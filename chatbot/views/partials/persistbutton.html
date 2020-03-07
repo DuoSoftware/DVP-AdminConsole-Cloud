@@ -1,0 +1,21 @@
+<div>
+    <div ng-show="mode == 'view'">
+        <input type="button" value="{{button.title}}" class="card-lable-new">
+        <div class="edit-card--btn-circle edit-card--edit" ng-click="changeMode('edit')">
+            <i class="fa fa-pencil"></i>
+        </div>
+    </div>
+    <div ng-show="mode == 'new'">
+        <a class="font-robot font-300 btn-small" ng-click="newButton()">
+            <i class="fa fa-plus"></i> New
+        </a>
+    </div>
+    <div class="top40" ng-show="mode == 'edit'">
+        <input class="form-control" type="text" placeholder="Title" ng-model="button.title">
+        <input ng-show="button.type == 'postback'" class="form-control" type="text" placeholder="Payload" ng-model="button.payload">
+        <input ng-show="button.type == 'web_url'" class="form-control" type="text" placeholder="URL" ng-model="button.url">
+        <input ng-show="button.type == 'nested'" type="button" value="Add Button" ng-click="changeMode('view')" class="btn card-btn pull-right">
+        <input type="button" value="Done" ng-click="changeMode('view')" class="btn card-btn pull-right">
+    </div>
+
+</div>

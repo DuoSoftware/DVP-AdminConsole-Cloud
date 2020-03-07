@@ -1,0 +1,229 @@
+<div class="row">
+    <div class="col-md-12 col-lg-12  col-sm-12">
+        <div class="x_panel">
+            <div class="x_title">
+                <h2> Email Configurations
+                    <small id="message"></small>
+                </h2>
+                <div class="clearfix"></div>
+            </div>
+            </br>
+
+            <div class="x_content">
+
+                <form class="form-horizontal form-label-left input_mask" name="addNewTicketForm" novalidate>
+                    <div class="row">
+                        <!--<div class="col-md-12 col-sm-12 col-xs-12 form-group has-feedback">
+                            <input type="text" class="form-control has-feedback-left"
+                                   ng-model="emailConfig.name"
+                                   placeholder="Name">
+                            <span class="fa fa-user form-control-feedback left" aria-hidden="true"></span>
+
+
+                        </div>-->
+
+                        <div class="col-md-3">
+                            <div class="form-group"
+                                 ng-class="{ 'has-error': addNewTicketForm.configName.$invalid && addNewTicketForm.configName.$dirty }">
+                                <label class="control-label">Name*</label>
+                                <input type="text" class="form-control " name="configName"
+                                       ng-model="emailConfig.name" required
+                                       placeholder="Name">
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label class="control-label">Domain</label>
+                                <input type="text" class="form-control " name="configName"
+                                       ng-model="emailConfig.domain"
+                                       placeholder="Domain">
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group" >
+                                <label class="control-label">Overwrite Sender</label>
+                                <input type="text" class="form-control " name="fromOverwrite"
+                                       ng-model="emailConfig.fromOverwrite"
+                                       placeholder="Overwrite Sender">
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group" >
+                                <label class="control-label">Overwrite ReplyTo</label>
+                                <input type="text" class="form-control " name="replytoOverwrite"
+                                       ng-model="emailConfig.replytoOverwrite"
+                                       placeholder="Overwrite ReplyTo">
+                            </div>
+                        </div>
+
+                        <div class="x_content" style="background-color: #F7F7F7">
+                            <div>
+                            <h2 class="font-robot font-300 text-uppercase font-15">Ticket Configuration</h2>
+
+                        <div class="col-md-3">
+                            <div class="form-group"
+                                 ng-class="{ 'has-error': addNewTicketForm.priority.$invalid && addNewTicketForm.priority.$dirty }">
+                                <label class="control-label">Priority*</label>
+                                <select class="form-control" ng-model="emailConfig.ticket_priority"
+                                        name="priority"
+                                        required
+                                        placeholder="Select">availableTicketTypes
+                                    <option ng-repeat="tType in prioritys"
+                                            value="{{tType}}">
+                                        {{tType}}
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group"
+                                 ng-class="{ 'has-error': addNewTicketForm.ticketType.$invalid && addNewTicketForm.ticketType.$dirty }">
+                                <label class="control-label">Type*</label>
+                                <select class="form-control" ng-model="emailConfig.ticket_type"
+                                        name="ticketType"
+                                        required
+                                        placeholder="Select">availableTicketTypes
+                                    <option ng-repeat="tType in availableTicketTypes"
+                                            value="{{tType}}">
+                                        {{tType}}
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-10 col-sm-10 col-xs-10 form-group has-feedback">
+                            <div class="form-group"
+                                 ng-class="{ 'has-error': addNewTicketForm.tags.$invalid && addNewTicketForm.tags.$dirty }">
+                                <label class="control-label"> Tags</label>
+                                <tags-input name="tags" ng-model="ticket_tags" placeholder="choose Tags"
+                                            replace-spaces-with-dashes="false"
+                                            display-property="name"
+                                            add-from-autocomplete-only="true"
+                                            ng-disabled="" min-length="1" style="margin-bottom: 10px; height: 100px">
+
+                                    <auto-complete source="queryTagSearch($query)"
+                                                   load-on-empty="true"
+                                                   load-on-focus="true"
+                                                   min-length="1"></auto-complete>
+                                </tags-input>
+                            </div>
+                        </div>
+                                <div>
+                                <div class="col-md-6 col-sm-6 col-xs-6">
+                                    <checkbox class="btn-success" ng-model="emailConfig.create_engagement"
+                                               ></checkbox>
+                                    <label class="control-label col-md-4 col-sm-4 col-xs-4" >Create Engagement</label>
+                                </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-2">
+                            <div class="btn-warp " style="margin-top: 28px;">
+                                <span ng-disabled="addNewTicketForm.$invalid" class="btn btn-default btn-block"
+                                      ng-click="saveEmailConfiguration(emailConfig);">Save</span>
+                            </div>
+                        </div>
+                    </div>
+
+                </form>
+
+            </div>
+
+        </div>
+    </div>
+
+    <br/>
+
+    <div class="col-md-12 col-lg-12  col-sm-12">
+        <div class="x_panel">
+            <div class="x_title">
+                <h2> Email List </h2>
+                <ul class="nav navbar-right panel_toolbox">
+                    <li>
+                        <a class="close-link"><i class="fa fa-refresh" ng-click="GetEmailAccounts()"></i></a>
+                    </li>
+                </ul>
+                <div class="clearfix"></div>
+
+            </div>
+
+            <div class="x_content">
+
+                <div class="row">
+
+                    <div ng-show="isLoading">
+                        <div class="row ">
+                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                <div class="data-state-wrap">
+                                    Loading...
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div ng-hide="isLoading" class="col-md-12 col-sm-12 col-xs-12">
+
+                        <table dt-options="dtOptions" datatable="ng" class="table table-striped jambo_table bulk_action">
+                            <thead>
+                            <tr class="headings veery-tbl-clmn-hdr">
+                                <th tabindex="0" class="column-title">Name</th>
+                                <th tabindex="1" class="column-title">Priority</th>
+                                <th tabindex="2" class="column-title selectedTpcs">Type</th>
+                                <th tabindex="3" class="column-title selectedTpcs">Tags</th>
+                                <th tabindex="4" class="column-title selectedTpcs">Overwrite Sender</th>
+                                <th tabindex="5" class="column-title selectedTpcs">Overwrite ReplyTo</th>
+                                <th tabindex="5" class="column-title selectedTpcs">Create Engagement</th>
+                                <th tabindex="6" class="column-title selectedTpcs">Status</th>
+                            </tr>
+                            </thead>
+
+                            <tbody>
+                            <tr class="even pointer veery-tbl-body" ng-repeat="mail in emailAccounts">
+
+                                <td class="valAlgn">{{mail.name}}</td>
+                                <td class="valAlgn">{{mail.ticket_priority}}</td>
+                                <td class="valAlgn">{{mail.ticket_type}}</td>
+                                <td class="valAlgn">
+                                    <table>
+                                        <tbody>
+                                        <tr class="even pointer veery-tbl-body" ng-repeat="tag in mail.ticket_tags">
+                                            <td style="display: inline-block;">{{tag}} </td><!--<div style="display: inline-block;">{{tag}}</div>-->
+                                        </tr>
+
+                                        </tbody>
+                                    </table>
+                                </td>
+                                <td class="valAlgn">{{mail.fromOverwrite}}</td>
+                                <td class="valAlgn">{{mail.replytoOverwrite}}</td>
+                                <td class="valAlgn" style="text-align: center">
+                                    <i class = "fa fa-check" ng-if="mail.create_engagement" style="color: green"> </i>
+                                    <i class = "fa fa-times" ng-if="mail.create_engagement == undefined || mail.create_engagement == false" style="color:red"> </i>
+                                </td>
+                                <td class="valAlgn">
+                                    <switch
+                                        id="enabled"
+                                        name="enabled"
+                                        ng-model="mail.active"
+                                        on="Active" off="Inactive"
+                                        class="green"
+                                        disabled="disableSwitch"
+                                        ng-change="deactivateMail(mail)"
+                                        style="margin-right: 10px">
+
+                                </switch>
+                                </td>
+                            </tr>
+
+                            </tbody>
+                        </table>
+
+
+                    </div>
+
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>

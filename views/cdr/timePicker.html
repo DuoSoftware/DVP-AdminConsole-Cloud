@@ -1,0 +1,31 @@
+<!--<div>
+    <div class="col-md-6 col-sm-6 col-xs-6 form-group">
+        <label>HH</label>
+        <input type="text" class="form-control"
+               ng-model="Hour" ng-change="onChangeHr()"
+               name="Hour" maxlength="2" ng-init="Hour='00'"/>
+    </div>
+    <div class="col-md-6 col-sm-6 col-xs-6 form-group">
+        <label>MM</label>
+        <input type="text" class="form-control"
+               ng-model="Minute"
+               name="Minute" maxlength="2" ng-init="Minute='00'" ng-change="onChangeMin()"/>
+    </div>
+
+</div>-->
+<div>
+    <div style="position: relative; width: 100px;height: 40px">
+        <label class="hourTag">HH</label>
+        <input type="text" class="hourInput"
+               ng-model="Hour" ng-change="onChangeHr()"
+               name="Hour" maxlength="2"/>
+        <a href="" class="hrUpButton">^</a>
+        <a href="" class="hrDownButton">^</a>
+        <label class="minuteTag">MM</label>
+        <input type="text" class="minuteInput"
+               ng-model="Minute"
+               name="Minute" maxlength="2" ng-change="onChangeMin()"/>
+        <a href="" class="minUpButton">^</a>
+        <a href="" class="minDownButton">^</a>
+    </div>
+</div>

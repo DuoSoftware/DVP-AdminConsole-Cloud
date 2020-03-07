@@ -1,0 +1,374 @@
+<div class="row">
+	<div class="col-md-12 col-sm-6 col-xs-12">
+		<uib-tabset active="0">
+			<uib-tab index="0" heading="Form Design">
+				<div class="x_panel">
+					<div class="x_title">
+						<h2><i class="fa fa-child"></i> Form
+							<small>Design</small>
+						</h2>
+						<ul class="nav navbar-right panel_toolbox">
+							<li><a class="close-link"><i class="fa fa-refresh" ng-click="LoadFormList()"></i></a></li>
+							<li><a ng-click="createForm()" class="close-link"><i class="fa fa-plus"></i></a>
+							</li>
+						</ul>
+						<br>
+						<div class="clearfix"></div>
+						<div ng-show="isProgress" >
+							<div class="row ">
+								<div class="col-md-12 col-sm-12 col-xs-12">
+									<div class="data-state-wrap">
+										Uploading ......
+									</div>
+
+								</div>
+							</div>
+						</div>
+
+						<div class="col-xs-12" ng-hide="isProgress">
+							<div class="tile-stats" ng-show="addNew">
+								<div class="container" ng-show="addNew">
+									<div class="row">
+										<div class="col-md-6">
+											<div class="panel panel-primary ">
+												<div class="panel-heading">
+													<h3 class="panel-title">Form Builder</h3>
+												</div>
+												<div class="panel-body" style="height:400px;overflow:auto;">
+													<form class="form" ng-submit="saveField()">
+														<div class="form-group">
+															<label for="newField-name">Field Name:</label> <input type="text"
+																												  class="form-control" id="newField-name" ng-model="newField.field" ng:required>
+														</div>
+														<div class="form-group">
+															<label>Required: <input
+																	type="checkbox" id="newField-required"
+																	ng-model="newField.required">
+															</label>
+														</div>
+
+														<div class="form-group">
+															<label for="newField-order">id :</label> <input
+																class="form-control" type="number" min="0" id="newField-order" ng-model="newField.id"
+																value="0" ng-required placeholder="0">
+														</div>
+														<div class="form-group">
+															<label for="newField-type">Field Type:</label> <select
+																class="form-control" id="newField-type" ng-model="newField.type" ng-required>
+															<option value="text" selected>Text</option>
+															<option value="radio">Radio Buttons</option>
+															<option value="select">Drop Menu (Select)</option>
+															<option value="multiple">Multi-Select</option>
+															<option value="checkbox">Toggle (Checkbox)</option>
+															<option value="checkboxes">Checkboxes</option>
+															<option value="textarea">Paragraph(s)</option>
+															<option value="number">Number</option>
+															<option value="url">Url</option>
+															<option value="phone">Phone</option>
+															<option value="email">Email</option>
+															<option value="header">Heading</option>
+															<option value="date">Date</option>
+														</select>
+														</div>
+														<ng-switch on="typeSwitch(newField.type)">
+															<div ng-switch-default class="form-group">
+																<label for="newField-placeholder">Description:</label> <input
+																	class="form-control" type="text" id="newField-placeholder"
+																	ng-model="newField.description">
+															</div>
+															<fieldset ng-switch-when="multiple">
+																<legend>
+																	<a class="btn btn-primary btn-xs" ng-click="addOption()">Add Option</a>
+																</legend>
+																<div class="panel panel-primary"
+																	 ng-repeat="option in newField.values|orderBy:'id'">
+																	<div class="panel-body">
+																		<b><i>Option:</i></b>
+																		<button class="btn btn-danger btn-xs"
+																				ng-click="splice(option, newField.values)">Remove</button>
+																		<div class="form-group">
+																			Name: <input class="form-control" type="text" ng-model="option.name"
+																						 ng-required>
+																			Value: <input class="form-control" type="text"
+																						  ng-model="option.value">
+																			id: <input class="form-control" type="number" min="0"
+																					   ng-model="option.id">
+																		</div>
+																	</div>
+																</div>
+															</fieldset>
+															<span ng-switch-when="checkbox"></span> <span
+																ng-switch-when="header"></span> </ng-switch>
+														<div>
+															<input class="btn btn-warning"type="submit" value="Create New Field">
+														</div>
+													</form>
+												</div>
+											</div>
+										</div>
+
+										<div class="col-md-6">
+											<div class="panel panel-primary " >
+												<div class="panel-heading">
+													<h3 class="panel-title">Form Preview</h3>
+												</div>
+												<div class="panel-body" style="height:400px;overflow:auto;">
+													<div ng-repeat="field in fields | orderBy:'id'">
+														<ng-switch on="field.type">
+															<h3 ng-switch-when="header" class="animated fadeInRight">
+																{{field.id}} {{field.field}}
+																<button class="btn btn-warning btn-xs" ng-click="editField(field)">Edit</button>
+																<button class="btn btn-danger btn-xs" ng-click="splice(field, fields)">Remove</button>
+															</h3>
+															<div ng-switch-default class="input {{field.type}}"
+																 ng-class="field.required && 'required'">
+																<div class="form-group">
+																	<label>
+																		{{field.id}} . {{field.field}}
+																		<button class="btn btn-warning btn-xs" ng-click="editField(field)">Edit</button>
+																		<button class="btn btn-danger btn-xs" ng-click="splice(field, fields)">Remove</button>
+																	</label>
+
+																	<ng-switch on="field.type">
+																		<input class="form-control animated fadeInRight" ng-switch-default
+																			   type="{{field.type}}" ng-model="field.value"
+																			   ng-bind-attr="{required:'{{field.required}}'}"
+																			   value="{{field.value}}" placeholder="{{field.description}}">
+																		<input ng-switch-when="checkbox" type="checkbox" class="animated fadeInRight"
+																			   ng-model="field.value" value="{{field.value}}" id="field"
+																			   placeholder="{{field.instructions}}">
+									<textarea class="form-control animated fadeInRight"
+											  ng-switch-when="textarea" ng-model="field.value"
+											  placeholder="{{field.instructions}}">{{field.value}}
+									</textarea>
+																		<select class="form-control animated fadeInRight"
+																				ng-switch-when="select" ng-model="field.value">
+																			<option ng-repeat="option in field.values"
+																					value="{{option.value}}">{{option.name}}
+																			</option>
+																		</select>
+																		<select class="form-control animated fadeInRight"
+																				ng-switch-when="multiple" ng-model="field.value" multiple>
+																			<option ng-repeat="option in field.values"
+																					value="{{option.value}}">{{option.name}}
+																			</option>
+																		</select>
+																		<fieldset ng-switch-when="radio">
+																			<label ng-repeat="option in field.values">
+																				<input class="animated fadeInRight"
+																					   type="radio" ng-model="field.value" value="{{option.value}}">
+																				{{option.name}}
+																			</label>
+																		</fieldset>
+																		<fieldset ng-switch-when="checkboxes">
+																			<label ng-repeat="option in field.values">
+																				<input class="animated fadeInRight"
+																					   type="checkbox" ng-model="field.value[tokenize(option.name)]"
+																					   value="{{option.value}}"> {{option.name}}
+																			</label>
+																		</fieldset>
+																	</ng-switch>
+																</div>
+															</div>
+														</ng-switch>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="row">
+										<div class="col-md-12  col-sm-12 col-xs-12">
+											<div class="panel panel-warning animated fadeInUp">
+												<div class="col-md-12  col-sm-12 col-xs-12 panel-heading">
+													<h3 class="panel-title">Form Name</h3>
+													<div class="col-md-10  col-sm-10 col-xs-10 panel-heading">
+														<input type="text" class=" form-control"  ng-model="formName" ng:required>
+													</div>
+													<div class="col-md-2  col-sm-2 col-xs-2 panel-heading">
+														<button type="button" class=" btn btn-success btn-xs " ng-click="saveForm(formName,fields)">
+															Save
+														</button>
+													</div>
+
+												</div>
+												<!--
+                                                                <div class="col-md-12  col-sm-12 col-xs-12 panel-body" style="height:100px;overflow:auto;">
+                                                                    <pre>{{fields}}</pre>
+                                                                </div>-->
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="clearfix"></div>
+					</div>
+
+					<div ng-show="isLoading" >
+						<div class="row ">
+							<div class="col-md-12 col-sm-12 col-xs-12">
+								<div class="data-state-wrap">
+									Please Wait...
+								</div>
+
+							</div>
+						</div>
+					</div>
+
+					<div class="x_content" ng-hide="isLoading" >
+
+
+						<!--<li ng-repeat="res in resources">
+                            <editresource  resource="res" tasks="tasksList" attributes="attributesList" page-reload="reloadPage()"
+                                           update-recource="removeDeleted(res)"></editresource>
+                        </li>-->
+
+						<div class="col-md-12 col-sm-12 col-xs-12 panel-body">
+							<div class="col-md-4 col-sm-4 col-xs-4">
+								<label>Dynamic Profile Form</label>
+								<select class="select2_single form-control" tabindex="-1" aria-hidden="true"
+										ng-model="currentProfileForm.currentProfileForm" ng-model-options="{trackBy: '$value'}">
+									<option value=""></option>
+									<option ng-repeat="form in formList" value="{{form._id}}">{{form.name}}
+									</option>
+								</select>
+							</div>
+
+
+							<div class="col-md-4 col-sm-4 col-xs-4">
+								<label>Dynamic Ticket Form</label>
+								<select class="select2_single form-control" tabindex="-1" aria-hidden="true"
+										ng-model="currentTicketForm.currentTicketForm" ng-model-options="{trackBy: '$value'}">
+									<option value=""></option>
+									<option ng-repeat="form in formList" value="{{form._id}}">{{form.name}}
+									</option>
+								</select>
+							</div>
+
+							<!--<div class="col-md-3 col-sm-3 col-xs-3">
+                                <label>Ticket Create Form</label>
+                                <select class="select2_single form-control" tabindex="-1" aria-hidden="true"
+                                        ng-model="createTicketForm" ng-model-options="{trackBy: '$value'}">
+                                    <option value=""></option>
+                                    <option ng-repeat="form in formList" value="{{form._id}}">{{form.name}}
+                                    </option>
+                                </select>
+                            </div>-->
+
+							<div class="col-md-2 col-sm-2 col-xs-2">
+								<button style="position: relative; top: 26px;" class="btn btn-primary" ng-click="saveProfileForm()" ng-disabled="sipUserConfForm.$invalid">
+									Set
+								</button>
+							</div>
+						</div>
+
+
+						<paging ng-show="showPaging"
+								class="small"
+								page="currentPage"
+								page-size="pageSize"
+								total="pageTotal"
+								show-prev-next="true"
+								show-first-last="true"
+								text-next-class="glyphicon glyphicon-chevron-right"
+								text-prev-class="glyphicon glyphicon-chevron-left"
+								text-first-class="glyphicon glyphicon-backward"
+								text-last-class="glyphicon glyphicon-forward"
+								paging-action="getPageData('attribute', page, pageSize, total)">
+						</paging>
+
+
+					</div>
+				</div>
+			</uib-tab>
+			<uib-tab index="1" heading="Dynamic Forms By Tag">
+				<div class="col-md-12 col-sm-12 col-xs-12 x_panel">
+					<div class="col-md-12 col-sm-12 col-xs-12" style="border-style: solid; border-width: 2px; padding: 10px;">
+						<span>Dynamic form by tags</span>
+						<br><br>
+						<div class="col-md-7 col-sm-7 col-xs-7">
+							<tags-input ng-model="postTags" display-property="name" placeholder="Tag Display" add-from-autocomplete-only="true" on-tag-removed="clearTagList($tag)">
+								<!--<auto-complete source="loadPostTags($query)"></auto-complete>-->
+							</tags-input>
+						</div>
+
+						<div class="col-md-3 col-sm-3 col-xs-3">
+							<select class="select2_single form-control" tabindex="-1" aria-hidden="true"
+									ng-model="currentTagForm.form" ng-model-options="{trackBy: '$value'}">
+								<option ng-repeat="form in formList" value="{{form._id}}">{{form.name}}
+								</option>
+							</select>
+						</div>
+
+
+						<div class="col-md-2 col-sm-2 col-xs-2">
+							<button style="background-color: #0081c2" class="btn btn-primary" ng-click="addIsolatedTag()" ng-disabled="!postTags || !currentTagForm">
+								Add
+							</button>
+						</div>
+						<br><br>
+						<div class="col-md-12 col-sm-12 col-xs-12">
+							<tags-input ng-if="postTags < 1" ng-model="newAddTags" placeholder="Choose Tags"
+										replace-spaces-with-dashes="false"
+										display-property="name"
+										add-from-autocomplete-only="true"
+										on-tag-added="onChipAddTag($tag)"
+										on-tag-removed="onChipDeleteTag($tag)"
+										ng-disabled="" min-length="1">
+								<auto-complete source="queryTagSearch($query)"
+											   load-on-empty="true"
+											   load-on-focus="true"
+											   min-length="1"></auto-complete>
+							</tags-input>
+						</div>
+
+
+					</div>
+
+				</div>
+				<div class="col-md-12 col-sm-12 col-xs-12 x_panel">
+					<ul class="list-unstyled timeline" style="overflow-y: auto; min-height: 877px">
+
+						<div class="mail_list_column sip-user-wrap"
+							 ng-mouseover="viewScroll()"
+							 ng-mouseleave="hideScroll()"
+							 ng-slimscroll
+							 height="800" width="100%" opacity="0.2" distance="0px"
+							 enabled="{{ scrollEnabled }}">
+							<a href="javascript:void(0);" class="user-wrap hover-none"
+							   ng-repeat="item in isolatedTags | filterBy: ['isolated_tag']: searchCriteria">
+								<div class="mail_list user-list">
+									<div class="right user-option-wrap">
+										<h3 class="font-robot sub-header" style="color:#383b3b">
+											{{item.isolated_tag}}
+											<small class="fa fa-trash" ng-click="deleteIsolatedTag(item.isolated_tag)"></small>
+										</h3>
+										<p>
+											<select class="select2_single form-control" tabindex="-1" aria-hidden="true"
+													ng-model="item.dynamicForm._id" ng-model-options="{trackBy: '$value'}" ng-change="selectValueChanged(item.dynamicForm._id, item.isolated_tag)">
+												<option ng-repeat="form in formList" value="{{form._id}}">{{form.name}}
+												</option>
+											</select>
+										</p>
+
+									</div>
+									<div class="left">
+
+									</div>
+								</div>
+							</a>
+						</div>
+
+					</ul>
+				</div>
+			</uib-tab>
+		</uib-tabset>
+
+
+	</div>
+
+</div>
+
+
+
+

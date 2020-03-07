@@ -1,0 +1,315 @@
+<div class="block">
+    <div class="tags">
+        <a class="tag">
+            <span>{{resource.ResourceId}}</span>
+        </a>
+    </div>
+    <div class="block_content">
+        <h2 class="title">
+            <a>Name : {{resource.ResourceName}}</a>
+            <a ng-disabled="true" ng-click="deleteResource(resource)" style="cursor: pointer"><i
+                    class="fa fa-trash-o"></i></a>
+            <a ng-disabled="true" ng-click="editResource()" style="cursor: pointer"><i class="fa fa-edit"></i></a>
+
+            <a ng-disabled="true" ng-click="assignAttribute()" style="cursor: pointer"><i class="fa fa-cog"></i></a>
+        </h2>
+
+
+        <div class="col-md-12 col-sm-12 col-xs-12" ng-show="editMode">
+            <br>
+
+            <!--<div class="col-md-12 col-sm-6 col-xs-12 col-xs-12">-->
+                <!--<div class="tile-stats">-->
+
+                    <!--<form class="form-horizontal form-label-left input_mask">-->
+                        <!--<br>-->
+
+                        <!--<div class="col-md-12 col-sm-6 col-xs-12 form-group has-feedback">-->
+                            <!--<input type="text" class="form-control has-feedback-left" ng-model="resource.ResourceName"-->
+                                   <!--placeholder="Resource Name">-->
+                            <!--<span class="fa fa-user form-control-feedback left" aria-hidden="true"></span>-->
+                        <!--</div>-->
+
+                        <!--<div class="col-md-4 col-sm-6 col-xs-12 form-group has-feedback">-->
+                            <!--<input type="text" class="form-control has-feedback-left" ng-model="resource.ResClass"-->
+                                   <!--placeholder="Resource Class">-->
+                            <!--<span class="fa fa-envelope form-control-feedback left" aria-hidden="true"></span>-->
+                        <!--</div>-->
+
+                        <!--<div class="col-md-4 col-sm-6 col-xs-12 form-group has-feedback">-->
+                            <!--<input type="text" class="form-control has-feedback-left" ng-model="resource.ResType"-->
+                                   <!--placeholder="Resource Type">-->
+                            <!--<span class="fa fa-envelope form-control-feedback left" aria-hidden="true"></span>-->
+                        <!--</div>-->
+
+                        <!--<div class="col-md-4 col-sm-6 col-xs-12 form-group has-feedback">-->
+                            <!--<input type="text" class="form-control has-feedback-left" ng-model="resource.ResCategory"-->
+                                   <!--placeholder="Resource Category">-->
+                            <!--<span class="fa fa-envelope form-control-feedback left" aria-hidden="true"></span>-->
+                        <!--</div>-->
+
+                        <!--<div class="col-md-12 col-sm-6 col-xs-12 form-group has-feedback">-->
+                            <!--<input type="text" class="form-control has-feedback-left" ng-model="resource.OtherData"-->
+                                   <!--placeholder="Other Data">-->
+                            <!--<span class="fa fa-envelope form-control-feedback left" aria-hidden="true"></span>-->
+                        <!--</div>-->
+
+                        <!--<div class="col-md-3 col-sm-6 col-xs-12 form-group has-feedback">-->
+                            <!--<button type="button" class="btn btn-success btn-xs " ng-click="UpdateResource(resource)">-->
+                                <!--Update-->
+                            <!--</button>-->
+
+                        <!--</div>-->
+                    <!--</form>-->
+                <!--</div>-->
+            <!--</div>-->
+
+            <div class="col-md-12 col-sm-6 col-xs-12 col-xs-12">
+                <div class="tile-stats">
+                    <small>Assign Task</small>
+
+                    <form class="form-horizontal form-label-left input_mask">
+
+                        <div class="row">
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                <!-- add permission -->
+                                <div class="drop-header">
+                                    <i class="fa fa-unlock"></i>
+
+                                    <h2 class="text-center">Access : Permission</h2>
+                                </div>
+                                <div class="thumbnaildrag drop-area-wrap" data-drop="true" ng-model='attachedTask'
+                                     data-jqyoui-options="{accept:'.btn-draggable:not([ng-model=deletedTask])'}"
+                                     jqyoui-droppable="{multiple:false}">
+                                    <div class="caption">
+                                        <div ng-click="setCurrentDrag(item,'attach')"
+                                             class="btn btn-round
+                                 btn-warning btn-draggable  draggable-item"
+                                             ng-repeat="item in attachedTask" ng-show="item.ResTaskInfo.TaskName"
+                                             data-drag="true" data-jqyoui-options="{revert: 'invalid'}"
+                                             ng-model="attachedTask"
+                                             jqyoui-draggable="{index: {{$index}},animate:true,beforeDrop: 'deleteTask'}">
+                                            {{item.ResTaskInfo.TaskName}}:{{item.Concurrency}}
+                                        </div>
+                                        <div class="drop-area-text" ng-show="attachedTask==0">
+                                            Drop To Add
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- end -->
+
+                            <!--Delete section-->
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                <!-- delete permission -->
+                                <div class="drop-header">
+                                    <i class="fa fa-lock"></i>
+
+                                    <h2 class="text-center">Access denied : Permissions </h2>
+                                </div>
+                                <div class="thumbnaildrag drop-area-wrap" data-drop="true" ng-model='deletedTask'
+                                     data-jqyoui-options="{accept:'.btn-draggable:not([ng-model=availableTask])'}"
+                                     jqyoui-droppable="{multiple:false}">
+                                    <div class="caption">
+                                        <div class="btn btn-round btn-primary
+                                 btn-draggable  draggable-item"
+                                             ng-repeat="item in deletedTask" ng-show="item.ResTaskInfo.TaskName"
+                                             data-drag="true" data-jqyoui-options="{revert: 'invalid'}"
+                                             ng-model="deletedTask"
+                                             jqyoui-draggable="{index: {{$index}},animate:true}">
+                                            {{item.ResTaskInfo.TaskName}}
+                                        </div>
+                                        <div class="drop-area-text" ng-show="deletedTask==0">
+                                            Drop to Delete
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--Available List-->
+
+                            <div class="col-md-12 col-sm-6 col-xs-12">
+
+                                <div class="thumbnaildrag drop-area-wrap" data-drop="true" ng-model='availableTask'
+                                     data-jqyoui-options="{accept:'.btn-draggable:not([ng-model=deletedTask])'}"
+                                     jqyoui-droppable="{multiple:false}">
+                                    <div class="caption">
+                                        <div ng-click="setCurrentDrag(item,'available')"
+                                             class="btn btn-info btn-draggable"
+                                             ng-repeat="item in availableTask" ng-show="item.ResTaskInfo.TaskName"
+                                             data-drag="true" data-jqyoui-options="{revert: 'invalid'}"
+                                             ng-model="availableTask"
+                                             jqyoui-draggable="{index: {{$index}},animate:true,beforeDrop: 'assignTask'}">
+                                            {{item.ResTaskInfo.TaskName}}
+                                        </div>
+                                        <div class="drop-area-text" ng-show="availableTask==0">
+                                            No Available Task
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+
+        </div>
+
+
+
+        <div class="col-md-12 col-sm-6 col-xs-12 col-xs-12" ng-show="editAttribute">
+            <br>
+
+            <div ng-show="isLoadingAttribute" >
+                <div class="row ">
+                    <div class="col-md-12 col-sm-12 col-xs-12">
+                        <div class="data-state-wrap">
+                            Please Wait...
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <div ng-hide="isLoadingAttribute"  class="col-md-12 col-sm-12 col-xs-12 tile-stats">
+                <div class="x_panel">
+                    <div class="x_title">
+                        <h2>SKILLS
+                            <small>{{assignSkill_selectedTask.task.ResTask.ResTaskInfo.TaskName}}</small>
+                        </h2>
+                        <div class="clearfix"></div>
+                    </div>
+                    <div class="x_content">
+                        <div class="col-md-12 col-sm-6 col-xs-12 form-group has-feedback">
+                            <button ng-click="selectTask(atTask)" ng-repeat="atTask in taskAttachToResource"
+                                    ng-class="{'btn btn-warning btn-sm': atTask.ResTask.ResTaskInfo.TaskName===assignSkill_selectedTask.task.ResTask.ResTaskInfo.TaskName, 'btn btn-success btn-sm': atTask.ResTask.ResTaskInfo.TaskName!=assignSkill_selectedTask.task.ResTask.ResTaskInfo.TaskName}"
+                                    type="button" >{{atTask.ResTask.ResTaskInfo.TaskName}}
+                            </button>
+
+                            <tr ng-repeat="user in vm.users" ng-class="{'approved': user.Status, 'notApproved': !user.Status}">
+                                <td>{{user.Id}}</td>
+                                <td>{{user.Name}}</td>
+                                <td>{{user.Status}}</td>
+                            </tr>
+                        </div>
+                        <br>
+
+                        <div class="col-md-3 col-sm-6 col-xs-12 form-group has-feedback">
+                            <input type="number" min="0" class="form-control has-feedback-left"
+                                   ng-model="assignSkill_selectedTask.task.Concurrency"
+                                   placeholder="Concurrency">
+                            <span class="fa fa-envelope form-control-feedback left" aria-hidden="true"></span>
+                        </div>
+                        <div class="col-md-7 col-sm-6 col-xs-12 form-group has-feedback">
+                            <input type="text" class="form-control has-feedback-left"
+                                   ng-model="assignSkill_selectedTask.task.OtherData"
+                                   placeholder="Other Data">
+                            <span class="fa fa-envelope form-control-feedback left" aria-hidden="true"></span>
+                        </div>
+
+                        <div class="col-md-2 col-sm-6 col-xs-12 form-group has-feedback">
+                            <button type="button" class="btn btn-success btn-xs "
+                                    ng-click="UpdateAttachedTask(assignSkill_selectedTask.task)">
+                                Update
+                            </button>
+
+                        </div>
+
+
+                        <div class="row">
+
+                            <!--Assign List section-->
+                            <div class="col-md-12 col-sm-6 col-xs-12">
+                                <!-- delete permission -->
+                                <div class="drop-header">
+                                    <i class="fa fa-graduation-cap"></i>
+                                    <h2 class="text-center">Assigned Skill</h2>
+                                </div>
+                                <div class="thumbnaildrag drop-area-wrap" data-drop="true" ng-model='selectedAttributes'
+                                     data-jqyoui-options="{accept:'.btn-draggable:not([ng-model=selectedAttributes])'}"
+                                     jqyoui-droppable="{multiple:false, onDrop: 'assignAttributeToTask'}">
+                                    <div class="caption">
+                                        <!--.   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .-->
+                                        <!--    ng-dblclick="deleteAttributeAssignToTask(item)"     -->
+                                        <!-- Removed from below directive as per the QA requirement-->
+                                        <!--.   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .-->
+
+                                        <resourceskill class="resource-skill"
+                                                       ng-click="curentDragAttribute(item)"
+                                                       ng-repeat="item in selectedAttributes" ng-show="item.Attribute"
+                                                       data-drag="{{draggable}}"
+                                                       data-jqyoui-options="{revert: 'invalid'}"
+                                                       ng-model="selectedAttributes"
+                                                       jqyoui-draggable="{index: {{$index}},animate:true}"
+                                                       resource-id="resource.ResourceId"
+                                                       task-type="assignSkill_selectedTask.task.ResTask.ResTaskInfo.TaskType"
+                                                       selected-attribute="item"
+                                                       delete-attributedrictive="deleteAttributeAssignToTask(item)"></resourceskill>
+
+                                        <div class="drop-area-text" ng-show="selectedAttributes==0">
+                                            Drop To Add
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <br> <br>
+
+                            <div class="col-md-12 col-sm-6 col-xs-12">
+                                <!-- add permission -->
+                                <div class="drop-header">
+                                    <h2 class="text-center">Available Skills</h2>
+                                </div>
+                                <div class="thumbnaildrag drop-area-wrap" data-drop="true"
+                                     ng-model='assignSkill_selectedTask.attributes'
+                                     data-jqyoui-options="{accept:'.btn-draggable:not([ng-model=assignSkill_selectedTask.attributes])'}"
+                                     jqyoui-droppable="{multiple:false, onDrop: 'deleteAttributeAssignToTask'}">
+                                    <div class="caption">
+                                        <div ng-click="curentDragAttribute(item)"
+                                             class="btn btn-round
+                                 btn-warning btn-draggable  draggable-item"
+                                             ng-repeat="item in assignSkill_selectedTask.attributes"
+                                             ng-show="item.Attribute"
+                                             data-drag="true" data-jqyoui-options="{revert: 'invalid'}"
+                                             ng-model="assignSkill_selectedTask.attributes"
+                                             jqyoui-draggable="{index: {{$index}},animate:true}">
+                                            {{item.Attribute}}
+                                        </div>
+                                        <div class="drop-area-text" ng-show="assignSkill_selectedTask.attributes==0">
+                                            No Available Skills
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                            </div>
+                            <!-- end -->
+
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+
+        <div class="byline" ng-hide="editMode">
+            <span>{{resource.createdAt|date:'MM/dd/yyyy @ h:mma'}}</span>
+        </div>
+        <!--<div ng-hide="editMode">-->
+            <!--<p class="excerpt col-md-4"> Class : {{resource.ResClass}} </p>-->
+
+            <!--<p class="excerpt col-md-4"> Type : {{resource.ResType}} </p>-->
+
+            <!--<p class="excerpt col-md-4"> Category: {{resource.ResCategory}} </p>-->
+
+            <!--<p class="excerpt col-md-12"> Other Data : {{resource.OtherData}} </p>-->
+        <!--</div>-->
+        <div class="clearfix"></div>
+    </div>
+</div>
+

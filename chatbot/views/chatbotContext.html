@@ -1,0 +1,110 @@
+<div class="row">
+
+    <div class="col-md-12 col-sm-6 col-xs-12">
+
+        <!-- Bot list -->
+        <div class="x_panel animated fadeIn bot-card">
+            <div class="x_title card-title">
+                <div class="col-md-6 col-sm-6 col-xs-6">
+                    <h2 class="font-robot">Context</h2>
+                </div>
+
+                <div class="col-md-4 col-sm-12 col-xs-12 form-group top_search card-search">
+                    <helpbutton class="helpbutton" displayhelp="'entity'"></helpbutton>
+                    <div class="card-search--form">
+                        <i class="fa fa-search"></i>
+                        <div class="input-group">
+                            <input type="text" ng-model="searchCriteria" class="form-control" placeholder="Search for...">
+                        </div>
+                    </div>
+                </div>
+
+                <div id="card-add-group" class="card-add">
+                    <button class="btn card-title--btn-add card-btn" data-toggle="collapse" data-target="#addNewSetUp"
+                        data-parent="#card-add-group">New Context</button>
+    
+                    <div class="accordion-group">
+                        <div class="collapse indent" id="addNewSetUp">
+                            <div class="subcard">
+                                <div class="col-sm-12 subcard-title ">
+                                    <h2 class="font-robot font-300 font-15">Create New Context</h2>
+                                    <div data-toggle="collapse" data-target="#addNewSetUp" ng-click="closeCreateModel();" class="btn-circle pull-right">
+                                        <i class="fa fa-times"></i>
+                                    </div>
+                                </div>
+                                <form name="createContext" ng-submit="createNewContext(context)" class="form-horizontal form-label-left input_mask card-create-bot">
+                                    <div class="row no-gutters">
+
+                                        <div class="col-12 col-sm-6 col-md-4 form-group">
+                                            <label>Work Flow Name</label>
+                                            <select class="form-control" name="createContext" placeholder="Work Flow Name*" ng-model="context.workflowName"
+                                                ng-options="x as x.DisplayName for x in workFlowNames" required>
+                                            </select>
+                                        </div>
+                                        <div class="col-12 col-sm-6 col-md-8 form-group">
+                                            <label>Description</label>
+                                            <input type="text" class="form-control" name="createContext" ng-model='context.description' placeholder="" required>
+                                        </div>
+
+                                        <label style="padding-left: 10px;">Map Context</label>
+                                        <div ng-repeat="field in contxMap track by $index">
+                                            
+                                            
+                                            <div class="col-12 col-sm-6 col-md-5 form-group">
+                                               
+                                                <input type="text" class="form-control" name="createContext" ng-model='field.contextName' placeholder="Context Name" required>
+                                            </div>
+                                            <div class="col-12 col-sm-6 col-md-6 form-group">
+                                               
+                                                <select class="form-control" name="createContext" ng-model="field.entityName" placeholder="Entity Name" ng-options="x.entityName as x.entityName for x in allEntities" required>
+                                                        <option value="" selected disabled>Select Entity Name</option>
+                                                </select>
+                                            </div>
+                                            <div class="col-12 col-sm-6 col-md-1 form-group">
+                                                    <div ng-hide="$index==0" ng-click='deletecontextMap($index)' class="btn-circle">
+                                                        <i class='fa fa-trash-o'></i>
+                                                    </div>
+                                            </div>
+                                        </div>
+                        
+                                        <div class="col-12 col-sm-6 col-md-12 form-group">
+                                                <button class="btn card-btn pull-left" type="button" ng-click="addcontxMap()">Add</button>
+                                        </div>
+                                            
+                                        
+
+                                        <div class="col-12 col-sm-12 col-md-12 form-group">
+                                            <button type="submit" ng-disabled="createContext.$invalid" data-toggle="collapse" data-target="#addNewSetUp" class="btn btn-success btn-block card-btn btn-add-bot pull-right">
+                                                Add Context
+                                            </button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <script type="text/javascript">
+                    var $myGroup = $('#card-add-group');
+                    $myGroup.on('show.bs.collapse', '.collapse', function () {
+                        $myGroup.find('.collapse.in').collapse('hide');
+                    });
+                </script>
+
+                <div class="clearfix"></div>
+            </div>
+            
+            <div class="x_content">
+                <ul class="list-unstyled">
+                    <li ng-repeat="context in allContext | filterBy: ['displayName']: searchCriteria | orderBy:'-created_at'" style="border-bottom: 1px solid #efefef;">
+                        <editchatbotcontext context="context" entitylist="allEntities" update-context="updateContext(context)" delete-context="deleteContext(context)">
+                        </editchatbotcontext> 
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <!-- end -->
+    </div>
+
+</div>

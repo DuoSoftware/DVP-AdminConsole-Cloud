@@ -1,0 +1,124 @@
+<div class="row">
+    <div class="col-md-12 col-sm-6 col-xs-12">
+        <div class="x_panel">
+            <div class="x_title">
+                <div class="col-md-6 col-sm-6 col-xs-6">
+                    <h2><i class="fa fa-child"></i> Resource
+                        <small>List</small>
+                    </h2>
+                </div>
+
+                <div class="col-md-6 col-sm-6 col-xs-6 form-group top_search">
+                    <div class="input-group">
+                        <input type="text" ng-model="searchCriteria" class="form-control"
+                               placeholder="Search for...">
+                                <span class="input-group-btn">
+                                    // Sanura Wijayarathne - 2019/11/01
+                                  <button class="btn btn-default" ng-click="reloadPage()" type="button">Go!</button>
+                                </span>
+                    </div>
+                </div>
+                <ul class="nav navbar-right panel_toolbox">
+                    <li><a class="close-link"><i class="fa fa-refresh" ng-click="reloadPage()"></i></a></li>
+                    <li><a ng-click="addResource()" class="close-link"><i class="fa fa-plus"></i></a>
+                    </li>
+                </ul>
+
+                <div ng-show="isProgress" >
+                    <div class="row ">
+                        <div class="col-md-12 col-sm-12 col-xs-12">
+                            <div class="data-state-wrap">
+                                {{progressMsg}}...
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xs-12" ng-hide="isProgress">
+                    <div class="tile-stats" ng-show="addNew">
+                        <form class="form-horizontal form-label-left input_mask">
+                            <div class="col-md-11 col-sm-6 col-xs-12 form-group has-feedback">
+                                <input  ng-disabled="userNameReadOnly" type="text" class="form-control has-feedback-left"
+                                       ng-model="resource.ResourceName"
+                                       placeholder="Resource Name">
+                                <span class="fa fa-user form-control-feedback left" aria-hidden="true"></span>
+                                <button type="button" class="btn btn-success btn-xs " ng-click="checkAvailability(resource)">
+                                    Check
+                                </button>
+                            </div>
+
+                            <div class="col-md-4 col-sm-6 col-xs-12 form-group has-feedback">
+                                <input type="text" class="form-control has-feedback-left" ng-model="resource.ResClass"
+                                       placeholder="Class -> Human">
+                                <span class="fa fa-envelope form-control-feedback left" aria-hidden="true"></span>
+                            </div>
+
+                            <div class="col-md-4 col-sm-6 col-xs-12 form-group has-feedback">
+                                <input type="text" class="form-control has-feedback-left" ng-model="resource.ResType"
+                                       placeholder="Type -> Agent">
+                                <span class="fa fa-envelope form-control-feedback left" aria-hidden="true"></span>
+                            </div>
+
+                            <div class="col-md-4 col-sm-6 col-xs-12 form-group has-feedback">
+                                <input type="text" class="form-control has-feedback-left"
+                                       ng-model="resource.ResCategory"
+                                       placeholder="Category -> Call Center">
+                                <span class="fa fa-envelope form-control-feedback left" aria-hidden="true"></span>
+                            </div>
+
+                            <div class="col-md-12 col-sm-6 col-xs-12 form-group has-feedback">
+                                <input type="text" class="form-control has-feedback-left" ng-model="resource.OtherData"
+                                       placeholder="Other Data">
+                                <span class="fa fa-envelope form-control-feedback left" aria-hidden="true"></span>
+                            </div>
+
+                            <div class="col-md-12 col-sm-6 col-xs-12 form-group has-feedback">
+                                <button ng-show="userNameAvilable" type="button" class="btn btn-success btn-xs " ng-click="saveResource(resource)">
+                                    Add
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="clearfix"></div>
+            </div>
+
+            <div ng-show="isLoading" >
+                <div class="row ">
+                    <div class="col-md-12 col-sm-12 col-xs-12">
+                        <div class="data-state-wrap">
+                            Please Wait...
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="x_content" ng-hide="isLoading" >
+                <ul class="list-unstyled timeline">
+                    <li ng-repeat="res in resources | filterBy: ['ResourceName']: searchCriteria">
+                        <editresource  resource="res" tasks="tasksList" attributes="attributesList" page-reload="reloadPage()"
+                                      update-recource="removeDeleted(res)"></editresource>
+                    </li>
+
+                    <paging ng-show="showPaging"
+                            class="small"
+                            page="currentPage"
+                            page-size="pageSize"
+                            total="pageTotal"
+                            show-prev-next="true"
+                            show-first-last="true"
+                            text-next-class="glyphicon glyphicon-chevron-right"
+                            text-prev-class="glyphicon glyphicon-chevron-left"
+                            text-first-class="glyphicon glyphicon-backward"
+                            text-last-class="glyphicon glyphicon-forward"
+                            paging-action="getPageData('attribute', page, pageSize, total)">
+                    </paging>
+                </ul>
+
+            </div>
+        </div>
+
+    </div>
+
+</div>

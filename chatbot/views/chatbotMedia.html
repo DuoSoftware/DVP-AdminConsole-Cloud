@@ -1,0 +1,53 @@
+<div class="row">
+    <div class="col-md-12 col-sm-6 col-xs-12">
+        <div class="x_panel animated fadeIn bot-card">
+            <div class="x_title card-title">
+                <div class="col-md-6 col-sm-6 col-xs-6">
+                    <h2 class="font-robot font-300">Media Library</h2>
+                </div>
+                <div class="col-md-5 col-sm-5 col-xs-5 form-group top_search card-search">
+                    <helpbutton class="helpbutton" displayhelp="'media'"></helpbutton>
+                    <div class="card-search--form">
+                        <i class="fa fa-search"></i>
+                        <div class="input-group">
+                            <input type="text" id="search" ng-model="searchCriteria" class="form-control" placeholder="Search for...">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="x_title card-title">
+                <div class="col-md-3 col-sm-6 col-xs-6">
+                    <select class="form-control width-100" ng-model="sort" placeholder="Sorting" >
+                        <option value="created_at"> Create Date</option>    
+                        <option value="name" >Name</option>
+                        <option value="size" >Size</option>
+                    </select> 
+                </div>   
+                <div class="col-md-3 col-sm-6 col-xs-6">
+                <button class="btn btn-success btn-sm" ng-click="sorting(sort)" >Sorting <span class="sortorder" ng-class="{reverse: reverse}"></span></button> 
+                </div>
+               
+                
+                   
+                <div class="col-md-3 col-sm-6 col-xs-6">
+                    <select class="form-control width-100" ng-model="type" placeholder="Filter" ng-change="filterType(type)" ng-options="x as x for x in mediaTypes">
+                        <option value="" disabled>Filter a type</option>
+                    </select> 
+                </div>   
+                
+                <div class="col-md-3 col-sm-6 col-xs-6">
+                    <button class="btn btn-sm" ng-click="resetFilters()" >Reset Filter</button> 
+                </div>
+            </div>
+
+            <div class="x_content">
+                <ul class="list-unstyled">
+                    <li ng-repeat="media in allmediaFiles | filterBy: ['name','created_at','type']: searchCriteria | filter: selectedtype | orderBy:val:reverse" style="border-bottom: 1px solid #efefef;padding-top: 10px;padding-bottom: 10px;">
+                        <editmedia media="media" media-type="TemplateCategory" update-media="updateIntegration(media)"
+                        delete-media="deleteIntegration(media)" media-Types="MediaTypes"></editmedia>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>

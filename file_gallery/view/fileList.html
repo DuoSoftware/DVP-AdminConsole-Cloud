@@ -1,0 +1,233 @@
+<div class="row">
+    <div class="col-md-12 col-sm-6 col-xs-12">
+
+        <div ng-show="isProgress">
+            <div class="row ">
+                <div class="col-md-12 col-sm-12 col-xs-12">
+                    <div class="data-state-wrap">
+                        Progress...
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+
+        <div ng-hide="isProgress">
+            <div class="top_tiles">
+                <filecountbycategory category="fileCat" load-files="loadFilesByCat(fileCat)"
+                                     ng-repeat="fileCat in Catagories" style="cursor: pointer">
+                </filecountbycategory>
+
+            </div>
+        </div>
+        <div class="clearfix"></div>
+        <div class="col-md-12 col-sm-6 col-xs-12">
+            <div class="x_panel">
+                <div class="col-md-4 col-sm-4 col-xs-4 form-group"
+                     ng-class="{ 'has-error' : userForm.StartTime.$invalid && !userForm.StartTime.$pristine }">
+                    <label>Start Date</label>
+
+                    <div>
+                        <p class="input-group">
+                            <input required name="StartTime" type="text" class="form-control"
+                                   datetime-picker="MM/dd/yyyy HH:mm"
+                                   ng-model="fileSerach.StartTime" is-open="StartTime.open"
+                                   ng-class="{ 'has-error' : userForm.StartTime.$invalid && !userForm.StartTime.$pristine }"/>
+                                  <span class="input-group-btn">
+                                      <button type="button" class="btn btn-default"
+                                              ng-click="openCalendar('StartTime')"><i
+                                              class="fa fa-calendar"></i></button>
+                                  </span>
+                        <p ng-show="userForm.StartTime.$error.required && !userForm.StartTime.$pristine"
+                           class="help-block">
+                            StartTime is required.</p>
+                        </p>
+                    </div>
+                </div>
+
+                <div class="col-md-4 col-sm-4 col-xs-4 form-group"
+                     ng-class="{ 'has-error' : userForm.EndTime.$invalid && !userForm.EndTime.$pristine }">
+                    <label>End Date</label>
+
+                    <div>
+                        <p class="input-group">
+                            <input name="EndTime" type="text" class="form-control"
+                                   datetime-picker="MM/dd/yyyy HH:mm"
+                                   ng-model="fileSerach.EndTime" is-open="EndTime.open" required/>
+                                  <span class="input-group-btn">
+                                      <button type="button" class="btn btn-default" ng-click="openCalendar('EndTime')">
+                                          <i
+                                                  class="fa fa-calendar"></i></button>
+                                  </span>
+
+                        <p ng-show="userForm.EndTime.$error.required && !userForm.EndTime.$pristine"
+                           class="help-block">
+                            EndTime is required.</p>
+
+                        <p ng-show="userForm.EndTime.$error.min && !userForm.EndTime.$pristine"
+                           class="help-block">
+                            End time should be greater than start time.</p>
+                        </p>
+                    </div>
+                </div>
+
+                <div class="col-md-2 col-sm-2 col-xs-12">
+                    <button type="button" class="btn btn-success" style="
+    margin-top: 24px;" ng-click="SearchFiles();">
+                        Search
+                    </button>
+                </div>
+                <div class="col-md-2 col-sm-2 col-xs-12" style="padding-top:10px;">
+                    <label>Used {{usedSizeWithType}} from {{allocatedSpace}}</label>
+                    <div class="progress">
+                        <div class="progress-bar progress-bar-warning progress-bar-striped" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100">
+                            {{usedPtg}}% Used
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="clearfix"></div>
+
+        <div class="col-md-12 col-sm-6 col-xs-12">
+            <div class="x_panel">
+                <div class="x_title">
+                    <h2><i class="fa fa-bars"></i> Media Gallery
+                        <small>List</small>
+                    </h2>
+                    <ul class="nav navbar-right panel_toolbox">
+
+                        <li><a class="close-link"><i class="fa fa-check-square-o" ng-click="showDelete();"></i></a>
+                        </li>
+                        <li><a class="close-link"><i class="fa fa-trash-o" ng-click="deleteMultipleFiles();"></i></a>
+                        </li>
+                    </ul>
+                    <div class="col-md-5 col-sm-5 col-xs-12 form-group pull-right top_search">
+                        <div class="input-group">
+                            <input type="text" ng-model="txtSearch" class="form-control" placeholder="Search for...">
+                    <span class="input-group-btn">
+                      <button class="btn btn-default" type="button">Go!</button>
+                    </span>
+                        </div>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+
+                <!--<div class="x_title">
+                    <h2>Media Gallery
+                        <small> gallery</small><i class="fa fa-wrench"></i>
+                    </h2>
+                    <div class="title_right">
+                        <div class="col-md-5 col-sm-5 col-xs-12 form-group pull-right top_search">
+                            <div class="input-group">
+                                <input type="text" class="form-control" placeholder="Search for...">
+                        <span class="input-group-btn">
+                            <button class="btn btn-default" type="button">Go!</button>
+                        </span>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="clearfix"></div>
+                </div>-->
+
+
+                <div class="x_content">
+
+                    <div ng-show="isLoading">
+                        <div class="row ">
+                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                <div class="data-state-wrap">
+                                    Please Wait...
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div ng-show="noDataToshow">
+                        <div class="row ">
+                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                <div class="data-state-wrap">
+                                    No Data...
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row" ng-hide="isLoading">
+
+                        <div class="col-md-55" ng-repeat="file in files | filter:txtSearch| orderBy:'-createdAt'">
+                            <div class="thumbnail">
+                                <div class="image view view-first">
+
+
+                                    <img style="width: 100%; display: block;" ng-if="isImageExtension(file.FileStructure)"
+                                         ng-src="{{internalUrl}}File/Thumbnail/{{tenant}}/{{company}}/{{file.UniqueId}}/{{file.Filename}}"/>
+
+
+                                    <img style="width: 100%; display: block;" ng-if="!isImageExtension(file.FileStructure)"
+                                         src="assets/images/noimage.jpg"/>
+                                    <!--<img style="width: 100%; display: block;"
+                                         src="{{internalUrl}}File/Thumbnail/{{tenant}}/{{company}}/{{file.UniqueId}}/{{file.Filename}}"
+                                         on-error-src="assets/images/noimage.jpg" alt="image"/>-->
+
+                                    <div class="mask">
+                                        <p>{{file.Filename| limitTo:20}}</p>
+
+                                        <div class="tools tools-bottom">
+                                            <a href="javascript:void(0);"><i class="fa fa-play"
+                                                                             ng-click="playVideo(file)"></i></a>
+                                            <a ng-hide="!allowed_file_downLoad" href="javascript:void(0);"><i class="fa fa-cloud-download"
+                                                                             ng-click="downloadFile(file)"></i></a>
+                                            <a ng-hide="file.FileCategory.Category === 'CONVERSATION'" href="javascript:void(0);"><i class="fa fa-times"
+                                                                             ng-click="deleteFile(file)"></i></a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="caption">
+                                    <p>{{file.DisplayName}}</p>
+
+                                    <!--<p>{{file.FileCategory.Category}}</p>-->
+
+                                    <p ng-hide="showDeleteSelection">{{file.createdAt| date:'yyyy-MM-dd HH:mm'}}</p>
+
+                                    <input ng-show="showDeleteSelection" type="checkbox" class="flat"
+                                           ng-model="file.delete"
+                                           ng-change="addToDelete(file)">
+
+                                </div>
+                            </div>
+                        </div>
+
+
+                    </div>
+
+                    <paging ng-show="showPaging"
+                            class="small"
+                            page="currentPage"
+                            page-size="pageSize"
+                            total="pageTotal"
+                            show-prev-next="true"
+                            show-first-last="true"
+                            text-next-class="glyphicon glyphicon-chevron-right"
+                            text-prev-class="glyphicon glyphicon-chevron-left"
+                            text-first-class="glyphicon glyphicon-backward"
+                            text-last-class="glyphicon glyphicon-forward"
+                            paging-action="getPageData('Paging Clicked', page, pageSize, total)">
+                    </paging>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
+

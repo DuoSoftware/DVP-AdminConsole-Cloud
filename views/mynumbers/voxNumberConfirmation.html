@@ -1,0 +1,57 @@
+<div class="row" ng-show="showModal">
+
+
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <div class="x_panel">
+            <div class="x_title border-0">
+                <h2>Order Details
+                </h2>
+                <div class="clearfix"></div>
+            </div>
+            <div class="x_content">
+                <table class="countries_list table-striped">
+                    <tbody>
+                    <tr>
+                        <td>Country</td>
+                        <td class="fs15 fw700 text-right">{{order.countryCodeA3}}</td>
+                    </tr>
+                    <tr>
+                        <td>State</td>
+                        <td class="fs15 fw700 text-right">{{order.didGroup.stateId}}</td>
+                    </tr>
+                    <tr>
+                        <td>City</td>
+                        <td class="fs15 fw700 text-right">{{order.didGroup.cityName}}</td>
+                    </tr>
+                    <tr>
+                        <td>DID Type</td>
+                        <td class="fs15 fw700 text-right">{{order.didGroup.didType}}</td>
+                    </tr>
+                    <tr>
+                        <td>Channel Capacity</td>
+                        <td class="fs15 fw700 text-right">{{order.ChannelCount}}</td>
+                    </tr>
+                    <tr>
+                        <td>Set-up Fee</td>
+                        <td class="fs15 fw700 text-right">${{order.numberSetupFee}}</td>
+                    </tr>
+                    <tr>
+                        <td>Monthly Fee</td>
+                        <td class="fs15 fw700 text-right">${{order.monthlyFee}}</td>
+                    </tr>
+                    </tbody>
+                </table>
+
+                <div class="form-group m-top20">
+                    <div class="row">
+                        <div class="col-md-12 col-sm-12 col-xs-12 ">
+                            <button type="submit" class="btn btn-success" ng-disabled="isOrderInitiated" ng-click="initiateOrder()">{{isOrderInitiated ? 'Please wait..' : 'Buy'}}</button>
+                            <button type="submit" class="btn btn-success" ng-click="closeModal()">Cancel</button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>

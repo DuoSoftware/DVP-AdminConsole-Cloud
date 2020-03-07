@@ -1,0 +1,241 @@
+
+<div class="row" >
+    <div class="col-md-12 col-sm-12 col-xs-12">
+
+        <div class="x_panel user-group-wrapper">
+            <div class="clearfix">
+                <div class="col-md-4 col-lg-4 col-sm-4">
+                    <h2>Articles <span ng-show="articlename"> of </span> <span ng-show="articlename" style="font-weight: bold" ng-click="goBack()">{{articlename}} </span>
+                        <span class="iconed-status-pill-header">
+                                    <b>
+                                        <i class="fa fa-book"></i>
+                                        {{articleList.length}}
+                                    </b>
+                                </span>
+                    </h2>
+                </div>
+                <div class="col-md-4 col-lg-4 col-sm-4"></div>
+                <div class="col-md-4 col-lg-4 col-sm-4">
+                    <div class="input-group full-width" style="width: 100%">
+                        <input type="text" ng-model="searchCriteria" class="form-control" placeholder="Search for...">
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-6 col-sm-6 text-right">
+                </div>
+                <div class="col-md-6 col-lg-6 col-sm-6 text-right">
+                    <button type="button" class="btn card-title--btn-add card-btn" style="margin: 0" ng-show="!newArticleView" ng-disabled="isUpdating" ng-click="toggleNewArticleView()">New Article</button>
+                </div>
+            </div>
+            <div class="x_content" id="createNewUser" style="background: #f5f5f5" ng-show="newArticleView">
+                <uib-tabset active="activeCreateUserTab" class="hidden-tab-header">
+                    <uib-tab index="0">
+                        <div class="col-md-12 col-sm-12 col-xs-12">
+                            <div class="x_title col-md-12 col-sm-12 col-xs-12">
+                                <div class="col-md-6 col-sm-6 col-lg-6">
+                                    <h2 class="font-robot font-300 text-uppercase font-15">{{edittitle}} </h2>
+                                </div>
+                                <div class="col-md-6 col-sm-6 col-lg-6">
+                                    <div class="edit-card--btn-circle" style="float: right" ng-click="toggleNewArticleView()">
+                                        <i class="fa fa-close"></i>
+                                    </div>
+                                </div>
+                                <div class="clearfix"></div>
+                            </div>
+                            <br>
+                            <div class="clearfix">
+                                <!--<div class="col-md-4 col-sm-4 col-xs-12 form-group has-feedback">-->
+                                <!--<input type="text" class="form-control has-feedback-left" placeholder="Username"-->
+                                <!--ng-model="newUser.username">-->
+                                <!--<span class="fa fa-user form-control-feedback left" aria-hidden="true"></span>-->
+                                <!--</div>-->
+
+                                <div class="col-lg-12">
+                                    <div class="col-md-12 animated fadeIn">
+                                        <h3><label for="catTitle">Title</label></h3>
+                                        <p><input type="text" class="form-control "
+                                                  placeholder="Title"
+                                                  ng-model="newArticle.title" id="catTitle"></p>
+                                    </div>
+
+                                </div>
+                                <div class="col-lg-12">
+                                    <div class="col-md-12 animated fadeIn">
+                                        <h3><label for="catDesc">Description</label></h3>
+                                        <p><textarea class="resizable_textarea form-control" ng-model="newArticle.description" placeholder="Enter Description Here" required id="catDesc"></textarea></p>
+                                    </div>
+                                </div>
+                                <div class="col-lg-12">
+                                    <div class="col-md-12 animated fadeIn">
+                                        <h3><label for="catDesc">Search Description</label></h3>
+                                        <p><textarea class="resizable_textarea form-control" ng-model="newArticle.searchmeta" placeholder="Enter Description Here" required id="catDesc"></textarea></p>
+                                    </div>
+                                </div>
+                                <div class="col-lg-12 ">
+                                    <h3><label for="">Tags</label></h3>
+                                    <tags-input ng-model="newTags" display-property="tag"
+                                                add-on-paste="true"
+                                                add-from-autocomplete-only="false" on-tag-added="onChipAdd($tag)"
+                                                on-tag-removed="onChipDelete($tag)" ng-disabled="" min-length="1"
+                                                placeholder="Add Tags">
+                                        <auto-complete source="querySearch($query)"
+                                                       load-on-empty="true"
+                                                       load-on-focus="true"
+                                                       min-length="1"></auto-complete>
+                                    </tags-input>
+                                </div>
+
+                                <div class="col-lg-12 ">
+                                    <h3><label for="">Search Tags</label></h3>
+                                    <tags-input ng-model="newSearchTagsList" display-property="tag"
+                                                add-on-paste="true"
+                                                add-from-autocomplete-only="false" on-tag-added="onSearchChipAdd($tag)"
+                                                on-tag-removed="onSearchChipDelete($tag)" ng-disabled="" min-length="1"
+                                                placeholder="Add Search Tags">
+
+                                    </tags-input>
+                                </div>
+                                <div class="col-lg-12 ">
+                                    <h3><label for="">Sections</label></h3>
+                                    <tags-input ng-model="sectionOfCurrentArticle" display-property="title"
+                                                add-on-paste="true"
+                                                add-from-autocomplete-only="false" on-tag-added="onChipAddSection($tag)"
+                                                on-tag-removed="onChipDeleteSection($tag)" ng-disabled="" min-length="1"
+                                                placeholder="Add Section">
+                                        <auto-complete source="querySearchSection($query)"
+                                                       load-on-empty="true"
+                                                       load-on-focus="true"
+                                                       min-length="1"></auto-complete>
+
+                                    </tags-input>
+                                </div>
+
+
+                                <div class="col-lg-12 ">
+                                    <h3><label for="">Document</label></h3>
+
+                                    <text-angular ng-model="newArticle.document"></text-angular>
+                                </div>
+
+                            </div>
+                            <div class="clearfix text-right">
+                                <div class="divider"></div>
+
+                                <button class="btn btn-success" ng-click="saveNewArticle()"
+                                        ng-disabled="!(newArticle.title && newArticle.description &&newArticle.document)|| isSaving">
+                                    {{savebtn}}
+                                </button>
+                            </div>
+                        </div>
+                    </uib-tab>
+
+                </uib-tabset>
+            </div>
+            <div class="x_content" id="showarticle" style="background: #f5f5f5" ng-show="isDemo">
+                <uib-tabset active="activeCreateUserTab2" class="hidden-tab-header">
+                    <uib-tab index="0">
+                        <div class="col-md-12 col-sm-12 col-xs-12">
+                            <div class="x_title col-md-12 col-sm-12 col-xs-12">
+                                <div class="col-md-6 col-sm-6 col-lg-6">
+                                    <h2 class="font-robot font-300 text-uppercase font-15">{{currentArticle.title}} </h2>
+                                </div>
+                                <div class="col-md-6 col-sm-6 col-lg-6">
+                                    <div class="edit-card--btn-circle" style="float: right" ng-click="closeView()">
+                                        <i class="fa fa-close"></i>
+                                    </div>
+                                </div>
+
+                                <div class="clearfix"></div>
+                            </div>
+                            <br>
+                            <div class="clearfix">
+                                <div class="col-lg-12">
+
+                                    <div class="webview-panel">
+                                        <p ng-bind-html="currentArticle.document"></p>
+                                    </div>
+                                </div>
+
+
+                            </div>
+
+                        </div>
+                    </uib-tab>
+
+                </uib-tabset>
+
+            </div>
+            <div class="divider clearfix" style="margin-bottom: 20px"></div>
+            <!-- view user details -->
+            <div class="x_content col-md-12 col-sm-12 col-xs-12">
+                <ul class="list-unstyled msg_list">
+                    <div class="mail_list_column sip-user-wrap" style="padding-top: 20px">
+                        <a href="javascript:void(0);" class="user-wrap"
+                           ng-repeat="item in articleList | filterBy: ['title']: searchCriteria">
+                            <div class="mail_list user-list">
+                                <div class="right user-option-wrap">
+                                    <div class="col-lg-6 col-md-6 col-sm-6" ng-click="openForView(item._id)">
+                                        <h3 class="font-robot sub-header">
+                                            {{item.title}}
+                                        </h3>
+                                        <h4 class="sub-header italic-mode">
+                                            {{item.description}}
+                                        </h4>
+
+                                        <span ng-repeat="tag in item.tags">
+                                            <small class="embed-wrap"> {{tag.tag}}</small>
+                                        </span>
+                                        <p class="font-robot" style="padding-top: 15px">
+                                            <i class="fa fa-calendar"
+                                               style="padding-right: 10px;"></i><span>{{item.created_at | amCalendar:referenceTime:formats}}</span>
+                                        </p>
+                                        <p class="font-robot">
+                                        <div class="article-author-img">
+                                            <img ng-src="{{item.author.avatar}}"
+                                                 src="assets/images/defaultProfile.png"><span style="padding-left: 5px"> {{item.author.firstname}} {{item.author.lastname}}</span>
+                                        </div>
+
+                                        </p>
+                                        <p class="font-robot">
+                                            <i class="fa fa-comments"
+                                               uib-tooltip="Comments" style="padding-right: 10px;"></i><span style="padding-right: 10px"> {{item.comments.length}}</span>
+                                            <i class="fa fa-thumbs-up"
+                                               uib-tooltip="Likes" style="padding-right: 10px;"></i><span style="padding-right: 10px"> {{voteFilter(item.votes,true).length}}</span>
+                                            <i class="fa fa-thumbs-down"
+                                               uib-tooltip="Dislikes" style="padding-right: 10px;"></i><span style="padding-right: 10px"> {{voteFilter(item.votes,false).length}}</span>
+                                        </p>
+
+
+
+
+                                    </div>
+                                    <div class="col-lg-6 col-md-6 col-sm-6 text-right">
+
+                                        <div class="edit-card--btn-circle"
+                                             style="float: right;margin-right: 10px"
+                                             ng-click="openForEditing(item._id)"
+                                             uib-tooltip="Edit">
+                                            <i class="fa fa-edit"></i>
+                                        </div>
+
+
+                                        <div class=""
+                                             style="float: right;margin-right: 10px">
+                                            <switch uib-tooltip="{{toolTipGenerator(item.enabled)}}" id="" name="enabled" ng-model="item.enabled" class="green pull-left"  disabled="disableSwitch" ng-change="setEnable(item._id,item.enabled)"></switch>
+                                        </div>
+
+
+                                    </div>
+                                </div>
+                                <div class="left">
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                </ul>
+            </div>
+            <!-- end -->
+        </div>
+    </div>
+
+</div>
+

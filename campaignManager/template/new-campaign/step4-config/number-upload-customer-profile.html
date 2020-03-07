@@ -1,0 +1,49 @@
+<div class="camp-num-upload-wrapper number-upload-sheet">
+    <div class="customer-lag-text inline-u-wrp">
+        <small style="font-size: 13px;">Select customer tag</small>
+        <small class="clear" ng-show="!uploadButtonValue"
+               ng-click="reset()">Clear All
+        </small>
+    </div>
+    <div class="customer-tag-wrapper" style="padding-top: 20px;">
+        <div class="col-md-8 col-sm-12 col-xs-12 ">
+
+            <!--<tags-input class=camp-c-tag-->
+            <!--ng-model="cusTag"-->
+            <!--display-property="name"-->
+            <!--add-from-autocomplete-only="true"-->
+            <!--on-tag-added="onChipAdd($tag)"-->
+            <!--on-tag-removed="onChipDelete($tag)" min-length="0"-->
+            <!--placeholder="Select Tags">-->
+            <!--<auto-complete source="querySearch($query)" load-on-empty="true"-->
+            <!--load-on-focus="true" min-length="0">-->
+
+            <!--</auto-complete>-->
+
+
+            <ul class="customer-inline">
+                <li ng-repeat="tag in customerTags">
+                    <div class="customer-tag-option"
+                         ng-class="tag.active?'active-tag':''"
+                         ng-click="searchFromProfile(tag)">
+                        {{tag.name}}
+                        <i ng-show="tag.active"
+                           class="ti-close"></i>
+                    </div>
+                </li>
+            </ul>
+
+
+            <!--{{customerTags}}-->
+            <!--</tags-input>-->
+        </div>
+        <!--<div class="col-md-4 col-sm-4 col-xs-12 form-group has-feedback pull-right">-->
+        <!--<button type="button" class="btn btn-wizard"-->
+        <!--style="height: 34px;"-->
+        <!--ng-click="searchFromProfile()">Load-->
+        <!--</button>-->
+        <!--</div>-->
+    </div>
+
+</div>
+

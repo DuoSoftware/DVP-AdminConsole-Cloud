@@ -1,0 +1,162 @@
+<div role="main">
+    <!-- top tiles -->
+    <!--<div class="row tile_count" style="background: #383a3b">
+        <div class="col-md-3 col-sm-4 col-xs-6 tile_stats_count">
+            <div class="count aero">{{total_dialed}}</div>
+            <span class="count_bottom"><i class="green ">Total Dialed</i></span>
+        </div>
+        <div class="col-md-3 col-sm-4 col-xs-6 tile_stats_count">
+            <div class="count aero">{{total_answered}}</div>
+            <span class="count_bottom"><i class="blue">Total Answered</i></span>
+        </div>
+        <div class="col-md-3 col-sm-4 col-xs-6 tile_stats_count">
+
+            <div class="count aero">{{total_dialings}}</div>
+            <span class="count_bottom"><i class="purple">Dialing </i></span>
+        </div>
+        <div class="col-md-3 col-sm-4 col-xs-6 tile_stats_count">
+            <div class="count aero">{{total_connected}}</div>
+            <span class="count_bottom"><i class="red">Connected</i></span>
+        </div>
+
+    </div>-->
+
+    <div class="row tile_count" style="background: #383a3b">
+
+        <div class="col-md-3 col-sm-4 col-xs-6 tile_stats_count">
+            <div class="d1-header-widget ">
+                <div class="d1-h-w-count d1-h-lg" style="font-size: 24px">{{total_dialed}} | {{total_callback_dialed}}</div>
+                <div class="d1-h-w-sub-title d1-sub-tile-sm color-light-blue-200">
+                    Call <span style="color: #fff">|</span> <span style="color: #FFC107">Callback</span>
+                </div>
+                <div class="d1-h-w-header d1-h-tile">
+                    TOTAL DIALED
+                </div>
+
+                <!--<div class="d-top-icon">
+                    <i class="fa fa-phone color-blue-300"></i>
+                </div>-->
+            </div>
+            <!--<div class="count aero">{{total_dialed}}</div>
+            <span class="count_bottom"><i class="green ">Total Dialed</i></span>-->
+        </div>
+        <div class="col-md-3 col-sm-4 col-xs-6 tile_stats_count">
+            <div class="d1-header-widget ">
+                <div class="d1-h-w-count d1-h-lg" style="font-size: 24px">{{total_answered}} | {{total_callback_answered}}</div>
+                <div class="d1-h-w-sub-title d1-sub-tile-sm color-light-blue-200">
+                    Call <span style="color: #fff">|</span> <span style="color: #FFC107">Callback</span>
+                </div>
+                <div class="d1-h-w-header d1-h-tile">
+                    TOTAL ANSWERED
+                </div>
+
+                <!--<div class="d-top-icon">
+                    <i class="fa fa-phone color-blue-300"></i>
+                </div>-->
+            </div>
+
+            <!-- <div class="count aero">{{total_answered}}</div>
+             <span class="count_bottom"><i class="blue">Total Answered</i></span>-->
+        </div>
+        <div class="col-md-3 col-sm-4 col-xs-6 tile_stats_count">
+            <div class="d1-header-widget ">
+                <div class="d1-h-w-count d1-h-lg" style="font-size: 24px">{{total_dialings}} | {{total_callback_dialings}}</div>
+                <div class="d1-h-w-sub-title d1-sub-tile-sm color-light-blue-200">
+                    Call <span style="color: #fff">|</span> <span style="color: #FFC107">Callback</span>
+                </div>
+                <div class="d1-h-w-header d1-h-tile">
+                    TOTAL DIALING
+                </div>
+
+                <!--<div class="d-top-icon">
+                    <i class="fa fa-phone color-blue-300"></i>
+                </div>-->
+            </div>
+            <!--<div class="count aero">{{total_dialings}}</div>
+            <span class="count_bottom"><i class="purple">Dialing </i></span>-->
+        </div>
+        <div class="col-md-3 col-sm-4 col-xs-6 tile_stats_count">
+            <div class="d1-header-widget ">
+                <div class="d1-h-w-count d1-h-lg" style="font-size: 24px">{{total_connected}} | {{total_callback_connected}}</div>
+                <div class="d1-h-w-sub-title d1-sub-tile-sm color-light-blue-200">
+                    Call <span style="color: #fff">|</span> <span style="color: #FFC107">Callback</span>
+                </div>
+                <div class="d1-h-w-header d1-h-tile">
+                    TOTAL CONNECTED
+                </div>
+
+                <!--<div class="d-top-icon">
+                    <i class="fa fa-phone color-blue-300"></i>
+                </div>-->
+            </div>
+            <!--<div class="count aero">{{total_connected}}</div>
+            <span class="count_bottom"><i class="red">Connected</i></span>-->
+        </div>
+
+    </div>
+    <!-- /top tiles -->
+
+    <div class="row">
+        <div class="col-md-12 col-sm-12 col-xs-12">
+            <div class="dashboard_graph">
+                <div class="x_title">Campaigns Summary</div>
+                <div class="x_content productivity-panel">
+                    <div class="data-state-wrap" ng-if="agentProductivityLoadin">
+                        Loading...
+                    </div>
+
+                    <!--<div id="ResourceId123" style="height:350px;"></div>-->
+
+                    <canvas id="myChart" width="400" height="400"></canvas>
+                </div>
+
+                <div class="clearfix"></div>
+            </div>
+        </div>
+
+    </div>
+    <br />
+    <div class="row">
+        <div class="col-md-12 col-sm-12 col-xs-12">
+            <div class="btn-group " data-toggle="buttons">
+                <label class="btn btn-default btn-lg" ng-click="GetOngoinCampignList('ALL')">
+                    <input type="radio" name="options" id="option1" > All
+                </label >
+                <label class="btn btn-default btn-lg btn-lg" ng-click="GetOngoinCampignList('WAITING')">
+                    <input type="radio" name="options" id="option2" > Waiting
+                </label>
+                <label class="btn btn-default btn-lg"  ng-click="GetOngoinCampignList('DIALING')">
+                    <input type="radio" name="options" id="option3"> Dialing
+                </label>
+                <label class="btn btn-default btn-lg" ng-click="GetOngoinCampignList('PAUSE')">
+                    <input type="radio" name="options" id="option4" > Paused
+                </label>
+                <label class="btn btn-default btn-lg" ng-click="GetOngoinCampignList('STOP')">
+                    <input type="radio" name="options" id="option5" > Stopped
+                </label>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="row">
+        <div class="col-md-12 col-sm-12 col-xs-12">
+            <div class="x_panel tile ">
+                <div class="x_content" id="campaignsMonitor">
+                    <div class="v_data_loader"  id="v_data_load" ></div>
+                    <!--<div id="v_data_grd"  ui-grid="gridQOptions"  ui-grid-move-columns ui-grid-resize-columns  ui-grid-auto-resize ui-grid-pinning></div>-->
+                    <div ui-grid="gridQOptions"  ui-grid-move-columns ui-grid-resize-columns  ui-grid-auto-resize ui-grid-selection  ui-grid-pinning ng-style="{ 'height': height_px }"></div>
+                    <div class="col-md-2 col-sm-2 col-xs-12  form-group has-feedback" ng-show="selected_campaigns.length">
+                        <button type="button"
+                                class="btn btn-green btn-block"
+                                ng-click="set_selected_campaign();">
+                            ok
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</div>

@@ -1,0 +1,241 @@
+<div class="row">
+    <div class="col-lg-12 col-md-12 col-xs-12">
+        <div class="x_panel">
+            <div class="x_title">
+                <h2>QA Form Submission
+                </h2>
+                <div class="clearfix"></div>
+            </div>
+
+            <div class="videogular-container audio">
+                <videogular vg-auto-play="true" vg-player-ready="onPlayerReady($API)">
+                    <vg-media vg-src="config.sources"
+                              vg-tracks="config.tracks"
+                              vg-native-controls="true" vg-type="audio">
+                    </vg-media>
+                </videogular>
+            </div>
+
+
+            <fieldset class="col-md-12 col-sm-12 col-xs-12 animated fadeIn">
+                <div class="row">
+                    <div class="x_panel">
+
+                        <div>Filter Conditions</div>
+                        <br>
+
+                        <div class="clearfix"></div>
+
+                        <div class="col-md-2 col-sm-2 col-xs-12">
+                            <label>User</label>
+
+                            <input type="text" class="form-control" ng-model="agentSelected" data-min-length="1" data-html="1"
+                                   data-limit="1000" data-auto-select="true" data-animation="am-flip-x"
+                                   bs-options="user as user.username for user in userList"
+                                   placeholder="Agent" bs-typeahead>
+
+                            <!--<select name="datatable-responsive_length" class="select2_single form-control"
+                                    aria-hidden="true"
+                                    ng-options="user as user.username for user in userList track by user._id"
+                                    ng-model="agentSelected" ng-change="getScore(agentSelected)">
+                            </select>-->
+                        </div>
+
+
+                        <div class="col-md-2 col-sm-2 col-xs-12">
+                            <label>Start Date</label>
+                            <input type="text" class="form-control" ng-model="startDate" name="startDate" datepicker>
+                        </div>
+
+                        <div class="col-md-2 col-sm-2 col-xs-12">
+                            <label>End Date</label>
+                            <input type="text" class="form-control" ng-model="endDate" name="endDate" datepicker>
+                        </div>
+
+                        <div class="col-md-2 col-sm-2 col-xs-2">
+                            <label>Direction</label>
+                            <select name="directionFilter" ng-model="directionFilter"
+                                    aria-controls="datatable-responsive" class="form-control">
+                                <option value="">ANY</option>
+                                <option value="inbound">INBOUND</option>
+                                <option value="outbound">OUTBOUND</option>
+                            </select>
+                        </div>
+
+                        <div class="col-md-2 col-sm-2 col-xs-12">
+                            <label>Engagement Type</label>
+                            <select name="datatable-responsive_length" ng-model="engType"
+                                    aria-controls="datatable-responsive" class="form-control">
+                                <option value="CALL">Call</option>
+                            </select>
+                        </div>
+
+                        <div class="col-md-2 col-sm-2 col-xs-2">
+                            <label>Question Paper</label>
+                            <select name="questionPaperSelect" class="select2_single form-control" aria-hidden="true"
+                                    ng-options="paper as paper.name for paper in papers track by paper._id"
+                                    ng-model="paperSelected">
+                            </select>
+                        </div>
+
+                        <div class="clearfix"></div>
+
+                        <div class="col-md-2 col-sm-2 col-xs-2">
+                            <div class="x_content btn-wrap-header">
+                                <!--<button ng-if="!showCancel" ng-disabled="!paperSelected || !engType || !agentSelected"
+                                        type="button" class="btn btn-success" ng-click="getRecords()">
+                                    Search
+                                </button>-->
+                                <button ng-if="!showCancel"
+                                        type="button" class="btn btn-success" ng-click="getRecords()">
+                                    Search
+                                </button>
+                                <button ng-if="showCancel" type="button" class="btn btn-success"
+                                        ng-click="goBackToRecords()">
+                                    Back
+                                </button>
+                            </div>
+                        </div>
+                        <!--<div class="col-md-2 col-sm-2 col-xs-2" ng-if="agentSelected">-->
+                            <!--<label style="position: relative; top: 20px;">Rating of user-->
+                                <!--{{agentSelected.username}}</label>-->
+                        <!--</div>-->
+
+                        <!--<div class="col-md-6 col-sm-6 col-xs-6" ng-if="agentSelected">-->
+                            <!--<span style="position: relative; top: 20px;" uib-rating ng-model="averagePoint" max="10"-->
+                                  <!--read-only="true" aria-labelledby="default-rating"></span>-->
+                        <!--</div>-->
+
+                    </div>
+                </div>
+            </fieldset>
+
+            <div class="search-main-wrap" ng-if="isTableLoading===0">
+                <div class="row ">
+                    <div class="col-md-12 col-sm-12 col-xs-12">
+                        <div class="data-state-wrap">
+                            Please Wait...
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="row" ng-show="isTableLoading===1">
+                <div class="col-md-12 col-sm-12 col-xs-12">
+                    <div class="x_panel">
+                        <div class="x_content">
+                            <div id="datatable-responsive_wrapper"
+                                 class="dataTables_wrapper form-inline dt-bootstrap no-footer">
+                                <div class="row">
+                                    <div class="col-md-12 col-sm-12 col-xs-12">
+
+                                        <div class="table-wrapper"
+                                             ng-slimscroll horizontal-scroll="true"
+                                             height="100%"
+                                             horizontal-scroll-position="bottom"
+                                             size="5px" opacity="0.4">
+                                            <table id="datatable-responsive" dt-options="dtOptions" datatable="ng"
+                                                   class="table table-striped table-bordered dt-responsive nowrap dataTable no-footer dtr-inline"
+                                                   cellspacing="0" role="grid"
+                                                   aria-describedby="datatable-responsive_info">
+                                                <thead>
+                                                <tr role="row">
+                                                    <th class="sorting" tabindex="0"
+                                                        aria-controls="datatable-responsive"
+                                                        rowspan="1"
+                                                        colspan="1" aria-label="Call Direction">Call Direction
+                                                    </th>
+                                                    <th class="sorting" tabindex="0"
+                                                        aria-controls="datatable-responsive"
+                                                        rowspan="1"
+                                                        colspan="1" aria-label="From">From
+                                                    </th>
+                                                    <th class="sorting" tabindex="0"
+                                                        aria-controls="datatable-responsive"
+                                                        rowspan="1"
+                                                        colspan="1" aria-label="To">To
+                                                    </th>
+                                                    <th class="sorting" tabindex="0"
+                                                        aria-controls="datatable-responsive"
+                                                        rowspan="1"
+                                                        colspan="1" aria-label="ReceivedBy">ReceivedBy
+                                                    </th>
+                                                    <th class="sorting" tabindex="0"
+                                                        aria-controls="datatable-responsive"
+                                                        rowspan="1"
+                                                        colspan="1" aria-label="Call Time">Call Time
+                                                    </th>
+                                                    <th class="sorting" tabindex="0"
+                                                        aria-controls="datatable-responsive"
+                                                        rowspan="1"
+                                                        colspan="1" aria-label="Bill Duration">Bill Duration
+                                                    </th>
+                                                    <th class="sorting" tabindex="0"
+                                                        aria-controls="datatable-responsive"
+                                                        rowspan="1"
+                                                        colspan="1" aria-label="Answer Duration">Answer Duration
+                                                    </th>
+
+                                                    <th class="sorting" tabindex="0"
+                                                        aria-controls="datatable-responsive"
+                                                        rowspan="1"
+                                                        colspan="1" aria-label="Hold Duration">Hold Duration
+                                                    </th>
+
+                                                    <th class="sorting" tabindex="0"
+                                                        aria-controls="datatable-responsive"
+                                                        rowspan="1"
+                                                        colspan="1" aria-label="Evaluate">Evaluate
+                                                    </th>
+                                                </thead>
+                                                <tbody>
+                                                <tr role="row" class="odd"
+                                                    ng-repeat="cdr in cdrList">
+                                                    <td>{{cdr.DVPCallDirection}}</td>
+                                                    <td>{{cdr.SipFromUser}}</td>
+                                                    <td>{{cdr.SipToUser}}</td>
+                                                    <td>{{cdr.RecievedBy}}</td>
+                                                    <td>{{moment(cdr.CreatedTime).local().format("YYYY-MM-DD
+                                                        HH:mm:ss")}}
+                                                    </td>
+                                                    <td>{{cdr.BillSec}}</td>
+                                                    <td>{{cdr.AnswerSec}}</td>
+                                                    <td>{{cdr.HoldSec}}</td>
+                                                    <td>
+                            <span>
+
+                                <a href="">
+                                    <i class="fa fa-play"
+                                       ng-click="playStopFile(cdr.RecordingUuid)"></i>
+                                </a>
+
+                                <button ng-click="openQuestionPaper(cdr.Uuid)">Evaluate</button>
+                                <button ng-click="deleteRecord(cdr)">Skip</button>
+
+                            </span>
+
+                                                    </td>
+                                                </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-12 col-sm-12 col-xs-12" ng-show="isTableLoading===3">
+                <form name="customForm" sf-schema="schema" sf-form="form" sf-model="model"
+                      ng-submit="onSubmit(customForm)"></form>
+            </div>
+
+
+        </div>
+    </div>
+</div>

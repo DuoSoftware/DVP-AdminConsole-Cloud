@@ -1,0 +1,411 @@
+<div class="col-md-12 col-sm-12 col-xs-12">
+    <div class="x_panel main-title">
+        <div class="x_title clearfix">
+            <h2>Credit</h2>
+            <ul class="nav navbar-right panel_toolbox" ng-show="wallet.WalletId===-1">
+                <button class="btn btn-success -mouse-pointer" stripe-payment="config"
+                        new-card="true">Create Wallet
+                </button>
+            </ul>
+            <h2 style="color: #ee407d;float:  right;margin-right: 20px;"><span style="font-size: 18px">Balance :</span>  ${{wallet.Credit}}</h2>
+        </div>
+    </div>
+
+
+    <div ng-show="wallet.WalletId!=-1">
+        <div class="x_panel" style="padding-bottom: 55px;">
+            <div class="x_title">
+                <h2>BUY CREDIT</h2>
+                <div class="clearfix"></div>
+            </div>
+            <div class="col-md-6 col-lg-offset-3">
+                <div class="form-group" ng-hide="isBuyCredit">
+                    <div class="form-group text-center" style="margin-top: 30px;">
+                        <div class="col-md-10">
+                            <input type="number" min="1"
+                                   class="form-control has-feedback-left"
+                                   name="Amount"
+                                   ng-model="Amount"
+                                   placeholder="Amount [$]">
+                        </div>
+                        <div class="col-md-2">
+                            <button href="javascript:void(0);"
+                                    ng-click="buyCredit(Amount)"
+                                    class="btn btn-success btn-block "
+                                    role="button">Buy
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+        <div class="x_panel" ng-show="true" class="bs-example" data-example-id="simple-jumbotron"
+             ng-hide="wallet.WalletId===-1">
+            <div class="x_title">
+                <h2>Configure Auto Recharge</h2>
+
+                <div class="clearfix"></div>
+            </div>
+            <div class="x_content">
+                <div class="row">
+                    <div class="col-lg-12">
+
+
+                        <div class="bs-example" data-example-id="simple-jumbotron"
+                             ng-hide="wallet.WalletId===-1">
+                            <div class="">
+                                <form class="form-horizontal form-label-left input_mask">
+                                    <!--<p>Buy Credit.</p>
+
+                                    <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
+                                        <input type="number" min="1" class="form-control has-feedback-left" name="Amount" ng-model="Amount"
+                                               placeholder="Amount [$]">
+                                        <span class="fa fa-user form-control-feedback left" aria-hidden="true"></span>
+                                    </div>
+
+                                    <a href="javascript:void(0);"
+                                       ng-click="buyCredit(Amount)"
+                                       class="btn btn-success " role="button">Buy
+                                    </a>-->
+
+                                    <div ng-show="isBuyCredit">
+                                        <div class="row ">
+                                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                                <div class="data-state-wrap">
+                                                    Processing...
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <p>We'll Only charge your payment method when your balance falls below the amount you set.</p>
+
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <form id="demo-form2" data-parsley-validate
+                                                  class="form-horizontal ">
+
+                                                <div class="form-group">
+                                                    <label class="control-label col-md-4 text-left"
+                                                           for="ThresholdValue">If The Balance Falls
+                                                        Below <span
+                                                                class="required">$ *</span>
+                                                    </label>
+                                                    <div class="col-md-8">
+                                                        <input ng-disabled="!wallet.AutoRecharge"
+                                                               type="number" id="ThresholdValue" min="0"
+                                                               ng-pattern="/^[0-9]+(\.[0-9]{1,2})?$/"
+                                                               step="5"
+                                                               required="required"
+                                                               ng-model="wallet.ThresholdValue"
+                                                               class="form-control col-md-7 col-xs-12">
+
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="control-label col-md-4"
+                                                           for="AutoRechargeAmount">Recharge The Balance To <span
+                                                            class="required">$ *</span>
+                                                    </label>
+                                                    <div class="col-md-8">
+                                                        <input type="number"
+                                                               ng-disabled="!wallet.AutoRecharge"
+                                                               id="AutoRechargeAmount" min="0"
+                                                               ng-pattern="/^[0-9]+(\.[0-9]{1,2})?$/"
+                                                               step="5"
+                                                               name="AutoRechargeAmount" required="required"
+                                                               ng-model="wallet.AutoRechargeAmount"
+                                                               class="form-control col-md-7 col-xs-12">
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="middle-name"
+                                                           class="control-label col-md-4">Payment
+                                                        Method</label>
+                                                    <div class="col-md-8">
+                                                        <input id="middle-name"
+                                                               class="form-control col-md-7 col-xs-12"
+                                                               type="text" value="Credit Card." readonly>
+                                                    </div>
+                                                </div>
+                                                <!--<p>
+                                                    M:
+                                                    <input type="radio" class="flat" name="gender" id="genderM" value="M" checked="" required /> F:
+                                                    <input type="radio" class="flat" name="gender" id="genderF" value="F" />
+                                                </p>-->
+
+                                                <div class="form-group">
+                                                    <label class="control-label col-md-4">Auto
+                                                        Recharge</label>
+                                                    <div class="col-md-8">
+                                                        <div class="radio">
+                                                            <label>
+                                                                <input type="radio" class="flat"
+                                                                       name="gender"
+                                                                       id="Enabled"
+                                                                       ng-model="wallet.AutoRecharge"
+                                                                       ng-value="true" checked="" required/>
+                                                                Enabled
+                                                            </label>
+                                                        </div>
+                                                        <div class="radio">
+                                                            <label>
+                                                                <input type="radio" class="flat"
+                                                                       name="gender"
+                                                                       id="Disabled"
+                                                                       ng-model="wallet.AutoRecharge"
+                                                                       ng-value="false"/>
+                                                                Disabled
+                                                            </label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+
+                                                <!--<div class="form-group">
+                                                    <label class="control-label col-md-3 col-sm-3 col-xs-12">Date Of Birth <span class="required">*</span>
+                                                    </label>
+                                                    <div class="col-md-6 col-sm-6 col-xs-12">
+                                                        <input id="birthday" class="date-picker form-control col-md-7 col-xs-12" required="required" type="text">
+                                                    </div>
+                                                </div>-->
+
+
+                                            </form>
+                                        </div>
+
+                                    </div>
+
+                                </div>
+                                <div class="row">
+                                    <div class="text-muted well well-sm no-shadow clearfix">
+                                        <div class="col-lg-12 text-center">
+                                            <p style="font-size: 15px;text-align: center;margin: 0;color: #000">Your current balance is
+                                                <b>${{wallet.Credit}}</b>
+                                            you will be charged
+                                                <b>${{rechargTo}}</b>
+                                            when you save to reach
+                                            <b>${{wallet.AutoRechargeAmount}}</b></p>
+                                        </div>
+                                        <div>
+                                            <button class="btn btn-success"
+                                                    ng-click="UpdateWallet(wallet);" style="width: 100px">
+                                                Save
+                                            </button>
+                                        </div>
+                                    </div>
+
+
+                                </form>
+                            </div>
+                        </div>
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="x_panel">
+            <div class="x_title">
+                <h2>Card List</h2>
+                <ul class="nav navbar-right panel_toolbox" ng-hide="wallet.WalletId===-1">
+                    <button class="btn btn-success -mouse-pointer" stripe-payment="config" new-card="false"
+                            wallet-id="wallet.WalletId">Add Card
+                    </button>
+                </ul>
+                <div class="clearfix"></div>
+            </div>
+            <div class="x_content">
+                <div class="row">
+                    <div ng-repeat="card in cardList track by $index">
+                        <!-- select default  card -->
+                        <div class="col-md-55" ng-hide="isLoading">
+                            <div class="thumbnail">
+
+                                <div class="image view view-first" style="border: #004444;margin: 0 auto;" width="150px">
+                                    <img style="width: 100%; display: block;" src="images/4.jpg" alt="image"
+                                         ng-src="{{(card.brand==='Visa')?'assets/images/credit_card/visa.png':((card.brand==='Mastercard')?'assets/images/credit_card/master_card.png':((card.brand==='American Express')?'assets/images/credit_card/amex.png':((card.brand==='JCB')?'assets/images/credit_card/jcb.png':((card.brand==='Discover')?'assets/images/credit_card/discover.png':((card.brand==='Diners Club')?'assets/images/credit_card/diners_club.png':('assets/images/credit_card/unknown.png'))))))}}"/>
+
+                                    <div class="mask">
+                                        <p> ****-****-****-{{card.last4}} </p>
+
+                                        <div class="tools tools-bottom">
+                                            <a href="javascript:void(0);"><i class="fa fa-check-square-o"
+                                                                             ng-click="setDefaultCard(card)"
+                                                                             title="Set To Default"></i></a>
+                                            <a href="javascript:void(0);"><i class="fa fa-times"
+                                                                             ng-click="RemoveCord(card)" title="Delete"></i></a>
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="caption">
+                                    <div class="default-card" ng-if="$index==0">
+                                        <div class="selected-group">
+                                            <i class="ti-check"></i>
+                                        </div>
+                                    </div>
+                                    <p>Name : {{card.name}}</p>
+
+                                    <p>{{card.brand}}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--<div ng-repeat-end ng-if="!$first">-->
+                    <!--<div class="col-md-55" ng-hide="isLoading">-->
+                    <!--<div class="thumbnail">-->
+                    <!--<div class="image view view-first">-->
+                    <!--<img style="width: 100%; display: block; margin: 0 auto;"-->
+                    <!--src="images/4.jpg" alt="image"-->
+                    <!--width="150px"-->
+                    <!--ng-src="{{(card.brand==='Visa')?'assets/images/credit_card/visa.png':((card.brand==='Mastercard')?'assets/images/credit_card/master_card.png':((card.brand==='American Express')?'assets/images/credit_card/amex.png':((card.brand==='JCB')?'assets/images/credit_card/jcb.png':((card.brand==='Discover')?'assets/images/credit_card/discover.png':((card.brand==='Diners Club')?'assets/images/credit_card/diners_club.png':('assets/images/credit_card/unknown.png'))))))}}"/>-->
+
+                    <!--<div class="mask">-->
+                    <!--<p> ****-****-****-{{card.last4}} </p>-->
+
+                    <!--<div class="tools tools-bottom">-->
+                    <!--<a href="javascript:void(0);"><i class="fa fa-check-square-o"-->
+                    <!--ng-click="setDefaultCard(card)"-->
+                    <!--title="Set To Default"></i></a>-->
+                    <!--<a href="javascript:void(0);"><i class="fa fa-times"-->
+                    <!--ng-click="RemoveCord(card)" title="Delete"></i></a>-->
+
+                    <!--</div>-->
+                    <!--</div>-->
+                    <!--</div>-->
+                    <!--<div class="caption">-->
+                    <!--<p>Name : {{card.name}}</p>-->
+
+                    <!--<p>{{card.brand}}</p>-->
+                    <!--</div>-->
+                    <!--</div>-->
+                    <!--</div>-->
+                    <!--</div>-->
+
+                    <!--<div class="col-md-55" ng-repeat="card in cardList" ng-hide="isLoading">
+                        <div class="thumbnail">
+                            <div class="image view view-first">
+                                <img style="width: 100%; display: block;" src="images/4.jpg" alt="image"
+                                     ng-src="{{(card.brand==='Visa')?'assets/images/credit_card/visa.png':((card.brand==='Mastercard')?'assets/images/credit_card/master_card.png':((card.brand==='American Express')?'assets/images/credit_card/amex.png':((card.brand==='JCB')?'assets/images/credit_card/jcb.png':((card.brand==='Discover')?'assets/images/credit_card/discover.png':((card.brand==='Diners Club')?'assets/images/credit_card/diners_club.png':('assets/images/credit_card/unknown.png'))))))}}"/>
+
+                                <div class="mask">
+                                    <p> ****-****-****-{{card.last4}} </p>
+
+                                    <div class="tools tools-bottom">
+                                        <a href="javascript:void(0);"><i class="fa fa-check-square-o"
+                                                                         ng-click="setDefaultCard(card)" title="Set To Default"></i></a>
+                                        <a href="javascript:void(0);"><i class="fa fa-times"
+                                                                         ng-click="RemoveCord(card)" title="Delete"></i></a>
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="caption">
+                                <p>Name : {{card.name}}</p>
+
+                                <p>{{card.brand}}</p>
+                            </div>
+                        </div>
+                    </div>-->
+
+                    <div ng-show="isLoading">
+                        <div class="row ">
+                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                <div class="data-state-wrap">
+                                    Please Wait...
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+</div>
+
+<!--<div class="x_content pricing_wrapper">
+    <img src="assets/images/bg_10444x10003.jpg" id="bg" alt="">
+    &lt;!&ndash; price element &ndash;&gt;
+
+    <div>
+        <div class="col-md-12 col-sm-12 col-xs-12">
+            <div class="row">
+                <div class="col-md-12 col-sm-12 col-xs-12 price-table-wrapper">
+                    <div class="pricing">
+                        <div class="x_content">
+
+                            <div class="pricing_footer">
+                                &lt;!&ndash;<a class="btn btn-success " role="button" stripe-payment="config">Buy
+                                    <span> now!</span></a>&ndash;&gt;
+                                <button class="btn btn-success -mouse-pointer" stripe-payment="config" new-card="true">Create Wallet</button>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12 col-sm-12 col-xs-12 price-table-wrapper animated zoomIn">
+                    <div class="pricing">
+                        <div class="title">
+                            <h2>Buy Credit</h2>
+
+                            <h1>{{wallet.Credit/100}} $</h1>
+                        </div>
+                        <div class="x_content">
+                            <div class="">
+                                <div class="pricing_features">
+                                    <div class="validation-area">
+
+                                        <label class="inline-block dark-frm-label">Amount [$]</label>
+                                        <input type="number" min="50" name="Amount" ng-model="Amount"
+                                               class="form-control login-controller dark-frm-input "
+                                               required/>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="pricing_footer">
+                                <a href="javascript:void(0);"
+                                   ng-click="buyCredit(Amount)"
+                                   class="btn btn-success " role="button">Buy
+                                   </a>
+                            </div>
+
+                            &lt;!&ndash;<div class="pricing_footer">
+                                &lt;!&ndash;<a class="btn btn-success " role="button" stripe-payment="config">Buy
+                                    <span> now!</span></a>&ndash;&gt;
+
+                                <button class="btn btn-success -mouse-pointer" stripe-payment="config">New Card</button>
+                            </div>&ndash;&gt;
+
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 col-sm-6 col-xs-12 price-table-wrapper ">
+                    <div class="pricing">
+                        <div class="title">
+                            <button class="btn btn-success -mouse-pointer" stripe-payment="config" new-card="false" wallet-id="wallet.WalletId">Add Card</button>
+                        </div>
+                    </div>
+                </div>
+                <div ng-repeat="card in cardList"
+                     class="col-md-4 col-sm-6 col-xs-12 price-table-wrapper animated zoomIn">
+                    <div class="pricing">
+                        <div class="title">
+                            <h2>{{card.id}}</h2>
+
+                            <h1>{{card.name}}</h1>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>-->
+

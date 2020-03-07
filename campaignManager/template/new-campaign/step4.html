@@ -1,0 +1,235 @@
+<section class="cam-create-wrapper">
+
+    <div id="uploadLoaindWizard"
+         class="upload-campaign-status display-none">
+        <div class="upload-status">
+            <h5>Upload inprogress, do not refresh the browser or navigate to another window.</h5>
+
+        </div>
+    </div>
+
+    <div class="camp-inline-header">
+        <div class="right-wizard-header inline-header">
+            <h5>Campaign Number Upload</h5>
+        </div>
+
+    </div>
+
+
+    <div class="cam-create-form">
+        <form>
+            <div class="col-lg-4">
+                <div id="frmNumberCatergory"
+                     class="form-group cam-form-grp">
+                    <label for="exampleInputEmail1" class="cam-label"> Select Category *
+                        <a ng-show="!isCreateNewCategory"
+                           href="javascript:void(0)"
+                           ng-click="createNewCategory()">[Create New] </a>
+                    </label>
+                    <select ng-show="!isCreateNewCategory" class="form-control cam-textbox "
+                            ng-model="campaignNumberObj.CategoryID"
+                            required>
+                        <!--<option value="" class="disable-opt" disabled selected>Ex : Promotion 30</option>-->
+                        <option value="" class="disable-opt" disabled selected></option>
+                        <option ng-repeat="camCategory in campaignCategories"
+                                value="{{camCategory.CategoryID}}">
+                            {{camCategory.CategoryName}}
+                        </option>
+                    </select>
+
+                    <!-- create new category wrapper -->
+                    <div ng-show="isCreateNewCategory"
+                         class="create-new-ca-wrapper ">
+                        <div class="input-group bg-input-group">
+                            <input ng-model="campaignNumberObj.CategoryID"
+                                   type="text"
+                                   class="form-control"
+                                   required
+                                   aria-label="...">
+                            <div class="input-group-btn bg-input-group">
+                                <button ng-show="!isSavingCategory" type="button"
+                                        ng-disabled="!campaignNumberObj.CategoryID"
+                                        ng-click="createCampaignCategories()"
+                                        class="btn btn-default"><span
+                                        class="fa fa-save"></span></button>
+                                <button ng-show="!isSavingCategory" type="button"
+                                        class="btn btn-default"
+                                        ng-click="closeCategory()"
+                                        aria-label="close"><span
+                                        class="fa fa-close"></span></button>
+
+                                <button ng-show="isSavingCategory"
+                                        type="button"
+                                        class="btn btn-default"
+                                        ng-click="closeCategory()"
+                                        aria-label="close"><span
+                                        class="fa fa-circle-o-notch fa-spin"></span></button>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <div ng-show="!isCreateNewCategory" class="form-group cam-form-grp">
+                    <label for="exampleInputEmail1" class="cam-label">Campaign Name</label>
+
+                    <input type="text"
+                           class="form-control input-group cam-textbox"
+                           ng-model="campaign.CampaignName" disabled>
+                    <!--<select class="form-control cam-textbox"-->
+                    <!--ng-model="campaignNumberObj.CampaignId"-->
+                    <!--ng-change="loadCampaignSchedules(campaignNumberObj.CampaignId)"-->
+                    <!--ng-model-options="{trackBy: '$value'}">-->
+                    <!--<option value="" disabled selected>Select Campaign</option>-->
+                    <!--<option value=""></option>-->
+                    <!--<option ng-repeat="newCampaign in newlyCreatedCampaigns"-->
+                    <!--value="{{newCampaign.CampaignId}}">-->
+                    <!--{{newCampaign.CampaignName.toUpperCase()}}-->
+                    <!--</option>-->
+                    <!--</select>-->
+                </div>
+            </div>
+
+            <div class="col-lg-4">
+                <div ng-show="!isCreateNewCategory"
+                     id="frmScheduleId" class="form-group cam-form-grp">
+                    <label for="exampleInputEmail1" class="cam-label">Select Campaign
+                        Schedule</label>
+                    <select class="form-control cam-textbox"
+                            ng-model="campaignNumberObj.CamScheduleId"
+                            ng-model-options="{trackBy: '$value'}"
+                            ng-change="onChangeSchedule()">
+                        <!--<option class="disable-opt" value="" disabled selected>Select Campaign Schedule</option>-->
+                        <option class="disable-opt" value="" disabled selected></option>
+                        <option ng-repeat="schedule in addedSchedule"
+                                value="{{schedule.camSchedule.CamScheduleId}}">
+                            {{schedule.ScheduleName}}
+                        </option>
+                    </select>
+                </div>
+
+            </div>
+
+        </form>
+    </div>
+
+    <div class="col-lg-12 col-xs-12">
+
+        <div class="camp-tab-config" ng-show="!isCreateNewCategory"
+             style="height: 215px;/* background: transparent; */">
+            <uib-tabset class="camp-tab"
+                        active="active">
+
+                <uib-tab index="1"
+                         heading="Load From Customer Profile ">
+                    <div ng-include="'campaignManager/template/new-campaign/step4-config/number-upload-customer-profile.html'"></div>
+                </uib-tab>
+                <uib-tab index="2"
+                         disable="!isExtranalDataSheet"
+                         ng-click="getInputFileValue()"
+                         heading="Extranal Data Sheet">
+                    <div class="camp-num-upload-wrapper number-upload-sheet">
+                        <div class="customer-lag-text inline-u-wrp">
+                            <small style="font-size: 13px;">Select extra file</small>
+                            <small ng-show="!uploadButtonValue"
+                                   ng-click="reset()"
+                                   class="clear">Clear All
+                            </small>
+                        </div>
+
+                        <div class="customer-tag-wrapper" style="padding-top: 20px;">
+                            <div class="col-md-8 col-sm-12 col-xs-12 ">
+                                <input accept=".csv" type="file"
+                                       custom-on-change="uploadFile"
+                                       class="file-chooser"
+                                       id="files123"
+                                       name="files[]"/>
+                            </div>
+                        </div>
+
+                    </div>
+                </uib-tab>
+
+
+            </uib-tabset>
+        </div>
+    </div>
+
+    <div ng-show="!isCreateNewCategory" class="camp-num-option">
+        <div class="col-lg-3">
+            <div id="frmNumberColumn"
+                 class="form-group cam-form-grp">
+                <label for="exampleInputEmail1" class="cam-label">Select Number Column
+                    {{gridOptions3.data.length}}
+                </label>
+                <select class="form-control cam-textbox" ng-change="loadNumbers()"
+                        ng-model="selectObj.name"
+                        ng-model-options="{trackBy: '$value'}">
+                    <!--<option class="disable-opt" value="" disabled selected>Ex : Mobile No-->
+                    <option class="disable-opt" value="" disabled selected>
+                    </option>
+                    <option ng-repeat="hData in headerData"
+                            value="{{hData.name}}">
+                        {{hData.name}}
+                    </option>
+                </select>
+            </div>
+        </div>
+
+        <div class="col-lg-5 animated fadeIn"
+             ng-if="selectObj.name">
+            <div class="col-lg-9">
+                <label for="exampleInputEmail1" class="cam-label">Add Digit</label>
+                <input type="text"
+
+                       class="form-control  cam-textbox"
+                       ng-model="leftAddValue.value"
+                       placeholder="Ex : +94 -- -----">
+            </div>
+            <div class="col-lg-3">
+                <button type="button"
+                        ng-if="leftAddValue.value"
+                        class="btn btn-block btn-add-digit"
+                        style="margin-top: 23px;"
+                        ng-click="numberLeftAdd()">
+                    Add
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-12 col-xs-12" ng-show="!isCreateNewCategory && campaign.DialoutMechanism=='PREVIEW'">
+        <div id="previewDataColumn"
+             class="preview-data-wrapper">
+            <label for="exampleInputEmail1" class="cam-label">Select Preview Data Columns *
+            </label>
+            <tags-input ng-model="previewData"
+
+                        display-property="name"
+                        add-from-autocomplete-only="true"
+                        on-tag-added="onChipAddForColumn($tag)"
+                        on-tag-removed="onChipDeleteForColumn($tag)" min-length="1"
+                        placeholder="Select Preview Data Columns" replace-spaces-with-dashes="false">
+                <auto-complete source="querySearchForColumn($query)"
+                               load-on-empty="true"
+                               load-on-focus="true"
+                               min-length="1"></auto-complete>
+            </tags-input>
+        </div>
+    </div>
+    <div ng-show="validation_numbers" class="col-md-12 col-sm-12 col-xs-12">
+        <div class="data-state-wrap color-red-500" >
+            Validating Numbers ...
+        </div>
+
+    </div>
+
+    <div ng-show="!isCreateNewCategory"
+         class="col-lg-12 col-xs-12">
+        <div ng-if="!refreshGrid" ui-grid="gridOptions" ui-grid-importer class="grid"></div>
+        <div>
+            <label>rows: {{gridApi.grid.getVisibleRows().length}}</label>
+        </div>
+    </div>
+</section>

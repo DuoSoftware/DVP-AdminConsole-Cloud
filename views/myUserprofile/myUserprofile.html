@@ -1,0 +1,466 @@
+<div class="row" ng-controller="myUserProfileCtrl">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <div class="x_panel p-0" style="top: 100px">
+            <!--<div class="profile-header">-->
+
+                <!--<div class="cover-image">-->
+                    <!--<img src="assets/images/profile-background/wallhaven-391750.jpg"/>-->
+                <!--</div>-->
+            <!--</div>-->
+
+            <div class="profile-content">
+                <div class="col-md-3 col-sm-3 col-xs-12 ">
+                    <div class="profile_left text-center">
+                        <div class="profile_img">
+                            <!-- end of image cropping -->
+                            <div id="crop-avatar" style="width: 230px;height: 230px;background: #fff;border-radius: 50%">
+                                <!-- Current avatar -->
+                                <img class="img-responsive avatar-view"
+                                     style='height: 100%; width: 100%; object-fit: contain'
+                                     src="{{CurrentProfile.avatar}}" alt="Avatar"
+                                     title="Change the avatar">
+
+                                <!-- Cropping modal -->
+                                <div class="modal fade" id="avatar-modal" aria-hidden="true"
+                                     aria-labelledby="avatar-modal-label" role="dialog" tabindex="-1">
+                                    <div class="modal-dialog modal-lg">
+                                        <div class="modal-content">
+                                            <form class="avatar-form" action="crop.php" enctype="multipart/form-data"
+                                                  method="post">
+                                                <div class="modal-header">
+                                                    <button class="close" data-dismiss="modal"
+                                                            type="button">&times;</button>
+                                                    <h4 class="modal-title" id="avatar-modal-label">Change Avatar</h4>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <div class="avatar-body">
+
+                                                        <!-- Upload image and data -->
+                                                        <div class="avatar-upload">
+                                                            <input class="avatar-src" name="avatar_src" type="hidden">
+                                                            <input class="avatar-data" name="avatar_data" type="hidden">
+                                                            <label for="avatarInput">Local upload</label>
+                                                            <input class="avatar-input" id="avatarInput"
+                                                                   name="avatar_file"
+                                                                   type="file">
+                                                        </div>
+
+                                                        <!-- Crop and preview -->
+                                                        <div class="row">
+                                                            <div class="col-md-9">
+                                                                <div class="avatar-wrapper"></div>
+                                                            </div>
+                                                            <div class="col-md-3">
+                                                                <div class="avatar-preview preview-lg"></div>
+                                                                <div class="avatar-preview preview-md"></div>
+                                                                <div class="avatar-preview preview-sm"></div>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="row avatar-btns">
+                                                            <div class="col-md-9">
+                                                                <div class="btn-group">
+                                                                    <button class="btn btn-primary" data-method="rotate"
+                                                                            data-option="-90" type="button"
+                                                                            title="Rotate -90 degrees">Rotate Left
+                                                                    </button>
+                                                                    <button class="btn btn-primary" data-method="rotate"
+                                                                            data-option="-15" type="button">-15deg
+                                                                    </button>
+                                                                    <button class="btn btn-primary" data-method="rotate"
+                                                                            data-option="-30" type="button">-30deg
+                                                                    </button>
+                                                                    <button class="btn btn-primary" data-method="rotate"
+                                                                            data-option="-45" type="button">-45deg
+                                                                    </button>
+                                                                </div>
+                                                                <div class="btn-group">
+                                                                    <button class="btn btn-primary" data-method="rotate"
+                                                                            data-option="90" type="button"
+                                                                            title="Rotate 90 degrees">Rotate Right
+                                                                    </button>
+                                                                    <button class="btn btn-primary" data-method="rotate"
+                                                                            data-option="15" type="button">15deg
+                                                                    </button>
+                                                                    <button class="btn btn-primary" data-method="rotate"
+                                                                            data-option="30" type="button">30deg
+                                                                    </button>
+                                                                    <button class="btn btn-primary" data-method="rotate"
+                                                                            data-option="45" type="button">45deg
+                                                                    </button>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-3">
+                                                                <button class="btn btn-primary btn-block avatar-save"
+                                                                        type="submit">Done
+                                                                </button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <!-- <div class="modal-footer">
+                                                                  <button class="btn btn-default" data-dismiss="modal" type="button">Close</button>
+                                                                </div> -->
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- /.modal -->
+
+                                <!-- Loading state -->
+                                <div class="loading" aria-label="Loading" role="img" tabindex="-1"></div>
+                            </div>
+                            <!-- end of image cropping -->
+
+                        </div>
+                        <h3>{{displayName}} ({{CurrentProfile.user_meta.role}})</h3>
+                        <ul class="list-unstyled profile-data-list">
+                            <li>{{displayAddress}}
+                            </li>
+                            <li>
+                                <i class="fa fa-envelope user-profile-icon"></i> {{displayEmail}}
+                                <i class="fa fa-check user-profile-icon" ng-if="CurrentProfile.email.verified"></i>
+                            </li>
+                            <li>
+                                <i class="fa fa-phone user-profile-icon"></i> {{displayPhoneNumber}}
+                                <i class="fa fa-check user-profile-icon"
+                                   ng-if="CurrentProfile.phoneNumber.verified"></i>
+                            </li>
+                        </ul>
+                        <a class="btn btn-success text-center" style="margin-top: 15px;" ng-click="editProfilePress()">Edit
+                            Profile</a>
+                    </div>
+                </div>
+                <!-- profile left wrap -->
+                <div class="col-md-9 col-sm-9 col-xs-12" role="tabpanel" data-example-id="togglable-tabs">
+                    <div class="profile_right">
+                        <ul id="myTab" class="nav nav-tabs bar_tabs profile-tab-panel" role="tablist" style="margin-top: 27px;">
+                            <li role="presentation" class="{{infoActive}}">
+                                <a href="" id="home-tab" role="tab" data-toggle="tab" aria-expanded="true"
+                                   ng-click="tabClick('Info')">Info</a>
+                            </li>
+                            <li role="presentation" class="{{contactsActive}}">
+                                <a href="" role="tab" id="profile-tab" data-toggle="tab" aria-expanded="false"
+                                   ng-click="tabClick('Contacts')">Contact List</a>
+                            </li>
+                        </ul>
+                        <div id="myTabContent" class="tab-content">
+                            <div ng-if="CurrentTab==='Contacts'">
+                                <div class="col-md-12 col-sm-12 col-xs-12">
+                                    <div class="x_title clearfix">
+                                        <h2 class="col-md-10 col-sm-10 col-xs-10">Contacts</h2>
+                                        <div class="col-md-2 col-sm-2 col-xs-2 text-right">
+                                            <button type="button" class="btn" ng-class="{'btn-success':NewContactLabel == 'New'}"
+                                                    ng-click="addContactPress()">{{NewContactLabel}}
+                                            </button>
+                                        </div>
+
+                                    </div>
+
+                                </div>
+
+                                <div class="col-md-12 col-sm-12 col-xs-12">
+                                    <br>
+                                    <div ng-if="NewContactOpened" class="col-md-12 col-sm-12 col-xs-12">
+                                        <div class="col-md-4 col-sm-4 col-xs-12 form-group has-feedback">
+                                            <input type="text" class="form-control has-feedback-left"
+                                                   placeholder="Contact"
+                                                   ng-model="newContact.Contact">
+                                            <span class="fa fa-user form-control-feedback left"
+                                                  aria-hidden="true"></span>
+                                        </div>
+                                        <div class="col-md-4 col-sm-4 col-xs-12 form-group has-feedback">
+                                            <select class="select2_single form-control" tabindex="-1" aria-hidden="true"
+                                                    placeholder="Type" name="contactType" ng-model="newContact.Type">
+                                                <option value="voice">Voice</option>
+                                                <option value="email">E-Mail</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-md-4 col-sm-4 col-xs-12 has-feedback">
+                                            <button class="btn btn-success" ng-click="addNewContact()"
+                                                    ng-disabled="!(newContact.Type && newContact.Contact)">Save
+                                            </button>
+                                        </div>
+
+                                    </div>
+                                    <div class="x_content col-md-12 col-sm-12 col-xs-12">
+                                        <ul class="list-unstyled msg_list">
+                                            <div class="mail_list_column sip-user-wrap"
+                                                 ng-mouseover="viewScroll()"
+                                                 ng-mouseleave="hideScroll()"
+                                                 ng-slimscroll
+                                                 height="670" opacity="0.2" distance="0px"
+                                                 enabled="{{ scrollEnabled }}">
+                                                <a href="javascript:void(0);" class="user-wrap"
+                                                   ng-repeat="item in CurrentProfile.contacts">
+                                                    <div class="mail_list user-list">
+                                                        <div class="right">
+                                                            <h3 class="font-robot ">{{item.contact}}
+                                                                <small class="fa fa-trash"
+                                                                       ng-click="removeContact(item.contact)"></small>
+                                                            </h3>
+                                                            <p>
+                                                                <small class="fa fa-envelope"
+                                                                       ng-if="item.type === 'email'"></small>
+                                                                <small class="fa fa-phone"
+                                                                       ng-if="item.type === 'voice'"></small>
+                                                                <small class="fa fa-globe"
+                                                                       ng-if="item.type != 'voice' && item.type != 'email'"></small>
+                                                            </p>
+                                                            <p>
+                                                                <small ng-if="item.verified">Verified</small>
+                                                                <small ng-if="!item.verified">Not Verified</small>
+                                                            </p>
+                                                        </div>
+                                                        <div class="left">
+                                                        </div>
+                                                    </div>
+                                                </a>
+                                            </div>
+                                        </ul>
+                                    </div>
+                                </div>
+
+                            </div>
+
+
+                            <div ng-if="CurrentTab==='Info'">
+                                <!-- address -->
+                                <div class="profile-details-wrap">
+                                    <div class="row">
+                                        <div class="x_title clearfix">
+                                            <h2>Address</h2>
+                                        </div>
+                                        <form class="form-horizontal form-label-left">
+
+                                            <div class="col-md-5 col-sm-5 col-xs-12 form-group has-feedback"
+                                                 style="margin-right: 20px;">
+                                                <label>P.O. Box / Building No</label>
+                                                <input type="text" class="form-control"
+                                                       ng-model="CurrentProfile.address.number">
+                                            </div>
+
+
+                                            <div class="col-md-5 col-sm-5 col-xs-12 form-group has-feedback">
+                                                <label>Street</label>
+                                                <input type="text" class="form-control"
+                                                       ng-model="CurrentProfile.address.street">
+                                            </div>
+
+
+                                            <div class="col-md-5 col-sm-5 col-xs-12 form-group has-feedback"
+                                                 style="margin-right: 20px;">
+                                                <label>City</label>
+                                                <input type="text" class="form-control"
+                                                       ng-model="CurrentProfile.address.city">
+                                            </div>
+
+
+                                            <div class="col-md-5 col-sm-5 col-xs-12 form-group has-feedback">
+                                                <label>Province</label>
+                                                <input type="text" class="form-control"
+                                                       ng-model="CurrentProfile.address.province">
+                                            </div>
+
+
+                                            <div class="col-md-5 col-sm-5 col-xs-12 form-group has-feedback"
+                                                 style="margin-right: 20px;">
+                                                <label>Country</label>
+                                                <!--<input type="text" class="form-control"-->
+                                                       <!--ng-model="CurrentProfile.address.country">-->
+
+                                                <select class="select2_single form-control" tabindex="-1"
+                                                        aria-hidden="true"
+                                                        name="country" ng-model="CurrentProfile.address.country">
+                                                    <option ng-repeat="country in countryList" value="{{country.name}}">
+                                                        {{country.name}}
+                                                    </option>
+                                                </select>
+                                            </div>
+
+                                            <div class="col-md-5 col-sm-5 col-xs-12 form-group has-feedback">
+                                                <label>Zip Code</label>
+                                                <input type="text" class="form-control"
+                                                       ng-model="CurrentProfile.address.zipcode">
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+
+                                <!-- avatar URL -->
+                                <div class="profile-details-wrap">
+                                    <div class="row">
+                                        <div class="x_title clearfix">
+                                            <h2>Avatar URL</h2>
+                                        </div>
+                                        <div class="col-md-10 col-sm-10 col-xs-12 form-group has-feedback">
+                                            <input type="text" class="form-control" ng-model="CurrentProfile.avatar">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- profile information -->
+                                <div class="profile-details-wrap">
+                                    <div class="row">
+                                        <div class="x_title clearfix">
+                                            <h2>Personal Information</h2>
+                                        </div>
+                                        <form class="form-horizontal form-label-left">
+
+                                            <div class="col-md-5 col-sm-5 col-xs-12 form-group has-feedback"
+                                                 style="margin-right: 20px;">
+                                                <label>First Name</label>
+                                                <input type="text" class="form-control"
+                                                       ng-model="CurrentProfile.firstname">
+                                            </div>
+
+                                            <div class="col-md-5 col-sm-5 col-xs-12 form-group has-feedback">
+                                                <label>Last Name</label>
+                                                <input type="text" class="form-control"
+                                                       ng-model="CurrentProfile.lastname">
+                                            </div>
+
+                                            <div class="clearfix"></div>
+
+
+                                            <div class="col-md-5 col-sm-5 col-xs-12 form-group has-feedback"
+                                                 style="margin-right: 20px;">
+                                                <label>Nick Name</label>
+                                                <input type="text" class="form-control" ng-model="CurrentProfile.name">
+                                            </div>
+
+
+                                            <div class="col-md-5 col-sm-5 col-xs-12 form-group has-feedback">
+                                                <label>Locale</label>
+                                                <select class="select2_single form-control" tabindex="-1"
+                                                        aria-hidden="true"
+                                                        name="contactType" ng-model="CurrentProfile.locale">
+                                                    <option ng-repeat="locale in languages" value="{{locale.code}}">
+                                                        {{locale.name}}
+                                                    </option>
+                                                </select>
+                                            </div>
+
+                                            <div class="clearfix"></div>
+
+
+                                            <div class="col-md-12 col-sm-12 col-xs-12 form-group has-feedback">
+                                                <label>Gender</label>
+                                                Male <input type="radio" ng-model="CurrentProfile.gender" class="flat"
+                                                            name="gender"
+                                                            value="male"/>
+                                                Female <input type="radio" ng-model="CurrentProfile.gender" class="flat"
+                                                              name="gender"
+                                                              value="female"/>
+                                            </div>
+
+                                            <div class="clearfix"></div>
+
+                                            <label class="control-label col-md-1 col-sm-1 col-xs-12">Birthday</label>
+                                            <div class="col-md-2 col-sm-1 col-xs-4 form-group has-feedback">
+                                                <select class="select2_single form-control" tabindex="-1"
+                                                        aria-hidden="true"
+                                                        name="bdayDay" ng-model="CurrentProfile.dob.day">
+                                                    <option ng-repeat="day in dayList" value="{{day}}">{{day}}</option>
+                                                </select>
+                                            </div>
+                                            <div class="col-md-3 col-sm-1 col-xs-4 form-group has-feedback">
+                                                <select class="select2_single form-control" tabindex="-1"
+                                                        aria-hidden="true"
+                                                        name="bdayMonth" ng-model="CurrentProfile.dob.month">
+                                                    <option ng-repeat="month in monthList" value="{{month.index}}">
+                                                        {{month.name}}
+                                                    </option>
+                                                </select>
+                                            </div>
+                                            <div class="col-md-3 col-sm-1 col-xs-4 form-group has-feedback">
+                                                <input type="number" class="form-control"
+                                                       ng-model="CurrentProfile.dob.year"
+                                                       name="bdayYear" min="1900" max="{{maxYear}}"/>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+
+                                <!-- contact info -->
+                                <div class="profile-details-wrap">
+                                    <div class="row">
+                                        <div class="x_title clearfix">
+                                            <h2>Contact Information</h2>
+                                        </div>
+
+
+                                        <div class="col-md-5 col-sm-5 col-xs-12 form-group has-feedback"
+                                             style="margin-right: 20px;">
+                                            <label>Email Address</label>
+                                            <input type="text" class="form-control has-feedback-left"
+                                                   ng-model="CurrentProfile.email.contact">
+                                        <span class="fa fa-envelope form-control-feedback left"
+                                              aria-hidden="true"></span>
+                                        </div>
+
+
+                                        <div class="col-md-5 col-sm-5 col-xs-12 form-group has-feedback">
+                                            <label>Phone Number</label>
+                                            <input type="text" class="form-control has-feedback-left"
+                                                   ng-model="CurrentProfile.phoneNumber.contact">
+                                            <span class="fa fa-phone form-control-feedback left"
+                                                  aria-hidden="true"></span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- veery account info -->
+
+                                <div class="profile-details-wrap">
+                                    <div class="row">
+                                        <div class="x_title clearfix">
+                                            <h2>Veery Account Information</h2>
+                                        </div>
+
+
+                                        <div class="col-md-5 col-sm-5 col-xs-12 form-group has-feedback"
+                                             style="margin-right: 20px;">
+                                            <label>Active Account</label>
+                                            <input type="text" class="form-control" ng-model="displayVeeryContact" style="opacity: 1;color: #68318e;
+                                            text-align: center;padding: 5px;border-radius: 10px;
+                                            background-color: rgb(237, 212, 255)"/>
+
+
+                                        </div>
+
+                                        <div class="col-md-5 col-sm-5 col-xs-6 form-group has-feedback">
+                                            <label>Change Account</label>
+                                            <select class="select2_single form-control" tabindex="-1" ng-disabled="!sipUserList || sipUserList.length === 0"
+                                                    aria-hidden="true"
+                                                    id="sipAcc"
+                                                    name="sipAcc" ng-model="selectedSipUser.id"
+                                                    ng-model-options="{trackBy: '$value'}">
+                                                <option ng-repeat="user in sipUserList" value="{{user.id}}">{{user.SipUsername}}
+                                                </option>
+                                            </select>
+                                        </div>
+
+                                    </div>
+                                </div>
+
+
+                                <!-- button wrap -->
+
+                                <div class="col-md-12 col-sm-12 col-xs-12">
+                                    <div class="row">
+                                        <div class="profile-details-btn-wrap">
+                                            <a class="btn btn-primary" ng-click="saveProfile()">
+                                                Save Profile
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

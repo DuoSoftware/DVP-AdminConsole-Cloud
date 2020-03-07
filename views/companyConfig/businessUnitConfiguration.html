@@ -1,0 +1,133 @@
+<div class="row">
+
+    <div class="col-md-12 col-sm-6 col-xs-12">
+
+        <!-- application list -->
+        <div class="x_panel bg-light-gray animated fadeIn">
+            <div class="x_title border-0">
+
+                <div class="custom-type">
+                    <div class="col-md-6 col-sm-6 col-xs-6">
+                        <h2 class="font-robot font-300 text-uppercase font-15">Business Unit Configuration</h2>
+                    </div>
+
+                    <div class="col-xs-12">
+                        <div class="tile-stats m-top15">
+                            <form class="form-horizontal form-label-left input_mask" novalidate name="frmbUnit">
+                                <div class="row">
+                                    <!--<label class="control-label col-md-2 col-sm-6 col-xs-12">Server Type</label>-->
+                                    <div class="col-md-6 col-sm-6 col-xs-12 form-group  ">
+                                        <label >Business Unit Name</label>
+                                        <input type="text" class="form-control "
+                                               ng-model="newBUnit.unitName"
+                                               name="businessUnitName"
+                                               ng-pattern="/^[a-zA-Z0-9-_\\s]+$/"
+                                               placeholder="Unit Name" required>
+                                        <span class="error-msg" ng-show="frmbUnit.businessUnitName.$error.pattern">Invalid Unit Name</span>
+                                    </div>
+
+                                    <div class="col-md-6 col-sm-6 col-xs-12  ">
+                                        <label >Description</label>
+                                        <input type="text" class="form-control "
+                                               ng-model="newBUnit.description"
+                                               name="businessUnitDescription"
+                                               ng-pattern=""
+                                               placeholder="Unit Description" required>
+                                        
+                                    </div>
+
+
+                                </div>
+                                <div class="row">
+
+                                    <div class="col-md-12 col-sm-12 col-xs-12 form-group  ">
+                                        <label >Head Users</label>
+                                        <tags-input ng-model="newBUnit.headUserObjs" display-property="username"
+                                                    add-from-autocomplete-only="true"  ng-disabled="" min-length="1"
+                                                    placeholder="Add a Head User">
+                                            <auto-complete source="querySearch($query)"
+                                                           load-on-empty="true"
+                                                           load-on-focus="true"
+                                                           min-length="1"></auto-complete>
+                                        </tags-input>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12 col-sm-12 col-xs-12 form-group  ">
+                                        <label >User Groups</label>
+                                        <tags-input ng-model="newBUnit.unitGroups" display-property="name"
+                                                    add-from-autocomplete-only="true"  ng-disabled="" min-length="1"
+                                                    placeholder="Add a Group" on-tag-added="onChipAddBGroup($tag)"
+                                                    on-tag-removed="onChipDeleteBGroup($tag)" >
+
+                                            <auto-complete source="querySearchGroups($query)"
+                                                           load-on-empty="true"
+                                                           load-on-focus="true"
+                                                           min-length="1"></auto-complete>
+                                        </tags-input>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-2 col-sm-2 col-xs-12 form-group has-feedback item pull-right">
+                                        <button ng-disabled="frmbUnit.$invalid" type="button"
+                                                class="btn btn-success  btn-block pull-right"
+                                                ng-click="saveNewBusinessUnit()">
+                                            Add
+                                        </button>
+                                    </div>
+                                </div>
+
+                            </form>
+                        </div>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+
+            </div>
+        </div>
+        <!-- end -->
+
+        <!-- view application users -->
+
+
+        <div class="x_panel " ng-if="businessUnits.length > 0">
+
+            <div class="col-md-6 col-sm-6 col-xs-6 form-group">
+            </div>
+            <div class="col-md-6 col-sm-6 col-xs-6 form-group top_search">
+                <div class="input-group">
+                    <input type="text" ng-model="searchCriteria" class="form-control"
+                           placeholder="Search for...">
+                    <span class="input-group-btn">
+                                  <button class="btn btn-default" type="button">Go!</button>
+                                </span>
+                </div>
+            </div>
+
+            <div class="x_content">
+                <ul class="list-unstyled ">
+                    <li ng-repeat="bUnit in businessUnits | orderBy : 'unitName' | filterBy: ['unitName']: searchCriteria">
+                        <bisunit unit="bUnit" headusers="headUsers" groups="nonAlocatedGroups" skills="attribinfo" updateobjs="updateGroupsOfBUnit"></bisunit>
+                    </li>
+
+                    <paging ng-show="showPaging"
+                            class="small"
+                            page="currentPage"
+                            page-size="pageSize"
+                            total="pageTotal"
+                            show-prev-next="true"
+                            show-first-last="true"
+                            text-next-class="glyphicon glyphicon-chevron-right"
+                            text-prev-class="glyphicon glyphicon-chevron-left"
+                            text-first-class="glyphicon glyphicon-backward"
+                            text-last-class="glyphicon glyphicon-forward"
+                            paging-action="getPageData('attribute', page, pageSize, total)">
+                    </paging>
+                </ul>
+            </div>
+        </div>
+
+    </div>
+
+</div>

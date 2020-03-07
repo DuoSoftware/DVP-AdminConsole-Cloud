@@ -1,0 +1,41 @@
+<div>
+    <div>
+
+        <div class="col-lg-12">
+            <div class="row">
+                <div class="col-md-9">
+                    <h2 class=" font-300">
+                        <a ng-hide="editMode">Prefix : {{prefix.name}} <span  ng-if="prefix.status" class="defaultPrefixType">Default</span>    </a>
+
+                    </h2>
+                </div>
+                <div class="col-md-3 " ng-if="!prefix.status">
+                    <div class="pull-right user-option-wrap" ng-show="!editMode">
+                        <button style="margin-top: 25px;" type="button"
+                                class="btn btn-success btn-sm btn- pull-right"
+                                ng-click="makeAsDefault()">
+                            Set as default
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="byline" ng-hide="editMode">
+            <span>{{resource.createdAt|date:'MM/dd/yyyy @ h:mma'}}</span>
+        </div>
+        <div ng-hide="editMode">
+            <div class="col-md-3 col-sm-3 col-xs-12 form-group " ng-if="prefix.status">
+
+
+            </div>
+
+
+
+            <!--<p class="excerpt col-md-3" ng-if="IsDeveloper"> Developer : {{application.AppDeveloper.Username}} </p>-->
+        </div>
+
+        <div class="clearfix"></div>
+    </div>
+</div>

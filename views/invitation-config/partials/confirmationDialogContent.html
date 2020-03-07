@@ -1,0 +1,27 @@
+<strong>{{name}}</strong>
+<div>
+    <div class="clearfix" ng-show="notRegisteredUsers.length>0">
+        <strong class="reqchip-header">New Users </strong>
+        <div>
+            <span class="reqchip reqchip-green" ng-repeat="item in notRegisteredUsers">{{item}}</span>
+        </div>
+    </div>
+    <div class="clearfix" ng-show="requestableAccounts.length>0">
+        <strong class="reqchip-header">Invitable Users (Already Registered with Other Company)</strong>
+        <div>
+            <span class="reqchip reqchip-blue" ng-repeat="itemRqst in requestableAccounts"> {{itemRqst}} </span>
+        </div>
+    </div>
+    <div class="clearfix" ng-show="commonUsers.length>0">
+        <strong class="reqchip-header">Already Registered (Will not be invited)</strong>
+        <div>
+            <span class="reqchip reqchip-red" ng-repeat="cmnUser in commonUsers"> {{cmnUser}} </span>
+        </div>
+    </div>
+    <div class="clearfix" ng-show="invitedUsers.length>0">
+        <strong class="reqchip-header">Already Invited (Will not be invited)</strong>
+        <div>
+            <span class="reqchip reqchip-brown" ng-repeat="invUser in invitedUsers"> {{invUser}} </span>
+        </div>
+    </div>
+</div>

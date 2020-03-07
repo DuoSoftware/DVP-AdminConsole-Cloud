@@ -1,0 +1,268 @@
+<section ng-controller="campaignWizardController">
+    <section class="cam-wizard-wrapper cam-wizard-wrap-height animated fadeIn">
+
+
+
+        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+            <div class="row">
+                <div class="cam-left-wrapper cam-wizard-wrap-height">
+
+                    <header class="cam-wizard-left-header">
+                        New<br/> Campaign
+                    </header>
+
+                    <div class="cam-wizard-t-line">
+
+                        <ul class="wizard-time-line-wrp">
+                            <li id="1stStepWizard" class="processing">
+                                <div id="numberOne" class="t-line wizard-count active">
+                                    1
+                                </div>
+                                <div class="t-line wizard-desc">
+                                    Basic <br/>Campaign Info
+                                </div>
+                            </li>
+
+                            <li id="2ndStepWizard"
+                                class="">
+                                <div id="numberTwo" class="t-line wizard-count active">
+                                    2
+                                </div>
+                                <div class="t-line wizard-desc">
+                                    Campaign <br/> Config
+                                </div>
+                            </li>
+
+                            <li id="3ndStepWizard" class="">
+                                <div id="numberTree" class="t-line wizard-count active">
+                                    3
+                                </div>
+                                <div class="t-line wizard-desc">
+                                    Campaign <br/> Schedule
+                                </div>
+                            </li>
+
+
+                            <li id="4ndStepWizard" class="" ng-if="callback.NumberLoadingMethod == 'NUMBER'">
+                                <div id="numberFour" class="t-line wizard-count active">
+                                    4
+                                </div>
+
+                                <div class="number-upload-animation-wrapper">
+                                    <progress-arc
+                                            size="{{ size }}"
+                                            stroke="{{ stroke }}"
+                                            stroke-width="{{ strokeWidth }}"
+                                            complete="numberProgress/100"
+                                            background="{{ background }}"
+                                            counter-clockwise="{{ counterClockwise }}">
+                                    </progress-arc>
+                                </div>
+                                <div class="t-line wizard-desc">
+                                    Number <br/> Upload
+                                </div>
+                            </li>
+                        </ul>
+
+
+                    </div>
+
+
+                    <div class="wizard-btn-wrapper">
+
+
+                        <!-- campaign create -->
+                        <ul class="customer-inline" ng-show="step==1">
+                            <li>
+                                <button class="btn btn-wizard"
+                                        disabled>
+                                    Back
+                                </button>
+                            </li>
+                            <li ng-if="!isCreateNewCampaign">
+                                <button class="btn btn-wizard"
+                                        ng-disabled="campaignFrmStep1.$invalid"
+                                        ng-click="changeFormWizard('2')">
+                                    Next
+                                    <i class="ti-angle-right"></i>
+                                </button>
+                            </li>
+                            <li ng-if="isCreateNewCampaign">
+                                <button class="btn btn-wizard">
+                                    <i class="fa fa-circle-o-notch fa-spin fa-3x fa-fw"></i>
+                                </button>
+                            </li>
+                        </ul>
+
+                        <!-- campaign config -->
+                        <ul class="customer-inline" ng-show="step=='2'">
+                            <li>
+                                <button class="btn btn-wizard"
+                                        ng-click="wizardBackMove('2')">
+                                    <i class="ti-angle-left"></i>
+                                    Back
+                                </button>
+                            </li>
+
+                            <li ng-show="callback.AllowCallBack
+                            && !isCampaignUpdateConfig
+                            && campaign.DialoutMechanism!='PREVIEW'">
+                                <button class="btn btn-wizard"
+                                        ng-if="callbacks.length!=0"
+                                        ng-click="changeFormWizard('3')">
+                                    Next
+                                    <i class="ti-angle-right"></i>
+                                </button>
+
+                                <button class="btn btn-wizard"
+                                        ng-show="campaign.DialoutMechanism!='PREVIEW'"
+                                        ng-if="callbacks.length==0"
+                                        disabled>
+                                    Next
+                                    <i class="ti-angle-right"></i>
+                                </button>
+                            </li>
+
+                            <li ng-show="!callback.AllowCallBack
+                            && !isCampaignUpdateConfig
+                            && campaign.DialoutMechanism!='PREVIEW'">
+                                <button class="btn btn-wizard"
+                                        ng-click="changeFormWizard('3')">
+                                    Next
+                                    <i class="ti-angle-right"></i>
+                                </button>
+                            </li>
+
+
+                            <!--<li ng-show="!callback.AllowCallBack-->
+                            <!--&& !isCampaignUpdateConfig-->
+                            <!--&& campaign.DialoutMechanism=='PREVIEW'">-->
+                            <!--<button class="btn btn-wizard"-->
+                            <!--ng-click="changeFormWizard('3')">-->
+                            <!--Next-->
+                            <!--<i class="ti-angle-right"></i>-->
+                            <!--</button>-->
+                            <!--</li>-->
+
+                            <li ng-show="AdditionalDataRecordId
+                            && campaign.DialoutMechanism=='PREVIEW'">
+                                <button class="btn btn-wizard"
+                                        ng-click="changeFormWizard('3')">
+                                    Next
+                                    <i class="ti-angle-right"></i>
+                                </button>
+                            </li>
+
+                            <li ng-show="!AdditionalDataRecordId
+                            && campaign.DialoutMechanism=='PREVIEW'">
+                                <button class="btn btn-wizard"
+                                        disabled>
+                                    Next
+                                    <i class="ti-angle-right"></i>
+                                </button>
+                            </li>
+
+                            <li ng-if="isCampaignUpdateConfig
+                            && campaign.DialoutMechanism!='PREVIEW'">
+                                <button class="btn btn-wizard">
+                                    <i class="fa fa-circle-o-notch fa-spin fa-3x fa-fw"></i>
+                                </button>
+                            </li>
+                        </ul>
+
+                        <!-- campaign schedule -->
+                        <ul class="customer-inline" ng-show="step=='3'">
+                            <li>
+                                <!--ng-click="wizardBackMove('2')"-->
+                                <button class="btn btn-wizard"
+                                        ng-click="wizardBackMove('3')">
+                                    <i class="ti-angle-left"></i>
+                                    Back
+                                </button>
+                            </li>
+
+                            <li ng-show="mapnumberScheduleToCam">
+                                <button class="btn btn-wizard">
+                                    <i class="fa fa-circle-o-notch fa-spin fa-3x fa-fw"></i>
+                                </button>
+                            </li>
+
+                            <li ng-show="!mapnumberScheduleToCam">
+                                <button ng-if="addedSchedule.length!=0"
+                                        class="btn btn-wizard"
+                                        ng-click="changeFormWizard('4')">
+                                    {{ callback.NumberLoadingMethod == 'CONTACT' ? 'Done':'Next' }}
+                                    <i class="ti-angle-right" ng-if="callback.NumberLoadingMethod == 'NUMBER'"></i>
+                                </button>
+
+                                <button class="btn btn-wizard"
+                                        ng-if="addedSchedule.length==0"
+                                        disabled>
+                                    {{ callback.NumberLoadingMethod == 'CONTACT' ? 'Done':'Next' }}
+                                    <i class="ti-angle-right" ng-if="callback.NumberLoadingMethod == 'NUMBER'"></i>
+                                </button>
+                            </li>
+                        </ul>
+
+
+                        <!-- number upload -->
+                        <ul class="customer-inline" ng-show="step=='4'">
+                            <li ng-show="!uploadButtonValue">
+                                <button class="btn btn-wizard"
+                                        ng-show="OperationalStatus!='start'"
+                                        ng-click="wizardBackMove('4')">
+                                    <i class="ti-angle-left"></i>
+                                    Back
+                                </button>
+
+                                <button class="btn btn-wizard"
+                                        disabled
+                                        ng-show="OperationalStatus=='start'">
+                                    <i class="ti-angle-left"></i>
+                                    Back
+                                </button>
+                            </li>
+
+
+                            <li>
+                                <button ng-show="!uploadButtonValue" ng-disabled="campaign.DialoutMechanism=='PREVIEW' && previewData.length == 0"
+                                        class="btn btn-wizard"
+                                        ng-click="uploadNumbers()">
+                                    Done
+
+                                </button>
+
+
+                                <button class="btn btn-wizard"
+                                        ng-show="uploadButtonValue">
+                                    {{numberProgress}}%
+                                </button>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-9 col-md-9 col-sm-9 col-xs-9">
+            <div class="row">
+                <div ng-show="step==1"
+                     ng-include="'campaignManager/template/new-campaign/step1.html'"></div>
+                <div ng-show="step==3"
+                     ng-include="'campaignManager/template/new-campaign/step2.html'"></div>
+                <div ng-show="step==2"
+                     ng-include="'campaignManager/template/new-campaign/step3.html'"></div>
+                <div ng-if="step==4"
+                     ng-include="'campaignManager/template/new-campaign/step4.html'">
+
+
+                </div>
+            </div>
+
+        </div>
+
+
+    </section>
+
+</section>
+

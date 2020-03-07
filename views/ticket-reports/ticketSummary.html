@@ -1,0 +1,289 @@
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12 animated fadeIn">
+        <div class="x_panel main-title">
+            <div class="x_title">
+                <h2><b>REPORT</b> | TICKET - Summary</h2>
+                <ul class="nav navbar-right panel_toolbox">
+                    <li ng-show="!showFilter" ng-click="showFilter= !showFilter"><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                    </li>
+                    <li ng-show="showFilter" ng-click="showFilter= !showFilter"><a class="close-link"><i class="fa fa-chevron-down"></i></a></li>
+                </ul>
+                <div class="clearfix"></div>
+            </div>
+            <div class="x_content" ng-show="!showFilter">
+                <div class="col-md-2 col-sm-2 col-xs-12">
+                    <label>Start Date</label>
+                    <input type="text" class="form-control" ng-model="obj.startDay" name="startDate" ng-change="onDateChange()" datepicker>
+                </div>
+
+                <div class="col-md-2 col-sm-2 col-xs-12">
+                    <label>End Date</label>
+                    <input type="text" class="form-control" ng-model="obj.endDay" name="endDate" ng-change="onDateChange()" datepicker>
+                </div>
+
+                <div class="col-md-2 col-sm-2 col-xs-12">
+                    <label>Tag</label>
+                    <!--<select name="tagList" class="select2_single form-control" tabindex="-1" aria-hidden="true"
+                            ng-model="selectedTag" ng-model-options="{trackBy: '$value'}">
+                        <option ng-repeat="tag in tagList | groupBy: 'tag.TagType'" value="{{tag.name}}">
+                            {{tag.name}}
+                        </option>
+                    </select>-->
+
+                    <select class="select2_single form-control" tabindex="-1" aria-hidden="true"
+                            ng-options="tag.name group by tag.TagType for tag in tagList"
+                            ng-model="selectedTag">
+                        <option value=""></option>
+                    </select>
+                </div>
+
+                <div class="col-md-2 col-sm-2 col-xs-12">
+                    <label>Channel</label>
+                    <select name="datatable-responsive_length" ng-model="channelType"
+                            aria-controls="datatable-responsive" class="form-control">
+                        <option value=""></option>
+                        <option value="call">Call</option>
+                        <option value="sms">SMS</option>
+                        <option value="chat">Chat</option>
+                        <option value="facebook-post">Facebook Post</option>
+                        <option value="facebook-chat">Facebook Chat</option>
+                        <option value="facebook-comment">Facebook Comment</option>
+                        <option value="twitter">Twitter</option>
+                        <option value="skype">Skype</option>
+                        <option value="voicemail">Voicemail</option>
+                        <option value="appointment">Appointment</option>
+                        <option value="api">API</option>
+                        <option value="web-widget">Web Widget</option>
+                        <option value="viber">Viber</option>
+                        <option value="slack">Slack</option>
+                        <option value="email">Email</option>
+                        <option value="webchat">Web Chat</option>
+
+                    </select>
+                </div>
+
+                <div class="col-md-2 col-sm-2 col-xs-12">
+                    <label>Priority</label>
+                    <select name="datatable-responsive_length" ng-model="priorityType"
+                            aria-controls="datatable-responsive" class="form-control">
+                        <option value=""></option>
+                        <option value="urgent">Urgent</option>
+                        <option value="high">High</option>
+                        <option value="normal">Normal</option>
+                        <option value="low">Low</option>
+                    </select>
+                </div>
+
+                <div class="col-md-2 col-sm-2 col-xs-12">
+                    <label>Ticket Type</label>
+                    <!--<select name="datatable-responsive_length" ng-model="ticketType"
+                            aria-controls="datatable-responsive" class="form-control">
+                        <option value=""></option>
+                        <option value="question">Question</option>
+                        <option value="complain">Complain</option>
+                        <option value="incident">Incident</option>
+                        <option value="action">Action</option>
+                    </select>-->
+
+                    <select name="datatable-responsive_length" class="select2_single form-control" tabindex="-1"
+                            aria-hidden="true" ng-options="item as item for item in ticketTypesList track by item"
+                            ng-model="ticketType">
+                        <option value=""></option>
+                    </select>
+                </div>
+
+                <div class="clearfix"></div>
+
+                <div class="col-md-3 col-sm-3 col-xs-12">
+                    <button type="button" class="btn btn-success" ng-click="getTicketSummary()">
+                        Search
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-12 col-sm-12 col-xs-12" ng-if="obj.isTableLoading==0">
+            <div class="data-state-wrap">
+                Please Wait...
+            </div>
+        </div>
+        <div class="x_panel"  ng-if="obj.isTableLoading==1">
+            <div class="x_content">
+                <div class="col-lg-6">
+                    <div class="col-lg-8">
+                        <div class="ticker-pie-chart">
+                            <canvas id="doughnut" class=" "
+                                    width="300"
+                                    height="300"
+                                    chart-data="data" chart-doughnut
+                                    chart-options="options"
+                                    chart-labels="labels">
+                            </canvas>
+                        </div>
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="ticker-totla-cnt">
+                            <h2 class="font-700">Total</h2>
+                            <h2 class="font-700">
+                                {{summaryDetails.total}}
+                            </h2>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="col-lg-6">
+                    <div class="col-lg-6">
+                        <div class="ticker-pro-wrapper">
+                            <div class="row">
+                                <div class="col-sm-10">
+                                    <small>Resolved Tickets</small>
+                                    <uib-progressbar value="summaryProgressBar.resolved"></uib-progressbar>
+                                </div>
+                                <div class="col-sm-2">
+                                    <div class="ticker-prg-val text-left">
+                                        {{summaryProgressBar.resolved}} %
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-10">
+                                    <small>RE-Opened Tickets</small>
+                                    <uib-progressbar value="summaryProgressBar.reopen"></uib-progressbar>
+                                </div>
+                                <div class="col-sm-2 ">
+                                    <div class="ticker-prg-val text-left">
+                                        {{summaryProgressBar.reopen}} %
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-10">
+                                    <small>SLA Violated Tickets</small>
+                                    <uib-progressbar value="summaryProgressBar.sla"></uib-progressbar>
+                                </div>
+                                <div class="col-sm-2 ">
+                                    <div class="ticker-prg-val text-left">
+                                        {{summaryProgressBar.sla}} %
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-10">
+                                    <small>Completed Overdue Tickets</small>
+                                    <uib-progressbar value="summaryProgressBar.completed"></uib-progressbar>
+                                </div>
+                                <div class="col-sm-2 ">
+                                    <div class="ticker-prg-val text-left">
+                                        {{summaryProgressBar.completed}}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="ticker-pro-wrapper">
+                            <div class="row">
+                                <div class="col-sm-10">
+                                    <small>Overdue Tickets</small>
+                                    <uib-progressbar value="summaryProgressBar.overdue"></uib-progressbar>
+                                </div>
+                                <div class="col-sm-2">
+                                    <div class="ticker-prg-val text-left">
+                                        {{summaryProgressBar.overdue}}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="x_panel" ng-if="obj.isTableLoading==1">
+            <div class="x_content">
+                <div class="col-lg-12">
+                    <ul class="stats-overview ticket-summary">
+                        <li class="hidden-phone">
+                            <span class="name"> Tickets In Progress </span>
+                            <span class="value text-success"> {{summaryDetails.progressing}} </span>
+                        </li>
+                        <li class="hidden-phone">
+                            <span class="name"> New Tickets </span>
+                            <span class="value text-success"> {{summaryDetails.new}} </span>
+                        </li>
+                        <li class="hidden-phone">
+                            <span class="name">Closed Tickets </span>
+                            <span class="value text-success"> {{summaryDetails.closed}} </span>
+                        </li>
+
+                    </ul>
+                    <ul class="stats-overview ticket-summary">
+                        <li class="hidden-phone">
+                            <span class="name">Resolved Tickets </span>
+                            <span class="value text-success"> {{summaryDetails.resolved}} </span>
+                        </li>
+                        <li class="hidden-phone">
+                            <span class="name">RE-Opened Tickets</span>
+                            <span class="value text-success"> {{summaryDetails.reopen}} </span>
+                        </li>
+                        <li class="hidden-phone">
+                            <span class="name">SLA Violated Tickets </span>
+                            <span class="value text-success"> {{summaryDetails.sla_violated}} </span>
+                        </li>
+                    </ul>
+                    <ul class="stats-overview ticket-summary">
+
+                        <li class="hidden-phone">
+                            <span class="name">Completed Overdue Tickets</span>
+                            <span class="value text-success"> {{summaryDetails.overdue_done}} </span>
+                        </li>
+                        <li class="hidden-phone">
+                            <span class="name">Overdue Tickets</span>
+                            <span class="value text-success"> {{summaryDetails.overdue_working}} </span>
+                        </li>
+                        <li class="hidden-phone">
+                            <span class="name">First Call Resolved Tickets</span>
+                            <span class="value text-success"> {{summaryDetails.first_call_resolved}} </span>
+                        </li>
+                    </ul>
+                    <ul class="stats-overview ticket-summary">
+
+                        <li class="hidden-phone">
+                            <span class="name">Average Resolution</span>
+                            <span class="value text-success"> {{summaryDetails.average_resolution}}</span>
+                        </li>
+                        <li class="hidden-phone">
+                            <span class="name">Average Response</span>
+                            <span class="value text-success"> {{summaryDetails.average_response}} </span>
+                        </li>
+                        <li class="hidden-phone">
+                            <span class="name">Total</span>
+                            <span class="value text-success">{{summaryDetails.total}}</span>
+                        </li>
+                    </ul>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+	window.scrollTo(0, 0);
+</script>
+
+<!--
+<script type="text/javascript">
+    $('#timepickerSt').timepicker({
+        template: false,
+        showInputs: false,
+        minuteStep: 5
+    });
+</script>
+
+<script type="text/javascript">
+    $('#timepickerEt').timepicker({
+        template: false,
+        showInputs: false,
+        minuteStep: 5
+    });
+</script>-->

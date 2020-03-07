@@ -1,0 +1,242 @@
+<div class="x_panel" ng-controller="pbxBasicCtrl">
+    <div class="x_content col-md-12 col-sm-12 col-xs-12">
+        <form name="pabxBasicConfForm">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                <label><b>Basic Configuration</b>
+                </label>
+            </div>
+            <br>
+
+            <div class="item form-group  col-md-6 col-sm-6 col-xs-12">
+                <label>User Name  <span class="inline-block validation-on text-validaion  "
+                                        ng-show="pabxBasicConfForm.userName.$invalid && !pabxBasicConfForm.userName.$pristine"
+                                        style="text-transform: lowercase">
+                             Required field
+                  </span> </label>
+                <input type="text" class="form-control" name="userName" ng-disabled="IsEdit"
+                       ng-model="basicConfig.UserName" required>
+            </div>
+
+            <div class="item form-group  col-md-6 col-sm-6 col-xs-12">
+                <label>PIN  <span class="inline-block validation-on text-validaion  "
+                                  ng-show="pabxBasicConfForm.pinNumber.$invalid && !pabxBasicConfForm.pinNumber.$pristine">
+                            pin number should be numeric
+                  </span></label>
+                <input class="form-control" name="pinNumber" ng-model="basicConfig.Pin" ng-pattern="/^[0-9]*$/"
+                       required>
+            </div>
+
+            <!-- user staus -->
+            <div class="tile-stats col-md-12 col-sm-12 col-xs-12">
+                <br>
+                <label>User Status</label>
+                <br>
+
+                <div class="radio inline-block">
+                    <label style="padding-right: 10px;">
+                        <input type="radio" class="flat" ng-model="basicConfig.Status"
+                               name="pbxUserStatus"
+                               value="DND"/>DND
+                    </label>
+                </div>
+
+                <div class="radio inline-block">
+                    <label style="padding-right: 10px;">
+                        <input type="radio" class="flat" ng-model="basicConfig.Status"
+                               name="pbxUserStatus"
+                               value="CALL_DIVERT"/> Call Divert
+                    </label>
+                </div>
+
+                <div class="radio inline-block">
+                    <label style="padding-right: 10px;">
+                        <input type="radio" class="flat" ng-model="basicConfig.Status"
+                               name="pbxUserStatus"
+                               value="AVAILABLE"/> Available
+                    </label>
+                </div>
+                <div class="radio inline-block">
+                    <label style="padding-right: 10px;">
+                        <input type="radio" class="flat" ng-model="basicConfig.Status"
+                               name="pbxUserStatus"
+                               value="FOLLOW_ME"/> FollowMe
+                    </label>
+                </div>
+                <div class="radio inline-block">
+                    <label style="padding-right: 10px;">
+                        <input type="radio" class="flat" ng-model="basicConfig.Status"
+                               name="pbxUserStatus"
+                               value="FORWARD"/> Forwarding
+                    </label>
+                </div>
+
+            </div>
+
+
+            <div class="form-group col-md-4 col-sm-4 col-xs-12">
+                <label>Divert Number </label>
+                <select class="select2_single form-control" tabindex="-1" aria-hidden="true"
+                        ng-model="basicConfig.ActiveTemplate" ng-model-options="{trackBy: '$value'}">
+                    <option ng-repeat="templ in pabxTemplList" value="{{templ.id}}">{{templ.CallDivertNumber}}
+                    </option>
+                </select>
+            </div>
+
+            <div class="form-group col-md-4 col-sm-4 col-xs-12">
+                <label>Time Zone </label>
+                <!--<select class="select2_single form-control" tabindex="-1" aria-hidden="true" name="timeZone"
+                        ng-model="basicConfig.TimeZone" ng-model-options="{trackBy: '$value'}">
+                    <option ng-repeat="tz in timeZones" ng-value="tz.Offset">{{tz.TZName}}</option>
+                </select>-->
+
+                <timezone-selector ng-model="basicConfig.TimeZone"></timezone-selector>
+            </div>
+
+            <div class="item form-group  col-md-4 col-sm-4 col-xs-12">
+                <label>Ring Timeout <span class="inline-block validation-on text-validaion"
+                                          ng-show="pabxBasicConfForm.ringTimeout.$invalid &&
+                                           !pabxBasicConfForm.ringTimeout.$pristine">
+                            Invalid ring timeout
+                  </span> </label>
+                <input class="form-control" name="ringTimeout" ng-model="basicConfig.RingTimeout"
+                       ng-pattern="/^[0-9]*$/">
+            </div>
+
+            <div class="clearfix"></div>
+            <br>
+
+            <div class="col-md-3 col-sm-3 col-xs-12">
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" class="js-switch "
+                               ng-model="basicConfig.BypassMedia"
+                               ng-init="basicConfig.AllowOutbound=false"></checkbox>
+                        Bypass Media
+                    </label>
+                </div>
+            </div>
+            <div class="col-md-3 col-sm-3 col-xs-12">
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" class="js-switch "
+                               ng-model="basicConfig.IgnoreEarlyMedia"
+                               ng-init="basicConfig.IgnoreEarlyMedia=false"></checkbox>
+                        Ignore Early Media
+                    </label>
+                </div>
+            </div>
+            <div class="col-md-3 col-sm-3 col-xs-12">
+
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" class="js-switch "
+                               ng-model="basicConfig.VoicemailEnabled"
+                               ng-init="basicConfig.VoicemailEnabled=false"></checkbox>
+                        Voicemail
+                    </label>
+                </div>
+            </div>
+
+
+            <div class="clearfix"></div>
+            <!-- Greeting File Configuration-->
+            <div>
+                <div class="tile-stats col-md-12 col-sm-12 col-xs-12">
+                    <br>
+                    <label><b>Greeting File Configuration</b></label>
+                    <br>
+                </div>
+                <div class="form-group col-md-4 col-sm-4col-xs-12">
+                    <label>Day Greeting :</label>
+                    <select name="dayGreeting" class="select2_single form-control" tabindex="-1" aria-hidden="true"
+                            ng-model="basicConfig.DayGreetingFile" ng-model-options="{trackBy: '$value'}">
+                        <option ng-repeat="dayGreetItem in fileList" value="{{dayGreetItem.UniqueId}}">
+                            {{dayGreetItem.DisplayName}}
+                        </option>
+                    </select>
+                </div>
+
+                <div class="form-group col-md-4 col-sm-4 col-xs-12">
+                    <label>Night Greeting :</label>
+                    <select name="nightGreeting" class="select2_single form-control" tabindex="-1"
+                            aria-hidden="true"
+                            ng-model="basicConfig.NightGreetingFile" ng-model-options="{trackBy: '$value'}">
+                        <option ng-repeat="nightGreetItem in fileList" value="{{nightGreetItem.UniqueId}}">
+                            {{nightGreetItem.DisplayName}}
+                        </option>
+                    </select>
+                </div>
+
+                <div class="col-md-4 col-sm-4 col-xs-12">
+
+                    <div class="checkbox">
+                        <label>
+                            <input type="checkbox" class="js-switch "
+                                   ng-model="basicConfig.PersonalGreetingEnabled"
+                                   ng-init="basicConfig.PersonalGreetingEnabled=false"></checkbox>
+                            Enable Personal Greeting
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                <br>
+                <label><b>Call Barring</b></label>
+            </div>
+
+            <div class="clearfix"></div>
+
+            <br>
+
+            <div class="col-md-3 col-sm-3 col-xs-12">
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" class="js-switch "
+                               ng-model="basicConfig.AllowOutbound"
+                               ng-init="basicConfig.AllowOutbound=false"></checkbox>
+                        Allow Outbound
+                    </label>
+                </div>
+            </div>
+            <div class="col-md-3 col-sm-3 col-xs-12">
+
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" class="js-switch "
+                               ng-model="basicConfig.AllowIDD"
+                               ng-init="basicConfig.AllowIDD=false"></checkbox>
+                        Allow IDD
+                    </label>
+                </div>
+            </div>
+            <div class="clearfix"></div>
+
+            <br>
+
+            <div class="form-group col-md-6 col-sm-6 col-xs-12">
+                <label>Allowed Numbers </label>
+                <tags-input ng-model="basicConfig.AllowedNumBind" min-length="1" placeholder="Add Number">
+
+                </tags-input>
+            </div>
+
+            <div class="form-group col-md-6 col-sm-6 col-xs-12">
+                <label>Denied Numbers </label>
+                <tags-input ng-model="basicConfig.DeniedNumBind" min-length="1" placeholder="Add Number">
+                </tags-input>
+            </div>
+
+            <div class="clearfix"></div>
+            <br>
+
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                <button class="btn btn-primary" ng-click="UpdateBasicConfig()" ng-disabled="sipUserConfForm.$invalid">
+                    Update
+                </button>
+            </div>
+
+        </form>
+    </div>
+</div>

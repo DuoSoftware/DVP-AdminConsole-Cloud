@@ -1,0 +1,76 @@
+<div class="col-md-4 col-xs-12">
+    <div class="x_panel tile ">
+        <div class="x_title">
+            <h2>{{campaign.CampCampaignInfo.CampaignName}}</h2>
+
+            <ul class="nav navbar-right panel_toolbox"  ng-click="Reload()">
+                <li><a class="close-link"><i class="fa fa-refresh" ng-click="Reload()"></i></a></li>
+            </ul>
+            <div class="clearfix"></div>
+        </div>
+        <div class="x_content">
+            <div class="col-md-12 col-sm-12 col-xs-12" ng-show="isLoading">
+                <div class="data-state-wrap">
+                    Please Wait...
+                </div>
+            </div>
+
+            <div class="col-md-12 col-sm-12 col-xs-12" ng-hide="isLoading">
+                <table class="countries_list">
+                    <tbody>
+                    <tr>
+                        <td>Campaign Mode</td>
+                        <td class="fs15 fw700 text-right">{{campaign.CampCampaignInfo.CampaignMode}}</td>
+                    </tr>
+                    <tr>
+                        <td>Campaign Channel</td>
+                        <td class="fs15 fw700 text-right">{{campaign.CampCampaignInfo.CampaignChannel}}</td>
+                    </tr>
+                    <tr>
+                        <td>Dialout Mechanism</td>
+                        <td class="fs15 fw700 text-right">{{campaign.CampCampaignInfo.DialoutMechanism}}</td>
+                    </tr>
+                    <tr>
+                        <td>Extensions</td>
+                        <td class="fs15 fw700 text-right">{{campaign.CampCampaignInfo.Extensions}}</td>
+                    </tr>
+                    <tr>
+                        <td>LastResponsTime</td>
+                        <td class="fs15 fw700 text-right">{{campaign.LastResponsTime| date : 'dd-MM-yyyy, HH:mm'}}</td>
+                    </tr>
+                    <tr>
+                        <td>CampaignState</td>
+                        <td class="fs15 fw700 text-right">{{campaign.CampaignState}}</td>
+                    </tr>
+                    <tr>
+                        <td>Total Dial Count</td>
+                        <td class="fs15 fw700 text-right">{{totalDialCount}}</td>
+                    </tr>
+                    <tr>
+                        <td>Total Connected Count</td>
+                        <td class="fs15 fw700 text-right">{{totalConnectedCount}}</td>
+                    </tr>
+                    <tr>
+                        <td>Action</td>
+                        <td class="fs15 fw700 text-right">
+                            <a ng-disabled="true" style="cursor: pointer">
+                                <i ng-show="campaign.CampaignState==='start'" title="Pause" class="fa fa-pause"
+                                   ng-click="SendCommandToCampaign(campaign,'pause')"></i>
+                                <i ng-show="campaign.CampaignState==='pause'" title="Resume" class="fa fa-step-forward"
+                                   ng-click="SendCommandToCampaign(campaign,'resume')"></i>
+                                <i ng-show="campaign.CampaignState==='pause'" title="Stop" class="fa fa-stop"
+                                   ng-click="SendCommandToCampaign(campaign,'stop')"></i>
+                                <i ng-show="campaign.CampaignState==='stop'" title="End" class="fa fa-eject"
+                                   ng-click="SendCommandToCampaign(campaign,'end')"></i>
+                            </a>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+

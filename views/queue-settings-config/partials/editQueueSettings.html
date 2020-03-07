@@ -1,0 +1,153 @@
+<div>
+
+    <div>
+
+        <div class="col-lg-12">
+            <div class="row">
+                <div class="col-md-9">
+                    <h2 class=" font-300">
+                        <a ng-hide="editMode">Queue Name : {{setting.QueueName}}</a>
+
+                    </h2>
+                </div>
+                <div class="col-md-3 ">
+                    <div class="pull-right user-option-wrap" ng-show="!editMode">
+                        <h3>
+                            <small ng-disabled="true" ng-click="removeSettingRecord(setting.RecordID)" style="cursor: pointer"><i
+                                    class="fa fa-trash-o"></i></small>
+                            <small ng-disabled="true" ng-click="editQueueSetting()" style="cursor: pointer"><i
+                                    class="fa fa-edit"></i></small>
+                        </h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-12 col-sm-12 col-xs-12 edit-main-wrap" ng-show="editMode">
+            <div class="application-edit">
+                <div class="col-sm-12">
+                    <div class="col-sm-6">
+                        <h2 class="font-robot font-300 text-uppercase font-15">Edit {{setting.QueueName}}</h2>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="edit-close pull-right">
+                            <i class="fa fa-close" ng-click="closeQueueSetting()"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12 col-sm-6 col-xs-12 col-xs-12">
+                    <div class="tile-stats  m-top15">
+                        <form class="form-horizontal form-label-left input_mask"  name="queueedit">
+
+                            <div class="col-md-3 col-sm-3 col-xs-12 form-group has-feedback">
+                                <label class="form-control-static">Queue Name</label>
+                                <input type="text" class="form-control has-feedback-left"
+                                       placeholder="Queue Name"
+                                       ng-model="setting.QueueName" required>
+                                <span class="fa fa-user form-control-feedback left" aria-hidden="true"></span>
+                            </div>
+
+                            <div class="col-md-3 col-sm-3 col-xs-12 form-group has-feedback">
+                                <label class="form-control-static">Max Wait Time</label>
+                                <input type="number" class="form-control has-feedback-left"
+                                       placeholder="Max Wait Time"
+                                       ng-model="setting.MaxWaitTime" required min="0">
+                                <span class="form-control-feedback left" aria-hidden="true">sec</span>
+                            </div>
+
+                            <div class="col-md-3 col-sm-3 col-xs-12 form-group has-feedback">
+                                <label class="form-control-static">Call Abandoned Threshold</label>
+                                <input type="number" class="form-control has-feedback-left"
+                                       placeholder="Call Abandoned Threshold"
+                                       ng-model="setting.CallAbandonedThreshold" required min="0">
+                                <span class="form-control-feedback left" aria-hidden="true">sec</span>
+                            </div>
+                            <!--<div class="col-md-1 col-sm-1 col-xs-12 form-group has-feedback">
+
+
+                            </div>-->
+                            <div class="col-md-3 col-sm-3 col-xs-12 form-group has-feedback">
+                                <label class="form-control-static">Publish Position</label>
+                                <div style="padding-top: 5px">
+                                    <switch id="enabled" name="enabled" ng-model="setting.PublishPosition" class="green pull-left"  disabled="disableSwitch"></switch>
+                                </div>
+
+                            </div>
+                            <div class="col-md-12 col-sm-12 col-xs-12 form-group has-feedback">
+
+                                <label class="form-control-static">Combinations</label>
+                                <tags-input ng-model="assignedAttributes" display-property="Attribute"
+                                            add-from-autocomplete-only="true" on-tag-added="onChipAdd($tag)"
+                                            on-tag-removed="onChipDelete($tag)" ng-disabled="true" min-length="1" required>
+                                    <auto-complete source="querySearch($query)"
+                                                   load-on-empty="true"
+                                                   load-on-focus="true"
+                                                   min-length="1"></auto-complete>
+                                </tags-input>
+                            </div>
+
+                    </div>
+
+
+
+
+                    <div class="col-md-12 col-sm-9 col-xs-12 m-top15">
+                        <div class="col-md-12 col-sm-6 col-xs-12">
+                            <button type="button" class="btn btn-success btn-sm pull-right"
+                                    ng-click="UpdateQueueSettings()"ng-disabled=" queueedit.$invalid">
+                                Done
+                            </button>
+                        </div>
+                    </div>
+
+                    <!--<div class="col-md-12 col-sm-6 col-xs-12 form-group has-feedback">
+                        <input type="text" class="form-control has-feedback-left" ng-model="resource.OtherData"
+                               placeholder="Other Data">
+                        <span class="fa fa-envelope form-control-feedback left" aria-hidden="true"></span>
+                    </div>-->
+
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="byline" ng-hide="editMode">
+        <span>{{resource.createdAt|date:'MM/dd/yyyy @ h:mma'}}</span>
+    </div>
+    <div ng-hide="editMode" style="border-bottom: groove">
+
+        <div class="col-md-4 col-sm-4 col-xs-12 form-group ">
+            <label class="form-control-static">Max Wait Time</label>
+            <p>{{setting.MaxWaitTime}} </p>
+        </div>
+
+        <div class="col-md-4 col-sm-4 col-xs-12 form-group ">
+            <label class="form-control-static">Call Abandoned Threshold</label>
+            <p>{{setting.CallAbandonedThreshold}} </p>
+        </div>
+
+
+        <div class="col-md-4 col-sm-4 col-xs-12 form-group ">
+            <label class="form-control-static">Publish Position</label>
+            <p>{{setting.PublishPosition}} </p>
+        </div>
+        <div class="col-md-4 col-sm-4 col-xs-12 form-group ">
+            <label class="form-control-static">Server Type</label>
+            <p>{{setting.ServerType}} </p>
+        </div>
+        <div class="col-md-4 col-sm-4 col-xs-12 form-group ">
+            <label class="form-control-static">Request Type</label>
+            <p>{{setting.RequestType}} </p>
+        </div>
+
+
+
+        <!--<p class="excerpt col-md-3" ng-if="IsDeveloper"> Developer : {{application.AppDeveloper.Username}} </p>-->
+    </div>
+
+    <div class="clearfix"></div>
+</div>
+</div>

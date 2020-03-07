@@ -1,0 +1,145 @@
+<div class="row">
+    <fieldset class="col-md-12 col-sm-12 col-xs-12 animated fadeIn">
+        <div class="x_panel main-title main-title-tabbed">
+            <div class="x_title">
+                <h2><b>REPORT</b> | CALL - QA Rating</h2>
+                <ul class="nav navbar-right panel_toolbox">
+                    <li ng-show="!showFilter" ng-click="showFilter= !showFilter"><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                    </li>
+                    <li ng-show="showFilter" ng-click="showFilter= !showFilter"><a class="close-link"><i class="fa fa-chevron-down"></i></a></li>
+                </ul>
+                <div class="clearfix"></div>
+            </div>
+            <div class="x_content" ng-show="!showFilter">
+                <div class="col-md-4 col-sm-4 col-xs-12">
+                    <label>User</label>
+                    <!--<select name="datatable-responsive_length" class="select2_single form-control" aria-hidden="true" ng-options="user as user.username for user in userList track by user._id"
+                            ng-model="agentSelected">
+                    </select>-->
+
+                    <input type="text" class="form-control" ng-model="agentSelected" data-min-length="1" data-html="1"
+                           data-limit="1000" data-auto-select="true" data-animation="am-flip-x"
+                           bs-options="user as user.username for user in querySearch($viewValue)"
+                           placeholder="Agent" bs-typeahead>
+
+
+
+
+                </div>
+                <div class="col-md-2 col-sm-2 col-xs-12">
+                    <label>Start Date</label>
+                    <input type="text" class="form-control" ng-model="startDate" name="startDate" datepicker>
+                </div>
+
+                <div class="col-md-2 col-sm-2 col-xs-12">
+                    <label>End Date</label>
+                    <input type="text" class="form-control" ng-model="endDate" name="endDate" datepicker>
+                </div>
+                <div class="col-md-4 col-sm-4 col-xs-12 text-right" style="padding-top: 25px">
+                    <button class="btn btn-success" ng-disabled="showPaper" ng-click="loadRatingDetails()">Search</button>
+                </div>
+            </div>
+
+        </div>
+        <uib-tabset active="0">
+            <uib-tab index="0" heading="Rating">
+                <div class="x_panel" style="margin-top: 20px">
+                    <div class="x_content col-md-12 col-sm-12 col-xs-12">
+                        <div class="col-md-6 col-sm-6 col-xs-6">
+                        </div>
+                        <div class="col-md-6 col-sm-6 col-xs-6">
+                            <div class="input-group">
+                                <input type="text" ng-model="searchCriteria" class="form-control"
+                                       placeholder="Search for...">
+                                <span class="input-group-btn">
+                                  <button class="btn btn-default" type="button">Go!</button>
+                                </span>
+                            </div>
+                        </div>
+
+                        <ul>
+                            <div class="mail_list_column sip-user-wrap"
+                                 ng-mouseover="viewScroll()"
+                                 ng-mouseleave="hideScroll()"
+                                 ng-slimscroll
+                                 height="500" width="100%" opacity="0.2" distance="0px"
+                                 enabled="{{ scrollEnabled }}">
+                                <div class="col-md-6 col-sm-6 col-xs-6">
+
+                                </div>
+
+                                <a href="javascript:void(0);" class="user-wrap hover-none"
+                                   ng-repeat="(key,value) in sectionArray | filterBy: ['name']: searchCriteria" ng-init= "ratingData = RatingResultResolve(value)">
+                                    <div class="mail_list user-list">
+                                        <div class="right user-option-wrap">
+                                            <h3 class="font-robot sub-header">
+                                                {{value.name}}
+                                                <span  ng-init="SetTitiles(ratingData.displayValue)" class="pull-right" uib-rating ng-model="ratingData.starValue" max="10" read-only="true" titles="titles"></span>
+
+                                            </h3>
+
+                                            <p class="font-robot">
+
+                                            </p>
+                                        </div>
+                                        <div class="left">
+                                        </div>
+                                    </div>
+
+
+                                </a>
+                            </div>
+                        </ul>
+                    </div>
+                </div>
+            </uib-tab>
+            <uib-tab index="1" heading="Details">
+                <div class="x_panel" style="margin-top: 20px">
+                    <div class="x_content col-md-12 col-sm-12 col-xs-12">
+                        <!--<div class="col-md-6 col-sm-6 col-xs-6 form-group top_search">
+                            <div class="input-group">
+                                <input type="text" ng-model="searchCriteria" class="form-control"
+                                       placeholder="Search for...">
+                                    <span class="input-group-btn">
+                                      <button class="btn btn-default" type="button">Go!</button>
+                                    </span>
+                            </div>
+                        </div>-->
+
+                        <ul>
+                            <div class="mail_list_column sip-user-wrap"
+                                 ng-mouseover="viewScroll()"
+                                 ng-mouseleave="hideScroll()"
+                                 ng-slimscroll
+                                 height="500" width="100%" opacity="0.2" distance="0px"
+                                 enabled="{{ scrollEnabled }}">
+                                <div class="col-md-6 col-sm-6 col-xs-6">
+
+                                </div>
+
+                                <li ng-repeat="(key,value) in questionArray" style="list-style: none">
+
+                                    <submissionview submissionkey="key" submissiondata ="value"></submissionview>
+                                    <div style="border-bottom: groove">
+
+                                    </div>
+                                </li>
+
+                            </div>
+                        </ul>
+                    </div>
+                </div>
+            </uib-tab>
+        </uib-tabset>
+    </fieldset>
+</div>
+
+<script>
+	window.scrollTo(0, 0);
+</script>
+
+
+
+
+
+

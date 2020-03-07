@@ -1,0 +1,261 @@
+<form name="campaignFrmStep1" novalidate>
+    <section class="cam-create-wrapper">
+
+        <div class="right-wizard-header">
+            <h5>Basic Campaign Information</h5>
+        </div>
+
+        <div class="cam-create-form">
+
+            <div class="col-lg-12 col-md-12 col-xs-12">
+                <div class="col-lg-6 col-md-6 col-xs-12">
+                    <div id="frmCampaign"
+                         class="form-group cam-form-grp"
+                         ng-class="{ 'has-error' : campaignFrmStep1.CampaignName.$invalid &&
+                     !campaignFrmStep1.CampaignName.$pristine }">
+                        <label for="campaignName" class="cam-label">Campaign Name (space not allowed) *</label>
+                        <input type="text"
+                               name="CampaignName"
+                               ng-model="campaign.CampaignName"
+                               class="form-control cam-textbox"
+                               ng-pattern="/^[a-zA-Z\d\-\_]+$/"
+                               id="campaignName"
+                               required
+                               placeholder="Ex  : world Inc ">
+                    </div>
+                </div>
+                <div class="col-lg-6 col-md-6 col-xs-12">
+                    <div class="form-group cam-form-grp">
+                        <label for="exampleInputEmail1" class="cam-label">Channels *</label>
+                        <div class="camp-channel-wrp">
+                            <ul class="customer-inline">
+                                <li>
+                                    <div id="SMS" class="camp-channel active-channel"
+                                         ng-click="changeChannels('SMS')">
+                                        <i class="fa fa-comment-o"></i>
+                                        sms
+                                    </div>
+                                </li>
+                                <li>
+                                    <div id="EMAIL" class="camp-channel"
+                                         ng-click="changeChannels('EMAIL')">
+                                        <i class="fa fa-envelope-o"></i>
+                                        email
+                                    </div>
+                                </li>
+                                <li>
+                                    <div id="CALL" class="camp-channel "
+                                         ng-click="changeChannels('CALL')">
+                                        <i class="fa fa-phone"></i>
+                                        call
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+
+            <div class="col-lg-12 col-md-12 col-xs-12" ng-show="campaign.CampaignChannel=='CALL'">
+
+                <div class="col-lg-6 col-md-6 col-xs-12">
+                    <div id="frmExtensions"
+                         class="form-group cam-form-grp"
+                         ng-class="{ 'has-error' : campaignFrmStep1.Extensions.$invalid && !campaignFrmStep1.Extensions.$pristine }">
+                        <label for="Extensions" class="cam-label">Extension *</label>
+                        <select class="form-control cam-textbox"
+                                id="Extensions"
+                                ng-model="campaign.Extensions"
+                                name="Extensions"
+                                ng-options="opt as opt for opt in extensions track by opt" required>
+                            <!--<option disabled value='' selected>Select Extensions</option>-->
+                            <option disabled value='' selected></option>
+                        </select>
+                    </div>
+                </div>
+
+
+                <div class="col-lg-6 col-md-6 col-xs-12">
+                    <div id="frmCampaignMode"
+                         class="form-group cam-form-grp"
+                         ng-class="{ 'has-error' : campaignFrmStep1.CampaignMode.$invalid &&
+                     !campaignFrmStep1.CampaignMode.$pristine }">
+                        <label for="campaignMode" class="cam-label">Mode *</label>
+                        <div class="camp-channel-wrp">
+                            <ul class="customer-inline">
+                                <li>
+                                    <div id="IVR" class="camp-channel _camp-mode "
+                                         ng-click="changeMode('IVR')">
+                                        <i class="fa fa-code-fork"></i>
+                                        IVR
+                                    </div>
+                                </li>
+                                <li>
+                                    <div id="AGENT" class="camp-channel _camp-mode"
+                                         ng-click="changeMode('AGENT')">
+                                        <i class="fa fa-user"></i>
+                                        AGENT
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+
+
+            <!--<select ng-change="onCampaignChangeMode(campaign.CampaignMode)"-->
+            <!--class="form-control cam-textbox"-->
+            <!--id="CampaignMode"-->
+            <!--disabled-->
+            <!--name="CampaignMode"-->
+            <!--ng-model="campaign.CampaignMode"-->
+            <!--required>-->
+            <!--&lt;!&ndash;<option disabled value='' selected>Select Campaign Mode</option>&ndash;&gt;-->
+            <!--&lt;!&ndash;<option disabled value='' selected></option>&ndash;&gt;-->
+            <!--<option ng-repeat="mode in campaignModeObj"-->
+            <!--value="{{mode.name}}">{{mode.name}}-->
+
+            <!--</option>-->
+            <!--</select>-->
+            <div class="col-lg-12 col-md-12 col-xs-12">
+
+                <div class="col-lg-3" ng-if="campaign.CampaignChannel=='CALL' && campaign.CampaignMode=='AGENT'">
+                    <div id="frmDialoutMechanism"
+                         class="form-group cam-form-grp"
+                         ng-class="{ 'has-error' : campaingForm.DialoutMechanism.$invalid && !campaingForm.DialoutMechanism.$pristine }">
+                        <label for="DialoutMechanism" class="cam-label">Dialout Mechanism * </label>
+                        <select class="form-control cam-textbox"
+                                ng-change="active=2"
+                                ng-model="campaign.DialoutMechanism"
+                                id="DialoutMechanism">
+                            <!--<option disabled value='' selected>Select Dialout Mechanism</option>-->
+                            <!--<option disabled value='' selected></option>-->
+                            <option ng-repeat="dialout in dialoutMechanismObj"
+                                    value="{{dialout.name}}">{{dialout.name}}
+                            </option>
+
+                            <!--<option disabled="" value="" class="" selected="selected">Dialout Mechanism</option>-->
+                            <!--<option label="BLAST" value="BLAST" selected="selected">BLAST</option>-->
+                            <!--<option label="FIFO" value="FIFO">FIFO</option>-->
+                            <!--<option label="PREVIEW" value="PREVIEW">PREVIEW</option>-->
+                            <!--<option label="AGENT" value="AGENT">AGENT</option>-->
+                        </select>
+                    </div>
+                </div>
+                <div class="col-lg-3">
+                    <div id="frmChannelConcurrency"
+                         class="form-group cam-form-grp"
+                         ng-class="{ 'has-error' : campaignFrmStep1.ChannelConcurrency.$invalid &&
+                     !campaignFrmStep1.ChannelConcurrency.$pristine }">
+                        <label for="concurrency" class="cam-label">Channel Concurrency *</label>
+                        <input type="number" min="1"
+                               ng-model="callback.ChannelConcurrency"
+                               name="ChannelConcurrency"
+                               class="form-control cam-textbox"
+                               id="concurrency"
+                               placeholder="Ex  : 1 ">
+                    </div>
+                </div>
+
+                <div class="col-lg-4">
+                    <div id="frmNumberLoadMethod"
+                         class="form-group cam-form-grp"
+                         ng-class="{ 'has-error' : campaingForm.NumberLoadMethod.$invalid && !campaingForm.NumberLoadMethod.$pristine }">
+                        <label for="DialoutMechanism" class="cam-label">Number loading method * </label>
+                        <select class="form-control cam-textbox" ng-model="callback.NumberLoadingMethod" id="NumberLoadMethod">
+                            <option ng-repeat="lmethod in numberLoadingMethodObj" 
+                                value="{{lmethod.name}}">{{lmethod.label}}
+                            </option>
+                        </select>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="col-lg-12 col-md-12 col-xs-12" ng-show="campaign.CampaignChannel=='CALL'">
+                <div class="col-lg-3 col-md-3">
+                    <div id="frmDuplicateNumTimeout"
+                         class="form-group cam-form-grp"
+                         ng-class="{ 'has-error' : campaignFrmStep1.DuplicateNumTimeout.$invalid &&
+                     !campaignFrmStep1.DuplicateNumTimeout.$pristine }">
+                        <label for="duplicatenumtout" class="cam-label">Duplicate Number Timeout *</label>
+                        <input type="number" min="0"
+                               ng-model="callback.DuplicateNumTimeout"
+                               name="DuplicateNumTimeout"
+                               class="form-control cam-textbox"
+                               id="duplicatenumtout"
+                               placeholder="In Seconds">
+                    </div>
+                </div>
+
+            </div>
+
+
+            <!--<div id="callBackOption"-->
+            <!--class="col-lg-3 display-none">-->
+            <!--<label for="concurrency" class="cam-label animated fadeIn"> Allow Callback </label>-->
+            <!--<div class="form-group cam-form-grp">-->
+
+            <!--<label class="btn cam-textbox animated fadeIn ">-->
+            <!--<input type="radio" name="options" id="option1"-->
+            <!--ng-click="active = 3"-->
+            <!--ng-model="callback.AllowCallBack" value="true"-->
+            <!--ng-change='setCallback(callback.AllowCallBack)'> Yes-->
+            <!--</label>-->
+            <!--<label class="btn cam-textbox animated fadeIn ">-->
+            <!--<input type="radio" name="options" id="option2"-->
+            <!--ng-click="active = 0"-->
+            <!--ng-model="callback.AllowCallBack" checked-->
+            <!--value="false"-->
+            <!--ng-change='setCallback(callback.AllowCallBack)'> No-->
+            <!--</label>-->
+            <!--</div>-->
+            <!--</div>-->
+
+
+        </div>
+
+        <!--<div class="camp-tab-config">-->
+        <!--<uib-tabset class="camp-tab"-->
+        <!--active="active">-->
+        <!--<uib-tab index="tab.index"-->
+        <!--ng-repeat="tab in stepOneConfigTabs"-->
+        <!--heading="{{tab.title}}"-->
+        <!--disable="tab.disabled">-->
+
+
+        <!--<div ng-switch on="tab.viewType">-->
+        <!--<div ng-switch-when="callback">-->
+        <!--<div ng-include="'campaignManager/template/new-campaign/step1-config/callback-config.html'"></div>-->
+        <!--</div>-->
+        <!--<div ng-switch-when="template">-->
+        <!--<div ng-include="'campaignManager/template/new-campaign/step1-config/template-config.html'"></div>-->
+        <!--</div>-->
+        <!--<div ng-switch-when="preview">-->
+        <!--<div ng-show="campaign.DialoutMechanism=='PREVIEW'"-->
+        <!--ng-include="'campaignManager/template/new-campaign/step1-config/preview-config.html'"></div>-->
+        <!--</div>-->
+        <!--</div>-->
+
+
+        <!--&lt;!&ndash;<div ng-include="'campaignManager/template/new-campaign/step1-config/callback-config.html'"></div>&ndash;&gt;-->
+        <!--&lt;!&ndash;<div ng-switch on="tab.viewType">&ndash;&gt;-->
+        <!--&lt;!&ndash;<div ng-switch-when="template">&ndash;&gt;-->
+        <!--&lt;!&ndash;<div ng-include="'campaignManager/template/new-campaign/step1-config/template-config.html'"></div>&ndash;&gt;-->
+        <!--&lt;!&ndash;<div ng-switch-when="callback">&ndash;&gt;-->
+
+        <!--&lt;!&ndash;</div>&ndash;&gt;-->
+
+
+        <!--&lt;!&ndash;</div>&ndash;&gt;-->
+        <!--</uib-tab>-->
+
+        <!--</uib-tabset>-->
+        <!--</div>-->
+    </section>
+</form>

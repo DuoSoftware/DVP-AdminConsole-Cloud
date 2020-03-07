@@ -1,0 +1,134 @@
+<div id="login-bg" class="logi animated fadeIn " ng-controller="loginCtrl">
+    <!--<img src="assets/images/bg_10444x1000.jpg" id="bg" alt="">-->
+    <div>
+        <div class="login_wrapper">
+            <div class="form login_form">
+                <div ng-show="isSocialMedia" class="is-social-media-wrapper">
+                    Authentication...
+                </div>
+                <section class="login_content">
+                    </br>
+                    <div class="login-header">
+                        <img src="images/logo_130x130yellow.svg" />
+                    </div>
+
+                    <form name="loginFrm">
+                        <h1 class="font-robot font-300"> </h1>
+
+                        <div class="validation-area">
+
+                            <label class="inline-block dark-frm-label">Company name
+                                <span class="inline-block validation-on  "
+                                      ng-show="loginFrm.companyName.$invalid && !loginFrm.companyName.$pristine">
+                             *
+                            </span> </label>
+                            <input type="text" name="companyName" ng-model="companyName"
+                                   class="form-control login-controller dark-frm-input "
+                                   required/>
+                        </div>
+                        <div class="validation-area">
+
+                            <label class="inline-block dark-frm-label">User name
+                                <span class="inline-block validation-on  "
+                                      ng-show="loginFrm.userName.$invalid && !loginFrm.userName.$pristine">
+                             *
+                            </span> </label>
+                            <input type="text" name="userName" ng-model="userName"
+                                   class="form-control login-controller dark-frm-input "
+                                   required/>
+                        </div>
+                        <div class="validation-area">
+                            <div>
+                                <label class="inline-block dark-frm-label">Password
+                                <span class="inline-block validation-on"
+                                      ng-show="loginFrm.password.$invalid && !loginFrm.password.$pristine">
+                            *
+                            </span> </label>
+                                <input type="password" ng-model="password" name="password"
+                                       class="form-control dark-frm-input"
+                                       required/>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="col-lg-12">
+                                <div class="row">
+                                    <button class="btn btn-default btn-block submit  " href="javascript:void(0);"
+                                            ng-disabled="loginFrm.$invalid"
+                                            ng-class="isLogin==true ?'disabled-btn':'dark-frm-btn'"
+                                            ng-click="onClickLogin()" ng-disabled="isLogin">Log in
+                                        <i ng-if="isLogin"
+                                           class="fa fa-spinner fa-pulse fa-3x fa-fw form-data-loading"></i>
+                                    </button>
+                                </div>
+                            </div>
+
+                            <!--
+                            <button ng-click="authenticate('linkedin')">Sign in with LinkedIn</button>
+                            <button ng-click="authenticate('instagram')">Sign in with Instagram</button>
+                            <button ng-click="authenticate('twitter')">Sign in with Twitter</button>
+                            <button ng-click="authenticate('foursquare')">Sign in with Foursquare</button>
+                            <button ng-click="authenticate('yahoo')">Sign in with Yahoo</button>
+                            <button ng-click="authenticate('live')">Sign in with Windows Live</button>
+                            <button ng-click="authenticate('twitch')">Sign in with Twitch</button>
+                            <button ng-click="authenticate('bitbucket')">Sign in with Bitbucket</button>
+                            <button ng-click="authenticate('spotify')">Sign in with Spotify</button>-->
+
+                            <!-- loading -->
+                            <div class="col-lg-12">
+                                <div class="row lost-pwd ">
+                                    <div class="row">
+                                        <p class="change_link lost-pwd-link">
+                                            <a href="javascript:void(0);" ng-click="onClickResetPassword()">
+                                                Lost your password? </a>
+                                        </p>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <!--<div class="col-lg-12">
+                                <div class="row">
+                                    <p class="change_link">
+                                        <a href="javascript:void(0);" ng-click="onClickSignUp()"
+                                           class="to_register to_register_dark"> New here? <span style="color: #6b348e">Create an
+                                            account</span> </a>
+                                    </p>
+                                </div>
+                            </div>-->
+                        </div>
+
+                        <div class="clearfix"></div>
+
+                        <p class="login-dark-separator">
+                            SIGN IN WITH
+                        </p>
+
+                        <div class="login-with-social">
+                            <ul>
+                                <li ng-click="authenticate('facebook')">
+                                    <i class="fa fa-facebook hover hvr-bob "></i>
+                                </li>
+                                <li ng-click="authenticate('google')">
+                                    <i class="fa fa-google-plus hover hvr-bob "></i>
+                                </li>
+                                <li ng-click="authenticate('github')">
+                                    <i class="fa fa-github hover hvr-bob "></i>
+                                </li>
+                                <li><i class="fa fa-twitter disable"></i></li>
+                                <li><i class="fa fa-linkedin disable"></i></li>
+                            </ul>
+                        </div>
+                        <div class="clearfix"></div>
+                        <br/>
+                        <!--<div>-->
+                        <!--<p class="font-robot font-300 font-green-light500">-->
+                        <!--©2016 All Rights Reserved veery.cloud Privacy and Terms-->
+                        <!--</p>-->
+                        <!--</div>-->
+
+                    </form>
+                </section>
+            </div>
+        </div>
+    </div>
+</div>
+

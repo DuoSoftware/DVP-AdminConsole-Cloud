@@ -1,0 +1,79 @@
+
+<div class="row" >
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <div class="page-title">
+            <div class="title_left col-md-6 col-sm-6 col-xs-6">
+                <h3 class="font-robot font-600 ">Auto Attendant List</h3>
+            </div>
+            <div class="col-md-6 col-sm-6 col-xs-6 form-group top_search">
+                <div class="input-group">
+                    <input type="text" ng-model="searchCriteria" class="form-control"
+                           placeholder="Search for...">
+                                <span class="input-group-btn">
+                                  <button class="btn btn-default" type="button">Go!</button>
+                                </span>
+                </div>
+            </div>
+        </div>
+        <div class="x_panel">
+            <div class="x_title">
+                <h2 class="font-robot font-300 text-uppercase font-15">
+                    <button type="button" class="btn btn-success" ng-click="addNewAA()">
+                        New
+                    </button>
+                </h2>
+                <div class="clearfix"></div>
+            </div>
+
+            <div class="x_content">
+
+
+                <div class="">
+                    <table class="table table-striped table-bordered dt-responsive nowrap dataTable no-footer dtr-inline">
+                        <thead>
+                        <tr class="headings veery-tbl-clmn-hdr">
+                            <th class="column-title">Name</th>
+                            <th class="column-title">Code</th>
+                            <th class="column-title selectedTpcs">Extention</th>
+                            <th class="column-title selectedTpcs">MenuSound</th>
+                            <th class="column-title selectedTpcs">Tries</th>
+                            <th class="column-title selectedTpcs">TimeOut</th>
+                            <th class="column-title selectedTpcs">EnableExtention</th>
+
+                        </tr>
+                        </thead>
+
+                        <tbody>
+                        <tr class="even pointer veery-tbl-body" ng-repeat="aa in aas | filterBy: ['Name']: searchCriteria">
+
+                            <td class="valAlgn">{{aa.Name}}</td>
+                            <td class="valAlgn">{{aa.Code}}</td>
+                            <td class="valAlgn">{{aa.Extention}}</td>
+                            <td class="valAlgn">{{aa.MenuSound}}</td>
+                            <td class="valAlgn">{{aa.Tries}}</td>
+                            <td class="valAlgn">{{aa.TimeOut}}</td>
+                            <td class="valAlgn">{{aa.EnableExtention}}</td>
+
+                            <td class="lstCol">
+                                <button type="submit" class="btn btn-primary" ng-click="editAA(aa)"><span class="fa fa-edit" aria-hidden="true"></span>Edit</button>
+                                <button type="submit" class="btn btn-primary" ng-click="deleteAA(aa)"><span class="fa fa-remove" aria-hidden="true"></span>Delete</button>
+
+
+                                <!--<button type="submit" class="btn btn-primary" ng-click="BargeCall(call.BargeID)"><span class="fa fa-phone" aria-hidden="true"></span> Barge</button>-->
+                                <!--<button type="submit" class="btn btn-primary" ng-click="BargeCall(call.BargeID)"><span class="fa fa-phone" aria-hidden="true"></span> Barge</button>-->
+                            </td>
+
+
+                        </tr>
+
+
+                        </tbody>
+                    </table>
+                    <!-- <div class="animated flipInY col-lg-6 col-md-6 col-sm-6 col-xs-12" ng-if="phoneSatus">-->
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>

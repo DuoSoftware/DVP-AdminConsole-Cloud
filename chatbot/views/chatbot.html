@@ -1,0 +1,74 @@
+<div class="row">
+
+    <div class="col-md-12 col-sm-6 col-xs-12">
+
+        <!-- Bot list -->
+        <div class="x_panel animated fadeIn bot-card">
+            <div class="x_title card-title">
+                <div class="col-md-6 col-sm-6 col-xs-6">
+                    <h2 class="font-robot">My Bot</h2>
+                </div>
+
+                <div class="col-md-4 col-sm-5 col-xs-5 form-group top_search card-search">
+                    <helpbutton class="helpbutton" displayhelp="'chatbots'"></helpbutton>
+                    <div class="card-search--form">
+                        <i class="fa fa-search"></i>
+                        <div class="input-group">
+                            <input type="text" ng-model="searchCriteria" class="form-control" placeholder="Search for...">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card-add">
+                    <button type="button" class="btn card-title--btn-add card-btn" ng-click="showNewCardForm=true" data-toggle="collapse" data-target="#addNewBotCollapse"
+                        ng-hide="showNewCardForm">Add New
+                    </button>
+                    <div id="addNewBotCollapse" ng-show="showNewCardForm" class="collapse">
+
+                        <div class="subcard">
+                            <div class="col-sm-12 subcard-title ">
+                                <h2 class="font-robot font-300 font-15">Create New Bot</h2>
+                                <div data-toggle="collapse" data-target="#addNewBotCollapse" ng-click="showNewCardForm=false" class="btn-circle pull-right">
+                                    <i class="fa fa-times"></i>
+                                </div>
+                            </div>
+
+                            <form class="form-horizontal form-label-left input_mask card-create-bot">
+                                <div class="row no-gutters">
+                                    <div class="col-12 col-sm-6 col-md-6 form-group">
+                                        <input type="text" class="form-control" ng-model="newBot.name" placeholder="Bot Name">
+                                    </div>
+
+                                    <div class="col-12 col-sm-6 col-md-6 form-group">
+                                        <input type="text" class="form-control" ng-model="newBot.description" placeholder="Bot Description">
+                                    </div>
+
+                                    <button type="button" class="btn btn-success btn-block card-btn btn-add-bot pull-right padding-right10" ng-click="CreateNewBot(newBot)">
+                                        Add Bot
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div class="clearfix"></div>
+            </div>
+
+            <!-- view Bot List and Edit -->
+
+
+            <div class="x_content">
+                <ul class="list-unstyled">
+                    <li ng-repeat="bot in allbots | filterBy: ['name']: searchCriteria | orderBy:'-created_at'">
+                        <editachatbot bot="bot" updatebot="" getall="getAllBots()">
+                        </editachatbot>
+                    </li>
+
+
+                </ul>
+            </div>
+        </div>
+        <!-- end -->
+    </div>
+
+</div>

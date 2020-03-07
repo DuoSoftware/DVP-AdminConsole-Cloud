@@ -1,0 +1,161 @@
+<div class="col-md-12 col-sm-12 col-xs-12 panel panel-default" style="padding: 10px 10px 10px 10px">
+    <div class="col-md-8 col-sm-8 col-xs-8">
+        <div class="col-md-5 col-sm-5 col-xs-5">
+            <input ng-disabled="curAppointment.id" type="text" class="form-control" ng-model="curAppointment.AppointmentName" placeholder="Appointment Name">
+        </div>
+        <div class="col-md-5 col-sm-5 col-xs-5">
+            <select class="form-control" placeholder="Recurrence Pattern" ng-model="curAppointment.RecurrencePattern" ng-change="onRecurrenceValueChanged()">
+                <option value="NONE">Recurrence - NONE</option>
+                <option value="DAILY">Recurrence - DAILY</option>
+                <option value="WEEKLY">Recurrence - WEEKLY</option>
+            </select>
+        </div>
+        <div class="col-md-2 col-sm-2 col-xs-2">
+            <button ng-disabled="!curAppointment.id" type="button" class="btn btn-primary" ng-click="deleteCurrentAppointment()">Delete</button>
+        </div>
+
+        <div class="col-md-5 col-sm-5 col-xs-5">
+            <span>Start Date (YYYY-MM-DD)</span>
+            <input type="text" class="form-control date-picker" ng-model="curAppointment.StartDate" name="startDate" datepicker>
+        </div>
+        <div class="col-md-5 col-sm-5 col-xs-5">
+            <span>End Date (YYYY-MM-DD)</span>
+            <input type="text" class="form-control" ng-model="curAppointment.EndDate" name="endDate" datepicker>
+        </div>
+        <div class="col-md-2 col-sm-2 col-xs-2" style="position: relative; top: 20px;">
+            <button type="button" class="btn btn-primary" ng-click="clearCurrentAppointment()">Clear</button>
+        </div>
+        <fieldset class="col-md-5 col-sm-5 col-xs-5" ng-disabled="curAppointment.RecurrencePattern === 'DAILY'">
+            <span>Start Time (HH:MM) 24 HR</span>
+            <div class="bootstrap-timepicker">
+                <input id="timepickerSt" type="text" class="form-control" ng-model="curAppointment.StartTime">
+                <i class="icon-time"></i>
+            </div>
+        </fieldset>
+        <fieldset class="col-md-5 col-sm-5 col-xs-5" ng-disabled="curAppointment.RecurrencePattern === 'DAILY'">
+            <span>End Time (HH:MM) 24 HR</span>
+            <div class="bootstrap-timepicker">
+                <input id="timepickerEt" type="text" class="form-control" ng-model="curAppointment.EndTime">
+                <i class="icon-time"></i>
+            </div>
+        </fieldset>
+        <div class="col-md-2 col-sm-2 col-xs-2" style="position: relative; top: 20px;">
+            <button type="button" class="btn btn-primary" ng-click="saveUpdateAppointment()">{{saveButtonName}}</button>
+        </div>
+    </div>
+    <fieldset class="col-md-4 col-sm-4 col-xs-4" ng-disabled="isWeeksDisabled">
+        <p style="padding-left: 10px;">Days of Week</p>
+        <div class="col-md-3 col-sm-3 col-xs-3">
+            <checkbox class="btn-success" ng-model="curAppointment.WeeklyMonday" ng-init="curAppointment.WeeklyMonday=false"></checkbox>
+            <label>
+                <small>Monday</small>
+            </label>
+        </div>
+
+        <div class="col-md-3 col-sm-3 col-xs-3">
+            <checkbox class="btn-success" ng-model="curAppointment.WeeklyTuesday" ng-init="curAppointment.WeeklyTuesday=false"></checkbox>
+            <label>
+                <small>Tuesday</small>
+            </label>
+        </div>
+
+        <div class="col-md-3 col-sm-3 col-xs-3">
+            <checkbox class="btn-success" ng-model="curAppointment.WeeklyWednesday" ng-init="curAppointment.WeeklyWednesday=false"></checkbox>
+            <label>
+                <small>Wednesday</small>
+            </label>
+        </div>
+
+        <div class="col-md-3 col-sm-3 col-xs-3">
+            <checkbox class="btn-success" ng-model="curAppointment.WeeklyThursday" ng-init="curAppointment.WeeklyThursday=false"></checkbox>
+            <label>
+                <small>Thursday</small>
+            </label>
+        </div>
+
+        <div class="col-md-3 col-sm-3 col-xs-3">
+            <checkbox class="btn-success" ng-model="curAppointment.WeeklyFriday" ng-init="curAppointment.WeeklyFriday=false"></checkbox>
+            <label>
+                <small>Friday</small>
+            </label>
+        </div>
+
+        <div class="col-md-3 col-sm-3 col-xs-3">
+            <checkbox class="btn-success" ng-model="curAppointment.WeeklySaturday" ng-init="curAppointment.WeeklySaturday=false"></checkbox>
+            <label>
+                <small>Saturday</small>
+            </label>
+        </div>
+
+        <div class="col-md-3 col-sm-3 col-xs-3">
+            <checkbox class="btn-success" ng-model="curAppointment.WeeklySunday" ng-init="curAppointment.WeeklySunday=false"></checkbox>
+            <label>
+                <small>Sunday</small>
+            </label>
+        </div>
+    </fieldset>
+
+</div>
+
+<div class="col-md-12 col-sm-12 col-xs-12">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <div ui-calendar="uiconfig.calendar" ng-model="eventsources" calendar="myCalendar1"></div>
+    </div>
+
+    <br>
+
+    <div class="col-md-12 col-sm-12 col-xs-12" style="padding: 5px 5px 5px 5px">
+        <div class="col-md-4 col-sm-4 col-xs-4">
+            <button ng-click="changeView('month', 'myCalendar1')">Month View</button>
+            <button ng-click="changeView('agendaWeek', 'myCalendar1')">Week View</button>
+            <button ng-click="changeView('agendaDay', 'myCalendar1')">Day View</button>
+        </div>
+        <div class="col-md-2 col-sm-2 col-xs-2"></div>
+        <div class="col-md-6 col-sm-6 col-xs-6">
+            <div class="col-md-1 col-sm-1 col-xs-1">
+                <div class="calendar-legend cal-none"></div>
+            </div>
+            <div class="col-md-3 col-sm-3 col-xs-3" style="position: relative; top: 5px;">
+                <span>Rec - None</span>
+            </div>
+            <div class="col-md-1 col-sm-1 col-xs-1">
+                <div class="calendar-legend cal-daily"></div>
+            </div>
+            <div class="col-md-3 col-sm-3 col-xs-3" style="position: relative; top: 5px;">
+                <span>Rec - Daily</span>
+            </div>
+            <div class="col-md-1 col-sm-1 col-xs-1">
+                <div class="calendar-legend cal-weekly"></div>
+            </div>
+            <div class="col-md-3 col-sm-3 col-xs-3" style="position: relative; top: 5px;">
+                <span>Rec - Weekly</span>
+            </div>
+
+
+
+
+        </div>
+
+
+    </div>
+
+
+</div>
+
+
+<script type="text/javascript">
+    $('#timepickerSt').timepicker({
+        template: false,
+        showInputs: false,
+        minuteStep: 5
+    });
+</script>
+
+<script type="text/javascript">
+    $('#timepickerEt').timepicker({
+        template: false,
+        showInputs: false,
+        minuteStep: 5
+    });
+</script>
+

@@ -1,0 +1,117 @@
+.new-card .btn-small {
+    margin-top :0;
+}
+
+.card {
+    background-color: #ffffff;
+    padding: 15px;
+    width: 364px;
+    float: left;
+    margin: 10px 10px;
+    position: relative;
+    border-radius: 8px;
+}
+
+.cardset{
+    background-color: #F2F4F8;
+    padding: 15px;
+    margin: 10px 0;
+    position: relative;
+    border-radius: 8px;
+    float: left;
+    width: 100%;
+}
+
+/* 
+following block is commented to prevent overrding any styles 
+used in other interfaces. Please inform before enabling. 
+*/
+/* tags-input .tags{
+    width: 470px !important;
+    margin-left: -6px !important;
+    margin-top: -4px !important;
+    padding: 2px !important;
+    border: none !important;
+} */
+
+.edit-card--btn-circle {
+    
+    background-color: #FBDDEA;
+    color: #EE407D;
+    height: 30px;
+    width: 30px;
+    border-radius: 100%;
+    text-align: center;
+    line-height: 2.4;
+    cursor: pointer;
+}
+
+.edit-card--btn-circle:hover {
+    background-color: #EE407D;
+    color: #ffffff;
+}
+
+.edit-card--remove {
+    position: absolute;
+    top: 12px;
+    right: 10px;
+}
+
+.edit-card--edit {
+    position: absolute;
+    top: 12px;
+    right: 44px;
+}
+
+.edit-card-image {
+    margin-top: 20px;
+}
+
+.edit-card--title {
+    border-bottom: 1px solid #E6E6E6;
+    padding: 10px 0;
+    margin-bottom: 10px;
+    line-height: 1;
+}
+
+.top40 {
+    margin-top: 40px;
+}
+
+.btn-small {
+    background-color: #FBDDEA;
+    color: #EE407D;
+    border-radius: 15px;
+    padding: 6px 12px;
+    margin-top:20px;
+    display: table;
+    float: left;
+    border: none;
+    margin-right: 5px;
+}
+
+.btn-small:hover {
+    background-color: #EE407D;
+    color: #ffffff;
+}
+
+.card-lable-new {
+    background: transparent;
+    border: none;
+    padding: 0;
+    line-height: 2.1;
+}
+.taggedclassA{
+    color: green !important;
+}
+.taggedclassB{
+    color: red !important;
+}
+
+.sortorder:after {
+    content: '\25b2';   
+    
+  }
+  .sortorder.reverse:after {
+    content: '\25bc';   
+  }

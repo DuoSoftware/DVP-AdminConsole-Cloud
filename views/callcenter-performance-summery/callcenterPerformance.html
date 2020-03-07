@@ -1,0 +1,158 @@
+<div>
+    <!--<div class="col-md-12 col-sm-12 col-xs-12 animated fadeIn">-->
+        <!--<div class="row">-->
+            <!--<div class="x_panel">-->
+                <!--<div class="x_title bottom-gray-200 m-bottom20">-->
+                    <!--<h4 class="font-robot font-300 text-uppercase font-15">Search option-->
+                    <!--</h4>-->
+                    <!--<div class="clearfix"></div>-->
+                <!--</div>-->
+
+                <!--<div class="col-sm-3">-->
+                    <!--<label>Start Date</label>-->
+                    <!--<input type="text" class="form-control" ng-model="startDate" ng-change="onDateChange()" name="startDate"-->
+                           <!--datepicker>-->
+                <!--</div>-->
+                <!--<div class="col-sm-3">-->
+                    <!--<label>End Date</label>-->
+                    <!--<input type="text" class="form-control" ng-model="endDate" ng-change="onDateChange()" name="endDate"-->
+                           <!--datepicker>-->
+                <!--</div>-->
+                <!--<div class="col-sm-3">-->
+                    <!--<div class="x_content btn-wrap-header">-->
+                        <!--<button type="button" style="position: relative; top: 10px;" class="btn btn-success" ng-click="getCallCenterPerformanceHistory()" ng-disabled="!dateValid">-->
+                            <!--Search-->
+                        <!--</button>-->
+                        <!--<button type="button" style="position: relative; top: 10px;" class="btn btn-success" ng-click="loadCurrentCounts()" ng-disabled="!dateValid || disableCurrent">-->
+                            <!--Current Count-->
+                        <!--</button>-->
+                    <!--</div>-->
+                <!--</div>-->
+            <!--</div>-->
+        <!--</div>-->
+    <!--</div>-->
+    <div class>
+
+
+
+        <div class="row top_tiles">
+            <div class="col-lg-8 col-md-8 col-sm-3 col-xs-12">
+                <canvas style="position: relative;" id="callCenterPerformanceCanvas" width="436px"
+                        height="200px"></canvas>
+
+                <!--<div class="col-lg-12 agent-ticket-chart-wrapper">
+                    <canvas id="deferencecanvas" width="436px" height="100px"></canvas>
+                </div>-->
+            </div>
+
+
+            <div class="animated flipInY col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                <div class="tile-stats cp-second-card-dashboard bg-yellow300">
+                    <div class="icon"><i class="fa  fa-smile-o font-black500"></i></div>
+                    <div class="count">{{callCenterPerformance.TotalLoginAgents}}</div>
+                    <h3 class="font-robot font-700 font-black500">Logged In Agents</h3>
+                    <p class="font-robot font-200">Total Logged In Agents</p>
+                </div>
+                <div class="tile-stats cp-second-card-dashboard bg-blue700">
+                    <div class="icon"><i class="fa fa-hourglass-start font-orange800"></i></div>
+                    <div class="count">{{callCenterPerformance.totalStaffTime}}</div>
+                    <h3 class="font-robot font-700 font-orange800">Staff Time</h3>
+                    <p class="font-robot font-200 ">Total Staff Time </p>
+                </div>
+            </div>
+        </div>
+
+
+
+
+        <div class=" row top_tiles">
+            <div class="animated flipInY col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                <div class="tile-stats cp-second-card-dashboard bg-red50">
+                    <div class="icon"><i class="fa fa-hourglass-start font-gray800"></i></div>
+                    <div class="count">{{callCenterPerformance.AverageStaffTime}}</div>
+                    <h3 class="font-robot font-700 font-gray800">AVG Staff Time</h3>
+                    <p class="font-robot font-200">Average Staff Time</p>
+                </div>
+                <div class="tile-stats cp-second-card-dashboard bg-blue700">
+                    <div class="icon"><i class="fa fa-smile-o font-orange800"></i></div>
+                    <div class="count">{{callCenterPerformance.AverageInboundCallsPerAgent}}</div>
+                    <h3 class="font-robot font-700 font-orange800">AVG Answered Calls Per Agent</h3>
+                    <p class="font-robot font-200">Inbound</p>
+                </div>
+                <div class="tile-stats cp-second-card-dashboard bg-red50">
+                    <div class="icon"><i class="fa fa-hourglass-start font-gray800"></i></div>
+                    <div class="count">{{callCenterPerformance.totalTalkTimeInbound}}</div>
+                    <h3 class="font-robot font-700 font-gray800">Talk Time </h3>
+                    <p class="font-robot font-200">Total Talk Time(Inbound)</p>
+                </div>
+            </div>
+            <div class="animated flipInY col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                <div class="tile-stats cp-second-card-dashboard bg-green100">
+                    <div class="icon"><i class="fa fa-hourglass-start font-yellow800"></i></div>
+                    <div class="count">{{callCenterPerformance.totalHoldTime}}</div>
+                    <h3 class="font-robot font-700 font-yellow800">Hold Time</h3>
+                    <p class="font-robot font-200">Total Hold Time</p>
+                </div>
+                <div class="tile-stats cp-second-card-dashboard bg-yellow300">
+                    <div class="icon"><i class="fa  fa-smile-o font-black500"></i></div>
+                    <div class="count">{{callCenterPerformance.AverageOutboundCallsPerAgent}}</div>
+                    <h3 class="font-robot font-700 font-black500">AVG Dialed Calls Per Agent</h3>
+                    <p class="font-robot font-200">Outbound</p>
+                </div>
+                <div class="tile-stats cp-second-card-dashboard bg-red50">
+                    <div class="icon"><i class="fa fa-hourglass-start font-gray800"></i></div>
+                    <div class="count">{{callCenterPerformance.totalTalkTimeOutbound}}</div>
+                    <h3 class="font-robot font-700 font-gray800">Talk Time </h3>
+                    <p class="font-robot font-200">Total Talk Time(Outbound)</p>
+                </div>
+            </div>
+
+            <div class="animated flipInY col-lg-3 col-md-3 col-sm-3 col-xs-12">
+            <div class="tile-stats cp-second-card-dashboard bg-red50">
+                <div class="icon"><i class="fa fa-hourglass-start font-gray800"></i></div>
+                <div class="count">{{callCenterPerformance.totalAcwTime}}</div>
+                <h3 class="font-robot font-700 font-gray800">ACW Time </h3>
+                <p class="font-robot font-200">Total ACW Time</p>
+            </div>
+                <div class="tile-stats cp-second-card-dashboard bg-green100">
+                    <div class="icon">
+                        <i class="fa fa-hourglass-start font-yellow800"></i></div>
+                    <div class="count">{{callCenterPerformance.AverageAcwTime}}</div>
+                    <h3 class="font-robot font-700 font-yellow800">AVG ACW Time</h3>
+                    <p class="font-robot font-200">Average ACW Time</p>
+                </div>
+                <div class="tile-stats cp-second-card-dashboard bg-blue700">
+                    <div class="icon"><i class="fa fa-hourglass-start font-orange800"></i></div>
+                    <div class="count">{{callCenterPerformance.totalBreakTime}}</div>
+                    <h3 class="font-robot font-700 font-orange800">Break Time</h3>
+                    <p class="font-robot font-200 ">Total Break Time </p>
+                </div>
+        </div>
+
+            <div class="animated flipInY col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                <div class="tile-stats cp-second-card-dashboard bg-green100">
+                    <div class="icon">
+                        <i class="fa fa-hourglass-start font-yellow800"></i></div>
+                    <div class="count">{{callCenterPerformance.totalIdleTime}}</div>
+                    <h3 class="font-robot font-700 font-yellow800">Total Idle Time</h3>
+                    <p class="font-robot font-200">Total Idle Time</p>
+                </div>
+                <div class="tile-stats cp-second-card-dashboard bg-blue700">
+                    <div class="icon"><i class="fa fa-hourglass-start font-orange800"></i></div>
+                    <div class="count">{{callCenterPerformance.AverageTalkTimeInbound}}</div>
+                    <h3 class="font-robot font-700 font-orange800">AVG Talk Time</h3>
+                    <p class="font-robot font-200 ">Inbound </p>
+                </div>
+                <div class="tile-stats cp-second-card-dashboard bg-red50">
+                    <div class="icon"><i class="fa fa-hourglass-start font-gray800"></i></div>
+                    <div class="count">{{callCenterPerformance.AverageTalkTimeOutbound}}</div>
+                    <h3 class="font-robot font-700 font-gray800">AVG Talk Time </h3>
+                    <p class="font-robot font-200">Outbound</p>
+                </div>
+            </div>
+
+        </div>
+
+
+    </div>
+</div>

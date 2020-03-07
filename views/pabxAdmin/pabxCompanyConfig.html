@@ -1,0 +1,185 @@
+<div class="page-title row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <div class="col-md-12 col-sm-12 col-xs-12">
+            <h3 class="font-robot font-600 ">PABX Administration</h3>
+        </div>
+
+    </div>
+</div>
+
+<div class="clearfix"></div>
+
+<div class="row">
+    <fieldset class="col-md-12 col-sm-12 col-xs-12">
+        <div class="x_panel">
+            <div class="x_title col-md-12 col-sm-12 col-xs-12">
+                <h2>PABX Company Configuration</h2>
+
+            </div>
+
+            <div class="clearfix"></div>
+            <div class="x_content col-md-12 col-sm-12 col-xs-12">
+
+
+                    <div class="col-md-6 col-sm-6 col-xs-12">
+
+                        <div class="col-md-12 col-sm-12 col-xs-12" style="border: 1px solid rgb(230, 229, 229); border-radius: 8px; padding: 5px;">
+
+                            <form name="pabxBasicConfForm">
+                                <div class="col-md-12 col-sm-12 col-xs-12">
+                                    <label><b>Basic Configuration</b></label>
+                                </div>
+
+                                <br>
+                                <br>
+
+                                <div class="col-md-4 col-sm-4 col-xs-12">
+                                    <checkbox class="btn-success" ng-model="pabxConfig.BypassMedia" ng-init="pabxConfig.AllowOutbound=false"></checkbox><label><small>Bypass Media</small></label>
+                                </div>
+                                <div class="col-md-4 col-sm-4 col-xs-12">
+                                    <checkbox class="btn-success" ng-model="pabxConfig.IgnoreEarlyMedia" ng-init="pabxConfig.IgnoreEarlyMedia=false"></checkbox><label><small>Ignore Early Media</small></label>
+                                </div>
+                                <div class="col-md-4 col-sm-4 col-xs-12">
+                                    <checkbox class="btn-success" ng-model="pabxConfig.VoicemailEnabled" ng-init="pabxConfig.VoicemailEnabled=false"></checkbox><label><small>Voicemail</small></label>
+                                </div>
+
+                                <div class="clearfix"></div>
+
+                                <br>
+
+                                <div class="col-md-12 col-sm-12 col-xs-12">
+                                    <button class="btn btn-primary" ng-click="UpdatePABXMasterData()">Save</button>
+                                </div>
+
+                            </form>
+                        </div>
+
+                        <div class="col-md-12 col-sm-12 col-xs-12" style="border: 1px solid rgb(230, 229, 229); border-radius: 8px; padding: 5px;">
+
+                            <form name="pabxFeatureCodesForm">
+                                <div class="col-md-12 col-sm-12 col-xs-12">
+                                    <label><b>Feature Codes</b></label>
+                                </div>
+
+                                <br>
+                                <br>
+
+                                <div class="item form-group bad col-md-3 col-sm-3 col-xs-6">
+                                    <label>PickUp :</label>
+                                    <input class="form-control" name="PickUp" ng-model="fc.PickUp" ng-pattern="/^[0-9]*$/">
+                                    <div ng-messages="pabxFeatureCodesForm.PickUp.$error" ng-if="pabxFeatureCodesForm.PickUp.$dirty">
+                                        <div class="alert" ng-message="pattern">Value should be numeric</div>
+                                    </div>
+                                </div>
+                                <div class="item form-group bad col-md-3 col-sm-3 col-xs-6">
+                                    <label>Park :</label>
+                                    <input class="form-control" name="Park" ng-model="fc.Park" ng-pattern="/^[0-9]*$/">
+                                    <div ng-messages="pabxFeatureCodesForm.Park.$error" ng-if="pabxFeatureCodesForm.Park.$dirty">
+                                        <div class="alert" ng-message="pattern">Value should be numeric</div>
+                                    </div>
+                                </div>
+                                <div class="item form-group bad col-md-3 col-sm-3 col-xs-6">
+                                    <label>Barge :</label>
+                                    <input class="form-control" name="Barge" ng-model="fc.Barge" ng-pattern="/^[0-9]*$/">
+                                    <div ng-messages="pabxFeatureCodesForm.Barge.$error" ng-if="pabxFeatureCodesForm.Barge.$dirty">
+                                        <div class="alert" ng-message="pattern">Value should be numeric</div>
+                                    </div>
+                                </div>
+                                <div class="item form-group bad col-md-3 col-sm-3 col-xs-6">
+                                    <label>Intercept :</label>
+                                    <input class="form-control" name="Intercept" ng-model="fc.Intercept" ng-pattern="/^[0-9]*$/">
+                                    <div ng-messages="pabxFeatureCodesForm.Intercept.$error" ng-if="pabxFeatureCodesForm.Intercept.$dirty">
+                                        <div class="alert" ng-message="pattern">Value should be numeric</div>
+                                    </div>
+                                </div>
+                                <div class="item form-group bad col-md-3 col-sm-3 col-xs-6">
+                                    <label>Voicemail :</label>
+                                    <input class="form-control" name="VoiceMail" ng-model="fc.VoiceMail" ng-pattern="/^[0-9]*$/">
+                                    <div ng-messages="pabxFeatureCodesForm.Intercept.$error" ng-if="pabxFeatureCodesForm.Intercept.$dirty">
+                                        <div class="alert" ng-message="pattern">Value should be numeric</div>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-12 col-sm-12 col-xs-12">
+                                    <button class="btn btn-primary" ng-click="UpdateFC()" ng-disabled="pabxFeatureCodesForm.$invalid">Save</button>
+                                </div>
+                            </form>
+
+
+                        </div>
+
+                        <div class="col-md-12 col-sm-12 col-xs-12" style="border: 1px solid rgb(230, 229, 229); border-radius: 8px; padding: 5px;">
+
+                            <form name="pabxAttTransForm">
+                                <div class="col-md-12 col-sm-12 col-xs-12">
+                                    <label><b>Attendant Transfer Configurations</b></label>
+                                </div>
+
+                                <br>
+                                <br>
+
+                                <div class="item form-group bad col-md-3 col-sm-3 col-xs-6">
+                                    <label>Internal :</label>
+                                    <input class="form-control" name="InternalTransfer" ng-model="attTrans.InternalTransfer" ng-pattern="/^[0-9]*$/">
+                                    <div ng-messages="pabxAttTransForm.InternalTransfer.$error" ng-if="pabxAttTransForm.InternalTransfer.$dirty">
+                                        <div class="alert" ng-message="pattern">Value should be numeric</div>
+                                    </div>
+                                </div>
+                                <div class="item form-group bad col-md-3 col-sm-3 col-xs-6">
+                                    <label>External :</label>
+                                    <input class="form-control" name="ExternalTransfer" ng-model="attTrans.ExternalTransfer" ng-pattern="/^[0-9]*$/">
+                                    <div ng-messages="pabxAttTransForm.ExternalTransfer.$error" ng-if="pabxAttTransForm.ExternalTransfer.$dirty">
+                                        <div class="alert" ng-message="pattern">Value should be numeric</div>
+                                    </div>
+                                </div>
+                                <div class="item form-group bad col-md-3 col-sm-3 col-xs-6">
+                                    <label>Conference :</label>
+                                    <input class="form-control" name="ConferenceTransfer" ng-model="attTrans.ConferenceTransfer" ng-pattern="/^[0-9]*$/">
+                                    <div ng-messages="pabxAttTransForm.ConferenceTransfer.$error" ng-if="pabxAttTransForm.ConferenceTransfer.$dirty">
+                                        <div class="alert" ng-message="pattern">Value should be numeric</div>
+                                    </div>
+                                </div>
+                                <div class="item form-group bad col-md-3 col-sm-3 col-xs-6">
+                                    <label>Group :</label>
+                                    <input class="form-control" name="GroupTransfer" ng-model="attTrans.GroupTransfer" ng-pattern="/^[0-9]*$/">
+                                    <div ng-messages="pabxAttTransForm.GroupTransfer.$error" ng-if="pabxAttTransForm.GroupTransfer.$dirty">
+                                        <div class="alert" ng-message="pattern">Value should be numeric</div>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-12 col-sm-12 col-xs-12">
+                                    <button class="btn btn-primary" ng-click="UpdateTransferCodes()" ng-disabled="pabxAttTransForm.$invalid">Save</button>
+                                </div>
+                            </form>
+
+
+
+                        </div>
+
+                    </div>
+
+                    <div class="col-md-6 col-sm-6 col-xs-12"style="border: 1px solid rgb(230, 229, 229); border-radius: 8px; padding: 5px;">
+
+                        <div class="col-md-12 col-sm-12 col-xs-12">
+                            <label><b>Emergency Numbers</b></label>
+                        </div>
+
+                        <br>
+                        <br>
+
+                        <div class="form-group col-md-12 col-sm-12 col-xs-12">
+                            <tags-input ng-model="emergencyNumbers" on-tag-added="onChipAdd($tag)" on-tag-removed="onChipDelete($tag)" min-length="1">
+
+                            </tags-input>
+                        </div>
+
+                    </div>
+
+
+
+
+            </div>
+        </div>
+    </fieldset>
+
+</div>

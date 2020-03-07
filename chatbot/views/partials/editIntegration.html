@@ -1,0 +1,234 @@
+<div>
+    <div>
+        <div class="col-lg-12">
+            <div class="row">
+                <div class="col-md-9">
+                    <h2 class=" font-300">
+                        <a ng-hide="editMode">Name : {{template.name}}</a>
+                    </h2>
+                </div>
+                <div class="col-md-3 ">
+                    <div class="pull-right user-option-wrap" ng-show="!editMode">
+                        <div ng-disabled="true" ng-click="editTemplate(template)" class="btn-circle">
+                            <i class="fa fa-pencil"></i>
+                        </div>
+
+                        <div ng-disabled="true" ng-click="removeTemplate(template)" class="btn-circle">
+                                <i class="fa fa-trash-o"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+         <div class="col-md-12 col-sm-12 col-xs-12 edit-main-wrap" ng-show="editMode">
+            <div class="application-edit">
+                <div class="col-sm-12">
+                    <div class="col-sm-6">
+                        <h2 class="font-robot font-300 text-uppercase font-15">Edit {{templateType}}: {{integrate.name}}</h2>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="edit-close pull-right">
+                            <i class="fa fa-close" ng-click="closeTemplate()"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12 col-sm-6 col-xs-12 col-xs-12">
+                    <div class="tile-stats  m-top15">
+                        <form name="updatentegrationname" ng-submit="updateIntegration(integrate)" class="form-horizontal form-label-left input_mask">
+                            <div class="row no-gutters">
+                                <div class="col-12 col-md-6 form-group has-feedback">
+                                    <input type="text" class="form-control width-100 has-feedback-left" name="updatentegrationname.name" ng-model="integrate.name" placeholder="Name" required>
+                                    <span class="fa fa-user form-control-feedback left" aria-hidden="true"></span>
+                                </div>
+                                <div class="col-12 col-md-6 form-group has-feedback">
+                                    <select class="form-control width-100 has-feedback-left" name="updatentegrationname.method" ng-model="integrate.method" placeholder="Method" ng-change="setbody(integrate.method)" required>
+                                        <option value="" selected disabled>Method*</option>
+                                        <option value="POST" ng-value="POST">POST</option>
+                                        <option value="GET" ng-value="GET"> GET</option>
+                                    </select> 
+                                    <span class="fa fa-user form-control-feedback left" aria-hidden="true"></span>
+                                </div>
+                            </div>
+                            <div class="row no-gutters">
+                                <div class="col-12 col-md-6 has-feedback">
+                                    <input type="text" class="form-control width-100 has-feedback-left" name="updatentegrationname.url" ng-model="integrate.url" placeholder="Url" required>
+                                    <span class="fa fa-user form-control-feedback left" aria-hidden="true"></span>
+
+                                </div>
+                            </div>
+                     
+                            <div class="row no-gutters">
+                               <h3 style="margin: 10px 11px 4px;color: #000;font-size: 14px; border-bottom: 1px solid #fbfbfb;">Url Params</h3>
+                               <div class="col-12 col-md-6">
+                                    <div ng-repeat="param in integrate.url_params track by $index">
+                                    <div class="col-sm-5"><input type="text" class="form-control" ng-model='param.key' placeholder="key"></div>
+                                    <div class="col-sm-6"><input type="text" class="form-control" ng-model='param.value' placeholder="value"></div> 
+                                    <div class="col-sm-1"><h3 ng-hide="$index==0"><small ng-click='deleteUrlParams($index)' style='cursor: pointer'><i class='fa fa-trash-o'></i></small></h3> </div>
+                                    
+                                    </div>
+                                    <div class="col-sm-4" style="padding-bottom: 10px;"><button class="btn btn-default" type="button" ng-click="addUrlParams()">Add</button></div>    
+                                </div> 
+                            </div>
+                            <div class="row no-gutters">
+                               <h3 style="margin: 10px 11px 4px;color: #000;font-size: 14px; border-bottom: 1px solid #fbfbfb;">Headers</h3>
+                               <div class="col-12 col-md-6">
+                                    <div ng-repeat="field in integrate.headers track by $index">
+                                    <div class="col-sm-5"><input type="text" class="form-control" ng-model='field.key' placeholder="key"></div>
+                                    <div class="col-sm-6"><input type="text" class="form-control" ng-model='field.value' placeholder="value"></div> 
+                                    <div class="col-sm-1"><h3 ng-hide="$index==0"><small ng-click='deleteHeader($index)' style='cursor: pointer'><i class='fa fa-trash-o'></i></small></h3> </div>
+            
+                                    </div>
+                                    <div class="col-sm-4" style="padding-bottom: 10px;"><button class="btn btn-default" type="button" ng-click="addCheckHeaders()">Add</button></div>    
+                                </div> 
+                            </div>
+                            <div class="row no-gutters">
+                                <h3 style="margin: 0px 11px 4px;color: #000;font-size: 14px; border-bottom: 1px solid #fbfbfb;" >Body</h3>
+                                <div class="col-12 col-md-6 form-group">
+                                    <textarea ng-model="integrate.body" class="form-control width-100" style="height:150px" ng-disabled="bodyDisabled" ng-required="!bodyDisabled"></textarea>
+                                </div>
+                                <div ng-show="errorMsg"><span style="color:red; font-size:12px;" >Enter valid json</span></div>
+                            </div>
+
+                            <div class="row no-gutters">
+                                <h3 style="margin: 0px 11px -13px;color: #000;font-size: 14px; border-bottom: 1px solid #fbfbfb;">Response</h3>
+                                <div class="col-12 col-md-6 form-group has-feedback">
+                                    
+                                    <div class="s-panel qa-section ng-scope">
+                                        <h3>Success</h3>
+                                        <!-- s-panel body wrapper -->
+                                        <div class="s-panel-body">
+                                            <div class="ng-dirty ng-valid-parse ng-valid ng-valid-required" style="">
+                                                <div class="form-group">
+                                                    <input type="text" class="form-control width-100  ng-not-empty ng-dirty ng-valid-parse ng-valid ng-valid-required ng-touched" ng-model="integrate.response.success.http_code" name="updatentegrationname.http_code" id="sectionName" placeholder="Http Code" required>
+                                                </div>
+                                                <div class="form-group">
+                                                    <input type="text" class="form-control width-100 ng-not-empty ng-dirty ng-valid-parse ng-valid ng-touched" ng-model="integrate.response.success.out_message_field" name="sectionDesc" id="sectionDesc" placeholder="Bind Data Field" >
+                                                </div>
+                                                <div class="form-group">
+                                                    <select class="form-control width-100" name="updatentegrationname.successfieldCheckCondition" ng-model="integrate.response.success.fieldCheckCondition" placeholder="Check Condition" required>
+                                                        <option value="" selected disabled>Check Condition*</option>
+                                                        <option value="and" ng-value="and">and</option>
+                                                        <option value="or" ng-value="or">or</option>
+                                                    </select>
+                                                </div>
+                                                
+                                                <div>
+                                                    <div>
+                                                        <div ng-repeat="field in integrate.response.success.check_fields track by $index">
+                                                        <div class="col-sm-3"><input type="text" class="form-control" ng-model='field.name' placeholder="name"></div>
+                                                        <!-- <div class="col-sm-3"><input type="text" class="form-control" ng-model='field.type' placeholder="type"></div> -->
+                                                        <div class="col-sm-4">
+                                                        <select class="form-control" ng-model="field.type" placeholder="" >
+                                                            <option value="" selected disabled>Type</option>
+                                                            <option value="boolean" ng-value="boolean">boolean</option>
+                                                            <option value="string" ng-value="string">string</option>
+                                                            <option value="number" ng-value="number">number</option>
+                                                        </select>
+                                                        </div>
+                                                        <div class="col-sm-4"><input type="text" class="form-control" ng-model='field.value' placeholder="value"></div>  
+                                                        <div class="col-sm-1"><h3 ng-hide="$index==0"><small ng-click='successDeleteCheckFields($index)' style='cursor: pointer'><i class='fa fa-trash-o'></i></small></h3> </div>
+                                                        </div>
+                                                        <div class="col-sm-4" style="padding-bottom: 10px;"><button class="btn btn-default" type="button" ng-click="addSuccessCheckFields()">Add check field</button></div>    
+                                                    </div> 
+                                                </div>
+                                            </div> 
+                                        </div>
+                                    </div>
+                              
+                                </div>
+                                 <div class="col-12 col-md-6 form-group has-feedback">
+                                      <div class="s-panel qa-section ng-scope">
+                                        <h3>Error</h3>
+                                        <!-- s-panel body wrapper -->
+                                        <div class="s-panel-body">
+                                            <div class="ng-dirty ng-valid-parse ng-valid ng-valid-required" style="">
+                                                <div class="form-group">
+                                                    <input type="text" class="form-control width-100  ng-not-empty ng-dirty ng-valid-parse ng-valid ng-valid-required ng-touched" ng-model="integrate.response.error.http_code" name="updatentegrationname.sectionName" id="sectionName" placeholder="Http Code*" required>
+                                                </div>
+                                                <div class="form-group">
+                                                    <input type="text" class="form-control width-100 ng-not-empty ng-dirty ng-valid-parse ng-valid ng-touched" 
+                                                    ng-model="integrate.response.error.out_message_field" name="sectionDesc" id="sectionDesc" placeholder="Bind Data Field">
+                                                </div>
+                                                <div class="form-group">
+                                                    <select class="form-control width-100" name="updatentegrationname.errorfieldCheckCondition" ng-model="integrate.response.error.fieldCheckCondition" placeholder="Check Condition" required>
+                                                        <option value="" selected disabled>Check Condition</option>
+                                                        <option value="and" ng-value="and">and</option>
+                                                        <option value="or" ng-value="or">or</option>
+                                                    </select>
+                                                </div>
+                                                <div >
+                                                    <div>
+                                                        <div ng-repeat="field in integrate.response.error.check_fields track by $index">
+                                                        <div class="col-sm-3"><input type="text" class="form-control" ng-model='field.name' placeholder="name"></div>
+                                                        <!-- <div class="col-sm-3"><input type="text" class="form-control" ng-model='field.type' placeholder="type"></div> -->
+                                                        <div class="col-sm-4">
+                                                        <select class="form-control" ng-model="field.type" placeholder="" >
+                                                            <option value="" selected disabled>Type</option>
+                                                            <option value="boolean" ng-value="boolean">boolean</option>
+                                                            <option value="string" ng-value="string">string</option>
+                                                            <option value="number" ng-value="number">number</option>
+                                                        </select>
+                                                        </div>
+                                                        <div class="col-sm-4"><input type="text" class="form-control" ng-model='field.value' placeholder="value"></div>  
+                                                        <div class="col-sm-1"><h3 ng-hide="$index==0"><small ng-click='errordeleteCheckFields($index)' style='cursor: pointer'><i class='fa fa-trash-o'></i></small></h3> </div>
+                                                        </div>
+                                                        <div class="col-sm-4" style="padding-bottom: 10px;"><button class="btn btn-default" type="button" ng-click="addErrorCheckFields()">Add check field</button></div>    
+                                                    </div>
+                                                </div>
+                                            </div> 
+                                        </div>
+                                        <!-- s-panel btn wrapper -->
+                                    </div>
+                                 </div>
+                             
+                                
+                            </div>
+                            <div class="col-md-12 col-sm-9 col-xs-12 m-top15">
+                                <!-- <div class="col-md-6 col-sm-6 col-xs-12 ">
+                                    <label>
+                                        Active
+                                        <input type="checkbox" class="js-switch" ng-model="application.Availability" />
+                                    </label>
+                                </div> -->
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                    <button type="submit" ng-disabled="updatentegrationname.$invalid" class="btn btn-success btn-sm pull-right">
+                                        Update
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div> 
+
+        <div ng-hide="editMode">
+            <div class="col-md-9 col-sm-9 col-xs-12 form-group ">
+                <label class="form-control-static">Url</label>
+                <p style="max-width:m">{{template.url}} </p>
+            </div>
+
+            <div class="col-md-3 col-sm-3 col-xs-12 form-group ">
+                <label class="form-control-static">Method</label>
+                <p>{{template.method}} </p>
+            </div>
+
+            <!-- <div class="col-md-3 col-sm-3 col-xs-12 form-group ">
+                <label class="form-control-static">No. of Items</label>
+                <p>{{template.items.length}} </p>
+            </div> -->
+
+            <!-- <div class="col-md-3 col-sm-3 col-xs-12 form-group ">
+                <label class="form-control-static">{{templateType}} ID</label>
+                <p>
+                    <input type="text" ng-readonly="true" ng-model="template._id" id="{{template._id}}">
+                    <input type="button" value="Copy" ng-click="copyCardID(template._id)">
+                </p>
+            </div> -->
+
+            <!--<p class="excerpt col-md-3" ng-if="IsDeveloper"> Developer : {{application.AppDeveloper.Username}} </p>-->
+        </div>
+        <div class="clearfix"></div>
+    </div>
+</div>

@@ -1,0 +1,68 @@
+<div style="border-bottom: groove">
+
+    <div>
+
+        <div class="col-lg-12">
+            <div class="row">
+                <div class="col-md-9">
+                    <h2 class=" font-300">
+                        <a >Invitation To : {{invite.to}}</a>
+
+                    </h2>
+                </div>
+                <div class="col-md-3 ">
+
+                </div>
+            </div>
+        </div>
+
+
+
+
+
+        <div class="row" >
+            <div class="col-md-3 col-sm-3 col-xs-12 form-group ">
+                <label class="form-control-static">From</label>
+                <p>{{invite.from}} </p>
+            </div>
+
+            <div class="col-md-3 col-sm-3 col-xs-12 form-group ">
+                <label class="form-control-static">Company</label>
+                <p>{{invite.company}} </p>
+            </div>
+
+            <div class="col-md-3 col-sm-3 col-xs-12 form-group ">
+                <label class="form-control-static">Status</label>
+                <p>{{invite.status}} </p>
+            </div>
+
+            <div class="col-md-3 col-sm-3 col-xs-12 form-group ">
+
+            </div>
+
+
+            <!--<p class="excerpt col-md-3" ng-if="IsDeveloper"> Developer : {{application.AppDeveloper.Username}} </p>-->
+        </div>
+        <div class="row">
+            <div class="col-md-3 col-sm-3 col-xs-12 form-group ">
+                <label class="form-control-static">Message</label>
+                <p>{{invite.message}} </p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-10 col-sm-10 col-xs-12 form-group ">
+            </div>
+            <div class="col-md-2 col-sm-2 col-xs-12 form-group ">
+                <button type="button" class="btn btn-danger  btn- pull-right"
+                        ng-click="cancelInvitation()" ng-show="invite.status =='pending'">
+                    Cancel
+                </button>
+                <button type="button" class="btn btn-primary  btn- pull-right"
+                        ng-click="resendInvitation()" ng-show="invite.status =='rejected' ||  invite.status =='canceled'">
+                    Resend
+                </button>
+            </div>
+        </div>
+        <div class="clearfix"></div>
+    </div>
+</div>

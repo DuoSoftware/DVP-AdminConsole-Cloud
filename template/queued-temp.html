@@ -1,0 +1,99 @@
+<div class="col-lg-4 col-lg-4 col-sm-4 col-xs-12 ">
+    <div class="x_panel">
+        <div class="x_title">
+            <h2>Queued - {{que.QueueName | limitTo:20}}{{que.QueueName.length > 15 ? '...' : null}}</h2>
+            <div class="clearfix"></div>
+        </div>
+        <div class="x_content">
+            <div class="row">
+                <div class="col-lg-6 col-lg-6 col-sm-6 col-xs-12">
+                    <div class="tile-stats text-center bg-purple500" ng-class="{'small-card':viewmode!='large'}">
+                        <div class="count">{{que.CurrentWaiting}}</div>
+                        <h3 class="font-700 font-yellow800" style="padding-bottom: 10px ; padding-top: 10px">Current
+                            Waiting</h3>
+                    </div>
+                </div>
+                <div class="col-lg-6 col-lg-6 col-sm-6 col-xs-12">
+                    <div class="tile-stats text-center bg-purple700" ng-class="{'small-card':viewmode!='large'}">
+                        <div class="count">
+                            <timer ng-if="que.MaxWaitingMS" start-time="que.MaxWaitingMS" interval="1000">
+                                {{hhours}} : {{mminutes}} : {{sseconds}}
+                            </timer>
+                            <span ng-if="!que.MaxWaitingMS"> 00 : 00 : 00</span>
+                        </div>
+                        <h3 class="font-700 font-orange800" style="padding-bottom: 10px ; padding-top: 10px">Max Wait
+                            Time</h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class=" col-xs-12" ng-if="viewmode=='large'">
+            <div class="row">
+                <div class="queued-pie-chart">
+                    <div id="pie-text">{{que.presentage}}%
+                        <p> ANSWERED</p>
+                    </div>
+                    <div easypiechart options="pieoption" percent="que.presentage"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- -->
+        <div class="row" ng-if="viewmode=='medium'">
+            <div class="col-lg-12  col-xs-12">
+                <div class="tile-stats text-center title-status-medium ">
+                    <div class="count">{{que.presentage}}%</div>
+                    <h3 class="font-700 ">ANSWERED</h3>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="col-xs-12" ng-if="viewmode=='large'">
+            <div class="row">
+                <!--<div class="col-md-6">-->
+                <div class="demo-container m-top20" style="height:150px">
+                    <flot id="engilshQueued" dataset="dataSet"
+                          options="queueoption"></flot>
+                </div>
+                <!--</div>-->
+            </div>
+        </div>
+
+        <div class="col-xs-12">
+            <div class="row">
+                <div class="col-lg-4 text-center " ng-class="{'small-card':viewmode!='large'}">
+                    <h3 class="font-700 font-green-light500 ">{{que.TotalQueued}}</h3>
+                    <span class="font-700 ">Total Queued</span>
+                </div>
+                <div class="col-lg-4 text-center" ng-class="{'small-card':viewmode!='large'}">
+                    <h3 class="font-700 font-blue500 ">{{que.MaxWaitTime}}</h3>
+                    <span class="font-700">Max Waiting</span>
+                </div>
+                <div class="col-lg-4 text-center" ng-class="{'small-card':viewmode!='large'}">
+                    <h3 class="font-700 font-yellow900">{{que.AverageWaitTime}}</h3>
+                    <span class="font-700">Average</span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-4 text-center " ng-class="{'small-card':viewmode!='large'}">
+                    <h3 class="font-700 font-green-light500 ">{{que.QueueDropped}}</h3>
+                    <span class="font-700 ">Droped Calls</span>
+                </div>
+                <div class="col-lg-4 text-center" ng-class="{'small-card':viewmode!='large'}">
+                    <h3 class="font-700 font-blue500 ">{{que.TotalAnswered}}</h3>
+                    <span class="font-700">Answered Calls</span>
+                </div>
+                <div class="col-lg-4 text-center" ng-class="{'small-card':viewmode!='large'}">
+                    <h3 class="font-700 font-yellow900">{{agentCount}}</h3>
+                    <span class="font-700">Available Agents</span>
+                </div>
+            </div>
+
+
+        </div>
+
+
+    </div>
+</div>

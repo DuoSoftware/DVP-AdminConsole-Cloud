@@ -1,0 +1,148 @@
+<div class="x_panel" ng-controller="pbxFollowMeCtrl">
+    <div class="clearfix"></div>
+    <div class="x_content col-md-12 col-sm-12 col-xs-12">
+
+
+        <form name="addTemplateForm">
+
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                <label><b>Add New</b></label>
+            </div>
+
+            <br>
+            <br>
+
+            <div class="item form-group  col-md-3 col-sm-3 col-xs-12">
+                <label>Destination Type </label>
+                <select class="select2_single form-control" name="destType" tabindex="-1" aria-hidden="true"
+                        placeholder="Destination Type" ng-model="numberType" ng-model-options="{trackBy: '$value'}"
+                        required>
+                    <option value="USER">User</option>
+                    <option value="GATEWAY">Gateway</option>
+                </select>
+                <span class="inline-block validation-on text-validaion  "
+                      ng-show="addTemplateForm.destType.$invalid && !addTemplateForm.destType.$pristine">
+                             Required field
+                  </span>
+            </div>
+
+            <div class="item form-group  col-md-3 col-sm-3 col-xs-12">
+                <label>Destination Number </label>
+                <input class="form-control" name="destinationNum" ng-model="destinationNumber" required
+                       ng-pattern="/^[0-9]*$/">
+                <span class="inline-block validation-on text-validaion  "
+                      ng-show="addTemplateForm.destinationNum.$invalid && !addTemplateForm.destinationNum.$pristine">
+
+                           Valid number required
+                  </span>
+            </div>
+
+            <div class="item form-group  col-md-3 col-sm-3 col-xs-12">
+                <label>Ring Timeout </label>
+                <input class="form-control" name="ringTimeout" ng-model="ringTimeout" required ng-pattern="/^[0-9]*$/">
+                <span class="inline-block validation-on text-validaion  "
+                      ng-show="addTemplateForm.ringTimeout.$invalid && !addTemplateForm.ringTimeout.$pristine">
+                             Valid number required
+                  </span>
+            </div>
+
+            <div class="item form-group  col-md-3 col-sm-3 col-xs-12" style="padding-top: 24px;">
+                <button class="btn btn-primary btn-block" ng-click="addToList()" ng-disabled="addTemplateForm.$invalid">
+                    Add
+                </button>
+            </div>
+
+
+            <div class="clearfix"></div>
+
+            <br>
+
+
+        </form>
+
+
+        <div class="x_title col-md-12 col-sm-12 col-xs-12">
+            <button class="btn btn-primary" ng-click="saveFMConfig()">
+                Save Configuration
+            </button>
+        </div>
+
+        <div class="col-md-12 col-sm-12 col-xs-12">
+            <label><b>Sandbox</b> (drag and drop to re-arrange)</label>
+        </div>
+
+        <br>
+        <br>
+
+
+
+        <div class="col-md-12 col-sm-12 col-xs-12">
+
+            <div>
+                <ul data-as-sortable="fmSortableGroup" data-ng-model="list" style="position: relative; left: -40px; min-height: 40px;">
+                    <li class="drag-item-wrp" ng-repeat="item in list" data-as-sortable-item >
+                        <div data-as-sortable-item-handle>
+                            <div class="col-md-3 col-sm-3 col-xs-3">
+                                <label>{{item.DestinationNumber}}</label>
+                            </div>
+                            <div class="col-md-3 col-sm-3 col-xs-3">
+                                <label>{{item.ObjCategory}}</label>
+                            </div>
+                            <div class="col-md-3 col-sm-3 col-xs-3">
+                                <label>{{item.RingTimeout}}</label>
+                            </div>
+                            <div class="col-md-2 col-sm-2 col-xs-2">
+                            </div>
+                            <div class="col-md-1 col-sm-1 col-xs-1">
+                                <button class="btn fa fa-close" ng-click="deleteFm($index, item)"></button>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+
+            </div>
+
+        </div>
+
+        <!--<div class="col-md-12 col-sm-12 col-xs-12">
+            <div class="sandbox-wrapper">
+                <ul dnd-list="list" style="list-style-type: none">
+                    <li ng-repeat="item in list"
+                        dnd-draggable="item"
+                        dnd-moved="list.splice($index, 1)"
+                        dnd-effect-allowed="move"
+                        dnd-selected="models.selected = item"
+                        ng-class="{'selected': models.selected === item}">
+                        <div class="col-md-12 col-sm-12 col-xs-12"
+                             style="border: 1px solid rgb(230, 229, 229); border-radius: 8px; padding: 5px;">
+
+                            <div class="col-md-3 col-sm-3 col-xs-3">
+                                <label>{{item.DestinationNumber}}</label>
+                            </div>
+                            <div class="col-md-3 col-sm-3 col-xs-3">
+                                <label>{{item.ObjCategory}}</label>
+                            </div>
+                            <div class="col-md-3 col-sm-3 col-xs-3">
+                                <label>{{item.RingTimeout}}</label>
+                            </div>
+                            <div class="col-md-3 col-sm-3 col-xs-3">
+                                <button ng-click="deleteFm($index, item)">delete</button>
+                            </div>
+
+
+                        </div>
+
+
+                    </li>
+                </ul>
+            </div>
+        </div>-->
+
+        <div class="clearfix"></div>
+
+        <br>
+        <br>
+
+
+    </div>
+</div>

@@ -1,0 +1,275 @@
+<div role="main">
+    <!-- top tiles -->
+    <!--<div class="row tile_count" style="background: #383a3b">
+        &lt;!&ndash;<div class="col-md-3 col-sm-4 col-xs-6 tile_stats_count">
+            <div class="count aero">{{ContactLoaded}}</div>
+            <span class="count_bottom"><i class="green ">Total Numbers</i></span>
+        </div>&ndash;&gt;
+
+        <div class="col-md-3 col-sm-4 col-xs-6 tile_stats_count">
+            <div class="count aero">{{total_dialed}}</div>
+            <span class="count_bottom"><i class="blue">Total Dialed</i></span>
+        </div>
+        <div class="col-md-3 col-sm-4 col-xs-6 tile_stats_count">
+            <div class="count aero">{{total_answered}}</div>
+            <span class="count_bottom"><i class="blue">Total Answered</i></span>
+        </div>
+        <div class="col-md-3 col-sm-4 col-xs-6 tile_stats_count">
+            <div class="count aero">{{total_dialing}}</div>
+            <span class="count_bottom"><i class="red">Dialing</i></span>
+        </div>
+        <div class="col-md-3 col-sm-4 col-xs-6 tile_stats_count">
+
+            <div class="count aero">{{connected}}</div>
+            <span class="count_bottom"><i class="purple">Connected </i></span>
+        </div>
+
+    </div>-->
+
+    <div class="row tile_count" style="background: #383a3b">
+        <!--<div class="col-md-3 col-sm-4 col-xs-6 tile_stats_count">
+            <div class="count aero">{{ContactLoaded}}</div>
+            <span class="count_bottom"><i class="green ">Total Numbers</i></span>
+        </div>-->
+
+        <div class="col-md-3 col-sm-4 col-xs-6 tile_stats_count">
+            <div class="d1-header-widget ">
+                <div class="d1-h-w-count d1-h-lg" style="font-size: 24px">{{total_dialed}} | {{total_callback_dialed}}</div>
+
+                <div class="d1-h-w-sub-title d1-sub-tile-sm color-light-blue-200">
+                    Call <span style="color: #fff">|</span> <span style="color: #FFC107">Callback</span>
+                </div>
+                <div class="d1-h-w-header d1-h-tile">
+                    TOTAL DIALED
+                </div>
+
+                <!--<div class="d-top-icon">
+                    <i class="fa fa-phone color-blue-300"></i>
+                </div>-->
+            </div>
+        </div>
+        <div class="col-md-3 col-sm-4 col-xs-6 tile_stats_count">
+            <div class="d1-header-widget ">
+                <div class="d1-h-w-count d1-h-lg" style="font-size: 24px">{{total_answered}} | {{total_callback_answered}}</div>
+                <div class="d1-h-w-sub-title d1-sub-tile-sm color-light-blue-200">
+                    Call <span style="color: #fff">|</span> <span style="color: #FFC107">Callback</span>
+                </div>
+                <div class="d1-h-w-header d1-h-tile">
+                    TOTAL ANSWERED
+                </div>
+
+                <!--<div class="d-top-icon">
+                    <i class="fa fa-phone color-blue-300"></i>
+                </div>-->
+            </div>
+        </div>
+        <div class="col-md-3 col-sm-4 col-xs-6 tile_stats_count">
+            <div class="d1-header-widget ">
+                <div class="d1-h-w-count d1-h-lg" style="font-size: 24px">{{total_dialing}} | {{total_callback_dialing}}</div>
+                <div class="d1-h-w-sub-title d1-sub-tile-sm color-light-blue-200">
+                    Call <span style="color: #fff">|</span> <span style="color: #FFC107">Callback</span>
+                </div>
+                <div class="d1-h-w-header d1-h-tile">
+                    TOTAL DIALING
+                </div>
+
+                <!--<div class="d-top-icon">
+                    <i class="fa fa-phone color-blue-300"></i>
+                </div>-->
+            </div>
+
+        </div>
+        <div class="col-md-3 col-sm-4 col-xs-6 tile_stats_count">
+            <div class="d1-header-widget ">
+                <div class="d1-h-w-count d1-h-lg" style="font-size: 24px">{{total_connected}} | {{total_callback_connected}}</div>
+                <div class="d1-h-w-sub-title d1-sub-tile-sm color-light-blue-200">
+                    Call <span style="color: #fff">|</span> <span style="color: #FFC107">Callback</span>
+                </div>
+                <div class="d1-h-w-header d1-h-tile">
+                    TOTAL CONNECTED
+                </div>
+
+                <!--<div class="d-top-icon">
+                    <i class="fa fa-phone color-blue-300"></i>
+                </div>-->
+            </div>
+        </div>
+
+    </div>
+
+    <!-- /top tiles -->
+
+    <div class="cam-status-wrapper">
+        <div class="cam-status-play">
+
+            <!-- campaign done status -->
+            <ul class="list-inline customer-inline"
+                ng-if="campaignSelectedData.OperationalStatus=='done'">
+                <li>
+                    <div class="cam-staus-btn-wrapper sm done">
+                        <i class="fa fa-stop disable-icon"></i>
+                    </div>
+                </li>
+                <li>
+                    <div class="cam-staus-btn-wrapper lg done">
+                        <i class="fa fa-play disable-icon"></i>
+                    </div>
+                </li>
+
+                <li>
+                    <div class="cam-staus-btn-wrapper sm done">
+                        <i class="fa fa-pause disable-icon"></i>
+                    </div>
+                </li>
+            </ul>
+
+            <!-- campaign pause status -->
+            <ul class="list-inline customer-inline"
+                ng-if="campaignSelectedData.OperationalStatus=='pause'">
+                <li>
+                    <div ng-class="isSetCommand?'loading-stop-bg':''"
+                         class="cam-staus-btn-wrapper sm pause animated bounceIn"
+                         ng-click="sendCommandToCampaign(campaignSelectedData,'stop')">
+                        <i class="fa fa-stop cam-stop"></i>
+                    </div>
+                </li>
+                <li>
+                    <div ng-class="isSetCommand?'loading-play-bg':''"
+                         class="cam-staus-btn-wrapper lg pause animated bounceIn "
+                         ng-click="sendCommandToCampaign(campaignSelectedData,'resume')">
+                        <i class="fa fa-play"></i>
+                    </div>
+                </li>
+
+                <li>
+                    <div ng-class="isSetCommand?'loading-pause-bg':''"
+                         class="cam-staus-btn-wrapper sm pause ">
+                        <i class="fa fa-pause disable-icon"></i>
+                    </div>
+                </li>
+            </ul>
+
+            <!-- campaign stop status -->
+            <ul class="list-inline customer-inline"
+                ng-if="campaignSelectedData.OperationalStatus=='stop' ">
+                <li>
+                    <div ng-class="isSetCommand?'loading-stop-bg':''"
+                         class="cam-staus-btn-wrapper sm stop animated bounceIn"
+                         ng-click="sendCommandToCampaign(campaignSelectedData,'end')">
+                        <i class="fa fa-eject cam-eject"></i>
+                    </div>
+                </li>
+                <li>
+                    <div ng-class="isSetCommand?'loading-play-bg':''"
+                         class="cam-staus-btn-wrapper lg stop  ">
+                        <i class="fa fa-play disable-icon"></i>
+                    </div>
+                </li>
+
+                <li>
+                    <div ng-class="isSetCommand?'loading-pause-bg':''"
+                         class="cam-staus-btn-wrapper sm stop ">
+                        <i class="fa fa-pause disable-icon"></i>
+                    </div>
+                </li>
+            </ul>
+
+            <!-- campaign start status -->
+            <ul class="list-inline customer-inline"
+                ng-if="campaignSelectedData.OperationalStatus=='start'||
+                campaignSelectedData.OperationalStatus=='ongoing'">
+                <li>
+                    <div ng-class="isSetCommand?'loading-stop-bg':''"
+                         class="cam-staus-btn-wrapper sm start">
+                        <i class="fa fa-stop disable-icon"></i>
+                    </div>
+                </li>
+                <li>
+                    <div ng-class="isSetCommand?'loading-play-bg':''"
+                         class="cam-staus-btn-wrapper lg start ">
+                        <i class="fa fa-play  disable-icon"></i>
+                    </div>
+                </li>
+
+                <li>
+                    <div ng-class="isSetCommand?'loading-pause-bg':''"
+                         class="cam-staus-btn-wrapper sm start animated bounceIn"
+                         ng-click="sendCommandToCampaign(campaignSelectedData,'pause')">
+                        <i class="fa fa-pause cam-pause"></i>
+                    </div>
+                </li>
+            </ul>
+
+            <!-- campaign create status -->
+            <ul class="list-inline customer-inline"
+                ng-if="campaignSelectedData.OperationalStatus=='create'">
+                <li>
+                    <div ng-class="isSetCommand?'loading-stop-bg':''"
+                         class="cam-staus-btn-wrapper sm start">
+                        <i class="fa fa-stop cam-stop disable-icon"></i>
+                    </div>
+                </li>
+                <li>
+                    <div ng-class="isSetCommand?'loading-play-bg':''"
+                         class="cam-staus-btn-wrapper lg create animated bounceIn"
+                         ng-click="startCampaign(campaignSelectedData)">
+                        <i class="fa fa-play cam-play"></i>
+                    </div>
+                </li>
+
+                <li>
+                    <div ng-class="isSetCommand?'loading-pause-bg':''"
+                         class="cam-staus-btn-wrapper sm start ">
+                        <i class="fa fa-pause  disable-icon"></i>
+                    </div>
+                </li>
+            </ul>
+
+        </div>
+        <div class="campaign-status-text">
+            <ul class="customer-inline">
+                <li>Campaign State</li>
+                <li class="camp-status"> - {{campaignSelectedData.OperationalStatus}}</li>
+            </ul>
+        </div>
+
+    </div>
+
+    <div class="row">
+        <div class="col-md-12 col-sm-12 col-xs-12">
+            <div class="dashboard_graph">
+
+                <div class="x_title">Campaign Summary - {{campaignname}}</div>
+                <div class="x_content productivity-panel">
+                    <div class="data-state-wrap" ng-if="agentProductivityLoadin">
+                        Loading...
+                    </div>
+
+                   <!-- <div id="ResourceId123" style="height:350px;"></div>-->
+                    <canvas id="campaignDataBarChart" width="400" height="400"></canvas>
+                </div>
+
+
+                <div class="clearfix"></div>
+            </div>
+        </div>
+
+    </div>
+    <br />
+
+
+    <div class="row">
+        <div class="col-md-12 col-sm-12 col-xs-12">
+            <div class="x_panel tile ">
+                <div class="x_content" >
+                    <div class="v_data_loader"  id="v_data_load" ></div>
+                    <!--<div id="v_data_grd"  ui-grid="gridQOptions"  ui-grid-move-columns ui-grid-resize-columns  ui-grid-auto-resize ui-grid-pinning ng-style="getTableHeight()"></div>-->
+                    <div ui-grid="gridQOptions"   ui-grid-move-columns ui-grid-resize-columns  ui-grid-auto-resize ui-grid-selection ui-grid-pinning ng-style="{ 'height': '1500px' }"></div>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</div>

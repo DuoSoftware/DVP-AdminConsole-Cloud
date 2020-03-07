@@ -1,0 +1,121 @@
+<div class="row">
+
+    <div class="col-md-12 col-sm-6 col-xs-12">
+
+        <!-- extension list -->
+        <div class="x_panel bg-light-gray animated fadeIn">
+            <div class="x_title border-0">
+                <div class="col-md-6 col-sm-6 col-xs-6">
+                    <h2 class="font-robot font-300 text-uppercase font-15">New Extension</h2>
+                </div>
+
+                <div class="col-md-6 col-sm-6 col-xs-6 form-group top_search">
+                    <div class="input-group">
+                        <input type="text" ng-model="searchCriteria" class="form-control"
+                               placeholder="Search for...">
+                                <span class="input-group-btn">
+                                  <button class="btn btn-default" type="button">Go!</button>
+                                </span>
+                    </div>
+                </div>
+                <div class="col-xs-12">
+                    <div class="tile-stats m-top15">
+                        <form class="form-horizontal form-label-left input_mask">
+                            <div class="row">
+                                <div class="col-md-4 col-sm-4 col-xs-12 form-group has-feedback">
+                                    <input type="text" class="form-control has-feedback-left"
+                                           ng-model="newExtension.Extension"
+                                           placeholder="Extension">
+                                    <span class="fa fa-user form-control-feedback left" aria-hidden="true"></span>
+                                </div>
+
+                                <div class="col-md-4 col-sm-4 col-xs-12 form-group has-feedback">
+                                    <input type="text" class="form-control has-feedback-left"
+                                           ng-model="newExtension.ExtensionName"
+                                           placeholder="ExtensionName">
+                                    <span class="fa fa-envelope form-control-feedback left" aria-hidden="true"></span>
+                                </div>
+
+                                <div class="col-md-4 col-sm-4 col-xs-12 form-group has-feedback">
+                                    <input type="text" class="form-control has-feedback-left"
+                                           ng-model="newExtension.DodNumber"
+                                           placeholder="DodNumber">
+                                    <span class="fa fa-envelope form-control-feedback left" aria-hidden="true"></span>
+                                </div>
+
+                                <div class="clearfix"></div>
+
+                                <div class="col-md-4 col-sm-4 col-xs-12 form-group has-feedback">
+                                    <label>Extension Type</label>
+                                    <select class="form-control has-feedback-left" placeholder="select application type"
+                                            ng-model="newExtension.ObjCategory">
+                                        <option>USER</option>
+                                        <option>GROUP</option>
+                                        <option>CONFERENCE</option>
+                                        <option>VOICE_PORTAL</option>
+                                        <option>FAX</option>
+                                        <option>IVR</option>
+                                        <option>CAMPAIGN</option>
+                                        <option>AUTO_ATTENDANT</option>
+                                    </select>
+                                    <span class="fa fa-envelope form-control-feedback left" aria-hidden="true"></span>
+                                </div>
+
+                                <fieldset class="col-md-4 col-sm-4 col-xs-12 form-group has-feedback" ng-disabled="newExtension.ObjCategory != 'IVR'">
+                                    <label>IVR App</label>
+                                    <select class="form-control has-feedback-left" placeholder="select application type"
+                                            ng-model="newExtension.ExtraData" ng-options="app.id as app.AppName for app in applications track by app.id">
+                                    </select>
+                                    <span class="fa fa-envelope form-control-feedback left" aria-hidden="true"></span>
+                                </fieldset>
+
+
+                            </div>
+                            <div class="row">
+                                <div class="col-md-2 col-sm-2 col-xs-12  ">
+                                    <button type="button" class="btn btn-success btn-block  btn- pull-right"
+                                            ng-click="addNewExtension(newExtension)">
+                                        Add
+                                    </button>
+                                </div>
+                            </div>
+
+                        </form>
+                    </div>
+                </div>
+                <div class="clearfix"></div>
+            </div>
+        </div>
+        <!-- end -->
+
+        <!-- view application users -->
+        <div class="x_panel">
+            <div class="x_content">
+                <ul class="list-unstyled timeline">
+                    <li ng-repeat="Extension in Extensions | filterBy: ['Extension']: searchCriteria">
+                        <editextension extension="Extension" extensionlist="Extensions" applications="applications"
+                                         reloadpage="reloadPage()"></editextension>
+                    </li>
+
+                    <paging ng-show="showPaging"
+                            class="small"
+                            page="currentPage"
+                            page-size="pageSize"
+                            total="pageTotal"
+                            show-prev-next="true"
+                            show-first-last="true"
+                            text-next-class="glyphicon glyphicon-chevron-right"
+                            text-prev-class="glyphicon glyphicon-chevron-left"
+                            text-first-class="glyphicon glyphicon-backward"
+                            text-last-class="glyphicon glyphicon-forward"
+                            paging-action="getPageData('attribute', page, pageSize, total)">
+                    </paging>
+                </ul>
+            </div>
+        </div>
+        <!-- end -->
+    </div>
+
+</div>
+
+</div>

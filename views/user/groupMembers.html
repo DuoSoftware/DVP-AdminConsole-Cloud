@@ -1,0 +1,77 @@
+
+<label class="form-control-static"><h4>Users</h4> </label><!--<i class="fa fa-plus" style="margin-left: 10px" ng-click="isAddMember=!isAddMember"></i>-->
+
+<div class="row"  style="margin-bottom: 30px">
+    <div class="col-md-9 col-sm-9 col-xs-12">
+        <select class="select2_single form-control" tabindex="-1" aria-hidden="true"
+                placeholder="Title" name="title" ng-model="newMember" ng-options="user.username for user in agents">
+            <!--<select class=" form-control" tabindex="-1" aria-hidden="true" >-->
+        </select>
+        <!--placeholder="Title" name="title" ng-model="newUser" ng-options="user.username for user in agents">-->
+
+    </div>
+    <button class="btn btn-success" ng-click="addUserToGroup(newMember._id)">Add Member</button>
+
+</div>
+
+
+<div ng-repeat="member in groupMemberlist">
+
+    <div class="col-md-4 col-sm-4 col-xs-12" style="margin-bottom: 30px">
+
+        <div class="col-md-3 col-sm-3 col-xs-12">
+
+            <div class="notify-img-small">
+
+                <img ng-src="{{member.avatar}}">
+            </div>
+        </div>
+        <div class="col-md-8 col-sm-8 col-xs-12">
+            <div class="col-md-12 col-sm-12 col-xs-12 ">
+                <small class="pull-left" >{{member.username}} </small>
+            </div>
+            <div class="col-md-12 col-sm-12 col-xs-12 pull-left">
+                <i class="fa fa-remove" ng-click="removeGroupMember(member._id)"></i>
+            </div>
+        </div>
+
+
+
+    </div>
+
+
+
+    <!--<angucomplete-alt id="ex1"
+                      place-holder="Search agents"
+                      pause="100"
+                      selected-object="selectedAgent"
+                      local-data="userList"
+                      search-fields="username"
+                      title-field="username"
+                      minlength="1"
+                      input-class="form-control form-control-small"
+                      searchTerm="username"/>-->
+
+</div>
+
+
+
+<!--
+<div class="col-md-4 col-sm-4 col-xs-12 form-group has-feedback">
+    <select class="select2_single form-control" tabindex="-1" aria-hidden="true"
+            placeholder="Role" name="role" ng-model="newUser.role">
+        <option value="admin">Admin</option>
+        <option value="agent">Agent</option>
+        <option value="supervisor">Supervisor</option>
+        <option value="supervisor">Supvdr</option>
+        <option value="supervisor">Supervdvisor</option>
+        <option value="supervisor">Svdvervisor</option>
+        <option value="supervisor">Svdervisor</option>
+    </select>
+</div>
+-->
+
+
+
+
+

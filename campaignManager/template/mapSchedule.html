@@ -1,0 +1,441 @@
+<div class="col-md-12 col-sm-6 col-xs-12 col-xs-12">
+    <div class="tile-stats">
+        <div class="col-md-12 col-sm-6 col-xs-12">
+
+
+            <!--Add Schedule to Campaign-->
+            <div class="x_panel">
+                <div class="x_title">
+                    <div class="col-md-6 col-sm-6 col-xs-6">
+                        <h2><i class="fa fa-calendar-o">
+                            <small>Add Schedule to Campaign</small>
+                        </i>
+
+                        </h2>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+
+                <div ng-show="addScheduleToCampaign">
+                    <div class="row ">
+                        <div class="col-md-12 col-sm-12 col-xs-12">
+                            <div class="data-state-wrap">
+                                Please Wait...
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+                <div ng-hide="addScheduleToCampaign" class="x_content">
+                    <form class="col-md-12 col-sm-6 col-xs-12 col-xs-12" name="addScheduleForm" novalidate>
+                        <br>
+
+                        <!--<div class="col-md-5 col-sm-5 col-xs-5 form-group"
+                             ng-class="{ 'has-error' : addScheduleForm.addScheduleCampaignName.$invalid && !addScheduleForm.addScheduleCampaignName.$pristine }">
+
+                            <select class="form-control has-feedback-left" id="addScheduleCampaignName"
+                                    ng-model="addSchedule.CampaignId"
+                                    ng-options="opt.CampaignId as opt.CampaignName for opt in campaigns" required>
+                                <option value=''>Select Campaign</option>
+                            </select>
+                            <span class="fa fa-indent form-control-feedback left" aria-hidden="true"></span>
+
+                            <p ng-show="addScheduleForm.addScheduleCampaignName.$invalid && !addScheduleForm.addScheduleCampaignName.$pristine" class="help-block">
+                                Campaign is required.</p>
+                        </div>-->
+
+                        <div class="col-md-4 col-sm-4 col-xs-4 form-group"
+                             ng-class="{ 'has-error' : addScheduleForm.addScheduleScheduleList.$invalid && !addScheduleForm.addScheduleScheduleList.$pristine }">
+
+                            <select class="form-control has-feedback-left" id="addScheduleScheduleList"
+                                    ng-model="addSchedule.ScheduleId"
+                                    ng-options="opt.id as opt.ScheduleName for opt in availableSchedule" required>
+                                <option value=''>Select Schedule</option>
+                            </select>
+                            <span class="fa fa-indent form-control-feedback left" aria-hidden="true"></span>
+
+                            <p ng-show="addScheduleForm.addScheduleScheduleList.$invalid && !addScheduleForm.addScheduleScheduleList.$pristine"
+                               class="help-block">
+                                Schedule is required.</p>
+                        </div>
+
+                        <div class="col-md-6 col-sm-6 col-xs-6 form-group"
+                             ng-class="{ 'has-error' : addScheduleForm.ScheduleType.$invalid && !addScheduleForm.ScheduleType.$pristine }">
+
+                            <input type="text" class="form-control has-feedback-left"
+                                   ng-model="addSchedule.ScheduleType"
+                                   placeholder="Schedule Type" >
+                            <span class="fa fa-tty form-control-feedback left" aria-hidden="true"></span>
+
+                            <p ng-show="addScheduleForm.ScheduleType.$invalid && !addScheduleForm.ScheduleType.$pristine"
+                               class="help-block">Schedule Type is required.</p>
+                        </div>
+
+                        <div class="col-md-2 col-sm-2 col-xs-2 form-group has-feedback">
+                            <button type="button" class="btn btn-success btn-xs "
+                                    ng-click="AddScheduleToCampaign(addSchedule)"
+                                    ng-disabled="addScheduleForm.$invalid">
+                                Add
+                            </button>
+                        </div>
+                    </form>
+                </div>
+
+                <!--Schedule List-->
+                <div class="x_panel">
+                    <div class="x_title">
+                        <div class="col-md-6 col-sm-6 col-xs-6">
+                            <h2><i class="fa fa-calendar-o">
+                                <small>Schedule List</small>
+                            </i>
+
+                            </h2>
+                        </div>
+                        <div class="clearfix"></div>
+                    </div>
+
+                    <div ng-show="scheduleList">
+                        <div class="row ">
+                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                <div class="data-state-wrap">
+                                    Please Wait...
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div ng-hide="scheduleList" class="x_content">
+                        <div class="table-wrapper daynamic-s-tble">
+                            <table id="datatable-responsive" dt-options="dtOptions" datatable="ng"
+                                   class="table table-striped table-bordered dt-responsive nowrap dataTable no-footer dtr-inline"
+                                   cellspacing="0" width="100%" role="grid"
+                                   aria-describedby="datatable-responsive_info">
+                                <thead>
+                                <tr role="row">
+                                    <th class="sorting" tabindex="0" aria-controls="datatable-responsive"
+                                        rowspan="1"
+                                        colspan="1" aria-label="From">ScheduleName
+                                    </th>
+                                    <th class="sorting" tabindex="0" aria-controls="datatable-responsive"
+                                        rowspan="1"
+                                        colspan="1" aria-label="To">Action
+                                    </th>
+                                    <th class="sorting" tabindex="0" aria-controls="datatable-responsive"
+                                        rowspan="1"
+                                        colspan="1" aria-label="AgentSkill">ExtraData
+                                    </th>
+                                    <th class="sorting" tabindex="0" aria-controls="datatable-responsive"
+                                        rowspan="1"
+                                        colspan="1" aria-label="AgentSkill">Delete
+                                    </th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr role="row" class="odd"
+                                    ng-repeat="schedule in addedSchedule">
+
+                                    <td>{{schedule.ScheduleName}}</td>
+                                    <td>{{schedule.Action}}</td>
+                                    <td>{{schedule.ExtraData}}</td>
+                                    <td><a ng-disabled="true" ng-click="deleteSchedule(schedule)" style="cursor: pointer"><i
+                                            class="fa fa-trash-o"></i></a></td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <!--Map Schedule to Campaign-->
+            <!--<div class="x_panel">
+                <div class="x_title">
+                    <div class="col-md-6 col-sm-6 col-xs-6">
+                        <h2><i class="fa fa-calendar-o"><small>Map Schedule to Campaign</small></i>
+
+                        </h2>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+
+                <div ng-show="editMapSchedule" >
+                    <div class="row ">
+                        <div class="col-md-12 col-sm-12 col-xs-12">
+                            <div class="data-state-wrap">
+                                Please Wait...
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+                <div ng-hide="editMapSchedule" class="x_content"  >
+                    <form class="col-md-12 col-sm-6 col-xs-12 col-xs-12" name="mapscheduleForm" novalidate>
+                        <br>
+
+                       &lt;!&ndash; <div class="col-md-5 col-sm-5 col-xs-5 form-group"
+                             ng-class="{ 'has-error' : mapscheduleForm.CampaignName.$invalid && !mapscheduleForm.CampaignName.$pristine }">
+
+                            <select class="form-control has-feedback-left" id="CampaignName"
+                                    ng-model="mapSchedule.CampaignId"
+                                    ng-options="opt.CampaignId as opt.CampaignName for opt in campaigns" required>
+                                <option value=''>Select Campaign</option>
+                            </select>
+                            <span class="fa fa-indent form-control-feedback left" aria-hidden="true"></span>
+
+                            <p ng-show="mapscheduleForm.CampaignName.$invalid && !mapscheduleForm.CampaignName.$pristine" class="help-block">
+                                Campaign is required.</p>
+                        </div>&ndash;&gt;
+
+                        <div class="col-md-10 col-sm-10 col-xs-10 form-group"
+                             ng-class="{ 'has-error' : mapscheduleForm.ScheduleList.$invalid && !mapscheduleForm.ScheduleList.$pristine }">
+
+                            <select class="form-control has-feedback-left"  id="ScheduleList" ng-model="mapSchedule.ScheduleId"
+                                    ng-options="opt.id as opt.ScheduleName for opt in addedSchedule"  required>
+                                <option value=''>Select Schedule </option>
+                            </select>
+                            <span class="fa fa-indent form-control-feedback left" aria-hidden="true"></span>
+
+                            <p ng-show="mapscheduleForm.ScheduleList.$invalid && !mapscheduleForm.ScheduleList.$pristine" class="help-block">
+                                Schedule is required.</p>
+                        </div>
+
+
+
+                        <div class="col-md-2 col-sm-2 col-xs-2 form-group has-feedback">
+                            <button type="button" class="btn btn-success btn-xs " ng-click="MapScheduleToCampaign(mapSchedule)" ng-disabled="mapscheduleForm.$invalid">
+                                Map
+                            </button>
+
+                        </div>
+                    </form>
+                </div>
+            </div>-->
+
+            <!--Map Numbers to Campaign-->
+           <!-- <div class="x_panel">
+                <div class="x_title">
+                    <div class="col-md-6 col-sm-6 col-xs-6">
+                        <h2><i class="fa fa-calendar">
+                            <small>Map Numbers to Campaign</small>
+                        </i>
+
+                        </h2>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+
+                <div ng-show="editMapNumberSchedule">
+                    <div class="row ">
+                        <div class="col-md-12 col-sm-12 col-xs-12">
+                            <div class="data-state-wrap">
+                                Please Wait...
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+                <div ng-hide="editMapNumberSchedule" class="x_content">
+                    <form class="col-md-12 col-sm-6 col-xs-12 col-xs-12" name="mapnumberForm" novalidate>
+                        <br>
+
+                        &lt;!&ndash;<div class="col-md-5 col-sm-5 col-xs-5 form-group"
+                             ng-class="{ 'has-error' : mapnumberForm.mapnumberCampaignName.$invalid && !mapnumberForm.mapnumberCampaignName.$pristine }">
+
+                            <select class="form-control has-feedback-left" id="mapnumberCampaignName"
+                                    ng-model="mapnumber.CampaignId"
+                                    ng-options="opt.CampaignId as opt.CampaignName for opt in campaigns" required>
+                                <option value=''>Select Campaign</option>
+                            </select>
+                            <span class="fa fa-indent form-control-feedback left" aria-hidden="true"></span>
+
+                            <p ng-show="mapnumberForm.mapnumberCampaignName.$invalid && !mapnumberForm.mapnumberCampaignName.$pristine" class="help-block">
+                                Campaign is required.</p>
+                        </div>&ndash;&gt;
+
+                        <div class="col-md-10 col-sm-10 col-xs-10 form-group"
+                             ng-class="{ 'has-error' : mapnumberForm.mapnumberCategoryID.$invalid && !mapnumberForm.mapnumberCategoryID.$pristine }">
+
+                            <select class="form-control has-feedback-left" id="mapnumberCategoryID"
+                                    ng-model="mapnumber.CategoryID"
+                                    ng-options="opt.CategoryID as opt.CategoryName for opt in AvailableCategory" required>
+                                <option value=''>Select Category</option>
+                            </select>
+                            <span class="fa fa-indent form-control-feedback left" aria-hidden="true"></span>
+
+                            <p ng-show="mapnumberForm.mapnumberCategoryID.$invalid && !mapnumberForm.mapnumberCategoryID.$pristine"
+                               class="help-block">
+                                Schedule is required.</p>
+                        </div>
+
+                        <div class="col-md-2 col-sm-2 col-xs-2 form-group has-feedback">
+                            <button type="button" class="btn btn-success btn-xs "
+                                    ng-click="mapNumberToCampaign(mapnumber)" ng-disabled="mapnumberForm.$invalid">
+                                Map
+                            </button>
+
+                        </div>
+
+                        <div class="x_content">
+                            <div class="table-wrapper daynamic-s-tble">
+                                <table id="datatable-responsiveID" dt-options="dtOptions" datatable="ng"
+                                       class="table table-striped table-bordered dt-responsive nowrap dataTable no-footer dtr-inline"
+                                       cellspacing="0" width="100%" role="grid"
+                                       aria-describedby="datatable-responsive_info">
+                                    <thead>
+                                    <tr role="row">
+                                        <th class="sorting" tabindex="0" aria-controls="datatable-responsive"
+                                            rowspan="1"
+                                            colspan="1" aria-label="From">Category ID
+                                        </th>
+                                        <th class="sorting" tabindex="0" aria-controls="datatable-responsive"
+                                            rowspan="1"
+                                            colspan="1" aria-label="To">Category Name
+                                        </th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr role="row" class="odd"
+                                        ng-repeat="schedule in AssignedCategory">
+                                        <td>{{schedule.CategoryID}}</td>
+                                        <td>{{schedule.CategoryName}}</td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+
+                    </form>
+                </div>
+            </div>-->
+
+            <!--Map Number Group to Campaign-->
+            <div class="x_panel">
+                <div class="x_title">
+                    <div class="col-md-6 col-sm-6 col-xs-6">
+                        <h2><i class="fa fa-calendar">
+                            <small>Map Number Group and Schedule to Campaign</small>
+                        </i>
+
+                        </h2>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+
+                <div ng-show="mapnumberScheduleToCam">
+                    <div class="row ">
+                        <div class="col-md-12 col-sm-12 col-xs-12">
+                            <div class="data-state-wrap">
+                                Please Wait...
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+                <div ng-hide="mapnumberScheduleToCam" class="x_content">
+                    <form class="col-md-12 col-sm-6 col-xs-12 col-xs-12" name="mapnumberschedueForm" novalidate>
+                        <br>
+
+                        <!--<div class="col-md-5 col-sm-5 col-xs-5 form-group"
+                             ng-class="{ 'has-error' : mapnumberschedueForm.mapnumberschedueCampaignName.$invalid && !mapnumberschedueForm.mapnumberschedueCampaignName.$pristine }">
+
+                            <select class="form-control has-feedback-left" id="mapnumberschedueCampaignName"
+                                    ng-model="mapnumberschedue.CampaignId"
+                                    ng-options="opt.CampaignId as opt.CampaignName for opt in campaigns" required>
+                                <option value=''>Select Campaign</option>
+                            </select>
+                            <span class="fa fa-indent form-control-feedback left" aria-hidden="true"></span>
+
+                            <p ng-show="mapnumberschedueForm.mapnumberschedueCampaignName.$invalid && !mapnumberschedueForm.mapnumberschedueCampaignName.$pristine" class="help-block">
+                                Campaign is required.</p>
+                        </div>-->
+
+                        <div class="col-md-4 col-sm-4 col-xs-4 form-group"
+                             ng-class="{ 'has-error' : mapnumberschedueForm.mapnumberschedueScheduleList.$invalid && !mapnumberschedueForm.mapnumberschedueScheduleList.$pristine }">
+
+                            <select class="form-control has-feedback-left" id="mapnumberschedueScheduleList"
+                                    ng-model="mapnumberschedue.Schedule"
+                                    ng-options="opt as opt.ScheduleName for opt in addedSchedule" required>
+                                <option value=''>Select Schedule</option>
+                            </select>
+                            <span class="fa fa-indent form-control-feedback left" aria-hidden="true"></span>
+
+                            <p ng-show="mapnumberschedueForm.mapnumberschedueScheduleList.$invalid && !mapnumberschedueForm.mapnumberschedueScheduleList.$pristine"
+                               class="help-block">
+                                Schedule is required.</p>
+                        </div>
+
+                        <div class="col-md-6 col-sm-6 col-xs-6 form-group"
+                             ng-class="{ 'has-error' : mapnumberschedueForm.mapnumberCategoryID.$invalid && !mapnumberschedueForm.mapnumberCategoryID.$pristine }">
+
+                            <select class="form-control has-feedback-left" id="mapnumberschedueCategoryID"
+                                    ng-model="mapnumberschedue.CategoryID"
+                                    ng-options="opt.CategoryID as opt.CategoryName for opt in Categorys" required>
+                                <option value=''>Select Category</option>
+                            </select>
+                            <span class="fa fa-indent form-control-feedback left" aria-hidden="true"></span>
+
+                            <p ng-show="mapnumberschedueForm.mapnumberCategoryID.$invalid && !mapnumberschedueForm.mapnumberCategoryID.$pristine"
+                               class="help-block">
+                                Schedule is required.</p>
+                        </div>
+
+                        <div class="col-md-2 col-sm-2 col-xs-2 form-group has-feedback">
+                            <button type="button" class="btn btn-success btn-xs "
+                                    ng-click="MapNumberAndScheduleToCampaign(mapnumberschedue)"
+                                    ng-disabled="mapnumberschedueForm.$invalid">
+                                Map
+                            </button>
+
+                        </div>
+
+                        <div class="x_content">
+                            <div class="table-wrapper daynamic-s-tble">
+                                <table id="datatable-responsiveID" dt-options="dtOptions" datatable="ng"
+                                       class="table table-striped table-bordered dt-responsive nowrap dataTable no-footer dtr-inline"
+                                       cellspacing="0" width="100%" role="grid"
+                                       aria-describedby="datatable-responsive_info">
+                                    <thead>
+                                    <tr role="row">
+                                        <th class="sorting" tabindex="0" aria-controls="datatable-responsive"
+                                            rowspan="1"
+                                            colspan="1" aria-label="From">Category ID
+                                        </th>
+                                        <th class="sorting" tabindex="0" aria-controls="datatable-responsive"
+                                            rowspan="1"
+                                            colspan="1" aria-label="To">Category Name
+                                        </th>
+                                        <th class="sorting" tabindex="0" aria-controls="datatable-responsive"
+                                            rowspan="1"
+                                            colspan="1" aria-label="To">Schedule
+                                        </th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr role="row" class="odd"
+                                        ng-repeat="schedule in AssignedCategory">
+                                        <td>{{schedule.CategoryID}}</td>
+                                        <td>{{schedule.CampContactCategory.CategoryName}}</td>
+                                        <td>{{schedule.CamSchedule}}</td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+
+

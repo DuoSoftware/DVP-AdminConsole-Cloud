@@ -1,0 +1,132 @@
+<div class="row">
+    <div class="col-md-12 col-sm-6 col-xs-12">
+        <!-- application list -->
+        <div class="x_panel-2 bg-light-gray animated fadeIn">
+            <div class="x_title border-0">
+
+                <div class="col-md-6 col-sm-6 col-xs-6">
+                    <h2 class="font-robot font-300 text-uppercase font-15">New Schedule</h2>
+                </div>
+
+                <div class="col-md-6 col-sm-6 col-xs-6 form-group top_search">
+                    <div class="input-group">
+                        <input type="text" ng-model="searchCriteria" class="form-control"
+                               placeholder="Search for...">
+                        <span class="input-group-btn">
+                                  <button class="btn btn-default" type="button">Go!</button>
+                                </span>
+                    </div>
+                </div>
+                <div class="col-xs-12">
+                    <form>
+                        <div class="row">
+                            <div class="col-md-3 col-sm-3 col-xs-12 form-group has-feedback">
+                                <input type="text" class="form-control has-feedback-left"
+                                       ng-model="newSchedule.ScheduleName"
+                                       placeholder="Schedule Name">
+                                <span class="fa fa-user form-control-feedback left" aria-hidden="true"></span>
+                            </div>
+
+                            <div class="col-md-3 col-sm-3 col-xs-12 form-group has-feedback">
+                                <input type="text" class="form-control has-feedback-left"
+                                       ng-model="newSchedule.Action"
+                                       placeholder="Action">
+                                <span class="fa fa-envelope form-control-feedback left" aria-hidden="true"></span>
+                            </div>
+
+                            <div class="col-md-3 col-sm-3 col-xs-12 form-group has-feedback">
+
+
+                                <div class="col-md-3 col-sm-3 col-xs-12 ">
+                                    <timezone-selector ng-model="newSchedule.TimeZone"></timezone-selector>
+                                </div>
+                            </div>
+
+
+
+                        </div>
+
+
+
+                        <div class="row">
+
+                            <div class="col-md-3 col-sm-3 col-xs-12">
+                                <span style="color: grey">Start Date</span>
+                                <input type="text" class="form-control" ng-model="newSchedule.StartDate"
+                                       name="startDate"
+                                       ng-required="newSchedule.StartDate"
+                                       datepicker>
+
+                            </div>
+                            <div class="col-md-3 col-sm-3 col-xs-12">
+                                <span style="color: grey">End Date</span>
+                                <input type="text" class="form-control" ng-model="newSchedule.EndDate" name="endDate"
+                                       ng-required="newSchedule.EndDate"
+                                       datepicker>
+
+                            </div>
+                            <div class="col-md-3 col-sm-3 col-xs-12">
+                                <span style="color: grey">Extra Data</span>
+                                <input type="text" class="form-control has-feedback-left"
+                                       ng-model="newSchedule.ExtraData"
+                                       placeholder="Extra Data">
+
+                            </div>
+
+
+                        </div>
+
+                        <div  class="row">
+
+                            <div class="col-md-2 col-sm-2 col-xs-12 pull-right">
+                                <button type="button" class="btn btn-success btn-block  btn-pull-right"
+                                        ng-click="saveSchedule()">
+                                    Add
+                                </button>
+
+                            </div>
+                        </div>
+
+                    </form>
+                </div>
+                <div class="clearfix"></div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- end -->
+
+<!-- view application users -->
+<div class="row">
+    <div class="x_panel-2">
+        <div class="x_content">
+            <ul class="list-unstyled ">
+                <li ng-repeat="Schedule in ScheduleList | filterBy: ['ScheduleName']: searchCriteria">
+                    <editschedule schedule="Schedule" scheduleList="ScheduleList"
+                                  showmodalappointments="showModalAppointments(scheduleId, Schedule)"
+                                  update-Schedule="removeDeleted(Schedule)"
+                                  reloadpage="reloadPage()">
+
+                    </editschedule>
+                </li>
+
+                <paging ng-show="showPaging"
+                        class="small"
+                        page="currentPage"
+                        page-size="pageSize"
+                        total="pageTotal"
+                        show-prev-next="true"
+                        show-first-last="true"
+                        text-next-class="glyphicon glyphicon-chevron-right"
+                        text-prev-class="glyphicon glyphicon-chevron-left"
+                        text-first-class="glyphicon glyphicon-backward"
+                        text-last-class="glyphicon glyphicon-forward"
+                        paging-action="getPageData('attribute', page, pageSize, total)">
+                </paging>
+            </ul>
+        </div>
+    </div>
+</div>
+<!-- end -->
+
+

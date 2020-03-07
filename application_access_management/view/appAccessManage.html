@@ -1,0 +1,185 @@
+<div ng-controller="appAccessManageController as vm">
+    <!--<div class="col-md-12 col-sm-12 col-xs-12">
+        <div class="x_panel">
+            <button ng-click="selectUser(user)" type="button" class="btn btn-round btn-primary"
+                    ng-repeat="user in userList">{{user.username}}
+            </button>
+        </div>
+    </div>-->
+
+
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <div class="x_panel">
+            <div class="x_title">
+                <h2 class="font-robot font-300 text-uppercase font-15">Application Access Manager
+                    <small class="lab-owner">owner : {{ownerName}} Set Permission To : {{userName}}</small>
+                </h2>
+                <ul class="nav navbar-right panel_toolbox">
+                    <li>
+                        <button class="btn btn-primary" ng-click="clickDirective.goUsers()">Back</button>
+                    </li>
+                </ul>
+                <div class="clearfix"></div>
+            </div>
+            <div class="x_content">
+                <br>
+                <form id="demo-form2" data-parsley-validate="" class="form-horizontal form-label-left" novalidate="">
+                    <div class="row">
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            <!-- add permission -->
+                            <div class="drop-header">
+                                <i class="fa fa-unlock"></i>
+                                <h2 class="text-center">Access : Permission</h2>
+                            </div>
+                            <div class="thumbnaildrag drop-area-wrap" data-drop="true" ng-model='assignedNavigations'
+                                 data-jqyoui-options="{accept:'.btn-draggable:not([ng-model=assignedNavigations])'}"
+                                 jqyoui-droppable="{multiple:false,onDrop: 'assignNavigation'}">
+                                <div class="caption">
+                                    <div ng-dblclick="showEditView(item)" ng-click="setCurrentDrag(item)"
+                                         class="btn btn-round
+                                 btn-warning btn-draggable  draggable-item"
+                                         ng-repeat="item in assignedNavigations" ng-show="item.consoleName"
+                                         data-drag="true" data-jqyoui-options="{revert: 'invalid'}"
+                                         ng-model="assignedNavigations"
+                                         jqyoui-draggable="{index: {{$index}},animate:true}">
+                                        {{item.consoleName}}
+                                    </div>
+                                    <div class="drop-area-text" ng-if="assignedNavigations.length==0">
+                                        drop area
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- end -->
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            <!-- delete permission -->
+                            <div class="drop-header">
+                                <i class="fa fa-lock"></i>
+                                <h2 class="text-center">Access denied : Permissions </h2>
+                            </div>
+                            <div class="thumbnaildrag drop-area-wrap" data-drop="true" ng-model='assignableNavigations'
+                                 data-jqyoui-options="{accept:'.btn-draggable:not([ng-model=assignableNavigations])'}"
+                                 jqyoui-droppable="{multiple:false,onDrop: 'removeNavigation'}">
+                                <div class="caption">
+                                    <div ng-click="setCurrentDrag(item)" class="btn btn-round btn-primary
+                                 btn-draggable  draggable-item"
+                                         ng-repeat="item in assignableNavigations" ng-show="item.consoleName"
+                                         data-drag="true" data-jqyoui-options="{revert: 'invalid'}"
+                                         ng-model="assignableNavigations"
+                                         jqyoui-draggable="{index: {{$index}},animate:true}">
+                                        {{item.consoleName}}
+                                    </div>
+                                    <div class="drop-area-text" ng-if="assignableNavigations.length==0">
+                                        drop area
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- end -->
+
+                    <!--<div ng-disabled="active" class="form-group has-feedback">-->
+                    <!--<br>-->
+                    <!--</div>-->
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-8 col-sm-8 col-xs-12" ng-show="showEditWindow">
+        <div class="x_panel">
+            <h2 class="font-robot font-300 text-uppercase font-15">Console
+                <small class="lab-owner">{{DragObject.consoleName}}</small>
+            </h2>
+            <div class="x_content navigation-tree">
+                <div class="dashboard-widget-content"
+                     ng-slimscroll
+                     opacity="0.2"
+                     position="right"
+                     height="600"
+                     distance="1px">
+                    <div class="container">
+                        <div class="row">
+                            <navigationtree
+                                    selected-console="selectedConsole"
+                                    user-name="{{selectedUser}}"
+                                    console-name="{{DragObject.consoleName}}"
+                                    navigation="item"
+                                    userrole="{{selectedUserRole}}"
+                                    ng-repeat="item in selectedConsole.consoleNavigation">
+                            </navigationtree>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scope Assign-->
+    <!--<div>-->
+    <!--<div class="x_content">-->
+    <!--<br>-->
+    <!--<form id="scopeForm" data-parsley-validate="" class="form-horizontal form-label-left" novalidate="">-->
+    <!--<div class="row">-->
+    <!--<div class="col-md-6 col-sm-6 col-xs-12">-->
+    <!--&lt;!&ndash; add permission &ndash;&gt;-->
+    <!--<div class="drop-header">-->
+    <!--<i class="fa fa-unlock"></i>-->
+    <!--<h2 class="text-center">Access : Permission</h2>-->
+    <!--</div>-->
+    <!--<div class="thumbnaildrag drop-area-wrap" data-drop="true" ng-model='assignedScope'-->
+    <!--data-jqyoui-options="{accept:'.btn-draggable:not([ng-model=assignedScope])'}"-->
+    <!--jqyoui-droppable="{multiple:false,onDrop: 'assignScopeToUser'}">-->
+    <!--<div class="caption">-->
+    <!--<div ng-click="setCurrentDragScope(item)"-->
+    <!--class="btn btn-round-->
+    <!--btn-warning btn-draggable  draggable-item"-->
+    <!--ng-repeat="item in assignedScope" ng-show="item.resource"-->
+    <!--data-drag="true" data-jqyoui-options="{revert: 'invalid'}"-->
+    <!--ng-model="assignedScope"-->
+    <!--jqyoui-draggable="{index: {{$index}},animate:true}">-->
+    <!--{{item.resource}}-->
+    <!--</div>-->
+    <!--<div class="drop-area-text" >-->
+    <!--drop area-->
+    <!--</div>-->
+    <!--</div>-->
+    <!--</div>-->
+    <!--</div>-->
+    <!--&lt;!&ndash; end &ndash;&gt;-->
+    <!--<div class="col-md-6 col-sm-6 col-xs-12">-->
+    <!--&lt;!&ndash; delete permission &ndash;&gt;-->
+    <!--<div class="drop-header">-->
+    <!--<i class="fa fa-lock"></i>-->
+    <!--<h2 class="text-center">Access denied : Permissions </h2>-->
+    <!--</div>-->
+    <!--<div class="thumbnaildrag drop-area-wrap" data-drop="true" ng-model='assignableScope'-->
+    <!--data-jqyoui-options="{accept:'.btn-draggable:not([ng-model=assignableScope])'}"-->
+    <!--jqyoui-droppable="{multiple:false,onDrop: 'removeAssignedScope'}">-->
+    <!--<div class="caption">-->
+    <!--<div ng-click="setCurrentDragScope(item)" class="btn btn-round btn-primary-->
+    <!--btn-draggable  draggable-item"-->
+    <!--ng-repeat="item in assignableScope" ng-show="item.resource"-->
+    <!--data-drag="true" data-jqyoui-options="{revert: 'invalid'}"-->
+    <!--ng-model="assignableScope"-->
+    <!--jqyoui-draggable="{index: {{$index}},animate:true}">-->
+    <!--{{item.resource}}-->
+    <!--</div>-->
+    <!--<div class="drop-area-text" >-->
+    <!--drop area-->
+    <!--</div>-->
+    <!--</div>-->
+    <!--</div>-->
+    <!--</div>-->
+    <!--</div>-->
+    <!--&lt;!&ndash; end &ndash;&gt;-->
+
+    <!--&lt;!&ndash;<div ng-disabled="active" class="form-group has-feedback">&ndash;&gt;-->
+    <!--&lt;!&ndash;<br>&ndash;&gt;-->
+    <!--&lt;!&ndash;</div>&ndash;&gt;-->
+    <!--</form>-->
+    <!--</div>-->
+    <!--</div>-->
+</div>
+
+

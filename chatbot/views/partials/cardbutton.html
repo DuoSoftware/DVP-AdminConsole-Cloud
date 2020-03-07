@@ -1,0 +1,31 @@
+<div>
+    <div ng-show="mode == 'view'">
+        <input type="button" value="{{button.title}}" class="card-lable-new">
+        <div class="edit-card--btn-circle edit-card--edit" ng-click="changeMode('edit')">
+            <i class="fa fa-pencil"></i>
+        </div>
+    </div>
+    <div ng-show="mode == 'new'">
+        <a class="font-robot font-300 btn-small" ng-click="newButton()">
+            <i class="fa fa-plus"></i> New
+        </a>
+    </div>
+    <div class="top40" ng-show="mode == 'edit'">
+        <input class="form-control" type="text" placeholder="Title" ng-model="button.title">
+        <input class="form-control" type="text" placeholder="Message" ng-model="button.payload.message">
+        <select class="form-control" placeholder="Select Type" ng-model="button.type">
+            <option value="" disabled selected>Select Type</option>
+            <option value="web_url">Web URL</option>
+            <option value="postback">Postback</option>
+            <option value="element_shear">Element Shear</option>
+            <option value="payment">Payment</option>
+            <option value="phone_number">Phone Number</option>
+            <option value="account_link">Account Link</option>
+            <option value="account_unlink">Account Unlink</option>
+            <option value="game_play">Game Play</option>
+        </select>
+        <input class="form-control" type="text" placeholder="Url" ng-model="button.other_data.url">
+        <input type="button" value="Done" ng-click="changeMode('view')" class="btn card-btn pull-right">
+    </div>
+
+</div>

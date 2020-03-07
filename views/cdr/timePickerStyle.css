@@ -1,0 +1,132 @@
+.hourTag {
+    position: absolute;
+    left: 2px;
+    top: -1px;
+    width: 19px;
+    height: 13px;
+    border: 0px solid rgb(0, 0, 0);
+    font-size: 8pt;
+    color: rgb(136, 136, 136);
+    text-align: center;
+    outline: rgb(0, 0, 0) solid 0px;
+    background-color: rgb(255, 255, 255);
+}
+
+.minuteTag {
+    position: absolute;
+    left: 40px;
+    top: -1px;
+    width: 19px;
+    height: 13px;
+    border: 0px solid rgb(0, 0, 0);
+    font-size: 8pt;
+    color: rgb(136, 136, 136);
+    text-align: center;
+    outline: rgb(0, 0, 0) solid 0px;
+    background-color: rgb(255, 255, 255);
+}
+
+.hourInput {
+    position: absolute;
+    left: 0px;
+    top: 14px;
+    width: 22px;
+    height: 22px;
+    color: rgb(136, 136, 136);
+    text-align: center;
+    border-radius: 7px;
+    box-shadow: rgb(47, 79, 79) 0px 0px 4px;
+    border: 0px solid rgb(0, 0, 0);
+    outline: rgb(0, 0, 0) solid 0px;
+    background-color: rgb(255, 255, 255);
+}
+
+.minuteInput {
+    position: absolute;
+    left: 39px;
+    top: 14px;
+    width: 22px;
+    height: 22px;
+    border-radius: 7px;
+    box-shadow: rgb(47, 79, 79) 0px 0px 4px;
+    border: 0px solid rgb(0, 0, 0);
+    color: rgb(136, 136, 136);
+    text-align: center;
+    outline: rgb(0, 0, 0) solid 0px;
+    background-color: rgb(255, 255, 255);
+}
+
+.hrDownButton
+{
+    position: absolute;
+    left: 25px;
+    top: 26px;
+    width: 11px;
+    height: 9px;
+    box-shadow: rgb(47, 79, 79) 0px 0px 1px;
+    border: 0px solid rgb(0, 0, 0);
+    font-size: 8pt;
+    color: rgb(0, 0, 0);
+    text-align: center;
+    font-family: Verdana, Geneva, sans-serif;
+    outline: rgb(0, 0, 0) solid 0px;
+    transform: rotate(180deg);
+    font-weight: bold;
+    background-color: rgb(211, 211, 211);
+}
+
+.hrUpButton
+{
+    position: absolute;
+    left: 25px;
+    top: 15px;
+    width: 11px;
+    height: 9px;
+    box-shadow: rgb(47, 79, 79) 0px 0px 1px;
+    border: 0px solid rgb(0, 0, 0);
+    opacity: 1;
+    font-size: 8pt;
+    color: rgb(0, 0, 0);
+    text-align: center;
+    font-family: Verdana, Geneva, sans-serif;
+    font-weight: bold;
+    outline: rgb(0, 0, 0) solid 0px;
+    background-color: rgb(211, 211, 211);
+}
+
+.minUpButton
+{
+    position: absolute;
+    left: 63px;
+    top: 15px;
+    width: 11px;
+    height: 9px;
+    box-shadow: rgb(47, 79, 79) 0px 0px 1px;
+    border: 0px solid rgb(0, 0, 0);
+    font-size: 8pt;
+    color: rgb(0, 0, 0);
+    text-align: center;
+    font-family: Verdana, Geneva, sans-serif;
+    outline: rgb(0, 0, 0) solid 0px;
+    font-weight: bold;
+    background-color: rgb(211, 211, 211);
+}
+
+.minDownButton
+{
+    position: absolute;
+    left: 63px;
+    top: 26px;
+    width: 11px;
+    height: 9px;
+    box-shadow: rgb(47, 79, 79) 0px 0px 1px;
+    transform: rotate(180deg);
+    border: 0px solid rgb(0, 0, 0);
+    font-size: 8pt;
+    color: rgb(0, 0, 0);
+    text-align: center;
+    font-family: Verdana, Geneva, sans-serif;
+    outline: rgb(0, 0, 0) solid 0px;
+    font-weight: bold;
+    background-color: rgb(211, 211, 211);
+}

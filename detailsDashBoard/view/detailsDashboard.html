@@ -1,0 +1,53 @@
+<div class="row details-dashboard">
+    <div class="backdrop-dark" ng-if="selectedAgent"></div>
+    <div class="col-md-12">
+        <div class="x_panel main-title">
+            <div class="x_title">
+                <h2>Dashboard</h2>
+                <ul class="nav navbar-right panel_toolbox">
+
+                    <li class="dropdown">
+                        <a href="javascript:void(0)" class="dropdown-toggle" data-toggle="dropdown" role="button"
+                           aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                        <ul class="dropdown-menu" role="menu">
+                            <li><a ng-class="refreshTime==10000 ?'fa fa-check':''" href="javascript:void(0)"
+                                   ng-click="setRefreshTime(10000);">10s </a>
+                            </li>
+                            <li><a ng-class="refreshTime==20000 ?'fa fa-check':''" href="javascript:void(0)"
+                                   ng-click="setRefreshTime(20000);">20s</a>
+                            </li>
+                            <li><a ng-class="refreshTime==30000 ?'fa fa-check':''" href="javascript:void(0)"
+                                   ng-click="setRefreshTime(30000);">30s</a>
+                            </li>
+                            <li><a ng-class="refreshTime==40000 ?'fa fa-check':''" href="javascript:void(0)"
+                                   ng-click="setRefreshTime(40000);">40s</a>
+                            </li>
+                            <li><a ng-class="refreshTime==50000 ?'fa fa-check':''" href="javascript:void(0)"
+                                   ng-click="setRefreshTime(50000);">50s</a>
+                            </li>
+                            <li><a ng-class="refreshTime==60000 ?'fa fa-check':''" href="javascript:void(0)"
+                                   ng-click="setRefreshTime(60000);">60s</a>
+                            </li>
+                            <li><a ng-class="refreshTime=='stop' ?'fa fa-check':''" href="javascript:void(0)"
+                                   ng-click="setRefreshTime('stop');">Stop</a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+                <div class="clearfix"></div>
+            </div>
+        </div>
+        <div class="clearfix">
+
+            <div ng-include="'detailsDashBoard/view/template/queueDetails.html'"></div>
+            <div ng-include="'detailsDashBoard/view/template/agentSummary.html'"></div>
+            <!--<div ng-if="selectedAgent" ng-include="'detailsDashBoard/view/template/agentInfo.html'"></div>-->
+            <!--<div ng-include="'detailsDashBoard/view/template/agentState.html'"></div>-->
+
+        </div>
+
+        <div class="clearfix">
+            <div ng-include="'views/call-monitor/callMonitor.html'"></div>
+        </div>
+    </div>
+</div>

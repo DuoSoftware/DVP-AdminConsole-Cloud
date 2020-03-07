@@ -1,0 +1,96 @@
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12 animated fadeIn">
+        <div class="x_panel main-title">
+            <div class="x_title">
+                <h2><b>REPORT</b> | TICKET - Tag Wise Summary</h2>
+                <ul class="nav navbar-right panel_toolbox">
+                    <li ng-show="!showFilter" ng-click="showFilter= !showFilter"><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                    </li>
+                    <li ng-show="showFilter" ng-click="showFilter= !showFilter"><a class="close-link"><i class="fa fa-chevron-down"></i></a></li>
+                </ul>
+                <div class="clearfix"></div>
+            </div>
+            <div class="x_content" ng-show="!showFilter">
+                <div class="col-md-4 col-sm-4 col-xs-12">
+                    <label>Start Date</label>
+                    <input type="text" class="form-control" ng-model="searchParams.startDay" name="startDate" ng-change="onDateChange()" datepicker>
+                </div>
+                <div class="col-md-4 col-sm-4 col-xs-12">
+                    <label>End Date</label>
+                    <input type="text" class="form-control" ng-model="searchParams.endDay" name="endDate" ng-change="onDateChange()" datepicker>
+                </div>
+                <div class="col-md-2 col-sm-2 col-xs-12" style="padding-top: 25px">
+                    <button type="button" class="btn btn-success" ng-click="getTicketTagSummary()">
+                        Search
+                    </button>
+                </div>
+                <div class="col-md-2 col-sm-2 col-xs-12 text-right" style="padding-top: 25px">
+                    <button type="button" class="btn btn-success"
+                            csv-header="['Tag', 'Ticket Count']"
+                            csv-column-order="['tag', 'count']" ng-csv="getTicketTagSummaryCSV()"
+                            filename="{{DownloadFileName}}.csv">
+                        CSV&nbsp;&nbsp;&nbsp;&nbsp;
+                        <i class="fa fa-download"></i>
+                    </button>
+                </div>
+                <div class="clearfix">
+                    <div class="col-md-12 col-sm-12 col-xs-12">
+                        <label>Tags</label>
+                        <tags-input ng-model="filteredTags" display-property="name" min-length="1"
+                                    add-from-autocomplete-only="false" replace-spaces-with-dashes="false" key-property="_id">
+                            <auto-complete max-results-to-show="1000" source="querySearch($query)"
+                                           load-on-empty="true" load-on-focus="true"
+                                           min-length="1"></auto-complete>
+                        </tags-input>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-12 col-sm-12 col-xs-12" ng-if="searchParams.isTableLoading">
+            <div class="data-state-wrap">
+                Please Wait...
+            </div>
+        </div>
+        <div class="x_panel" ng-show="tagSummaryDetails.length > 0">
+            <div class="x_content">
+                <div class="col-lg-12">
+                    <div class="tag-ticket-summary-wrp"
+                         ng-repeat="sum in tagSummaryDetails"
+                         ng-class="{'divider clearfix width-100 no-padding': ($index+1) % 5 == 0}"
+                    >
+                        <div ng-if="($index+1) % 5 != 0">
+                            <div class="tag-name">
+                                {{sum.tag}}
+                            </div>
+                            <div class="count">
+                                {{sum.count}}
+                            </div>
+                        </div>
+                        <!--<div class="divider clearfix width-100" ng-if=""></div>-->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+	window.scrollTo(0, 0);
+</script>
+
+<!--
+<script type="text/javascript">
+    $('#timepickerSt').timepicker({
+        template: false,
+        showInputs: false,
+        minuteStep: 5
+    });
+</script>
+
+<script type="text/javascript">
+    $('#timepickerEt').timepicker({
+        template: false,
+        showInputs: false,
+        minuteStep: 5
+    });
+</script>-->

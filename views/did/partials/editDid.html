@@ -1,0 +1,47 @@
+<div class="row" ng-show="showModal">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <div class="x_panel">
+
+
+            <div class="x_content">
+                <br />
+                <form class="form-horizontal form-label-left input_mask">
+
+                    <div class="form-group col-md-12 col-sm-12 col-xs-12">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12">DID Number</label>
+                        <div class="col-md-9 col-sm-9 col-xs-12">
+                            <!--<input type="text" class="form-control" placeholder="" name="txt_desc" ng-model="did.DidNumber" ng-disabled="false">-->
+                            <select class="form-control" name="txt_desc" ng-model="did.DidNumber"
+                                    ng-model-options="{trackBy: '$value'}" ng-change="">
+                                <option ng-repeat="TrunkNumber in TrunkNumbers" value="{{TrunkNumber.PhoneNumber}}">
+                                    {{TrunkNumber.PhoneNumber}}
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group col-md-12 col-sm-12 col-xs-12">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12">Extension</label>
+                        <div class="col-md-9 col-sm-9 col-xs-12">
+                            <select class="form-control" ng-model="did.Extension.id"
+                                    ng-model-options="{trackBy: '$value'}" ng-change="">
+                                <option ng-repeat="extension in Extensions" value="{{extension.id}}">
+                                    {{extension.Extension}}
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-md-9 col-sm-9 col-xs-12 col-md-offset-8">
+                            <button type="submit" class="btn btn-primary" ng-click="closeModal()">Cancel</button>
+                            <button type="submit" class="btn btn-success" ng-click="saveOrUpdate()">Save</button>
+                        </div>
+                    </div>
+
+
+                </form>
+            </div>
+
+        </div>
+    </div>
+</div>

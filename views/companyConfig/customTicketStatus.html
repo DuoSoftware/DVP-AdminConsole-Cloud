@@ -1,0 +1,130 @@
+<div class="row">
+
+    <div class="col-md-12 col-sm-6 col-xs-12">
+
+        <!-- application list -->
+        <div class="x_panel bg-light-gray animated fadeIn">
+            <div class="x_title border-0">
+                <div class="default-type">
+                    <div class="col-md-6 col-sm-6 col-xs-6">
+                        <h2 class="font-robot font-300 text-uppercase font-15">Default Ticket Status</h2>
+                    </div>
+                    <div class="col-xs-12">
+                        <div class="tile-stats m-top15">
+                            <form class="form-horizontal form-label-left input_mask">
+                                <div class="row">
+                                    <!--<label class="control-label col-md-2 col-sm-6 col-xs-12">Server Type</label>-->
+                                    <div class="col-md-12 col-sm-12 col-xs-12  ">
+                                        <ul class="customer-type-wrapper defaultType">
+                                            <li ng-repeat="systemStatus in systemTicketStatus">
+                                                {{systemStatus.status_node}}
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div class="custom-type">
+                    <div class="col-md-6 col-sm-6 col-xs-6">
+                        <h2 class="font-robot font-300 text-uppercase font-15">Custom Ticket Status configuration</h2>
+                    </div>
+
+                    <div class="col-xs-12">
+                        <div class="tile-stats m-top15">
+                            <form class="form-horizontal form-label-left input_mask">
+                                <div class="row">
+                                    <!--<label class="control-label col-md-2 col-sm-6 col-xs-12">Server Type</label>-->
+                                    <div class="col-md-4 col-sm-4 col-xs-12 form-group has-feedback">
+                                        <input type="text" class="form-control has-feedback-left"
+                                               ng-model="cusTicketStatus.status_node"
+                                               placeholder="Custom Status">
+                                        <span class="fa fa-user form-control-feedback left" aria-hidden="true"></span>
+                                    </div>
+
+                                    <div class="col-md-4 col-sm-4 col-xs-12 form-group has-feedback">
+                                        <input type="text" class="form-control has-feedback-left"
+                                               ng-model="cusTicketStatus.description"
+                                               placeholder="Description">
+                                        <span class="fa fa-user form-control-feedback left" aria-hidden="true"></span>
+                                    </div>
+                                    <div class="col-md-4 col-sm-4 col-xs-12 form-group has-feedback">
+                                        <select class="form-control has-feedback-left"
+                                                ng-model="cusTicketStatus.category"
+                                                placeholder="Choose Protocol">
+                                            <option>TODO</option>
+                                            <option>INPROGRESS</option>
+                                            <option>DONE</option>
+                                        </select>
+                                    </div>
+
+                                </div>
+
+
+                                <div class="row">
+
+
+                                    <div class="col-md-12 col-sm-12 col-xs-12  ">
+                                        <button type="button" class="btn btn-success  btn- pull-right" ng-disabled="!cusTicketStatus.status_node"
+                                                ng-click="addCustomTicketStatus()">
+                                            Add
+                                        </button>
+                                    </div>
+                                </div>
+
+                            </form>
+                        </div>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+
+            </div>
+        </div>
+        <!-- end -->
+
+        <!-- view application users -->
+
+
+
+        <div class="x_panel " ng-if="customticketStatus.length > 0">
+
+            <div class="col-md-6 col-sm-6 col-xs-6 form-group top_search">
+                <div class="input-group">
+                    <input type="text" ng-model="searchCriteria" class="form-control"
+                           placeholder="Search for...">
+                    <span class="input-group-btn">
+                                  <button class="btn btn-default" type="button">Go!</button>
+                                </span>
+                </div>
+            </div>
+
+            <div class="x_content">
+                <ul class="list-unstyled ">
+                    <li ng-repeat="cusStatus in customticketStatus | filterBy: ['status_node']: searchCriteria">
+                        <custom-ticket-status-directive custom-status="cusStatus" update-custom-status="removeDeleted(cusStatus)"
+                                                        reloadpage="getCustomTicketStatus()"></custom-ticket-status-directive>
+                    </li>
+
+                    <paging ng-show="showPaging"
+                            class="small"
+                            page="currentPage"
+                            page-size="pageSize"
+                            total="pageTotal"
+                            show-prev-next="true"
+                            show-first-last="true"
+                            text-next-class="glyphicon glyphicon-chevron-right"
+                            text-prev-class="glyphicon glyphicon-chevron-left"
+                            text-first-class="glyphicon glyphicon-backward"
+                            text-last-class="glyphicon glyphicon-forward"
+                            paging-action="getPageData('attribute', page, pageSize, total)">
+                    </paging>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+</div>

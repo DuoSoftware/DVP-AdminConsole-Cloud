@@ -1,0 +1,178 @@
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <div class="x_panel main-title">
+            <div class="x_title">
+                <h2><b>REPORT</b> | CAMPAIGN | Agent Dialer - Details</h2>
+                <ul class="nav navbar-right panel_toolbox">
+                    <li><button class="btn btn-success" ng-click="HeaderDetails()"><i class="fa fa-refresh" ></i></button></li>
+                    <li ng-show="!showFilter" ng-click="showFilter= !showFilter"><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                    </li>
+                    <li ng-show="showFilter" ng-click="showFilter= !showFilter"><a class="close-link"><i class="fa fa-chevron-down"></i></a>
+                    </li>
+                </ul>
+                <div class="clearfix"></div>
+            </div>
+            <div class="x_content" ng-show="!showFilter">
+                <div class="col-md-12 col-sm-6 col-xs-12">
+                    <form id="campaingForm" name="ivrForm" novalidate class="form-label-left input_mask">
+
+                        <div class="row">
+
+                            <div class="col-md-12 col-sm-12 col-xs-12 form-group"
+                                 ng-class="{ 'has-error' : campaingForm.BatchNames.$invalid && !campaingForm.BatchNames.$pristine }">
+                                <select class="form-control has-feedback-left" id="Extensions"
+                                        ng-model="dispositionInfo.BatchName"
+                                        ng-options="opt as opt for opt in BatchNames track by opt" required>
+                                    <option disabled value=''>Batch Names</option>
+                                </select>
+                                <span class="fa fa-envelope form-control-feedback left" aria-hidden="true"></span>
+
+                                <p ng-show="campaingForm.BatchNames.$invalid && !campaingForm.BatchNames.$pristine"
+                                   class="help-block">
+                                    Batch Names is required.</p>
+                            </div>
+
+                            <div class="col-md-8 col-sm-8 col-xs-12 form-group" >
+                                <select class="form-control has-feedback-left" id="dialerState"
+                                        ng-model="dispositionInfo.DialerState"
+                                        ng-options="opt as opt for opt in DialerStates track by opt" required>
+                                    <option disabled value=''>Dialer State</option>
+                                </select>
+                            </div>
+
+                            <div class="col-md-1 col-sm-1 col-xs-1 form-group" style="position: relative; top: 12px">
+                                <label>Agent</label>
+                            </div>
+
+                            <div class="col-md-3 col-sm-3 col-xs-3 form-group">
+                                <input style="max-height: 200px;overflow-y: auto" type="text" ng-model="Resource"  uib-typeahead="resource.ResourceName as resource.ResourceName for resource in ResourceList | filter:$viewValue | orderBy: 'ResourceName'"  class="form-control" typeahead-show-hint="true" typeahead-min-length="0">
+                            </div>
+
+
+                            <div class="col-md-2 col-sm-2 col-xs-12 form-group"  >
+                                <input type="number" min="0" class="form-control has-feedback-left"
+                                       ng-model="dispositionInfo.tryCount"
+                                       placeholder="Try Count">
+                            </div>
+
+                            <div class="col-md-2 col-sm-2 col-xs-12  form-group has-feedback">
+                                <button ng-if="!isLoading" ng-disabled="campaingForm.$invalid" type="button"
+                                        class="btn btn-green btn-block"
+                                        ng-click="GetCampaignSummery();">
+                                    Search
+                                </button>
+                                <button ng-if="isLoading" disabled type="button" class="btn btn-green btn-block"
+                                >
+                                    PLEASE WAIT...
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12 col-sm-6 col-xs-12" ng-hide="intiate">
+        <div class="x_panel">
+            <div class="x_title">
+                <h2>Details
+                </h2>
+
+                <div class="clearfix"></div>
+            </div>
+
+
+            <div class="x_content">
+
+                <div ng-show="isLoading">
+                    <div class="row ">
+                        <div class="col-md-12 col-sm-12 col-xs-12">
+                            <div class="data-state-wrap">
+                                Please Wait...
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="row" ng-hide="isLoading">
+
+
+                    <div class="col-sm-12">
+                        <div class="table-wrapper daynamic-s-tble">
+                            <table id="datatable-responsive" dt-options="dtOptions" datatable="ng"
+                                   class="table table-striped table-bordered dt-responsive nowrap dataTable no-footer dtr-inline"
+                                   cellspacing="0" width="100%" role="grid"
+                                   aria-describedby="datatable-responsive_info">
+                                <thead>
+                                <tr role="row">
+                                    <th class="sorting" tabindex="0" aria-controls="datatable-responsive"
+                                        rowspan="1"
+                                        colspan="1" aria-label="Call Time">Batch Name
+                                    </th>
+                                    <th class="sorting" tabindex="1" aria-controls="datatable-responsive"
+                                        rowspan="1"
+                                        colspan="1" aria-label="Total Duration">Contact Number
+                                    </th>
+                                    <th class="sorting" tabindex="2" aria-controls="datatable-responsive"
+                                        rowspan="1"
+                                        colspan="1" aria-label="Answer Duration">Dialer State
+                                    </th>
+                                    <th class="sorting" tabindex="3" aria-controls="datatable-responsive"
+                                        rowspan="1"
+                                        colspan="1" aria-label="Total Duration">Resource Name
+                                    </th>
+                                    <th class="sorting" tabindex="3" aria-controls="datatable-responsive"
+                                        rowspan="1"
+                                        colspan="1" aria-label="Total Duration">User Name
+                                    </th>
+                                    <th class="sorting" tabindex="4" aria-controls="datatable-responsive"
+                                        rowspan="1"
+                                        colspan="1" aria-label="AgentSkill">Other Data
+                                    </th>
+                                    <th class="sorting" tabindex="5" aria-controls="datatable-responsive"
+                                        rowspan="1"
+                                        colspan="1" aria-label="Call Time">Try Count
+                                    </th>
+                                </thead>
+                                <tbody>
+                                <tr role="row" class="odd"
+                                    ng-repeat="c in campaignSummery">
+                                    <td>{{c.BatchName}}</td>
+                                    <td>{{c.ContactNumber}}</td>
+                                    <td>{{c.DialerState}}</td>
+                                    <td>{{c.ResourceName}}</td>
+                                    <td>{{c.ResourceId}}</td>
+                                    <td>{{c.OtherData}}</td>
+                                    <td>{{c.AttemptCount}}</td>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <paging
+                            class="small"
+                            page="currentPage"
+                            page-size="pageSize"
+                            total="pageTotal"
+                            show-prev-next="true"
+                            show-first-last="true"
+                            text-next-class="glyphicon glyphicon-chevron-right"
+                            text-prev-class="glyphicon glyphicon-chevron-left"
+                            text-first-class="glyphicon glyphicon-backward"
+                            text-last-class="glyphicon glyphicon-forward"
+                            paging-action="getPageData('Paging Clicked', page, pageSize, total)">
+                    </paging>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+	window.scrollTo(0, 0);
+</script>
+

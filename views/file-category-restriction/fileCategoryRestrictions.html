@@ -1,0 +1,45 @@
+<div class="row">
+
+    <div class="col-md-12 col-sm-6 col-xs-12">
+
+        <div class="col-md-6 col-sm-6 col-xs-6">
+            <h2 class="font-robot font-300 text-uppercase font-15">Supervisors</h2>
+        </div>
+        <div class="col-md-6 col-sm-6 col-xs-6 form-group top_search">
+            <div class="input-group">
+                <input type="text" ng-model="searchCriteria" class="form-control"
+                       placeholder="Search for...">
+                <span class="input-group-btn">
+                                  <button class="btn btn-default" type="button">Go!</button>
+                                </span>
+            </div>
+        </div>
+
+        <div class="x_panel ">
+            <div class="x_content">
+                <ul class="list-unstyled ">
+                    <li ng-repeat="adminUser in AdminUsers | filterBy: ['username']: searchCriteria">
+                        <editfcatrestrict adminuser="adminUser" catlist="FileCategoryNames" reloadpage="reloadPage()"></editfcatrestrict>
+                    </li>
+
+                    <paging ng-show="showPaging"
+                            class="small"
+                            page="currentPage"
+                            page-size="pageSize"
+                            total="pageTotal"
+                            show-prev-next="true"
+                            show-first-last="true"
+                            text-next-class="glyphicon glyphicon-chevron-right"
+                            text-prev-class="glyphicon glyphicon-chevron-left"
+                            text-first-class="glyphicon glyphicon-backward"
+                            text-last-class="glyphicon glyphicon-forward"
+                            paging-action="getPageData('attribute', page, pageSize, total)">
+                    </paging>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+</div>

@@ -1,0 +1,80 @@
+<div>
+        <div>
+            <div class="col-lg-12">
+                <div class="row">
+                    <div class="col-md-9">
+                        <h2 class=" font-300">
+                            <a ng-hide="editMode">Entity Name: {{entity.entityName}}</a>
+                        </h2>
+                        <span ng-hide="editMode">{{entity.description}}</span>
+                        <br>
+                       
+                    </div>
+                    <div class="col-md-3 ">
+                        <div class="pull-right user-option-wrap" ng-show="!editMode">
+                            <div ng-disabled="true" ng-click="editEntity(entity)" class="btn-circle">
+                                <i class="fa fa-pencil"></i>
+                            </div>
+                            <div ng-disabled="true" ng-click="removeEntity(entity)" class="btn-circle">
+                                <i class="fa fa-trash-o"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    
+            <div class="col-md-12 col-sm-12 col-xs-12 edit-main-wrap" ng-show="editMode">
+                <div class="application-edit">
+                    <div class="col-sm-12">
+                        <div class="col-sm-6">
+                            <h2 class="font-robot font-300 text-uppercase font-15">Edit {{entity.entityName}}</h2>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="edit-close pull-right">
+                                <i class="fa fa-close" ng-click="closeTemplate()"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12 col-sm-6 col-xs-12 col-xs-12">
+                        <div class="tile-stats  m-top15">
+                            <form name="updateentity" ng-submit="updateEntity(entity)" class="form-horizontal form-label-left input_mask">
+                                <div class="row no-gutters">
+                                    <div class="col-12 col-sm-6 col-md-6 form-group">
+                                        <input type="text" class="form-control" name="updateentity" ng-model="entity.entityName" placeholder="Entity Name">
+                                    </div>
+
+                                    <div class="col-12 col-sm-6 col-md-6 form-group">
+                                        <input type="text" class="form-control" name="updateentity" ng-model="entity.description" placeholder="Entity Description">
+                                    </div>
+                                    
+                                    <div class="col-12 col-sm-12 col-md-12 form-group">
+                                        <label>Enter Values</label>
+                                        <tags-input class="form-control" style="height:100% !important;" name="updateentity" ng-model="entity.values" required></tags-input>
+                                    </div>
+    
+                                </div>
+                              
+                                <div class="col-12 col-sm-12 col-md-12 form-group">
+                                    <button type="submit" ng-disabled="updateentity.$invalid" class="btn btn-success btn-sm pull-right">
+                                        Update
+                                    </button>
+                                </div>
+                             
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    
+            <div ng-hide="editMode">
+                <!-- <div class="col-md-9 col-sm-9 col-xs-12 form-group ">
+                    <label class="form-control-static">Url</label>
+                    <p style="max-width:m">{{template.url}} </p>
+                </div>  -->
+    
+    
+                <!--<p class="excerpt col-md-3" ng-if="IsDeveloper"> Developer : {{application.AppDeveloper.Username}} </p>-->
+            </div>
+            <div class="clearfix"></div>
+        </div>
+    </div>

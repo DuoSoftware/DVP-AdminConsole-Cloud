@@ -1,0 +1,139 @@
+<section id="campMWrapper"
+         main-scroll-campaign
+         class="camp-m-wrapper">
+    <!-- campaign header -->
+    <header class="camp-m-header">
+        <!-- UI hedaer -->
+        <div class="col-lg-3">
+            <div class="camp-header-left">
+                <div class="camp-hleft-text hleft-lg">
+                    CM
+                </div>
+                <div class="camp-hleft-text h-left-sm">
+                    Campaign Manager
+                </div>
+            </div>
+            <span class="left-line"></span>
+        </div>
+        <!-- search -->
+        <div class="col-lg-5">
+            <div class="campaign-search">
+                <input class="form-control" ng-model="searchCriteria"
+                       placeholder="Campaign Search Here...">
+            </div>
+        </div>
+        <!-- create new campaign  -->
+        <div class="col-lg-4">
+            <div class="create-btn-wrap">
+                <div class="rectangle-create-new-c"
+                     ng-click="crateNewCamping();">
+                    <i class="ti-plus"></i>
+                    New Campaign
+                </div>
+            </div>
+        </div>
+    </header>
+    <!-- table header -->
+    <div class="camp-tbl-header">
+
+        <div class="col-lg-2">
+            <div class="tbl-header">Name</div>
+        </div>
+        <div class="col-lg-2">
+            <div class="tbl-header">Mode</div>
+        </div>
+        <div class="col-lg-2">
+            <div class="tbl-header">Status</div>
+        </div>
+        <div class="col-lg-2">
+            <div class="tbl-header">Channel</div>
+        </div>
+        <div class="col-lg-2">
+            <div class="tbl-header">Create Date</div>
+        </div>
+        <div class="col-lg-2">
+            <!-- <div class="tbl-header">Action</div>-->
+        </div>
+
+    </div>
+
+    <div class="camp-tbl-body">
+
+        <!-- loader -->
+        <div class="loading-camp " ng-if="isLoadingCamp">
+            <svg class="spinner-container" width="65px" height="65px" viewBox="0 0 52 52">
+                <circle class="path" cx="26px" cy="26px" r="20px" fill="none" stroke-width="4px"/>
+            </svg>
+        </div>
+
+        <!-- campaign details view -->
+        <div ng-include="'campaignManager/template/temp/campign-details-view-temp.html'"></div>
+
+        <div id="{{cam.CampaignId}}" class="camp-tbl-row"
+             title="{{cam.CampaignName}}"
+             ng-repeat="cam in campaigns | filterBy: ['CampaignName']: searchCriteria | orderBy : '-updatedAt'">
+
+            <div class="col-lg-2">
+                <div class="tbl-body-text">
+                    {{cam.CampaignName | limitTo: 10 }}
+                    {{cam.CampaignName.length
+                    > 10 ? '...' : ''}}
+                </div>
+            </div>
+            <div class="col-lg-2">
+                <div class="tbl-body-text">{{cam.CampaignMode}}</div>
+            </div>
+            <div class="col-lg-2">
+                <div class="tbl-body-text">{{cam.OperationalStatus}}</div>
+            </div>
+            <div class="col-lg-2">
+                <div class="tbl-body-text">{{cam.CampaignChannel}}</div>
+            </div>
+            <div class="col-lg-2">
+                <div class="tbl-body-text">{{cam.updatedAt | amDateFormat:'MM-DD-YYYY' }}</div>
+            </div>
+            <div class="col-lg-2">
+                <ul class="inline-list inline-btn-list">
+                    <li style="float: left;">
+                        <div class="campaign-edit-btn"
+                             ng-show="cam.OperationalStatus !='done'"
+                             title="Edit Campaign"
+                             ng-click="editCampaign(cam)">
+                            <i class="ti-pencil"
+                               title="Edit Campaign"></i>
+                        </div>
+
+                        <div class="campaign-edit-btn"
+                             ng-show="cam.OperationalStatus =='done'"
+                             title="Done">
+                            <i class="ti-check" style="color:#dfe2e4"
+                               title="Edit Campaign"></i>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="campaign-edit-btn"
+                             title="More Details"
+                             ng-click="viewCurrentCampaignDetails(cam)">
+                            <i class="ti-more-alt"
+                               title="More Details"></i>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="campaign-edit-btn"
+                             title="Flush Numbers"
+                             ng-click="flushCampaignNumbers(cam)">
+                            <i class="fa fa-eraser"
+                               title="Flush Numbers"></i>
+                        </div>
+
+                    </li>
+                </ul>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+</section>

@@ -1,0 +1,96 @@
+<section class="camp-config-wrapper">
+        
+    <div class="col-lg-12 col-xs-12">
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-xs-12">
+                <div class="x_title">
+                    Agent
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-xs-12">
+                <div id="" class="form-group cam-form-grp">
+                    <label for="Reason" class="cam-label">Url *</label>
+                    <input type="text" class="form-control cam-textbox" ng-model="callback.IntegrationData.Agent.Url" placeholder="" required>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-9 col-md-12 col-xs-12">
+                <div id="" class="form-group cam-form-grp">
+                    <label for="exampleInputEmail1" class="cam-label">Params *</label>
+                    <!-- <select class="form-control cam-textbox" ng-model="callback.IntegrationData.Agent.Params" required>
+                        <option ng-repeat="param in integrationConf.params" value='{{ param }}'>{{ param }}</option>
+                    </select> -->
+                    <tags-input ng-model="callback.IntegrationData.Agent.Params"
+                                display-property="Name"
+                                add-from-autocomplete-only="true"
+                                on-tag-added="onChipAddParam($tag, 'Agent')"
+                                on-tag-removed="onChipDeleteParam($tag, 'Agent')"
+                                min-length="1">
+                        <auto-complete source="integrationConf.params"
+                                       load-on-empty="true"
+                                       load-on-focus="true"
+                                       min-length="1"></auto-complete>
+                    </tags-input>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-12 col-xs-12">
+                <div id="" class="form-group cam-form-grp">
+                    <label for="exampleInputEmail1" class="cam-label">Method *</label>
+                    <select class="form-control cam-textbox" ng-model="callback.IntegrationData.Agent.Method" required>
+                            <option ng-repeat="method in integrationConf.methods" value='{{ method }}'>{{ method }}</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <hr>
+
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-xs-12">
+                <div class="x_title">
+                    Customer
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-xs-12">
+                <div id="frmReason" class="form-group cam-form-grp">
+                    <label for="Reason" class="cam-label">Url *</label>
+                    <input type="text" class="form-control cam-textbox" ng-model="callback.IntegrationData.Customer.Url" placeholder="" required>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-9 col-md-12 col-xs-12">
+                <div id="" class="form-group cam-form-grp">
+                    <label for="exampleInputEmail1" class="cam-label">Params *</label>
+                    <!-- <select class="form-control cam-textbox" ng-model="callback.IntegrationData.Customer.Params" required>
+                            <option ng-repeat="param in integrationConf.params" value='{{ param }}'>{{ param }}</option>
+                        </select> -->
+                    <tags-input ng-model="callback.IntegrationData.Customer.Params"
+                            display-property="Name"
+                            add-from-autocomplete-only="true"
+                            on-tag-added="onChipAddParam($tag, 'Customer')"
+                            on-tag-removed="onChipDeleteParam($tag, 'Customer')"
+                            min-length="1">
+                    <auto-complete source="integrationConf.params"
+                                    load-on-empty="true"
+                                    load-on-focus="true"
+                                    min-length="1"></auto-complete>
+                </tags-input>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-12 col-xs-12">
+                <div id="" class="form-group cam-form-grp">
+                    <label for="exampleInputEmail1" class="cam-label">Method *</label>
+                    <select class="form-control cam-textbox" ng-model="callback.IntegrationData.Customer.Method" required>
+                            <option ng-repeat="method in integrationConf.methods" value='{{ method }}'>{{ method }}</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

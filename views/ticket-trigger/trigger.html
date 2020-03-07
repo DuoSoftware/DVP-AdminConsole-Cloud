@@ -1,0 +1,134 @@
+<div class="row">
+
+    <div class="col-md-12 col-sm-6 col-xs-12">
+
+        <!-- Trigger Organisation Config -->
+        <div class="x_panel bg-light-gray animated fadeIn">
+            <div class="x_title border-0">
+                <div class="col-md-6 col-sm-6 col-xs-6 "><h2 class="font-robot font-300 text-uppercase font-15">Trigger Main Configuration</h2></div>
+
+
+                <div class="col-xs-12">
+                    <div class="tile-stats m-top15">
+                        <form class="form-horizontal form-label-left input_mask">
+                            <div class="row">
+
+                                <div class="col-md-2 col-sm-2 col-xs-12">
+                                    <checkbox class="btn-success" ng-model="triggerConfig.highPriorityMatch"
+                                              ng-click="CreateTriggerConfiguration(triggerConfig)"></checkbox>
+                                    <label>
+                                        <small>Execute Only High Priority Match</small>
+                                    </label>
+                                </div>
+                            </div>
+
+                        </form>
+                    </div>
+                </div>
+                <div class="clearfix"></div>
+            </div>
+        </div>
+        <!-- end -->
+
+        <!-- application list -->
+        <div class="x_panel bg-light-gray animated fadeIn">
+            <div class="x_title border-0">
+                <div class="col-md-6 col-sm-6 col-xs-6 "><h2 class="font-robot font-300 text-uppercase font-15">New Trigger</h2></div>
+
+                <div class="col-md-6 col-sm-6 col-xs-6 form-group top_search">
+                    <div class="input-group">
+                        <input type="text" ng-model="searchCriteria" class="form-control"
+                               placeholder="Search for...">
+                                <span class="input-group-btn">
+                                  <button class="btn btn-default" type="button">Go!</button>
+                                </span>
+                    </div>
+                </div>
+                <div class="col-xs-12">
+                    <div class="tile-stats m-top15">
+                        <form class="form-horizontal form-label-left input_mask">
+                            <div class="row">
+                                <div class="col-md-3 col-sm-3 col-xs-12 form-group has-feedback">
+                                    <input type="text" class="form-control has-feedback-left"
+                                           ng-model="trigger.title"
+                                           placeholder="Trigger Title">
+                                    <span class="fa fa-user form-control-feedback left" aria-hidden="true"></span>
+                                </div>
+
+                                <div class="col-md-5 col-sm-5 col-xs-12 form-group has-feedback">
+                                    <select class="form-control has-feedback-left" placeholder="Select Trigger Type"
+                                            ng-model="trigger.triggerEvent">
+                                        <option value="" disabled selected>Select Trigger Type</option>
+                                        <option value="change_assignee">Change Assignee</option>
+                                        <option value="change_assignee_groups">Change Assignee Group</option>
+                                        <option value="change_status">Change Status</option>
+                                        <option value="add_comment">Add Comment</option>
+                                    </select>
+                                    <span class="fa fa-envelope form-control-feedback left" aria-hidden="true"></span>
+                                </div>
+
+                                <div class="col-md-3 col-sm-3 col-xs-12 form-group has-feedback">
+                                    <input type="number" class="form-control has-feedback-left"
+                                           ng-model="trigger.priority"
+                                           placeholder="Priority" min="0">
+                                    <span class="fa fa-envelope form-control-feedback left" aria-hidden="true"></span>
+                                </div>
+
+                                <div class="col-md-3">
+                                    <checkbox class="btn-success" ng-model="trigger.Active"
+                                              ng-init="trigger.Active=false"></checkbox>
+                                    <label>
+                                        <small>Active</small>
+                                    </label>
+                                </div>
+                            </div>
+
+
+                            <div class="row">
+                                <div class="col-md-2 col-sm-2 col-xs-12  ">
+                                    <button type="button" class="btn btn-success btn-block  btn- pull-right"
+                                            ng-click="saveTrigger()">
+                                        Add
+                                    </button>
+                                </div>
+                            </div>
+
+                        </form>
+                    </div>
+                </div>
+                <div class="clearfix"></div>
+            </div>
+        </div>
+        <!-- end -->
+
+        <!-- view application users -->
+        <div class="x_panel">
+            <div class="x_content">
+                <ul class="list-unstyled timeline">
+                    <li ng-repeat="trigger in triggers | filterBy: ['title']: searchCriteria">
+                        <ticket-directive trigger="trigger" triggers="triggers" update-trigger="removeDeleted(trigger)"
+                                          reloadpage="reloadPage()"></ticket-directive>
+                    </li>
+
+                    <paging ng-show="showPaging"
+                            class="small"
+                            page="currentPage"
+                            page-size="pageSize"
+                            total="pageTotal"
+                            show-prev-next="true"
+                            show-first-last="true"
+                            text-next-class="glyphicon glyphicon-chevron-right"
+                            text-prev-class="glyphicon glyphicon-chevron-left"
+                            text-first-class="glyphicon glyphicon-backward"
+                            text-last-class="glyphicon glyphicon-forward"
+                            paging-action="getPageData('attribute', page, pageSize, total)">
+                    </paging>
+                </ul>
+            </div>
+        </div>
+        <!-- end -->
+    </div>
+
+</div>
+
+</div>

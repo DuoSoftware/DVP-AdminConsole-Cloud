@@ -1,0 +1,22 @@
+.left_col {
+    background: #383b3b;
+}
+
+
+.font-gry-500 {
+    color: #615f5f !important;
+}
+
+.font-gry-200 {
+    color: #949494 !important;
+}
+
+.font-gry-150 {
+    color: #a9adad !important;
+}
+
+.nav_title {
+    background: #353535;
+    height: 60px;
+    border-bottom: 1px solid #2f3333 !important;
+}

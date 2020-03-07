@@ -1,0 +1,403 @@
+<div>
+    <div class="col-md-6">
+        <div class="page-title">
+            <div class="title_left">
+                <h3 class="font-robot font-600 ">Related Tickets</h3>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="back-btn-wrapper" ng-click="backToList()">
+            BACK
+        </div>
+    </div>
+
+
+    <div ng-hide="addNewTickets" class="x_panel ">
+        <div class="x_title" ng-hide="!statusMode">
+            <div class="row">
+                <div class="col-lg-6">
+                    <h2>Show Related Tickets</small></h2>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="col-lg-6">
+                    <button ng-disabled="!selectedExsistingTickets.ids.length > 0" type="button" class="btn btn-success btn-sm  pull-right" ng-click="removeTicketFromCase()">
+                        Remove Tickets
+                    </button>
+                    <button type="button" class="btn btn-success btn-sm  pull-right"
+                            ng-click="addNewRelatedSlaMatrix()">
+                        Add Tickets
+                    </button>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12 col-sm-12 col-xs-12 form-group has-feedback">
+
+                    <uib-progressbar animate="false" value="uploadProgress"
+                                     type="success"><b>{{uploadProgress}}%</b>
+                    </uib-progressbar>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="x_panel x_content col-md-12 col-sm-12 col-xs-12">
+
+            <div class="clearfix"></div>
+
+
+            <div class="custom-type"  ng-hide="!statusMode">
+                <div class="row">
+                    <h2>Bulk Operation</h2>
+                    <div class="col-md-4 col-sm-4 col-xs-12  form-group has-feedback">
+                        <select ng-disabled="!selectedExsistingTickets.ids.length > 0" class="form-control has-feedback-left "
+                                placeholder="Select Bulk Action"
+                                ng-model="bulkAction.action">
+                            <option value="" disabled selected>Select Action</option>
+                            <option value="{{action}}" ng-repeat="action in bulkActions"> {{action}} </option>
+                        </select>
+                                            <span class="glyphicon glyphicon-list form-control-feedback left"
+                                                  aria-hidden="true"></span>
+                    </div>
+                    <div class="col-md-2 col-sm-2 col-xs-12">
+                        <button ng-disabled="!selectedExsistingTickets.ids.length > 0" type="button" class="btn btn-success btn-sm " ng-click="bulkStatusChangeTickets()">
+                            Execute Operation
+                        </button>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12 col-sm-12 col-xs-12  ">
+                        <label>Add Custom Operations</label>
+                        <a ng-disabled="!selectedExsistingTickets.ids.length > 0" ng-click="showModal()" class="close-link"><i class="fa fa-plus"></i></a>
+                        <ul class="customer-type-wrapper">
+                            <li ng-repeat="operation in bulkAction.specificOperations">
+                                {{operation.name}} <i class="ti-close " ng-click="removeOperation(operation)"></i>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="row"  ng-hide="!statusMode">
+                <div class="col-md-6">
+                    <button type="button" class="btn btn-sm " ng-click="checkAllExsisting()">
+                        Check All
+                    </button>
+                    <button type="button" class="btn btn-sm" ng-click="uncheckAllExsisting()">
+                        Uncheck All
+                    </button>
+                </div>
+
+            </div>
+
+            <ul class="case-card-wrapper" ng-repeat="rTicket in CTickets">
+                <li>
+                    <div class="checkbox">
+                        <label>
+                            <input style="font-size: 15px" type="checkbox"
+                                   checklist-model="selectedExsistingTickets.ids"
+                                   checklist-value="rTicket._id">Ticket - {{rTicket.reference}}
+                        </label>
+                    </div>
+                </li>
+                <ul>
+                    <li>Subject: {{rTicket.subject}}</li>
+                    <li>Status: {{rTicket.status}}</li>
+                    <li>Priority: {{rTicket.priority}}</li>
+                    <li>Tags1:</li>
+                    <ul ng-repeat="rTag in rTicket.tags">
+                        <li>{{rTag}}</li>
+                    </ul>
+                </ul>
+            </ul>
+
+            <paging ng-show="showPaging"
+                    class="small"
+                    page="currentPage"
+                    page-size="pageSize"
+                    total="totalTickets"
+                    show-prev-next="true"
+                    show-first-last="true"
+                    text-next-class="glyphicon glyphicon-chevron-right"
+                    text-prev-class="glyphicon glyphicon-chevron-left"
+                    text-first-class="glyphicon glyphicon-backward"
+                    text-last-class="glyphicon glyphicon-forward"
+                    paging-action="getPageData(page)">
+            </paging>
+
+        </div>
+    </div>
+
+    <div ng-show="addNewTickets" class="x_panel ">
+        <div class="col-md-12 col-sm-12 col-xs-12 animated fadeIn">
+            <div class="row">
+                <div class="x_panel">
+
+                    <div>Filter Conditions</div>
+                    <br>
+
+                    <div class="clearfix"></div>
+
+                    <div class="col-md-2 col-sm-2 col-xs-12">
+                        <label>Start Date</label>
+                        <input type="text" class="form-control" ng-model="obj.startDay" name="startDate" datepicker>
+                    </div>
+
+                    <div class="col-md-2 col-sm-2 col-xs-12">
+                        <label>End Date</label>
+                        <input type="text" class="form-control" ng-model="obj.endDay" name="endDate" datepicker>
+                    </div>
+
+                    <div class="col-md-2 col-sm-2 col-xs-12">
+                        <label>Requester</label>
+                        <!--<select name="requesterList" class="select2_single form-control" tabindex="-1" aria-hidden="true"
+                                ng-model="selectedExtUser" ng-model-options="{trackBy: '$value'}">
+                            <option value=""></option>
+                            <option ng-repeat="extUsr in extUserList" value="{{extUsr._id}}">
+                                {{extUsr.name}}
+                            </option>
+                        </select>-->
+
+                        <div class="form-group">
+                            <input type="text" class="form-control" ng-model="selectedExtUser" data-min-length="0"
+                                   data-html="1" data-auto-select="true" data-animation="am-flip-x"
+                                   bs-options="extUsr.UniqueId as extUsr.Display for extUsr in extUserList"
+                                   placeholder="Requester" bs-typeahead>
+                        </div>
+
+                        <!--<div class="form-group">
+                            <input type="text" class="form-control" ng-model="selectedExtUser" data-min-length="0" data-html="2" data-auto-select="true" bs-options='extUsr._id as (extUsr.firstname + " " + extUsr.lastname) for extUsr in extUserList' placeholder="Enter icon" bs-typeahead>
+                        </div>-->
+                    </div>
+
+                    <div class="col-md-2 col-sm-2 col-xs-12">
+                        <label>Assignee</label>
+
+                        <div class="form-group">
+                            <input type="text" class="form-control" ng-model="selectedAssignee" data-min-length="0"
+                                   data-html="1" data-auto-select="true" data-animation="am-flip-x"
+                                   bs-options="usr.UniqueId as usr.Display for usr in userList" placeholder="Assignee"
+                                   bs-typeahead>
+                        </div>
+
+                        <!--<select name="assigneeList" class="select2_single form-control" tabindex="-1" aria-hidden="true"
+                                ng-model="selectedAssignee" ng-model-options="{trackBy: '$value'}">
+                            <option value=""></option>
+                            <option ng-repeat="usr in userList" value="{{usr._id}}">
+                                {{usr.name}}
+                            </option>
+                        </select>-->
+                    </div>
+
+                    <div class="col-md-2 col-sm-2 col-xs-12">
+                        <label>Submitter</label>
+                        <div class="form-group">
+                            <input type="text" class="form-control" ng-model="selectedSubmitter" data-min-length="0"
+                                   data-html="1" data-auto-select="true" data-animation="am-flip-x"
+                                   bs-options="usr.UniqueId as usr.Display for usr in userList" placeholder="Submitter"
+                                   bs-typeahead>
+                        </div>
+                        <!--<select name="submitterList" class="select2_single form-control" tabindex="-1" aria-hidden="true"
+                                ng-model="selectedSubmitter" ng-model-options="{trackBy: '$value'}">
+                            <option value=""></option>
+                            <option ng-repeat="usr in userList" value="{{usr._id}}">
+                                {{usr.name}}
+                            </option>
+                        </select>-->
+                    </div>
+
+                    <div class="col-md-2 col-sm-2 col-xs-2">
+                        <label>Show
+                            <select name="datatable-responsive_length" ng-model="recLimit"
+                                    aria-controls="datatable-responsive" class="form-control select-limit">
+                                <option value="10">10</option>
+                                <option value="25">25</option>
+                                <option value="50">50</option>
+                                <option value="100">100</option>
+                                <option value="500">500</option>
+                                <option value="1000">1000</option>
+                            </select>
+                        </label>
+                    </div>
+
+
+                    <div class="clearfix"></div>
+                    <br>
+
+                    <div class="col-md-2 col-sm-2 col-xs-12">
+                        <label>Tag</label>
+                        <!--<select name="tagList" class="select2_single form-control" tabindex="-1" aria-hidden="true"
+                                ng-model="selectedTag" ng-model-options="{trackBy: '$value'}">
+                            <option ng-repeat="tag in tagList | groupBy: 'tag.TagType'" value="{{tag.name}}">
+                                {{tag.name}}
+                            </option>
+                        </select>-->
+
+                        <select class="select2_single form-control" tabindex="-1" aria-hidden="true"
+                                ng-options="tag.name group by tag.TagType for tag in tagList"
+                                ng-model="selectedTag">
+                            <option value=""></option>
+                        </select>
+                    </div>
+
+                    <div class="col-md-2 col-sm-2 col-xs-12">
+                        <label>Channel</label>
+                        <select name="datatable-responsive_length" ng-model="channelType"
+                                aria-controls="datatable-responsive" class="form-control">
+                            <option value=""></option>
+                            <option value="call">Call</option>
+                            <option value="sms">SMS</option>
+                            <option value="facebook-post">Facebook Post</option>
+                            <option value="facebook-chat">Facebook Chat</option>
+                            <option value="twitter">Twitter</option>
+                            <option value="skype">Skype</option>
+                            <option value="api">API</option>
+                            <option value="web-widget">Web Widget</option>
+                        </select>
+                    </div>
+
+                    <div class="col-md-2 col-sm-2 col-xs-12">
+                        <label>Priority</label>
+                        <select name="datatable-responsive_length" ng-model="priorityType"
+                                aria-controls="datatable-responsive" class="form-control">
+                            <option value=""></option>
+                            <option value="urgent">Urgent</option>
+                            <option value="high">High</option>
+                            <option value="normal">Normal</option>
+                            <option value="low">Low</option>
+                        </select>
+                    </div>
+
+                    <!--<div class="col-md-2 col-sm-2 col-xs-12">
+                        <label>Ticket Type</label>
+                        <select name="datatable-responsive_length" ng-model="ticketType"
+                                aria-controls="datatable-responsive" class="form-control">
+                            <option value=""></option>
+                            <option value="question">Question</option>
+                            <option value="complain">Complain</option>
+                            <option value="incident">Incident</option>
+                            <option value="action">Action</option>
+                        </select>
+                    </div>-->
+
+                    <div class="col-md-2 col-sm-2 col-xs-12">
+                        <label>Ticket Status</label>
+                        <select name="datatable-responsive_length" ng-model="ticketStatus"
+                                aria-controls="datatable-responsive" class="form-control">
+                            <option value=""></option>
+                            <option value="new">New</option>
+                            <option value="open">Open</option>
+                            <option value="progressing">In Progress</option>
+                            <option value="parked">Parked</option>
+                            <option value="solved">Solved</option>
+                            <option value="closed">Closed</option>
+                        </select>
+                    </div>
+
+                    <div class="col-md-2 col-sm-2 col-xs-12">
+                        <label>SLA Status</label>
+                        <select name="datatable-responsive_length" ng-model="slaStatus"
+                                aria-controls="datatable-responsive" class="form-control">
+                            <option value=""></option>
+                            <option value="true">Violated</option>
+                            <option value="false">Not-Violated</option>
+                        </select>
+                    </div>
+
+                    <div class="clearfix"></div>
+
+
+                    <div class="col-md-3 col-sm-3 col-xs-12">
+                        <div class="x_content btn-wrap-header">
+                            <button type="button" class="btn btn-success" ng-click="searchWithNewFilter()">
+                                Search
+                            </button>
+                            <button type="button" class="btn btn-success" ng-click="addNewRelatedSlaMatrix()">
+                                Cancel
+                            </button>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-sm-6 col-xs-12">
+
+                    </div>
+
+                    <div class="col-md-1 col-sm-1 col-xs-12">
+                        <label style="position: relative; top: 26px;">Tag Count</label>
+                    </div>
+                    <div class="col-md-1 col-sm-1 col-xs-12">
+                        <input style="position: relative; top: 18px;" type="number" min="1" max="1000"
+                               class="form-control" name="tagCount"
+                               ng-model="tagCount">
+
+                    </div>
+                    <div class="clearfix"></div>
+
+
+                </div>
+            </div>
+        </div>
+
+        <div class="search-main-wrap" ng-if="obj.isTableLoading==0">
+            <div class="row ">
+                <div class="col-md-12 col-sm-12 col-xs-12">
+                    <div class="data-state-wrap">
+                        Please Wait...
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="x_panel x_content col-md-12 col-sm-12 col-xs-12" ng-if="obj.isTableLoading==1">
+            <div class="col-md-3 col-sm-3 col-xs-12">
+                <div class="x_content btn-wrap-header">
+                    <button type="button" class="btn btn-success" ng-click="checkAll()">
+                        Check All
+                    </button>
+                </div>
+            </div>
+            <div class="col-md-3 col-sm-3 col-xs-12">
+                <div class="x_content btn-wrap-header">
+                    <button type="button" class="btn btn-success" ng-click="uncheckAll()">
+                        Uncheck All
+                    </button>
+                </div>
+            </div>
+
+            <div class="col-md-3 col-sm-3 col-xs-12">
+                <div class="x_content btn-wrap-header">
+                    <button type="button" class="btn btn-success" ng-click="addTicketToCase()">
+                        Add Tickets To Case
+                    </button>
+                </div>
+            </div>
+
+            <div class="clearfix"></div>
+
+            <ul ng-repeat="ticket in ticketList">
+                <li>
+                    <input style="font-size: 15px" type="checkbox" checklist-model="selectedTickets.ids"
+                           checklist-value="ticket._id">Ticket: {{ticket.reference}}
+
+                </li>
+                <ul>
+                    <li>Subject: {{ticket.subject}}</li>
+                    <li>Status: {{ticket.status}}</li>
+                    <li>Subject: {{ticket.subject}}</li>
+                    <li>Tags1:</li>
+                    <ul ng-repeat="tag in ticket.tags">
+                        <li>{{tag}}</li>
+                    </ul>
+                </ul>
+            </ul>
+
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                <ul uib-pagination total-items="pagination.totalItems" items-per-page="pagination.itemsPerPage" ng-model="pagination.currentPage" max-size="pagination.maxSize" class="pagination-sm" boundary-link-numbers="true" ng-change="pageChanged()"></ul>
+            </div>
+
+        </div>
+    </div>
+
+
+</div>

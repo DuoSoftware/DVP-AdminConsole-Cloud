@@ -1,0 +1,344 @@
+<div>
+
+    <div class="row">
+        <div class="col-md-12 col-sm-12 col-xs-12">
+            <div class="x_panel main-title">
+                <div class="x_title">
+                    <h2>Ticket Dashboard</h2>
+                    <div class="clearfix"></div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-8 col-xs-12">
+            <div class="x_panel">
+                <div class="x_title">
+                    <h2>Created vs Resolved</h2>
+                    <div class="clearfix"></div>
+                </div>
+                </br>
+                <div class="x_content">
+                    <div id="createVsResolved" style="height:300px;width: 100%">
+                    </div>
+
+                    </br>
+                    <div class="x_title">
+                        <h2>Created vs Resolved - Difference </h2>
+                        <div class="clearfix"></div>
+                    </div>
+                    <div style="height:150px;width: 100%;margin-top: 20px;">
+                        <flot dataset="ticketDif"
+                              options="difCreateVsResolvedChartOptions"></flot>
+                    </div>
+                </div>
+                </br></br>
+                <div class="col-lg-12">
+                    <div class="col-md-6">
+                        <div class="product_price ">
+                            <h1 class="price  text-center">{{totalTicket}}</h1>
+
+                            <div class="price-tax  text-center">Created</div>
+                            <br>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="product_price">
+                            <h1 class="price text-center">{{totalCloseTicket}}</h1>
+
+                            <div class="price-tax text-center">Resolved</div>
+                            <br>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+
+        <div class="col-md-4 col-xs-12">
+            <div class="x_panel">
+                    <div class="x_title">
+                        <h2>Summary</h2>
+
+                        <div class="clearfix"></div>
+                    </div>
+                    <div class="x_content">
+                        <div class="col-lg-4 col-xs-12" id="ticketView">
+                            <br>
+                            <table class="countries_list">
+                                <tbody>
+                                <tr>
+                                    <td>New</td>
+                                    <td class="fs15 fw700 text-right">{{newTicket}}</td>
+                                </tr>
+                                <tr>
+                                    <td>Open</td>
+                                    <td class="fs15 fw700 text-right">{{openTicket}}</td>
+                                </tr>
+                                <tr>
+                                    <td>Progress</td>
+                                    <td class="fs15 fw700 text-right">{{progressTicket}}</td>
+                                </tr>
+
+                                <tr>
+                                    <td>Resolved</td>
+                                    <td class="fs15 fw700 text-right">{{solvedTicket}}</td>
+                                </tr>
+
+                                <tr>
+                                    <td>Parked</td>
+                                    <td class="fs15 fw700 text-right">{{parkedTicket}}</td>
+                                </tr>
+                                <tr>
+                                    <td>Closed</td>
+                                    <td class="fs15 fw700 text-right">{{closedTicket}}</td>
+                                </tr>
+                                <tr>
+                                    <td>Total Reopen</td>
+                                    <td class="fs15 fw700 text-right">{{reopenTicket}}</td>
+                                </tr>
+                                <tr>
+                                    <td>Total</td>
+                                    <td class="fs15 fw700 text-right">{{totalTicket}}</td>
+                                </tr>
+
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div class="col-lg-8 col-xs-12 text-center">
+                            <canvas id="doughnut" class="chart chart-doughnut"
+                                    width="250" height="250"
+                                    chart-data="data" chart-labels="labels"
+                                    chart-legend="false"
+                                    chart-options="options">
+                            </canvas>
+                        </div>
+
+                        <div class="col-lg-12 col-xs-12">
+                            <table class="countries_list">
+                                <tbody>
+                                <tr>
+                                    <td>SLA Compliance</td>
+                                    <td class="fs15 fw700 text-right">{{slaViolated}}</td>
+                                </tr>
+                                <tr>
+                                    <td>First Call Resolution</td>
+                                    <td class="fs15 fw700 text-right">{{firstCallResolution}}</td>
+                                </tr>
+                                <tr>
+                                    <td>Average Response Time</td>
+                                    <td class="fs15 fw700 text-right">{{averageResponseTime| secondsToDateTime | date:'HH:mm:ss'}} </td>
+                                </tr>
+                                <tr>
+                                    <td>Average Resolution Time</td>
+                                    <td class="fs15 fw700 text-right">{{ticketResolutionTime |secondsToDateTime | date:'HH:mm:ss'}}   </td>
+                                </tr>
+                                <tr>
+                                    <td>SLA Percentage</td>
+                                    <td class="fs15 fw700 text-right">{{slaCompliance}}%</td>
+                                </tr>
+                                <tr>
+                                    <td>Reopen Percentage</td>
+                                    <td class="fs15 fw700 text-right">{{reopenPercentage}}%</td>
+                                </tr>
+
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            <div class="x_panel"><!--fixed_height_320-->
+                    <div class="x_title">
+                        <h2>Customer Engagements </h2>
+
+                        <div class="clearfix"></div>
+                    </div>
+                    <div class="x_content">
+                        <div class="widget_summary">
+                            <div class="w_left w_20">
+                                <span>Call</span>
+                            </div>
+                            <div class="w_center w_55">
+                                <div class="progress">
+                                    <uib-progressbar animate="true" value="ticketViaCall" type="success"><b>{{ticketViaCall}}%</b>
+                                    </uib-progressbar>
+                                </div>
+                            </div>
+                            <div class="w_right w_20">
+                                <span>{{ticketViaCallCount}}</span>
+                            </div>
+                            <div class="clearfix"></div>
+                        </div>
+
+                        <div class="widget_summary">
+                            <div class="w_left w_20">
+                                <span>SMS</span>
+                            </div>
+                            <div class="w_center w_55">
+                                <div class="progress">
+                                    <uib-progressbar animate="true" value="ticketViaSms" type="success"><b>{{ticketViaSms}}%</b>
+                                    </uib-progressbar>
+                                </div>
+                            </div>
+                            <div class="w_right w_20">
+                                <span>{{ticketViaSmsCount}}</span>
+                            </div>
+                            <div class="clearfix"></div>
+                        </div>
+                        <div class="widget_summary" ng-hide="showFbDetail" style="cursor: pointer"
+                             ng-click="showFbDetails();">
+                            <div class="w_left w_20">
+                                <span>Facebook</span>
+                            </div>
+                            <div class="w_center w_55">
+                                <div class="progress">
+                                    <uib-progressbar animate="true" value="ticketViaFacebookTotal" type="success"><b>{{ticketViaFacebookTotal}}%</b>
+                                    </uib-progressbar>
+                                </div>
+                            </div>
+                            <div class="w_right w_20">
+                                <span>{{ticketViaFacebookTotalCount}}</span>
+                            </div>
+                            <div class="clearfix"></div>
+                        </div>
+                        <div class="widget_summary" ng-show="showFbDetail" style="cursor: pointer"
+                             ng-click="showFbDetails();">
+                            <div class="w_left w_20">
+                                <span>Facebook Post</span>
+                            </div>
+                            <div class="w_center w_55">
+                                <div class="progress">
+                                    <uib-progressbar animate="true" value="ticketViaFacebook" type="success"><b>{{ticketViaFacebook}}%</b>
+                                    </uib-progressbar>
+                                </div>
+                            </div>
+                            <div class="w_right w_20">
+                                <span>{{ticketViaFacebookCount}}</span>
+                            </div>
+                            <div class="clearfix"></div>
+                        </div>
+                        <div class="widget_summary" ng-show="showFbDetail" style="cursor: pointer"
+                             ng-click="showFbDetails();">
+                            <div class="w_left w_20">
+                                <span>Facebook Chat</span>
+                            </div>
+                            <div class="w_center w_55">
+                                <div class="progress">
+                                    <uib-progressbar animate="true" value="ticketViaFacebookChat" type="success"><b>{{ticketViaFacebookChat}}%</b>
+                                    </uib-progressbar>
+                                </div>
+                            </div>
+                            <div class="w_right w_20">
+                                <span>{{ticketViaFacebookChatCount}}</span>
+                            </div>
+                            <div class="clearfix"></div>
+                        </div>
+                        <div class="widget_summary">
+                            <div class="w_left w_20">
+                                <span>Twitter</span>
+                            </div>
+                            <div class="w_center w_55">
+                                <div class="progress">
+                                    <uib-progressbar animate="true" value="ticketViaTwitter" type="success"><b>{{ticketViaTwitter}}%</b>
+                                    </uib-progressbar>
+
+                                </div>
+                            </div>
+                            <div class="w_right w_20">
+                                <span>{{ticketViaTwitterCount}}</span>
+                            </div>
+                            <div class="clearfix"></div>
+                        </div>
+
+                        <div class="widget_summary" ng-hide="showOtherDetail" style="cursor: pointer"
+                             ng-click="showOtherDetails();">
+                            <div class="w_left w_20">
+                                <span>Others</span>
+                            </div>
+                            <div class="w_center w_55">
+                                <div class="progress">
+                                    <uib-progressbar animate="true" value="ticketViaOther" type="success"><b>{{ticketViaOther}}%</b>
+                                    </uib-progressbar>
+
+                                </div>
+                            </div>
+                            <div class="w_right w_20">
+                                <span>{{ticketViaOtherCount}}</span>
+                            </div>
+                            <div class="clearfix"></div>
+                        </div>
+                        <div class="widget_summary" style="cursor: pointer" ng-show="showOtherDetail"
+                             ng-click="showOtherDetails();">
+                            <div class="w_left w_20">
+                                <span>Widget</span>
+                            </div>
+                            <div class="w_center w_55">
+                                <div class="progress">
+                                    <uib-progressbar animate="true" value="ticketViaWidget" type="success"><b>{{ticketViaWidget}}%</b>
+                                    </uib-progressbar>
+
+                                </div>
+                            </div>
+                            <div class="w_right w_20">
+                                <span>{{ticketViaWidgetCount}}</span>
+                            </div>
+                            <div class="clearfix"></div>
+                        </div>
+                        <div class="widget_summary" style="cursor: pointer" ng-show="showOtherDetail"
+                             ng-click="showOtherDetails();">
+                            <div class="w_left w_20">
+                                <span>Skype</span>
+                            </div>
+                            <div class="w_center w_55">
+                                <div class="progress">
+                                    <uib-progressbar animate="true" value="ticketViaSkype" type="success"><b>{{ticketViaSkype}}%</b>
+                                    </uib-progressbar>
+
+                                </div>
+                            </div>
+                            <div class="w_right w_20">
+                                <span>{{ticketViaSkypeCount}}</span>
+                            </div>
+                            <div class="clearfix"></div>
+                        </div>
+                        <div class="widget_summary" style="cursor: pointer" ng-show="showOtherDetail"
+                             ng-click="showOtherDetails();">
+                            <div class="w_left w_20">
+                                <span>API</span>
+                            </div>
+                            <div class="w_center w_55">
+                                <div class="progress">
+                                    <uib-progressbar animate="true" value="ticketViaApi" type="success"><b>{{ticketViaApi}}%</b>
+                                    </uib-progressbar>
+
+                                </div>
+                            </div>
+                            <div class="w_right w_20">
+                                <span>{{ticketViaApiCount}}</span>
+                            </div>
+                            <div class="clearfix"></div>
+                        </div>
+
+                        <div class="widget_summary" style="cursor: pointer" ng-show="showOtherDetail"
+                             ng-click="showOtherDetails();">
+                            <div class="w_left w_20">
+                                <span>Emails</span>
+                            </div>
+                            <div class="w_center w_55">
+                                <div class="progress">
+                                    <uib-progressbar animate="true" value="ticketViaEmail" type="success"><b>{{ticketViaEmail}}%</b>
+                                    </uib-progressbar>
+
+                                </div>
+                            </div>
+                            <div class="w_right w_20">
+                                <span>{{ticketViaEmailCount}}</span>
+                            </div>
+                            <div class="clearfix"></div>
+                        </div>
+                    </div>
+                </div>
+        </div>
+    </div>
+
+</div>

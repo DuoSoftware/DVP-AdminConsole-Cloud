@@ -1,0 +1,126 @@
+<div class="x_panel">
+    <div class="x_content col-md-12 col-sm-12 col-xs-12">
+        <form name="triggerFiltersConfForm">
+            <div class="new-attribute col-md-12 col-sm-12 col-xs-12">
+                <div class="x_panel bg-light-gray ">
+                    <div class="x_title border-0">
+                        <h2 class="font-robot font-300 text-uppercase font-15">Add Trigger Filters</h2>
+
+                        <div class="col-xs-12">
+                            <div class="tile-stats m-top15">
+                                <form class="form-horizontal form-label-left input_mask">
+                                    <div class="col-md-5 col-sm-5 col-xs-12 form-group has-feedback">
+                                        <select class="form-control has-feedback-left" placeholder="Select Field"
+                                                ng-model="triggerFilter.field"  ng-change="updateValue()">
+                                            <option value="" disabled selected>Select Field</option>
+                                            <option ng-repeat="ticketSchemaKey in ticketSchemaKeys| orderBy:'toString()'" value="{{ticketSchemaKey}}">
+                                                {{ticketSchemaKey}}
+                                            </option>
+                                        </select>
+                                        <span class="glyphicon glyphicon-list form-control-feedback left" aria-hidden="true"></span>
+                                    </div>
+                                    <div class="col-md-5 col-sm-5 col-xs-12 form-group has-feedback">
+                                        <select class="form-control has-feedback-left" placeholder="Select Field"
+                                                ng-model="triggerFilter.type">
+                                            <option value="" disabled selected>Select Fiter Type</option>
+                                            <option value="any"> ANY </option>
+                                            <option value="all"> ALL </option>
+                                        </select>
+                                        <span class="glyphicon glyphicon-list form-control-feedback left" aria-hidden="true"></span>
+                                    </div>
+                                    <div class="col-md-5 col-sm-5 col-xs-12 form-group has-feedback">
+                                        <select class="form-control has-feedback-left" placeholder="Select Field"
+                                                ng-model="triggerFilter.operator">
+                                            <option value="" disabled selected>Select Operator Type</option>
+                                            <option value="is"> IS </option>
+                                            <option value="less_than"> LESS THAN </option>
+                                            <option value="greater_than"> GREATER THAN </option>
+                                            <option value="is_not"> IS NOT </option>
+                                            <option value="included"> INCLUDED </option>
+                                            <option value="not_included"> NOT INCLUDED </option>
+                                            <option value="greater_than_or_equal"> GREATER THAN OR EQUAL </option>
+                                            <option value="less_than_or_equal"> LESS THAN OR EQUAL</option>
+                                        </select>
+                                        <span class="glyphicon glyphicon-list form-control-feedback left" aria-hidden="true"></span>
+                                    </div>
+                                    <div class="col-md-5 col-sm-5 col-xs-12 form-group has-feedback">
+                                        <div><ticket-dynamic-field ticket-types="ticketTypes" company-users="users" company-user-groups="userGroups" ng-model="triggerFilter" ticket-field="triggerFilter.field" ticket-schema="ticketSchema"></ticket-dynamic-field></div>
+                                    </div>
+                                    <div class="col-md-1">
+                                        <button type="button" class="btn btn-success btn-sm pull-right attribute-btn  "
+                                                ng-click="addTriggerFilter()">
+                                            Add
+                                        </button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                        <div class="clearfix"></div>
+                    </div>
+                </div>
+
+
+                <div class="x_panel ">
+                    <div class="x_content">
+                        <div class="form-horizontal form-label-left input_mask">
+                            <div class="row">
+                                <div class="col-md-12 col-sm-12 col-xs-12 form-group has-feedback">
+                                    <h1 class="font-robot font-300 text-uppercase font-15">ANY</h1>
+                                    <ul class="list-unstyled timeline">
+                                <li ng-repeat="filter in filterAny">
+                                    <edit-filter trigger-id= "triggerId" filter="filter" filter-index="$index" filter-type="filterTypeAny"
+                                                 update-filters="removeDeletedFilter(filter, filterTypeAny)">
+                                    </edit-filter>
+                                </li>
+
+                                <paging ng-show="showPaging"
+                                        class="small"
+                                        page="currentPage"
+                                        page-size="pageSize"
+                                        total="pageTotal"
+                                        show-prev-next="true"
+                                        show-first-last="true"
+                                        text-next-class="glyphicon glyphicon-chevron-right"
+                                        text-prev-class="glyphicon glyphicon-chevron-left"
+                                        text-first-class="glyphicon glyphicon-backward"
+                                        text-last-class="glyphicon glyphicon-forward"
+                                        paging-action="getPageData('attribute', page, pageSize, total)">
+                                </paging>
+                            </ul>
+                                </div>
+                                <div class="col-md-12 col-sm-12 col-xs-12 form-group has-feedback">
+                                    <h1 class="font-robot font-300 text-uppercase font-15">ALL</h1>
+                                    <ul class="list-unstyled timeline">
+                                        <li ng-repeat="filter in filterAll">
+                                            <edit-filter trigger-id= "triggerId" filter="filter" filter-index="$index" filter-type="filterTypeAll"
+                                                         update-filters="removeDeletedFilter(filter, filterTypeAll)">
+                                            </edit-filter>
+                                        </li>
+
+                                        <paging ng-show="showPaging"
+                                                class="small"
+                                                page="currentPage"
+                                                page-size="pageSize"
+                                                total="pageTotal"
+                                                show-prev-next="true"
+                                                show-first-last="true"
+                                                text-next-class="glyphicon glyphicon-chevron-right"
+                                                text-prev-class="glyphicon glyphicon-chevron-left"
+                                                text-first-class="glyphicon glyphicon-backward"
+                                                text-last-class="glyphicon glyphicon-forward"
+                                                paging-action="getPageData('attribute', page, pageSize, total)">
+                                        </paging>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+
+                    </div>
+                </div>
+
+            </div>
+
+        </form>
+    </div>
+</div>

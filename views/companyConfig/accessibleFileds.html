@@ -1,0 +1,158 @@
+<div class="row">
+
+    <div class="col-md-12 col-sm-6 col-xs-12">
+
+        <!-- application list -->
+        <div class="x_panel bg-light-gray animated fadeIn">
+            <div class="x_title border-0">
+
+                <div class="row" ng-show="!isConfigured">
+                    <div class="col-md-3 col-sm-3 col-xs-12"></div>
+                    <div class="col-md-8 col-sm-8 col-xs-12">
+                        <h1>No Accessible Field Configuration Found</h1>
+                        <div class="row">
+                            <div class="col-md-3 col-sm-3 col-xs-12"></div>
+                            <div class="col-md-4 col-sm-4 col-xs-12">
+                                <button ng-disabled="frmbUnit.$invalid" type="button"
+                                        class="btn btn-success  btn-block pull-right"
+                                        ng-click="showDefaultAceessFields()">
+                                    Add
+                                </button>
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+
+
+            </div>
+        </div>
+
+        <div class="x_panel " ng-show="isConfigured">
+
+            <div class="col-md-6 col-sm-6 col-xs-6 form-group">
+            </div>
+            <div class="col-md-6 col-sm-6 col-xs-6 form-group top_search">
+                <div class="input-group">
+                    <input type="text" ng-model="searchCriteria" class="form-control"
+                           placeholder="Search for...">
+                    <span class="input-group-btn">
+                                  <button class="btn btn-default" type="button">Go!</button>
+                                </span>
+                </div>
+            </div>
+
+            <div class="x_content">
+                <ul class="list-unstyled ">
+                    <li ng-repeat="field in accessFileds | filterBy: ['Key']: searchCriteria">
+
+                        <div class="col-md-12 col-sm-12 col-xs-12 edit-main-wrap" >
+                            <div class="application-edit">
+                                <div class="col-sm-12">
+                                    <div class="col-sm-6" style="padding-bottom: 10px">
+                                        <h1 class="font-robot font-300 text-uppercase font-15"> {{field.Key.toUpperCase()}} {{field.title}}</h1>
+                                    </div>
+
+                                </div>
+                                <ul>
+                                    <li ng-repeat="sub in field.Sub_fileds">
+
+
+                                        <div class="col-md-1 col-sm-1 col-xs-12 form-group has-feedback"
+                                             style="margin-bottom: 15px; ">
+                                            <h4>{{sub.action}}</h4>
+
+                                        </div>
+                                        <div class="col-md-1 col-sm-1 col-xs-12 form-group">
+                                            <!--<checkbox class="btn-success" ng-model="sub.value" ng-change="checkValidation(sub.action,field.Key,sub.value)" ng-disabled="checkDisable(sub,field)"></checkbox>-->
+                                            <checkbox class="btn-success" ng-model="sub.value" ng-disabled="checkDisable(sub,field)"></checkbox>
+                                            <!--<switch  ng-model="sub.value"  class="form-control " ></switch>-->
+                                        </div>
+
+
+
+                                    </li>
+                                </ul>
+
+
+
+                            </div>
+                        </div>
+
+
+
+                    </li>
+
+                    <paging ng-show="showPaging"
+                            class="small"
+                            page="currentPage"
+                            page-size="pageSize"
+                            total="pageTotal"
+                            show-prev-next="true"
+                            show-first-last="true"
+                            text-next-class="glyphicon glyphicon-chevron-right"
+                            text-prev-class="glyphicon glyphicon-chevron-left"
+                            text-first-class="glyphicon glyphicon-backward"
+                            text-last-class="glyphicon glyphicon-forward"
+                            paging-action="getPageData('attribute', page, pageSize, total)">
+                    </paging>
+                </ul>
+
+                <div class="col-md-12 col-sm-6 col-xs-12">
+                    <button type="button" class="btn btn-success btn-lg pull-right"
+                            ng-click="addOrUpdateConfig()">
+                        {{btnTitle}}
+                    </button>
+                </div>
+
+
+            </div>
+        </div>
+
+
+        <!-- end -->
+
+        <!-- view application users -->
+
+
+        <!-- <div class="x_panel " ng-if="businessUnits.length > 0">
+
+             <div class="col-md-6 col-sm-6 col-xs-6 form-group">
+             </div>
+             <div class="col-md-6 col-sm-6 col-xs-6 form-group top_search">
+                 <div class="input-group">
+                     <input type="text" ng-model="searchCriteria" class="form-control"
+                            placeholder="Search for...">
+                     <span class="input-group-btn">
+                                   <button class="btn btn-default" type="button">Go!</button>
+                                 </span>
+                 </div>
+             </div>
+
+             <div class="x_content">
+                 <ul class="list-unstyled ">
+                     <li ng-repeat="bUnit in businessUnits | orderBy : 'unitName' | filterBy: ['unitName']: searchCriteria">
+                         <bisunit unit="bUnit" headusers="headUsers"></bisunit>
+                     </li>
+
+                     <paging ng-show="showPaging"
+                             class="small"
+                             page="currentPage"
+                             page-size="pageSize"
+                             total="pageTotal"
+                             show-prev-next="true"
+                             show-first-last="true"
+                             text-next-class="glyphicon glyphicon-chevron-right"
+                             text-prev-class="glyphicon glyphicon-chevron-left"
+                             text-first-class="glyphicon glyphicon-backward"
+                             text-last-class="glyphicon glyphicon-forward"
+                             paging-action="getPageData('attribute', page, pageSize, total)">
+                     </paging>
+                 </ul>
+             </div>
+         </div>-->
+
+    </div>
+
+</div>

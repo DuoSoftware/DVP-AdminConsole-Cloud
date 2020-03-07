@@ -1,0 +1,166 @@
+
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+
+        <div class="x_panel user-group-wrapper">
+            <div class="clearfix">
+                <div class="col-md-4 col-lg-4 col-sm-4">
+                    <h2>Categories
+                        <span class="iconed-status-pill-header">
+                                    <b>
+                                        <i class="fa fa-book"></i>
+                                        {{categoryList.length}}
+                                    </b>
+                                </span>
+                    </h2>
+                </div>
+                <div class="col-md-4 col-lg-4 col-sm-4">
+                </div>
+                <div class="col-md-4 col-lg-4 col-sm-4">
+                    <div class="input-group full-width" style="width: 100%">
+                        <input type="text" ng-model="searchCriteria" class="form-control" placeholder="Search for...">
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-6 col-sm-6 text-right">
+                </div>
+                <div class="col-md-6 col-lg-6 col-sm-6 text-right">
+                    <button type="button" class="btn card-title--btn-add card-btn" style="margin: 0" ng-show="!newCategoryView"  ng-disabled="isUpdating" ng-click="toggleNewCategoryView()">New Category</button>
+                </div>
+            </div>
+            <div class="x_content" id="createNewUser" style="background: #f5f5f5" ng-show="newCategoryView">
+                <uib-tabset active="activeCreateUserTab" class="hidden-tab-header">
+                    <uib-tab index="0">
+                        <div class="col-md-12 col-sm-12 col-xs-12">
+                            <div class="x_title col-md-12 col-sm-12 col-xs-12">
+                                <div class="col-md-6 col-sm-6 col-lg-6">
+                                    <h2 class="font-robot font-300 text-uppercase font-15">Create New Article Category</h2>
+                                </div>
+                                <div class="col-md-6 col-sm-6 col-lg-6">
+                                    <div class="edit-card--btn-circle" style="float: right" ng-click="toggleNewCategoryView()">
+                                        <i class="fa fa-close"></i>
+                                    </div>
+                                </div>
+                                <div class="clearfix"></div>
+                            </div>
+                            <br>
+                            <div class="clearfix">
+                                <!--<div class="col-md-4 col-sm-4 col-xs-12 form-group has-feedback">-->
+                                <!--<input type="text" class="form-control has-feedback-left" placeholder="Username"-->
+                                <!--ng-model="newUser.username">-->
+                                <!--<span class="fa fa-user form-control-feedback left" aria-hidden="true"></span>-->
+                                <!--</div>-->
+
+                                <div class="col-lg-12">
+                                    <div class="col-md-12 animated fadeIn">
+                                        <h3><label for="catTitle">Title</label></h3>
+                                        <p><input type="text" class="form-control "
+                                                  placeholder="Title"
+                                                  ng-model="newCat.title" id="catTitle"></p>
+                                    </div>
+
+                                </div>
+                                <div class="col-lg-12">
+                                    <div class="col-md-12 animated fadeIn">
+                                        <h3><label for="catDesc">Description</label></h3>
+                                        <p><textarea class="resizable_textarea form-control" ng-model="newCat.description" placeholder="Enter Description Here" required id="catDesc"></textarea></p>
+                                    </div>
+                                </div>
+                                <div class="col-lg-12 ">
+                                    <h3><label for="">Allowed Business Units</label></h3>
+                                    <tags-input ng-model="newCat.allow_business_units"
+                                                add-from-autocomplete-only="true" on-tag-added="onChipAdd($tag)"
+                                                on-tag-removed="onChipDelete($tag)" ng-disabled="" min-length="1"
+                                                placeholder="Add Business Units">
+                                        <auto-complete source="querySearch($query)"
+                                                       load-on-empty="true"
+                                                       load-on-focus="true"
+                                                       min-length="1"></auto-complete>
+                                    </tags-input>
+                                </div>
+
+                            </div>
+                            <div class="clearfix text-right">
+                                <div class="divider"></div>
+
+                                <button class="btn btn-success" ng-click="saveNewCategory()"
+                                        ng-disabled="!(newCat.title && newCat.description)|| isSaving">
+                                    {{ savebtn}}
+                                </button>
+                            </div>
+                        </div>
+                    </uib-tab>
+
+                </uib-tabset>
+            </div>
+            <div class="divider clearfix" style="margin-bottom: 20px"></div>
+            <!-- view user details -->
+            <div class="x_content col-md-12 col-sm-12 col-xs-12" >
+                <ul class="list-unstyled msg_list">
+                    <div class="mail_list_column sip-user-wrap" style="padding-top: 20px">
+                        <a href="javascript:void(0);" class="user-wrap"
+                           ng-repeat="item in categoryList | filterBy: ['title']: searchCriteria">
+                            <div class="mail_list user-list">
+                                <div class="right user-option-wrap">
+                                    <div class="col-lg-6 col-md-6 col-sm-6" ng-click="goToFoldersWithoutNew(item._id,item.title)">
+                                        <h2 class="font-robot sub-header">
+                                            {{item.title}}
+                                        </h2>
+                                        <h4 class="sub-header italic-mode">
+                                            {{item.description}}
+                                        </h4>
+                                        <div class="article-author-img">
+                                            <img ng-src="{{item.author.avatar}}"
+                                                 src="assets/images/defaultProfile.png"><span style="padding-left: 5px"> {{item.author.firstname}} {{item.author.lastname}}</span>
+                                        </div>
+                                        <h6 class="sub-header">
+                                            Contains {{item.folders.length}} <span ng-if="item.folders.length==1">section</span><span ng-if="item.folders.length!=1">sections</span>
+                                        </h6>
+
+
+                                    </div>
+                                    <div class="col-lg-6 col-md-6 col-sm-6 text-right">
+                                        <!--<small ng-if="item.user_meta.role !== 'admin'" class="fa fa-trash"
+                                           ng-click="removeUser(item.username)"></small>-->
+                                        <!--<switch
+                                                ng-if="item.user_meta.role !== 'admin'"
+                                                id="enabled"
+                                                name="enabled"
+                                                ng-model="item.Active"
+                                                on="Active" off="Inactive"
+                                                class="green"
+                                                disabled="disableSwitch"
+                                                ng-change="removeUser(item)"
+                                                style="margin-right: 10px">
+
+                                        </switch>-->
+
+                                        <div class="edit-card--btn-circle"
+                                             style="float: right;margin-right: 10px"
+                                             ng-click="openForEditing(item._id)" uib-tooltip="Edit">
+                                            <i class="fa fa-edit" ></i>
+                                        </div>
+                                        <div class="edit-card--btn-circle"
+                                             style="float: right;margin-right: 10px"
+                                             ng-click="goToFolders(item._id,item.title)" uib-tooltip="New Section">
+                                            <i class="fa fa-plus" ></i>
+                                        </div>
+                                        <div class=""
+                                             style="float: right;margin-right: 10px">
+                                            <switch id="" uib-tooltip="{{toolTipGenerator(item.enabled)}}" name="enabled" ng-model="item.enabled" class="green pull-left"  disabled="disableSwitch" ng-change="setEnable(item._id,item.enabled)"></switch>
+                                        </div>
+
+                                    </div>
+                                </div>
+                                <div class="left">
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                </ul>
+            </div>
+            <!-- end -->
+        </div>
+    </div>
+
+</div>
+

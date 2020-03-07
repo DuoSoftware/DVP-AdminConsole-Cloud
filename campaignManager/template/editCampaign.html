@@ -1,0 +1,27 @@
+<div class="col-md-12 col-sm-6 col-xs-12 col-xs-12">
+    <div ng-show="updateEdit" >
+        <div class="row ">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="data-state-wrap">
+                    Please Wait...
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <div class="tile-stats" ng-hide="updateEdit">
+
+        <form class="form-horizontal form-label-left input_mask">
+            <br>
+
+            <div ng-hide="updateEdit" ng-include="'campaignManager/template/campaignForm.html'"></div>
+
+            <div ng-hide="updateEdit" class="col-md-3 col-sm-6 col-xs-12 form-group has-feedback">
+                <button type="button" class="btn btn-success btn-xs " ng-click="updateCampaign(campaign)">
+                    Update
+                </button>
+
+            </div>
+        </form>
+    </div>
+</div>

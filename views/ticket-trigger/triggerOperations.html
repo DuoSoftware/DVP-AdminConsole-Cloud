@@ -1,0 +1,75 @@
+<div class="x_panel">
+    <div class="x_content col-md-12 col-sm-12 col-xs-12">
+        <form name="triggerOperationsConfForm">
+            <div class="new-attribute col-md-12 col-sm-12 col-xs-12">
+                <div class="x_panel bg-light-gray ">
+                    <div class="x_title border-0">
+                        <h2 class="font-robot font-300 text-uppercase font-15">Add new Trigger Action</h2>
+
+                        <div class="col-xs-12">
+                            <div class="tile-stats m-top15">
+                                <form class="form-horizontal form-label-left input_mask">
+                                    <div class="col-md-5 col-sm-5 col-xs-12 form-group has-feedback">
+                                        <select class="form-control has-feedback-left" placeholder="Select Operation"
+                                                ng-model="triggerOperation.name" ng-change="OnChangeTriggerOperation()">
+                                            <option value="" disabled selected>Select Operation</option>
+                                            <option value="AddInteraction"> Add Interaction </option>
+                                            <option value="SendMessage"> Send Message </option>
+                                            <option value="PickAgent"> Assign To ARDS User </option>
+                                            <option value="SendEmail"> Send Email </option>
+                                            <option value="SendNotification"> Send Notification </option>
+                                            <option value="InvokeService"> Invoke Service </option>
+                                        </select>
+                                        <span class="glyphicon glyphicon-list form-control-feedback left" aria-hidden="true"></span>
+                                    </div>
+
+                                    <div><dynamic-operation operation-name="triggerOperation.name" render-templates="templates" ards-attributes="attributes" ng-model="triggerOperation"></dynamic-operation></div>
+
+                                    <div class="col-md-1">
+                                        <button type="button" ng-disabled="!addOperationsActive" class="btn btn-success btn-sm pull-right attribute-btn  "
+                                                ng-click="addTriggerOperation()">
+                                            Add
+                                        </button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                        <div class="clearfix"></div>
+                    </div>
+                </div>
+
+
+                <div class="x_panel ">
+                    <div class="x_content">
+                        <ul class="list-unstyled timeline">
+                            <li ng-repeat="operation in triggerOperations">
+                                <edit-operation trigger-id= "triggerId" operation="operation" operation-index="$index"
+                                             update-operations="removeDeletedOperation(operation)">
+                                </edit-operation>
+                            </li>
+
+                            <paging ng-show="showPaging"
+                                    class="small"
+                                    page="currentPage"
+                                    page-size="pageSize"
+                                    total="pageTotal"
+                                    show-prev-next="true"
+                                    show-first-last="true"
+                                    text-next-class="glyphicon glyphicon-chevron-right"
+                                    text-prev-class="glyphicon glyphicon-chevron-left"
+                                    text-first-class="glyphicon glyphicon-backward"
+                                    text-last-class="glyphicon glyphicon-forward"
+                                    paging-action="getPageData('attribute', page, pageSize, total)">
+                            </paging>
+                        </ul>
+
+                    </div>
+                </div>
+
+            </div>
+
+
+
+        </form>
+    </div>
+</div>

@@ -1,0 +1,82 @@
+<div>
+    <div>
+        <div class="col-lg-12">
+            <div class="row">
+                <div class="col-md-9">
+                    <h2 class=" font-300">
+                        <a ng-hide="editMode">Rule Name: {{setupai.ruleName}}</a>
+                    </h2>
+                    <span ng-hide="editMode">{{setupai.description}}</span>
+                    <br>
+                    <span ng-hide="editMode">Last updated at {{setupai.updated_at}}</span>
+                </div>
+                <div class="col-md-3 ">
+                    <div class="pull-right user-option-wrap" ng-show="!editMode">
+                        <div ng-disabled="true" ng-click="editSetupai(setupai)" class="btn-circle">
+                            <i class="fa fa-pencil"></i>
+                        </div>
+                        <div ng-disabled="true" ng-click="removeSetupai(setupai)" class="btn-circle">
+                            <i class="fa fa-trash-o"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-12 col-sm-12 col-xs-12 edit-main-wrap" ng-show="editMode">
+            <div class="application-edit">
+                <div class="col-sm-12">
+                    <div class="col-sm-6">
+                        <h2 class="font-robot font-300 text-uppercase font-15">Edit {{setupai.ruleName}}</h2>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="edit-close pull-right">
+                            <i class="fa fa-close" ng-click="closeTemplate()"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12 col-sm-6 col-xs-12 col-xs-12">
+                    <div class="tile-stats  m-top15">
+                        <form class="form-horizontal form-label-left input_mask">
+                            <div class="row no-gutters">
+                                <div class="col-12 col-md-12 form-group">
+                                    <label>If User Says Somthing Similar To:*</label>
+                                    <tags-input style="height:100% !important;" class="form-control" ng-model="setupai.events">
+                                    </tags-input>
+                                </div>
+                                <div class="col-6 col-md-6 form-group">
+                                    <label>Work Flow Name*</label>
+                                    <select class="form-control" placeholder="Work Flow Name*" ng-model="setupai.workFlowName" ng-options="x.Name as x.DisplayName for x in workFlowNames"></select>
+                                </div>
+                                <div class="col-6 col-md-6 form-group">
+                                    <label>Bot ID*</label>
+                                    <select class="form-control" name="setupai.botAppId" placeholder="Bot ID*" ng-model="setupai.botAppId" ng-options="x._id as x.screen_name for x in botlist">
+                                    </select>
+                                </div>
+
+                            </div>
+                          
+                            <div class="col-12 col-sm-12 col-md-12 form-group">
+                                <button type="button" class="btn btn-success btn-sm pull-right" ng-click="updaterule(setupai)">
+                                    Update
+                                </button>
+                            </div>
+                         
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div ng-hide="editMode">
+            <!-- <div class="col-md-9 col-sm-9 col-xs-12 form-group ">
+                <label class="form-control-static">Url</label>
+                <p style="max-width:m">{{template.url}} </p>
+            </div>  -->
+
+
+            <!--<p class="excerpt col-md-3" ng-if="IsDeveloper"> Developer : {{application.AppDeveloper.Username}} </p>-->
+        </div>
+        <div class="clearfix"></div>
+    </div>
+</div>

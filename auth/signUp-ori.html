@@ -1,0 +1,153 @@
+<div class="login animated fadeIn" ng-controller="signUpCtrl">
+    <!--<img src="assets/images/bg_10444x10002.jpg" id="bg" alt="">-->
+    <div>
+        <div class="login_wrapper signup-wrap">
+            <div class="form login_form">
+                <section class="login_content">
+                    <div class="login-header">
+                        <img src="images/logo_130x130yellow.png" width="120" height="120"/>
+                    </div>
+                    <form name="signUpForm">
+                        <h1 class="font-robot dark-frm-header font-300">SignUp </h1>
+                        <div class="row">
+                            <div class="col-md-12 col-xs-12">
+                                <div class="form-group has-feedback validation-area">
+                                    <!-- user name -->
+                                    <label class="dark-frm-label">Company Name
+                                        <span class="inline-block validation-on"
+                                              ng-show="signUpForm.companyName.$invalid
+                                              && !signUpForm.companyName.$pristine &&
+                                              signUpForm.companyName.$error.pattern">*
+                                    </span>
+                                    </label>
+                                    <input unique-company type="text" name="companyName"
+                                           ng-model="companyName"
+                                           class="form-control dark-frm-input"
+                                           ng-pattern='/^[a-zA-Z0-9]+$/'
+                                           placeholder=""
+                                           required
+                                           autofocus/>
+                                    <span id="companystate" class="fa form-control-feedback"
+                                          aria-hidden="true"
+                                          style="color: #cccbcb ;"></span>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="row">
+                            <div class="col-md-12 col-xs-12">
+                                <div class="form-group has-feedback validation-area">
+                                    <!-- user name -->
+                                    <label class="dark-frm-label">Email
+                                       <span class="inline-block validation-on"
+                                             ng-show="signUpForm.email.$invalid && !signUpForm.email.$pristine">*
+                                    </span></label>
+                                    <input unique-owner type="email" name="email" ng-model="email"
+                                           class="form-control dark-frm-input"
+                                           placeholder=""
+                                           required
+                                           autofocus/>
+                                    <span id="emailstate" class="fa form-control-feedback" aria-hidden="true"
+                                          style="color: #cccbcb ;"></span>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="row">
+                            <div class="col-lg-6">
+
+                                <div class="validation-area ">
+                                    <!-- password  -->
+                                    <!-- password  -->
+                                    <div ng-show="pwdBox">
+                                        <password-strength-box ng-model="password"
+                                                               box="pwdBox"
+                                                               confirm="confirmPwd"></password-strength-box>
+                                    </div>
+
+                                    <label class="dark-frm-label">Password
+                                         <span class="inline-block validation-on"
+                                               ng-show="signUpForm.password.$invalid && !signUpForm.password.$pristine
+                                               ">*
+                                    </span></label>
+                                    <input type="password"
+                                           ng-model="password"
+                                           class="form-control dark-frm-input"
+                                           name="pwd"
+                                           password-verify="{{confirmPwd}}"
+                                           id="password"
+                                           placeholder=""
+                                           required=""/>
+                                </div>
+                            </div>
+                            <!-- signUpForm.pwd.$error.pattern
+                            ng-pattern='/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$@$!%*?&])[A-Za-z\d$@$!%*?&]{8,}/'-->
+
+                            <div class="col-lg-6">
+                                <div class="validation-area">
+                                    <!-- confirm password -->
+                                    <label class="dark-frm-label">Confirm password
+                                         <span class="inline-block validation-on"
+                                               ng-show="signUpForm.confirmPwd.$invalid &&
+                                                !signUpForm.confirmPwd.$pristine">*
+                                    </span></label>
+                                    <input type="password" password-verify="{{password}}"
+                                           ng-model="confirmPwd"
+                                           class="form-control dark-frm-input"
+                                           name="confirmPwd"
+                                           placeholder=""
+                                           required/>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="recaptcha-wrapper"
+                             ng-show="!isSignUp">
+                            <div vc-recaptcha
+                                 theme="'dark'"
+                                 key="siteKey"></div>
+                        </div>
+
+
+                        <div class="m-bottom20">
+                            <button class="btn btn-default btn-block signUp dark-frm-btn-signup  pull-right"
+                                    ng-class="isSignUp==true ?'disabled-btn':'dark-frm-btn'"
+                                    ng-click="onClickCreateAccount()"
+                                    ng-disabled="signUpForm.$invalid">
+                                <i ng-if="isSignUp" class="fa fa-spinner fa-pulse fa-3x fa-fw form-data-loading"></i>
+                                Create Account
+                            </button>
+
+                        </div>
+
+                        <div class="clearfix"></div>
+
+                        <div class="dark-separator">
+                            <div class="clearfix"></div>
+                            <div class="col-lg-12">
+                                <div class="row">
+                                    <p class="change_link">
+                                        <a href="javascript:void(0);" ng-click="onClickBackToLogin()"
+                                           class="to_register to_register_dark"> Back to login </a>
+                                    </p>
+                                </div>
+                            </div>
+                            <br/>
+
+
+                            <div>
+                                <p class="font-robot font-300 dark-frm-footer">
+                                    ©2016 All Rights Reserved <br/> veery.cloud Privacy and
+                                    Terms</p>
+                            </div>
+                        </div>
+                    </form>
+                </section>
+            </div>
+        </div>
+    </div>
+</div>
+

@@ -1,0 +1,16 @@
+<div class="modal-header">
+    <h3 class="modal-title">{{selectedTask.ResTaskInfo.TaskName}} Concurrency</h3>
+</div>
+<div class="modal-body">
+    <div class="col-md-12 col-sm-6 col-xs-12 form-group has-feedback">
+        <input type="number" class="form-control has-feedback-left" ng-model="selectedTask.task.Concurrency"
+               min="1"   placeholder="Concurrency">
+        <span class="fa fa-user form-control-feedback left" aria-hidden="true"></span>
+    </div>
+
+
+</div>
+<div class="modal-footer">
+    <button class="btn btn-primary" type="button" ng-click="ok()">OK</button>
+    <button class="btn btn-warning" type="button" ng-click="cancel()">Cancel</button>
+</div>

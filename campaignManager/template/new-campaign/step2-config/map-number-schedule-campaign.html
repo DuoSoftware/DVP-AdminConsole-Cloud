@@ -1,0 +1,89 @@
+<div class="cam-create-form">
+    <div class="col-lg-4">
+        <div id="frmCurrentCampaignSchedule"
+             class="form-group cam-form-grp">
+            <label for="mapnumberschedueScheduleList" class="cam-label">
+                Select Current Campaign Schedule *</label>
+            <select class="form-control cam-textbox"
+                    id="mapnumberschedueScheduleList"
+                    ng-model="mapnumberschedue.Schedule"
+                    ng-options="opt as opt.ScheduleName for opt in addedSchedule" required>
+                <option value=''>Select Schedule</option>
+            </select>
+        </div>
+    </div>
+    <div class="col-lg-5">
+        <div id="frmCategory"
+             class="form-group cam-form-grp">
+            <label for="mapnumberschedueCategoryID" class="cam-label">Select Category *</label>
+
+            <select class="form-control cam-textbox"
+                    id="mapnumberschedueCategoryID"
+                    ng-model="mapnumberschedue.CategoryID"
+                    ng-options="opt.CategoryID as opt.CategoryName for opt in Categorys" required>
+                <option value=''>Select Category</option>
+            </select>
+        </div>
+    </div>
+
+    <div class="col-lg-3">
+        <button class="btn btn-wizard btn-inside-form"
+                ng-if="!mapnumberScheduleToCam"
+                ng-click="MapNumberAndScheduleToCampaign(mapnumberschedue)"
+                style=" margin-top: 22px;">
+            Map
+            <i class="ti-plus"></i>
+        </button>
+        <button class="btn btn-wizard btn-inside-form"
+                ng-if="mapnumberScheduleToCam"
+                disabled
+                style=" margin-top: 22px;">
+            <i class="fa fa-circle-o-notch fa-spin fa-3x fa-fw"></i>
+        </button>
+    </div>
+</div>
+
+<div class="campaign-list-wrapper">
+    <div class="row">
+        <div class="camp-sub-header">
+            Schedule List
+        </div>
+    </div>
+    <div class="camp-config-tbl-wrapper">
+        <div class="camp-tbl-header">
+            <div class="col-lg-4">
+                <div class="tbl-header">Category Id</div>
+            </div>
+            <div class="col-lg-4">
+                <div class="tbl-header">Category Name</div>
+            </div>
+            <div class="col-lg-4">
+                <div class="tbl-header">Schedule</div>
+            </div>
+
+        </div>
+
+        <div class="camp-tbl-body">
+
+            <div ng-if="AssignedCategory.length==0"
+                 class="default-message-camp-wrapper">
+                <i class="ti-announcement"></i>
+            </div>
+
+            <div class="camp-tbl-row"
+                 ng-if="AssignedCategory.length!=0"
+                 ng-repeat="schedule in AssignedCategory">
+                <div class="col-lg-4">
+                    <div class="tbl-body-text">{{schedule.CategoryID}}</div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="tbl-body-text">{{schedule.CampContactCategory.CategoryName}}</div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="tbl-body-text">{{schedule.CamSchedule}}</div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>

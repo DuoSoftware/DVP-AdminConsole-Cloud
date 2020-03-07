@@ -1,0 +1,83 @@
+<div class="block">
+    <div class="tags">
+        <a class="tag">
+            <span>Users : {{activeUserCount}}</span>
+        </a>
+    </div>
+
+
+
+    <div class="block_content">
+
+        <div class="row invoice-info" >
+            <div class="col-sm-6 invoice-col " >
+                <address class="title">
+                    <a class="font-robot font-15 text-uppercase" style="color: #d2d1d1;"><b>Conference Name :</b>
+                        {{conferenceData.ConferenceName}}</a>
+                    <br>
+
+                    <div ng-hide="isLoading">
+                        <br>ActiveTemplate : {{conferenceData.ActiveTemplate}}
+                        <br>
+
+                        <div ng-show="noActiveUsers">
+                            <div class="row ">
+                                <div class="col-md-12 col-sm-12 col-xs-12">
+                                    <div class="data-state-wrap">
+                                        No Active Users...
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+
+                        <ul class="to_do" ng-repeat="user in activeUsers">
+                            <li>
+                                <p>
+
+                                    {{ user["Caller-Username"] }}
+                                    <label>
+                                        <input type="checkbox" class="flat" ng-model="user.Def"
+                                               ng-change="UserOperations(user['Member-ID'],user.Def?'deaf':'undeaf')">
+                                        Deaf
+                                    </label>
+                                    <label>
+                                        <input type="checkbox" class="flat" ng-model="user.Mute"
+                                               ng-change="UserOperations(user['Member-ID'],user.Mute?'mute':'unmute')">
+                                        Mute
+                                    </label>
+                                    <label>
+                                        <input type="checkbox" class="flat" ng-model="user.Kick"
+                                               ng-change="UserOperations(user['Member-ID'],'kick')">
+                                        Kick
+                                    </label>
+                                </p>
+                            </li>
+                        </ul>
+
+                    </div>
+
+                    <div ng-show="isLoading">
+                        <div class="row ">
+                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                <div class="data-state-wrap">
+                                    Please Wait...
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                </address>
+            </div>
+
+            <div class="col-sm-6 invoice-col">
+                <div class="pull-left attribute-edit-wrap">
+                    <a ng-disabled="true" class="inline-block"><i class="fa fa-refresh" ng-click="reloadPage()" style="cursor: pointer"></i></a>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+</div>

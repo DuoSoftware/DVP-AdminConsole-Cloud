@@ -1,0 +1,307 @@
+<div class="block">
+    <div class="tags">
+        <a class="tag">
+            <span>{{conferenceData.ActiveTemplate}}</span>
+        </a>
+    </div>
+    <div ng-show="isLoading">
+        <div class="row ">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="data-state-wrap">
+                    Please Wait...
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="block_content">
+        <div class="row invoice-info" ng-hide="isLoading">
+            <div class="col-sm-6 invoice-col ">
+                <address class="title">
+                    <a class="font-robot font-15 text-uppercase" style="color: #d2d1d1;"><b>Conference Name :</b>
+                        {{conferenceData.ConferenceName}}</a>
+                    <br>
+
+                    <div ng-hide="editMode">
+                        <div class="byline">
+                            <span>Last Update : {{conferenceData.updatedAt|date:'MM/dd/yyyy @ h:mma'}}</span>
+                        </div>
+                        <br>ActiveTemplate : {{conferenceData.ActiveTemplate}}
+                        <br>Description : {{conferenceData.Description}}
+                        <br>Pin : {{conferenceData.Pin}}
+                        <br>Extension : {{conferenceData.Extension}}
+                        <br>Domain : {{conferenceData.Domain}}
+                        <br>MaxUser : {{conferenceData.MaxUser}}
+                        <br>Anonymous Users : {{conferenceData.AllowAnonymousUser}}
+                        <br>Locked : {{conferenceData.AllowAnonymousUser}}
+                        <br>StartTime : {{conferenceData.StartTime|date:'MM/dd/yyyy @ h:mma'}} EndTime :
+                        {{conferenceData.EndTime|date:'MM/dd/yyyy @ h:mma'}}
+                    </div>
+                </address>
+            </div>
+            <!-- /.col -->
+            <div class="col-sm-6 invoice-col">
+                <div class="pull-left attribute-edit-wrap">
+                    <a ng-disabled="true" class="inline-block" ng-click="deleteConf(conferenceData)"
+                       style="cursor: pointer"><i
+                            class="fa fa-trash-o"></i></a>
+                    <br>
+                    <a ng-disabled="true" class="inline-block" ng-click="editConference(conferenceData)"
+                       style="cursor: pointer"><i
+                            class="fa fa-edit"></i></a>
+                    <br>
+                    <a ng-disabled="true" class="inline-block" ng-click="addUserToConference(conferenceData)"
+                       style="cursor: pointer"><i
+                            class="fa fa-user"></i></a>
+                    <a ng-disabled="true" class="inline-block"><i class="fa fa-refresh" ng-click="reloadPage()"
+                                                                  style="cursor: pointer"></i></a>
+                </div>
+            </div>
+            <!-- /.col -->
+            <div class="col-md-12 col-sm-12 col-xs-12" ng-show="editMode">
+                <div class="tile-stats">
+                    <div class="col-md-12 col-sm-12 col-xs-12" ng-show="editMode">
+
+                        <form class="form-horizontal form-label-left" name="userFormEdit" novalidate>
+
+                            <div class="col-md-4 col-sm-4 col-xs-4 form-group"
+                                 ng-class="{ 'has-error' : userFormEdit.ConferenceName.$invalid && !userFormEdit.ConferenceName.$pristine }">
+                                <label>Conference Name</label>
+                                <input type="text" name="ConferenceName" class="form-control"
+                                       ng-model="conferenceData.ConferenceName" required>
+
+                                <p ng-show="userFormEdit.ConferenceName.$invalid && !userFormEdit.ConferenceName.$pristine"
+                                   class="help-block">You name is required.</p>
+                            </div>
+
+                            <div class="col-md-8 col-sm-8 col-xs-8 form-group"
+                                 ng-class="{ 'has-error' : userFormEdit.Description.$invalid && !userFormEdit.Description.$pristine }">
+                                <label>Description</label>
+                                <input type="text" name="Description" class="form-control"
+                                       ng-model="conferenceData.Description">
+                            </div>
+
+                            <div class="col-md-3 col-sm-3 col-xs-3 form-group"
+                                 ng-class="{ 'has-error' : userFormEdit.Pin.$invalid && !userFormEdit.Pin.$pristine }">
+                                <label>Pin</label>
+                                <input type="number" min="0" name="Pin" ng-minlength="4" class="form-control"
+                                       ng-model="conferenceData.Pin" required>
+
+                                <p ng-show="userFormEdit.Pin.$invalid && !userFormEdit.Pin.$pristine"
+                                   class="help-block">Pin is
+                                    required and minimum length is 4.</p>
+                            </div>
+
+                            <div class="col-md-3 col-sm-3 col-xs-3 form-group"
+                                 ng-class="{ 'has-error' : userFormEdit.MaxUser.$invalid && !userFormEdit.MaxUser.$pristine }">
+                                <label>Max User Count</label>
+                                <input type="number" min="0" max="64" name="MaxUser" class="form-control"
+                                       ng-model="conferenceData.MaxUser" required
+                                        >
+
+                                <p ng-show="userFormEdit.MaxUser.$error.required && !userFormEdit.MaxUser.$pristine"
+                                   class="help-block">
+                                    User Count is required.</p>
+
+                                <p ng-show="userFormEdit.MaxUser.$error.max && !userFormEdit.MaxUser.$pristine"
+                                   class="help-block">
+                                    Not valid number.</p>
+                            </div>
+
+                            <div class="col-md-3 col-sm-3 col-xs-3 form-group"
+                                 ng-class="{ 'has-error' : userFormEdit.Domain.$invalid && !userFormEdit.Domain.$pristine }">
+                                <label>Domain</label>
+
+                                <select required class="form-control" id="Domain"
+                                        ng-model="conferenceData.CloudEndUserId"
+                                        ng-options="opt.id as opt.Domain for opt in endUsers">
+                                </select>
+
+                            </div>
+
+                            <div class="col-md-3 col-sm-3 col-xs-3 form-group"
+                                 ng-class="{ 'has-error' : userFormEdit.Extension.$invalid && !userFormEdit.Extension.$pristine }">
+                                <label>Extension</label>
+
+                                <p ng-show="userFormEdit.Extension.$invalid && !userFormEdit.Extension.$pristine"
+                                   class="help-block">Extension is required.</p>
+
+                                <select class="form-control" id="Extension" ng-model="conferenceData.ExtensionId"
+                                        ng-options="opt.id as opt.Extension for opt in extensionList">
+                                </select>
+
+                            </div>
+
+                            <div class="col-md-6 col-sm-6 col-xs-6 form-group">
+                                <label>Start Time</label>
+
+                                <p class="input-group">
+                                    <input type="text" class="form-control" datetime-picker="MM/dd/yyyy HH:mm"
+                                           ng-model="conferenceData.StartTime" is-open="StartTime.open"/>
+                                  <span class="input-group-btn">
+                                      <button type="button" class="btn btn-default"
+                                              ng-click="openCalendar('StartTime')"><i
+                                              class="fa fa-calendar"></i></button>
+                                  </span>
+                                </p>
+                            </div>
+
+                            <div class="col-md-6 col-sm-6 col-xs-6 form-group">
+                                <label>End Time</label>
+
+                                <p class="input-group">
+                                    <input type="text" class="form-control" datetime-picker="MM/dd/yyyy HH:mm"
+                                           ng-model="conferenceData.EndTime" is-open="EndTime.open"/>
+                                  <span class="input-group-btn">
+                                      <button type="button" class="btn btn-default" ng-click="openCalendar('EndTime')">
+                                          <i
+                                                  class="fa fa-calendar"></i></button>
+                                  </span>
+                                </p>
+                            </div>
+
+                            <div class="col-md-4 col-sm-4 col-xs-4 form-group"
+                                    >
+                                <label>Template</label>
+
+                                <div class="row">
+                                    <div class="col-md-11">
+                                        <select class="form-control" id="ActiveTemplate"
+                                                ng-model="conferenceData.ActiveTemplate"
+                                                ng-options="opt.TemplateName as opt.TemplateName for opt in templatesList"
+                                                ng-change="previewTemplate(conferenceData.ActiveTemplate)">
+                                        </select>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <div class="col-md-4 col-sm-4 col-xs-4 form-group">
+                                <label>Anonymous Users</label>
+                                <checkbox class="btn-success" ng-model="conferenceData.AllowAnonymousUser"
+                                          ng-init="false"></checkbox>
+                            </div>
+
+                            <div class="col-md-4 col-sm-4 col-xs-4 form-group">
+                                <label>Locked </label>
+                                <checkbox class="btn-success" ng-model="conferenceData.IsLocked"
+                                          ng-init="false"></checkbox>
+
+                            </div>
+
+                            <div class="clearfix"></div>
+                            <div class="ln_solid"></div>
+
+                            <div class="form-group">
+                                <button class="btn btn-success" ng-click="updateConference(conferenceData)"
+                                        ng-disabled="userFormEdit.$invalid">
+                                    Update
+                                </button>
+                            </div>
+
+                        </form>
+
+                    </div>
+                </div>
+            </div>
+
+            <!--conference Users-->
+            <div class="col-md-12 col-sm-12 col-xs-12" ng-show="addUserMode">
+                <div class="row">
+                    <div class="col-md-4 col-sm-3 col-xs-3">
+
+                        <ul class="to_do" ng-init="user.JoinType = 'Outbound'">
+                            <li>
+                                <p>
+                                    <label>
+                                        <input type="radio" ng-model="user.JoinType" value="Inbound">
+                                        Inbound
+                                    </label>
+                                    <label>
+                                        <input type="radio" ng-model="user.JoinType" value="Outbound">
+                                        Outbound
+                                    </label>
+
+                                    <input type="text" name="Destination" class="form-control"
+                                           ng-model="user.Destination" required>
+
+                                    <button ng-disabled="!user.Destination" class="btn btn-success btn-xs"
+                                            ng-click="addDestination(user)">
+                                        Add
+                                    </button>
+                                </p>
+
+                            </li>
+                        </ul>
+
+                        <ul class="to_do" ng-repeat="user in sipUsers" ng-init="user.JoinType = 'Outbound'">
+                            <li>
+                                <p>
+
+                                    <label>
+                                        <input type="radio" ng-model="user.JoinType" value="Inbound">
+                                        Inbound
+                                    </label>
+                                    <label>
+                                        <input type="radio" ng-model="user.JoinType" value="Outbound">
+                                        Outbound
+                                    </label>
+
+
+                                    <!--<input type="checkbox" class="flat" ng-model="confirmed"
+                                           ng-change="handleClick(confirmed,user)">-->
+                                    {{user.SipUsername}}
+                                    <button class="btn btn-success btn-xs" ng-click="addNewUsers(user)">
+                                        Add
+                                    </button>
+                                </p>
+
+                            </li>
+                        </ul>
+
+                    </div>
+
+                    <div class="col-md-8 col-sm-8 col-xs-8">
+                        <div class="">
+                            <ul class="to_do" ng-repeat="exUser in conferenceExistingUsers">
+                                <li>
+                                    <p>
+                                        {{ exUser.sipUser.SipUsername }}
+                                        {{ exUser.Destination }}
+                                        <label>
+                                            <input type="checkbox" class="flat" ng-model="exUser.Def"
+                                                   ng-change="UpdateConferenceUserModes(exUser)">
+                                            Deaf
+                                        </label>
+                                        <label>
+                                            <input type="checkbox" class="flat" ng-model="exUser.Mute"
+                                                   ng-change="UpdateConferenceUserModes(exUser)">
+                                            Mute
+                                        </label>
+                                        <label>
+                                            <input type="checkbox" class="flat" ng-model="exUser.Mod"
+                                                   ng-change="UpdateConferenceUserModes(exUser)">
+                                            Mod
+                                        </label>
+
+                                        <a ng-disabled="true" class="inline-block"
+                                           ng-click="DeleteConferenceUser(exUser)" style="cursor: pointer"><i
+                                                class="fa fa-trash-o"></i></a>
+                                    </p>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+
+    </div>
+</div>
+
+
+<!--
+-->

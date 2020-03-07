@@ -1,0 +1,162 @@
+<div class="col-md-12 col-sm-12 col-xs-12">
+    <div class="x_panel" ng-class="{ 'ui-disabled' : isProcessing }">
+        <div class="x_title">
+            <h2>Webhooks
+                <small>Configuration</small>
+            </h2>
+            <ul class="nav navbar-right panel_toolbox">
+                <li><a class="close-link" title="Reload"><i class="fa fa-refresh" ng-click="loadWebhooks()"></i></a>
+                </li>
+                <li><a title="Add New Webhook" ng-click="showConfigurations()" class="close-link"><i
+                            class="fa fa-plus"></i></a>
+                </li>
+            </ul>
+            <div class="clearfix"></div>
+        </div>
+
+        <!--new configuration-->
+        <div ng-show="showConfiguration" class="" id="appEditWindow" style="background: #f5f5f5; position: relative">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="x_title col-md-12 col-sm-12 col-xs-12">
+                    <h3 class="font-robot font-300 text-uppercase font-15">{{ isUpdate ? "Update": "Create new" }}
+                        Webhook</h3>
+                    <div class="closebtn" ng-click="showConfigurations()"><span
+                            class="glyphicon glyphicon-remove"></span></div>
+                    <div class="clearfix"></div>
+                </div>
+                <br>
+                <ng-form class="" name="webhookForm" novalidate>
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-md-2 col-sm-12 col-xs-12 form-group"
+                                ng-class="{ 'has-error' : webhookForm.method.$invalid && !webhookForm.method.$pristine }">
+                                <span>Event Type<span class="req">*</span></span>
+                                <select required class="form-control" name="method" ng-model="webhookData.event_type"
+                                    required>
+                                    <option value="call">Call</option>
+                                    <option value="agent">Agent</option>
+                                    <option value="ticket">Ticket</option>
+                                </select>
+                                <p ng-show="webhookForm.method.$invalid && !webhookForm.method.$pristine"
+                                    class="help-block">method is invalid.</p>
+                            </div>
+                            <div class="col-md-10 col-sm-12 col-xs-12 form-group"
+                                ng-class="{ 'has-error' : webhookForm.url.$invalid && !webhookForm.url.$pristine }">
+                                <span>URL<span class="req">*</span></span>
+                                <input type="url" class="form-control" name="url" ng-model="webhookData.url" required>
+                                <p ng-show="webhookForm.url.$invalid && !webhookForm.url.$pristine" class="help-block">
+                                    URL is invalid.</p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-2 col-sm-12 col-xs-12 form-group"
+                                ng-class="{ 'has-error' : webhookForm.auth_type.$invalid && !webhookForm.auth_type.$pristine }">
+                                <span>Authentication</span>
+                                <select class="form-control" name="webhookData.auth_type"
+                                    ng-model="webhookData.auth_type">
+                                    <option value="" ng-selected="!webhookData.auth_type">None</option>
+                                    <option value="Basic">Basic</option>
+                                    <option value="Bearer">Bearer</option>
+                                </select>
+                            </div>
+                            <div id="authdetail" ng-if="webhookData.auth_type">
+                                <div ng-if="webhookData.auth_type == 'Bearer' || webhookData.auth_type == '' || !webhookData.auth_type"
+                                    class="col-md-10 col-sm-12 col-xs-12 form-group form-group">
+                                    <span>Token</span>
+                                    <input type="text" class="form-control" name="token" ng-model="webhookData.token"
+                                        required>
+                                    <p ng-show="webhookForm.token.$invalid && !webhookForm.token.$pristine"
+                                        class="help-block">Token is invalid.</p>
+                                </div>
+                                <div ng-if="webhookData.auth_type == 'Basic'">
+                                    <div class="col-md-5 col-sm-12 col-xs-12 form-group form-group">
+                                        <span>Username</span>
+                                        <input type="text" class="form-control" name="username"
+                                            ng-model="webhookData.username" required>
+                                        <p ng-show="webhookForm.username.$invalid && !webhookForm.username.$pristine"
+                                            class="help-block">Username is invalid.</p>
+                                    </div>
+                                    <div class="col-md-5 col-sm-12 col-xs-12 form-group form-group">
+                                        <span>Password</span>
+                                        <input type="password" class="form-control" name="password"
+                                            ng-model="webhookData.password" required>
+                                        <p ng-show="webhookForm.password.$invalid && !webhookForm.password.$pristine"
+                                            class="help-block">Password is invalid.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="divider"></div>
+                    <div class="form-group">
+                        <div class="col-md-9 col-sm-9 col-xs-12 col-md-offset-3">
+                            <button ng-if="!isUpdate" ng-disabled="webhookForm.$invalid"
+                                class="btn btn-success pull-right" ng-click="saveWebhook(webhookData)"
+                                title="Save App">Save
+                            </button>
+                            <button ng-if="isUpdate" ng-disabled="webhookForm.$invalid"
+                                class="btn btn-success pull-right" ng-click="updateWebhook(webhookData)"
+                                title="Save App">Update
+                            </button>
+                        </div>
+                    </div>
+                </ng-form>
+            </div>
+        </div>
+
+        <div class="clearfix"></div>
+        <br>
+
+        <div class="x_panel" ng-show="isProcessing">
+            <div class="x_content">
+                <div class="col-md-12 col-sm-12 col-xs-12">
+                    <div class="data-state-wrap">
+                        Processing...
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="x_panel" ng-show="!webhookList.length && !isProcessing">
+            <div class="x_content">
+                <div class="col-md-12 col-sm-12 col-xs-12">
+                    <div class="data-state-wrap">
+                        No Webhooks Configured.
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!--configuration List -->
+        <div class="x_panel" ng-show="webhookList.length">
+            <div class="x_content">
+                <div class="row timeline" ng-repeat="data in webhookList">
+                    <div class="col-md-11 ">
+                        <div class="block">
+                            <div class="tags" style="top:5px">
+                                <a href="" class="tag">
+                                    <span>{{data.event_type}}</span>
+                                </a>
+                            </div>
+                            <div class="block_content">
+                                <div class="pull-right">
+                                    <switch id="enabled" name="enabled" ng-model="data.is_enabled" on="Active"
+                                        off="Inactive" class="green pull-right" disabled="data.switchDisabled"
+                                        ng-change="setWebhookStatus(data)" style="margin-right: 10px">
+                                    </switch>
+                                </div>
+                                <div>
+                                    <span>{{data.method}} </span> : <a>{{data.url}}</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-1">
+                        <div>&nbsp;</div>
+                        <i class="fa fa-trash-o pull-right cursor-pointer" ng-click="deleteWebhook(data)" title="Delete"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

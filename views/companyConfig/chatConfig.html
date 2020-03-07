@@ -1,0 +1,52 @@
+<div class="row">
+    <div class="col-md-12 col-lg-12  col-sm-12">
+        <div class="x_panel">
+            <div class="x_title">
+
+                <h2><i class="fa fa-bars"></i> Welcome Chat Message
+                    <small>Configurations</small>
+                </h2>
+                <ul class="nav navbar-right panel_toolbox">
+
+                    <li><a class="close-link"><i class="fa fa-trash-o" ng-click="deleteChatConfig();"></i></a>
+                    </li>
+                </ul>
+                <div class="clearfix"></div>
+            </div>
+            </br>
+
+            <div class="x_content">
+                <div id="fb-root"></div>
+                <br/>
+                <div class="row">
+
+                    <div class="col-md-12 col-sm-12 col-xs-12" >
+
+                        <form class="form-horizontal form-label-left" name="userForm" novalidate>
+
+
+                            <div class="col-md-12 col-sm-12 col-xs-12 form-group  ">
+                                <label>Welcome Message</label>
+                                <input type="text" class="form-control  ng-pristine ng-untouched ng-empty ng-invalid ng-invalid-required ng-valid-pattern" ng-model="chatConfig.welcomeMessage" name="WelcomeMessage"  placeholder="Welcome Message" required>
+                            </div>
+                            <div class="clearfix"></div>
+                            <div class="ln_solid"></div>
+
+                            <div class="form-group">
+                                <button class="btn btn-success" ng-click="createChatConfig(chatConfig)"
+                                        ng-disabled="userForm.$invalid">
+                                    Save
+                                </button>
+                            </div>
+
+                        </form>
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+
+</div>

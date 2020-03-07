@@ -1,0 +1,357 @@
+<div class="col-md-12 col-sm-12 col-xs-12">
+    <div class="x_panel main-title main-title-tabbed">
+        <div class="x_title">
+            <h2><b>REPORT</b> | CALL - Queue Summary</h2>
+            <ul class="nav navbar-right panel_toolbox offset">
+                <li ng-show="!showFilter" ng-click="showFilter= !showFilter"><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                </li>
+                <li ng-show="showFilter" ng-click="showFilter= !showFilter"><a class="close-link"><i class="fa fa-chevron-down"></i></a>
+                </li>
+            </ul>
+            <div class="clearfix"></div>
+        </div>
+    </div>
+
+    <uib-tabset active="0">
+        <uib-tab index="0" heading="Queue Summary By Day">
+
+            <div class="tabbed-filters clearfix" ng-if="!showFilter">
+                <div class="col-sm-3 col-md-3 col-xs-12">
+                    <label>Start Date</label>
+                    <input type="text" class="form-control" ng-model="params.startDate" ng-change="onDateChange()"
+                           name="startDate"
+                           datepicker>
+                </div>
+                <div class="col-sm-3 col-md-3 col-xs-12">
+                    <label>End Date</label>
+                    <input type="text" class="form-control" ng-model="params.endDate" ng-change="onDateChange()" name="endDate"
+                           datepicker>
+                </div>
+                <!--<div class="col-sm-2 col-md-2 col-xs-12">-->
+                    <!--&lt;!&ndash;<div class="dataTables_length" id="datatable-responsive_length">-->
+                        <!--<label>Show-->
+                            <!--<select name="datatable-responsive_length" ng-model="recLimit"-->
+                                    <!--aria-controls="datatable-responsive" class="form-control select-limit">-->
+                                <!--<option value="10">10</option>-->
+                                <!--<option value="25">25</option>-->
+                                <!--<option value="50">50</option>-->
+                                <!--<option value="100">100</option>-->
+                            <!--</select> </label>-->
+                    <!--</div>&ndash;&gt;-->
+                <!--</div>-->
+                <div class="col-sm-4 col-md-4 col-xs-12" style="padding-top: 25px">
+                    <button type="button" class="btn btn-success" ng-click="getQueueSummary()" ng-disabled="!dateValid">Search</button>
+                    <!--<button type="button" class="btn btn-primary">Reset</button>-->
+                </div>
+
+                <div class="col-md-2 col-sm-2 col-xs-12" style="padding-top: 25px">
+                    <button type="button" class="btn btn-success"
+                            csv-header="['Queue', 'Date', 'Total Queued', 'Max Time', 'SLA (%)', 'Queue Answered (Count)', 'Queue Answered (%)', 'Queue Dropped (Count)', 'Queue Dropped (%)', 'Average QueueTime' , 'Business Unit']"
+                            csv-column-order="[ 'Queue', 'Date', 'TotalQueued', 'MaxTime', 'SLA', 'QueueAnswered', 'QueueAnsweredPercentage', 'QueueDropped', 'QueueDroppedPercentage', 'AverageQueueTime','BusinessUnit']"
+                            ng-csv="getQueueSummaryCSV()" filename="{{DownloadFileName}}.csv">
+                        CSV&nbsp;&nbsp;&nbsp;&nbsp;
+                        <i class="fa fa-download"></i>
+                    </button>
+                    <!--<button type="button" style="width:60px; height:30px; background-image: url(assets/images/csv.png); background-size: 100% 100%;" ng-click="prepareDownloadCSV()"></button>-->
+                </div>
+            </div>
+
+            <div class="search-main-wrap" ng-if="isTableLoading==0">
+                <div class="row ">
+                    <div class="col-md-12 col-sm-12 col-xs-12">
+                        <div class="data-state-wrap">
+                            Please Wait...
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="x_panel" ng-if="isTableLoading==1" style="margin-top: 20px">
+                <div class="x_content">
+                    <div id="datatable-responsive_wrapper"
+                         class="dataTables_wrapper form-inline dt-bootstrap no-footer">
+                        <div class="row">
+                            <div class="col-sm-12 col-lg-12 col-xs-12 col-md-12">
+                                <div class="table-wrapper"
+                                     ng-slimscroll horizontal-scroll="true"
+                                     width="100%"
+                                     height="100%"
+                                     horizontal-scroll-position="bottom"
+                                     size="5px" opacity="0.4">
+                                    <table id="datatable-responsive" dt-options="dtOptions" datatable="ng"
+                                           class="table table-responsive table-striped table-bordered dt-responsive nowrap dataTable no-footer dtr-inline"
+                                           cellspacing="0" width="100%" role="grid"
+                                           aria-describedby="datatable-responsive_info">
+                                        <thead>
+                                        <tr role="row">
+                                            <th class="sorting" tabindex="0" aria-controls="datatable-responsive"
+                                                rowspan="1"
+                                                colspan="1" aria-label="Call Direction">Queue
+                                            </th>
+                                            <th class="sorting" tabindex="0" aria-controls="datatable-responsive"
+                                                rowspan="1"
+                                                colspan="1" aria-label="From">Date
+                                            </th>
+                                            <th class="sorting" tabindex="0" aria-controls="datatable-responsive"
+                                                rowspan="1"
+                                                colspan="1" aria-label="To">Total Queued
+                                            </th>
+                                            <th class="sorting" tabindex="0" aria-controls="datatable-responsive"
+                                                rowspan="1"
+                                                colspan="1" aria-label="ReceivedBy">Max Time
+                                            </th>
+                                            <th class="sorting" tabindex="0" aria-controls="datatable-responsive"
+                                                rowspan="1"
+                                                colspan="1" aria-label="ReceivedBy">SLA(%)
+                                            </th>
+                                            <th class="sorting" tabindex="0" aria-controls="datatable-responsive"
+                                                rowspan="1"
+                                                colspan="1" aria-label="ReceivedBy">Queue Answered(Count)
+                                            </th>
+                                            <th class="sorting" tabindex="0" aria-controls="datatable-responsive"
+                                                rowspan="1"
+                                                colspan="1" aria-label="ReceivedBy">Queue Answered(%)
+                                            </th>
+                                            <th class="sorting" tabindex="0" aria-controls="datatable-responsive"
+                                                rowspan="1"
+                                                colspan="1" aria-label="ReceivedBy">Queue Dropped(Count)
+                                            </th>
+                                            <th class="sorting" tabindex="0" aria-controls="datatable-responsive"
+                                                rowspan="1"
+                                                colspan="1" aria-label="ReceivedBy">Queue Dropped(%)
+                                            </th>
+                                            <th class="sorting" tabindex="0" aria-controls="datatable-responsive"
+                                                rowspan="1"
+                                                colspan="1" aria-label="ReceivedBy">Average QueueTime
+                                            </th>
+                                            <th class="sorting" tabindex="0" aria-controls="datatable-responsive"
+                                                rowspan="1"
+                                                colspan="1" aria-label="ReceivedBy">Business Unit
+                                            </th>
+
+
+                                        </thead>
+                                        <tbody>
+                                        <tr role="row" class="odd"
+                                            ng-repeat="queueSummary in queueSummaryList">
+                                            <td>{{queueSummary.Queue}}</td>
+                                            <td>{{queueSummary.Date|date:"yyyy-MM-dd"}}</td>
+                                            <td>{{queueSummary.TotalQueued}}</td>
+                                            <td>{{queueSummary.MaxTime}}</td>
+                                            <td>{{queueSummary.SLA}}</td>
+                                            <td>{{queueSummary.QueueAnswered}}</td>
+                                            <td>{{queueSummary.QueueAnsweredPercentage}}</td>
+                                            <td>{{queueSummary.QueueDropped}}</td>
+                                            <td>{{queueSummary.QueueDroppedPercentage}}</td>
+                                            <td>{{queueSummary.AverageQueueTime}}</td>
+                                            <td>{{queueSummary.BusinessUnit}}</td>
+                                            <!--<td>
+                                            <span ng-show="cdr.ShowButton">
+                                                <i class="fa fa-stop"
+                                                   ng-if="cdr.Uuid == currentPlayingFile && ((fileToPlay.progress > 0 && fileToPlay.progress < 1) || fileToPlay.remaining == 'Infinity')"
+                                                   ng-click="playStopFile(cdr.Uuid, (!currentPlayingFile || (cdr.Uuid != currentPlayingFile) || ((fileToPlay.progress == '' ||
+                                                    fileToPlay.progress == 0 || fileToPlay.progress == 1) && fileToPlay.remaining != 'Infinity')),
+                                                     (cdr.Uuid == currentPlayingFile && ((fileToPlay.progress > 0 && fileToPlay.progress < 1) || fileToPlay.remaining == 'Infinity')))"></i>
+
+                                                <i class="fa fa-play"
+                                                   ng-if="!currentPlayingFile || (cdr.Uuid != currentPlayingFile) || ((fileToPlay.progress == '' ||
+                                                    fileToPlay.progress == 0 || fileToPlay.progress == 1) && fileToPlay.remaining != 'Infinity')"
+                                                   ng-click="playStopFile(cdr.Uuid, (!currentPlayingFile || (cdr.Uuid != currentPlayingFile) || ((fileToPlay.progress == '' ||
+                                                    fileToPlay.progress == 0 || fileToPlay.progress == 1) && fileToPlay.remaining != 'Infinity')),
+                                                   (cdr.Uuid == currentPlayingFile && ((fileToPlay.progress > 0 && fileToPlay.progress < 1) || fileToPlay.remaining == 'Infinity')))"></i>
+
+                                                <a class="fa fa-download" target="_self" href="{{DownloadFileUrl}}" ng-click="SetDownloadPath(cdr.Uuid)"></a>
+
+                                            </span>
+                                            </td>-->
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <!--<div class="row">
+                                <div class="col-sm-7">
+                                    <button class="btn btn-primary" ng-click="loadPreviousPage()" ng-disabled="isPreviousDisabled">Previous</button>
+                                    <button class="btn btn-success" ng-click="loadNextPage()" ng-disabled="isNextDisabled">Next</button>
+                                </div>
+                            </div>-->
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </uib-tab>
+
+        <uib-tab index="1" heading="Queue Summary Total">
+            <div class="tabbed-filters clearfix" ng-if="!showFilter">
+                <div class="col-sm-3 col-md-3 col-xs-12">
+                    <label>Start Date</label>
+                    <input type="text" class="form-control" ng-model="params2.startDate" ng-change="onDateChange2()"
+                           name="startDate"
+                           datepicker>
+                </div>
+                <div class="col-sm-3 col-md-3 col-xs-12">
+                    <label>End Date</label>
+                    <input type="text" class="form-control" ng-model="params2.endDate" ng-change="onDateChange2()" name="endDate"
+                           datepicker>
+                </div>
+                <div class="col-sm-2 col-md-2 col-xs-12">
+                    <div    id="datatable-responsive_length">
+                        <label>Show </label>
+                        <select name="datatable-responsive_length" ng-model="recLimit"
+                                aria-controls="datatable-responsive" class="form-control select-limit">
+                            <option value="10">10</option>
+                            <option value="25">25</option>
+                            <option value="50">50</option>
+                            <option value="100">100</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-sm-4 col-md-4 col-xs-12">
+                    <div class="col-md-8 col-sm-8 col-xs-12" style="padding-top: 25px">
+                        <button type="button" class="btn btn-success" ng-click="getQueueSummary2()"
+                                ng-disabled="!dateValid2">
+                            Search
+                        </button>
+                        <!--<button type="button" class="btn btn-primary">Reset</button>-->
+                    </div>
+
+                    <div class="col-md-4 col-sm-4 col-xs-12" style="padding-top: 25px">
+                        <button type="button" class="btn btn-success"
+                                csv-header="['Queue', 'Total Queued', 'Max Time', 'SLA (%)', 'Queue Answered (Count)', 'Queue Answered (%)', 'Queue Dropped (Count)', 'Queue Dropped (%)', 'Average QueueTime','Business Unit']"
+                                csv-column-order="[ 'Queue', 'TotalQueued', 'MaxTime', 'SLA', 'QueueAnswered', 'QueueAnsweredPercentage', 'QueueDropped', 'QueueDroppedPercentage', 'AverageQueueTime','BusinessUnit']"
+                                ng-csv="getQueueSummaryCSV2()" filename="{{DownloadFileName2}}.csv">
+                            CSV&nbsp;&nbsp;&nbsp;&nbsp;
+                            <i class="fa fa-download"></i>
+                        </button>
+                        <!--<button type="button" style="width:60px; height:30px; background-image: url(assets/images/csv.png); background-size: 100% 100%;" ng-click="prepareDownloadCSV()"></button>-->
+                    </div>
+                </div>
+            </div>
+
+            <div class="search-main-wrap" ng-if="isTableLoading2==0">
+                <div class="row ">
+                    <div class="col-md-12 col-sm-12 col-xs-12">
+                        <div class="data-state-wrap">
+                            Please Wait...
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="x_panel" ng-if="isTableLoading2==1" style="margin-top: 20px">
+                <div class="x_content">
+                    <div id="datatable-responsive_wrapper2"
+                         class="dataTables_wrapper form-inline dt-bootstrap no-footer">
+                        <div class="row">
+                            <div class="col-sm-12 col-lg-12 col-xs-12 col-md-12">
+                                <div class="table-wrapper"
+                                     ng-slimscroll horizontal-scroll="true"
+                                     width="100%"
+                                     height="100%"
+                                     horizontal-scroll-position="bottom"
+                                     size="5px" opacity="0.4">
+                                    <table id="datatable-responsive2" dt-options="dtOptions" datatable="ng"
+                                           class="table table-responsive table-striped table-bordered dt-responsive nowrap dataTable no-footer dtr-inline"
+                                           cellspacing="0" width="100%" role="grid"
+                                           aria-describedby="datatable-responsive_info">
+                                        <thead>
+                                        <tr role="row">
+                                            <th class="sorting" tabindex="0" aria-controls="datatable-responsive"
+                                                rowspan="1"
+                                                colspan="1" aria-label="Call Direction">Queue
+                                            </th>
+                                            <th class="sorting" tabindex="0" aria-controls="datatable-responsive"
+                                                rowspan="1"
+                                                colspan="1" aria-label="To">Total Queued
+                                            </th>
+                                            <th class="sorting" tabindex="0" aria-controls="datatable-responsive"
+                                                rowspan="1"
+                                                colspan="1" aria-label="ReceivedBy">Max Time
+                                            </th>
+                                            <th class="sorting" tabindex="0" aria-controls="datatable-responsive"
+                                                rowspan="1"
+                                                colspan="1" aria-label="ReceivedBy">SLA(%)
+                                            </th>
+                                            <th class="sorting" tabindex="0" aria-controls="datatable-responsive"
+                                                rowspan="1"
+                                                colspan="1" aria-label="ReceivedBy">Queue Answered(Count)
+                                            </th>
+                                            <th class="sorting" tabindex="0" aria-controls="datatable-responsive"
+                                                rowspan="1"
+                                                colspan="1" aria-label="ReceivedBy">Queue Answered(%)
+                                            </th>
+                                            <th class="sorting" tabindex="0" aria-controls="datatable-responsive"
+                                                rowspan="1"
+                                                colspan="1" aria-label="ReceivedBy">Queue Dropped(Count)
+                                            </th>
+                                            <th class="sorting" tabindex="0" aria-controls="datatable-responsive"
+                                                rowspan="1"
+                                                colspan="1" aria-label="ReceivedBy">Queue Dropped(%)
+                                            </th>
+                                            <th class="sorting" tabindex="0" aria-controls="datatable-responsive"
+                                                rowspan="1"
+                                                colspan="1" aria-label="ReceivedBy">Average QueueTime
+                                            </th>
+                                            <th class="sorting" tabindex="0" aria-controls="datatable-responsive"
+                                                rowspan="1"
+                                                colspan="1" aria-label="ReceivedBy">Business Unit
+                                            </th>
+
+
+                                        </thead>
+                                        <tbody>
+                                        <tr role="row" class="odd"
+                                            ng-repeat="queueSummary in queueSummaryList2">
+                                            <td>{{queueSummary.Queue}}</td>
+                                            <td>{{queueSummary.TotalQueued}}</td>
+                                            <td>{{queueSummary.MaxTime}}</td>
+                                            <td>{{queueSummary.SLA}}</td>
+                                            <td>{{queueSummary.QueueAnswered}}</td>
+                                            <td>{{queueSummary.QueueAnsweredPercentage}}</td>
+                                            <td>{{queueSummary.QueueDropped}}</td>
+                                            <td>{{queueSummary.QueueDroppedPercentage}}</td>
+                                            <td>{{queueSummary.AverageQueueTime}}</td>
+                                            <td>{{queueSummary.BusinessUnit}}</td>
+                                            <!--<td>
+                                <span ng-show="cdr.ShowButton">
+                                    <i class="fa fa-stop"
+                                       ng-if="cdr.Uuid == currentPlayingFile && ((fileToPlay.progress > 0 && fileToPlay.progress < 1) || fileToPlay.remaining == 'Infinity')"
+                                       ng-click="playStopFile(cdr.Uuid, (!currentPlayingFile || (cdr.Uuid != currentPlayingFile) || ((fileToPlay.progress == '' ||
+                                        fileToPlay.progress == 0 || fileToPlay.progress == 1) && fileToPlay.remaining != 'Infinity')),
+                                         (cdr.Uuid == currentPlayingFile && ((fileToPlay.progress > 0 && fileToPlay.progress < 1) || fileToPlay.remaining == 'Infinity')))"></i>
+
+                                    <i class="fa fa-play"
+                                       ng-if="!currentPlayingFile || (cdr.Uuid != currentPlayingFile) || ((fileToPlay.progress == '' ||
+                                        fileToPlay.progress == 0 || fileToPlay.progress == 1) && fileToPlay.remaining != 'Infinity')"
+                                       ng-click="playStopFile(cdr.Uuid, (!currentPlayingFile || (cdr.Uuid != currentPlayingFile) || ((fileToPlay.progress == '' ||
+                                        fileToPlay.progress == 0 || fileToPlay.progress == 1) && fileToPlay.remaining != 'Infinity')),
+                                       (cdr.Uuid == currentPlayingFile && ((fileToPlay.progress > 0 && fileToPlay.progress < 1) || fileToPlay.remaining == 'Infinity')))"></i>
+
+                                    <a class="fa fa-download" target="_self" href="{{DownloadFileUrl}}" ng-click="SetDownloadPath(cdr.Uuid)"></a>
+
+                                </span>
+
+                                            </td>-->
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <!--<div class="row">
+                                <div class="col-sm-7">
+                                    <button class="btn btn-primary" ng-click="loadPreviousPage()" ng-disabled="isPreviousDisabled">Previous</button>
+                                    <button class="btn btn-success" ng-click="loadNextPage()" ng-disabled="isNextDisabled">Next</button>
+                                </div>
+                            </div>-->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </uib-tab>
+    </uib-tabset>
+</div>
+<script>
+	window.scrollTo(0, 0);
+</script>

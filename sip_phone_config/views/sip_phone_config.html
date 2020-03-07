@@ -1,0 +1,60 @@
+<div class="col-md-12 col-lg-12  col-sm-12">
+    <div class="x_panel">
+        <div class="x_title">
+            <h2><i class="fa fa-bars"></i> IP Phone Configurations</h2>
+            <ul class="nav navbar-right panel_toolbox">
+                <ul class="nav navbar-right panel_toolbox">
+                    <li title="Reload" ng-click="loadData()">
+                        <a class="close-link"><i class="fa fa-refresh" ></i></a>
+                    </li>
+                </ul>
+            </ul>
+            <div class="clearfix"></div>
+        </div>
+        </br>
+
+
+        <div class="x_panel ">
+            <div class="x_content">
+
+                <div ng-show="isTableLoading"
+                     class="loading-current-view" style="background: transparent;">
+                    <!--  loader  -->
+                    <svg class="circular">
+                        <circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="2"></circle>
+                    </svg>
+                    <div class="loader-section"></div>
+                </div>
+
+
+                <ul class="list-unstyled timeline">
+                    <li ng-repeat="phone in ip_phones">
+                        <sipphonconfig phone="phone" sipusers="sipUsrList"></sipphonconfig>
+                    </li>
+
+
+                </ul>
+
+            </div>
+        </div>
+
+
+        <!--<div class="x_content">
+
+            <ul class="list-unstyled">
+                <div ng-show="isTableLoading"
+                     class="loading-current-view" style="background: transparent;">
+                    &lt;!&ndash;  loader  &ndash;&gt;
+                    <svg class="circular">
+                        <circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="2"></circle>
+                    </svg>
+                    <div class="loader-section"></div>
+                </div>
+                <li ng-repeat="phone in ip_phones">
+                    <sipphonconfig phone="phone" sipusers="sipUsrList"></sipphonconfig>
+                </li>
+            </ul>
+        </div>-->
+
+    </div>
+</div>

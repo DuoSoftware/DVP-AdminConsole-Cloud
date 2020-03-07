@@ -1,0 +1,60 @@
+<!--<div class="x_panel fixed_height_200" ng-controller="AgentSummaryController">-->
+<div class="x_panel " ng-controller="" >
+    <!--<div class="x_title">
+        <h2><i class="fa fa-align-left"></i> Agents
+            <small>State Details</small>
+        </h2>
+        <ul class="nav navbar-right panel_toolbox">
+            <li ng-click="reloadCallDetails();"><a class="collapse-link"><i class="fa fa-refresh"></i></a>
+            </li>
+        </ul>
+        <div class="clearfix"></div>
+    </div>-->
+    <h2 class="x_title_inner" ng-click="reloadCallDetails();">Agents <small>State Details </small><i class="fa fa-refresh" ng-click="reloadCallDetails()"></i></h2>
+    <!--<div style="border-bottom: 2px solid #F7F7F7;"></div>-->
+
+    <div class="x_content" style="padding: 0;">
+
+        <div ng-hide="keys(CallObj).length>0">
+            <div class="row ">
+                <div class="col-md-12 col-sm-12 col-xs-12">
+                    <div class="data-state-wrap">
+                        No Data...
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+
+
+        <table ng-show="keys(CallObj).length>0" dt-options="dtOptions" datatable="ng" class="table table-striped table-bordered dt-responsive nowrap dataTable no-footer dtr-inline">
+            <thead>
+            <tr class="headings veery-tbl-clmn-hdr">
+                <th class="column-title">Direction</th>
+                <th class="column-title selectedTpcs">From</th>
+                <th class="column-title selectedTpcs">To</th>
+                <th class="column-title selectedTpcs">Receiver</th>
+                <th class="column-title selectedTpcs">Skill</th>
+                <th class="column-title selectedTpcs">Call Duration</th>
+                <th class="column-title selectedTpcs">Call Answered Time</th>
+            </tr>
+            </thead>
+
+            <tbody>
+            <tr class="even pointer veery-tbl-body" ng-repeat="call in CallObj">
+
+                <td class="valAlgn">{{call.Direction}}</td>
+                <td class="valAlgn">{{call.FromID}}</td>
+                <td class="valAlgn">{{call.ToID}}</td>
+                <td class="valAlgn">{{call.Receiver}}</td>
+                <td class="valAlgn">{{call.Skill}}</td>
+                <td class="valAlgn">{{call.CallDuration}}</td>
+                <td class="valAlgn">{{call.LocalTime}}</td>
+            </tr>
+
+            </tbody>
+        </table>
+
+    </div>
+</div>

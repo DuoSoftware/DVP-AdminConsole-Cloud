@@ -1,0 +1,137 @@
+<div class="row" >
+    <div class="col-md-12 col-sm-12 col-xs-12 animated fadeIn">
+        <div class="x_panel main-title">
+            <div class="x_title">
+                <h2><b>REPORT</b> | AGENT - Time Sheet</h2>
+                <ul class="nav navbar-right panel_toolbox">
+                    <li ng-show="!showFilter" ng-click="showFilter= !showFilter"><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                    </li>
+                    <li ng-show="showFilter" ng-click="showFilter= !showFilter"><a class="close-link"><i class="fa fa-chevron-down"></i></a>
+                    </li>
+                </ul>
+                <div class="clearfix"></div>
+            </div>
+            <div class="x_content" ng-if="!showFilter">
+                <div class="col-md-6 col-sm-4 col-xs-12">
+                <label>Agent Name</label>
+
+
+                        <input type="text" class="form-control" ng-model="searchObj.userId" data-min-length="1" data-html="1"
+                               data-limit="1000" data-auto-select="true"  data-animation="am-flip-x"
+                               bs-options="user as user.username for user in userDataList"
+                               placeholder="Agent" bs-typeahead>
+
+
+
+               <!-- <select name="datatable-responsive_length" ng-model="searchObj.userId"
+                        aria-controls="datatable-responsive" class="form-control">
+                    <option value="" disabled selected>Select User</option>
+                    <option ng-repeat="user in userDataList" value="{{user._id}}">
+                        {{user.username}}
+                    </option>
+                </select>-->
+            </div>
+                <div class="col-md-3 col-sm-4 col-xs-12">
+                <label>From</label>
+                <input type="text" class="form-control" ng-model="searchObj.startDate" name="startDate" datepicker>
+            </div>
+                <div class="col-md-3 col-sm-4 col-xs-12">
+                <label>TO</label>
+                <input type="text" class="form-control" ng-model="searchObj.endDate" name="endDate" datepicker>
+            </div>
+                <div class="col-md-4 col-sm-4 col-xs-12"></div>
+                <div class="col-md-4 col-sm-4 col-xs-12"></div>
+                <div class="col-md-4 col-sm-4 col-xs-12">
+                    <div class="col-md-4 col-sm-4 col-xs-12"></div>
+                    <div class="col-md-4 col-sm-4 col-xs-12"></div>
+                    <div class="col-md-4 col-sm-4 col-xs-12 pull-right">
+                        <button type="button" class="btn btn-success" ng-click="searchSheetData()">
+                            Search
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <div class="x_panel" style="padding: 10px 0 0 0">
+            <!--
+            <button id="expandAll" type="button" class="btn btn-success" ng-click="expandAll()">Expand All</button>
+            <button id="toggleFirstRow" type="button" class="btn btn-success" ng-click="toggleRow(0)">Toggle First Row
+            </button>
+            <button id="toggleSecondRow" type="button" class="btn btn-success" ng-click="toggleRow(1)">Toggle Second Row
+            </button>
+
+            <button id="changeGroupingDate" type="button" class="btn btn-success" ng-click="changeGroupingDate()">Group By Date</button>
+            <button id="changeGroupingTicket" type="button" class="btn btn-success" ng-click="changeGroupingTicket()">Group By Ticket</button>-->
+            <div id="grid1" ui-grid="gridOptions" ui-grid-grouping class="time-grid"></div>
+        </div>
+    </div>
+</div>
+
+<!--Old-->
+<!--<div ng-controller="timeSheetCtrl">-->
+    <!--<div class="page-title">-->
+        <!--<div class="title_left">-->
+            <!--<h3 class="font-robot font-600 ">Time Sheet</h3>-->
+        <!--</div>-->
+    <!--</div>-->
+
+    <!--<div class="col-md-12 col-sm-12 col-xs-12 animated fadeIn">-->
+        <!--<div class="row">-->
+            <!--<div class="x_panel">-->
+
+                <!--<div>Filter Conditions</div>-->
+                <!--<br>-->
+
+                <!--<div class="clearfix"></div>-->
+                <!--<div class="col-md-6 col-sm-4 col-xs-12">-->
+                    <!--<label>Agent Name</label>-->
+                    <!--<select name="datatable-responsive_length" ng-model="searchObj.userId"-->
+                            <!--aria-controls="datatable-responsive" class="form-control col-md-12 ">-->
+                        <!--<option value="" disabled selected>Select User</option>-->
+                        <!--<option ng-repeat="user in userDataList" value="{{user._id}}">-->
+                            <!--{{user.username}}-->
+                        <!--</option>-->
+                    <!--</select>-->
+
+                <!--</div>-->
+                <!--<div class="col-md-3 col-sm-4 col-xs-12">-->
+                    <!--<label>From</label>-->
+                    <!--<input type="text" class="form-control" ng-model="searchObj.startDate" name="startDate" datepicker>-->
+                <!--</div>-->
+
+                <!--<div class="col-md-3 col-sm-4 col-xs-12">-->
+                    <!--<label>TO</label>-->
+                    <!--<input type="text" class="form-control" ng-model="searchObj.endDate" name="endDate" datepicker>-->
+                <!--</div>-->
+                <!--<div class="clearfix"></div>-->
+                <!--<div class="col-md-3 col-sm-3 col-xs-12">-->
+                    <!--<div class="x_content btn-wrap-header">-->
+                        <!--<button type="button" class="btn btn-success" ng-click="searchSheetData()">-->
+                            <!--Search-->
+                        <!--</button>-->
+                    <!--</div>-->
+                <!--</div>-->
+            <!--</div>-->
+        <!--</div>-->
+    <!--</div>-->
+
+    <!--<div class="col-md-12">-->
+        <!--&lt;!&ndash;-->
+        <!--<button id="expandAll" type="button" class="btn btn-success" ng-click="expandAll()">Expand All</button>-->
+        <!--<button id="toggleFirstRow" type="button" class="btn btn-success" ng-click="toggleRow(0)">Toggle First Row-->
+        <!--</button>-->
+        <!--<button id="toggleSecondRow" type="button" class="btn btn-success" ng-click="toggleRow(1)">Toggle Second Row-->
+        <!--</button>-->
+
+        <!--<button id="changeGroupingDate" type="button" class="btn btn-success" ng-click="changeGroupingDate()">Group By Date</button>-->
+        <!--<button id="changeGroupingTicket" type="button" class="btn btn-success" ng-click="changeGroupingTicket()">Group By Ticket</button>&ndash;&gt;-->
+        <!--<div id="grid1" ui-grid="gridOptions" ui-grid-grouping class="time-grid"></div>-->
+    <!--</div>-->
+
+<!--</div>-->
+<!--Old-->
+
+<script>
+	window.scrollTo(0, 0);
+</script>

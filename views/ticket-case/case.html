@@ -1,0 +1,124 @@
+<div class="row">
+
+    <div class="col-md-12 col-sm-6 col-xs-12">
+
+        <!-- application list -->
+        <div class="x_panel bg-light-gray animated fadeIn">
+            <div class="x_content">
+                <div class="x_title border-0">
+                    <div class="col-md-6 col-sm-6 col-xs-6">
+                        <h2 class="font-robot font-300 text-uppercase font-15">Add New Case</h2>
+                    </div>
+
+
+                    <div class="col-xs-12">
+                        <div class="tile-stats m-top15">
+                            <form name="caseForm" class="form-horizontal form-label-left input_mask" novalidate>
+                                <div class="row">
+                                    <div class="col-md-3 col-sm-3 col-xs-12 form-group has-feedback">
+                                        <input name="caseName" type="text" class="form-control has-feedback-left"
+                                               ng-model="caseInfo.caseName"
+                                               placeholder="Case Name" required>
+                                        <span class="fa fa-user form-control-feedback left" aria-hidden="true"></span>
+                                         <span class="inline-block validation-on"
+                                               ng-show="caseForm.caseName.$invalid">required*
+                                        </span>
+                                    </div>
+
+                                    <div class="col-md-3 col-sm-3 col-xs-12 form-group has-feedback">
+                                        <input name="description" type="text" class="form-control has-feedback-left"
+                                               ng-model="caseInfo.description"
+                                               placeholder="Description" required>
+                                        <span class="fa fa-user form-control-feedback left" aria-hidden="true"></span>
+                                        <span class="inline-block validation-on"
+                                              ng-show="caseForm.description.$invalid">required*
+                                        </span>
+                                    </div>
+
+                                </div>
+
+
+                                <div class="row">
+                                    <div class="col-md-2 col-sm-2 col-xs-12  ">
+                                        <button type="button" class="btn btn-success btn-block  btn- pull-right"
+                                                ng-click="saveCase()" ng-disabled="caseForm.$invalid">
+                                            Add
+                                        </button>
+                                    </div>
+                                </div>
+
+                            </form>
+                        </div>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+            </div>
+        </div>
+        <!-- end -->
+
+        <div class="x_panel  animated fadeIn">
+            <div class="x_content">
+                <div class="x_title border-0">
+                    <div class="col-lg-12">
+                        <h2 class="font-robot font-300 text-uppercase font-15">Filter Cases</h2>
+                    </div>
+                    <div class="col-md-6 col-sm-6 col-xs-12" style="margin-top: 30px;">
+                        <label class="radio-inline">
+                            <input type="radio" name="caseOption" ng-model="searchOption"
+                                   id="activeCases"
+                                   value="activeCases" ng-checked="true" ng-click="filterCases()"> Active Cases
+                        </label>
+                        <label class="radio-inline">
+                            <input type="radio" ng-model="searchOption" name="caseOption" id="deactivateCases"
+                                   value="deactivateCases" ng-click="filterCases()"> Deactivate Cases
+                        </label>
+                        <label class="radio-inline">
+                            <input type="radio" name="caseOption" ng-model="searchOption"
+                                   id="allCases"
+                                   value="allCases" ng-click="filterCases()"> All
+                        </label>
+                    </div>
+                    <div class="col-md-6 col-sm-6 col-xs-12 form-group top_search">
+                        <div class="input-group">
+                            <input type="text" ng-model="searchCriteria" class="form-control"
+                                   placeholder="Search for...">
+                                <span class="input-group-btn">
+                                  <button class="btn btn-default" type="button">Go!</button>
+                                </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- view application users -->
+        <div class="x_panel">
+            <div class="x_content">
+                <ul class="list-unstyled timeline">
+                    <li ng-repeat="caseInfo in caseInfos | filterBy: ['caseName']: searchCriteria">
+                        <case-directive case-info="caseInfo" bulk-operations="ongoingBulkOperations" update-case="removeDeleted(caseInfo)"
+                                        reload-page="reloadPage()"></case-directive>
+                    </li>
+
+                    <paging ng-show="showPaging"
+                            class="small"
+                            page="currentPage"
+                            page-size="pageSize"
+                            total="pageTotal"
+                            show-prev-next="true"
+                            show-first-last="true"
+                            text-next-class="glyphicon glyphicon-chevron-right"
+                            text-prev-class="glyphicon glyphicon-chevron-left"
+                            text-first-class="glyphicon glyphicon-backward"
+                            text-last-class="glyphicon glyphicon-forward"
+                            paging-action="getPageData('attribute', page, pageSize, total)">
+                    </paging>
+                </ul>
+            </div>
+        </div>
+        <!-- end -->
+    </div>
+
+</div>
+
+</div>

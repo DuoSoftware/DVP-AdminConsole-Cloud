@@ -1,0 +1,166 @@
+
+
+<div class="block">
+
+    <div class="block_content">
+
+        <div class="col-md-12 col-sm-12 col-xs-12">
+            <br>
+
+            <div class="col-md-12 col-sm-6 col-xs-12 col-xs-12">
+                <div class="tile-stats">
+                    <button class="btn btn-success" ng-click="backToList()">Back</button>
+
+                    <form class="form-horizontal form-label-left input_mask">
+
+                        <label class="control-label col-md-2 col-sm-6 col-xs-12">Name</label>
+                        <div class="col-md-4 col-sm-6 col-xs-12 form-group has-feedback">
+                            <input type="text" class="form-control" placeholder="" name="txt_desc" ng-model="newObj.Name" >
+                        </div>
+
+                        <label class="control-label col-md-2 col-sm-6 col-xs-12">Code</label>
+                        <div class="col-md-4 col-sm-6 col-xs-12 form-group has-feedback">
+                            <input type="text" class="form-control" placeholder="" name="txt_desc" ng-model="newObj.Code" >
+                        </div>
+                        <label class="control-label col-md-2 col-sm-6 col-xs-12">Extention</label>
+                        <div class="col-md-4 col-sm-6 col-xs-12 form-group has-feedback">
+                            <select class="form-control" ng-options="ext.Extension as ext.Extension for ext in extentions" name="status" ng-model="newObj.Extention">
+                            </select>
+                        </div>
+                        <label class="control-label col-md-2 col-sm-6 col-xs-12">Menu Sound</label>
+                        <div class="col-md-4 col-sm-6 col-xs-12 form-group has-feedback">
+                            <select class="form-control" id="MenuSound" ng-model="newObj.MenuSound"
+                                    ng-options="opt.Filename as opt.Filename for opt in ivrFileList">
+                            </select>
+                        </div>
+                        <!--<label class="control-label col-md-2 col-sm-6 col-xs-12">MenuSound</label>
+                        <div class="col-md-4 col-sm-6 col-xs-12 form-group has-feedback">
+                            <input type="text" class="form-control" placeholder="" name="txt_desc" ng-model="newObj.MenuSound" >
+                        </div>-->
+                        <label class="control-label col-md-2 col-sm-6 col-xs-12">Tries</label>
+                        <div class="col-md-4 col-sm-6 col-xs-12 form-group has-feedback">
+                            <input type="number" class="form-control" placeholder="" name="txt_desc" ng-model="newObj.Tries" min="0" max="5">
+                        </div>
+                        <label class="control-label col-md-2 col-sm-6 col-xs-12">TimeOut</label>
+                        <div class="col-md-4 col-sm-6 col-xs-12 form-group has-feedback">
+                            <input type="number" class="form-control" placeholder="" name="txt_desc" ng-model="newObj.TimeOut" min="0">
+                        </div>
+                        <label class="control-label col-md-2 col-sm-6 col-xs-12">EnableExtention</label>
+                        <div class="col-md-4 col-sm-6 col-xs-12 form-group has-feedback">
+                            <select class="form-control" ng-model="newObj.EnableExtention" class="form-control" ng-options="o.v as o.n for o in [{ n: 'Enable Extention', v: true }, { n: 'Disable Extention', v: false }]">
+                            </select>
+                        </div>
+                        <label class="control-label col-md-2 col-sm-6 col-xs-12">ExtentionLength</label>
+                        <div class="col-md-4 col-sm-6 col-xs-12 form-group has-feedback">
+                            <input type="number" class="form-control" placeholder="" name="txt_desc" ng-model="newObj.ExtentionLength" min="1"  >
+                        </div>
+
+                        <div class="col-md-12 col-sm-12 col-xs-12 form-group has-feedback">
+                            <button class="btn btn-success" ng-click="updateAA()">Update</button>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+
+
+        </div>
+
+        <div class="clearfix"></div>
+    </div>
+</div>
+
+
+
+<div class="row" >
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <div class="x_panel">
+            <div class="x_title">
+
+
+                <form class="form-horizontal form-label-left input_mask">
+
+                    <label class="control-label col-md-2 col-sm-6 col-xs-12">Name</label>
+                    <div class="col-md-4 col-sm-6 col-xs-12 form-group has-feedback">
+                        <input type="text" class="form-control" placeholder="" name="txt_desc" ng-model="newAction.Name" >
+                    </div>
+
+                    <label class="control-label col-md-2 col-sm-6 col-xs-12">Action</label>
+                    <div class="col-md-4 col-sm-6 col-xs-12 form-group has-feedback">
+                        <!--input type="text" class="form-control" placeholder="" name="txt_desc" ng-model="newAction.Action" -->
+                        <select name="singleSelect" class="form-control" id="singleSelect" ng-model="newAction.Action">
+                            <option value="route">route</option>
+                            <option value="play">play</option>
+                            <option value="end">end</option>
+                            <option value="transfer">transfer</option>
+                        </select>
+                    </div>
+                    <label class="control-label col-md-2 col-sm-6 col-xs-12">OnEvent</label>
+                    <div class="col-md-4 col-sm-6 col-xs-12 form-group has-feedback">
+                        <!--input type="text" class="form-control" placeholder="" name="txt_desc" ng-model="newAction.OnEvent" -->
+                        <select name="eventSelect" class="form-control" id="eventSelect" ng-model="newAction.OnEvent">
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                            <option value="6">6</option>
+                            <option value="7">7</option>
+                            <option value="8">8</option>
+                            <option value="9">9</option>
+                            <option value="0">0</option>
+                            <option value="*">*</option>
+                            <option value="#">#</option>
+                            <option value="timeout">timeout</option>
+                        </select>
+                    </div>
+                    <label class="control-label col-md-2 col-sm-6 col-xs-12">Data</label>
+                    <div class="col-md-4 col-sm-6 col-xs-12 form-group has-feedback">
+                        <input type="text" class="form-control" placeholder="" name="txt_desc" ng-model="newAction.Data" >
+                    </div>
+
+                    <button type="button" class="btn btn-success" ng-click="addNewAction()">
+                        Save
+                    </button>
+                    <button type="button" class="btn btn-success" ng-click="clearAction()">
+                        Clear
+                    </button>
+
+
+                </form>
+            </div>
+
+            <div class="x_content">
+                <div class="">
+                    <table class="table table-striped table-bordered dt-responsive nowrap dataTable no-footer dtr-inline">
+                        <thead>
+                        <tr class="headings veery-tbl-clmn-hdr">
+                            <th class="column-title">Name</th>
+                            <th class="column-title">Action</th>
+                            <th class="column-title selectedTpcs">OnEvent</th>
+                            <th class="column-title selectedTpcs">Data</th>
+                        </tr>
+                        </thead>
+
+                        <tbody>
+                        <tr class="even pointer veery-tbl-body" ng-repeat="action in newObj.Actions">
+
+                            <td class="valAlgn">{{action.Name}}</td>
+                            <td class="valAlgn">{{action.Action}}</td>
+                            <td class="valAlgn">{{action.OnEvent}}</td>
+                            <td class="valAlgn">{{action.Data}}</td>
+
+                            <td class="lstCol">
+                                <button type="submit" class="btn btn-primary" ng-click="deleteAction(action)"><span class="fa fa-remove" aria-hidden="true"></span>Delete</button>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <!-- <div class="animated flipInY col-lg-6 col-md-6 col-sm-6 col-xs-12" ng-if="phoneSatus">-->
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>

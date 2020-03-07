@@ -1,0 +1,117 @@
+<div>
+
+    <div class="row">
+
+        <div class="col-md-12 col-sm-6 col-xs-12">
+            <div class="x_panel bg-light-gray animated fadeIn">
+                <div class="x_title border-0">
+
+                    <div class="custom-type">
+                        <div class="col-md-6 col-sm-6 col-xs-6">
+                            <h2 class="font-robot font-300 text-uppercase font-15">DNC Number Management</h2>
+                        </div>
+
+                        <div class="col-xs-12">
+                            <div class="tile-stats m-top15">
+                                <div class="col-md-12 col-sm-12 col-xs-12" ng-show="manageDncNumbers">
+
+                                    <form class="form-horizontal form-label-left input_mask" novalidate>
+                                        <div class="row">
+                                            <div class="col-md-4 col-sm-4 col-xs-12 form-group has-feedback">
+                                                <select class="form-control has-feedback-left" ng-change="loadNumbers()" ng-model="selectObj.name"
+                                                        ng-model-options="{trackBy: '$value'}">
+                                                    <option value="" disabled selected>Select Number Column</option>
+                                                    <option ng-repeat="hData in headerData" value="{{hData.name}}">
+                                                        {{hData.name}}
+                                                    </option>
+                                                </select>
+                                            </div>
+
+                                            <div class="col-md-4 col-sm-4 col-xs-12 form-group has-feedback">
+                                                <div class="input-group">
+                                                    <input type="text" class="form-control input-group"
+                                                           ng-model="leftAddValue"
+                                                           placeholder="Left Add">
+                                                                    <span class="input-group-btn">
+                                                                        <button type="button" class="btn btn-primary"
+                                                                                ng-click="numberLeftAdd()">
+                                                                            Add
+                                                                        </button>
+                                                                    </span>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-4 col-sm-4 col-xs-12 form-group has-feedback">
+
+                                                <button type="button" class="btn btn-success" ng-disabled="!uploadButtonValue"
+                                                        ng-click="addNumbersToDncList()">
+                                                    Add
+                                                </button>
+                                                <button type="button" class="btn btn-success" ng-disabled="!removeButtonValue"
+                                                        ng-click="removeNumbersFromDncList()">
+                                                    Remove
+                                                </button>
+                                                <button type="button" class="btn btn-success"
+                                                        ng-click="reset()">
+                                                    Reset Grid
+                                                </button>
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col-md-12 col-sm-12 col-xs-12 form-group has-feedback">
+
+                                                <uib-progressbar animate="false" value="numberProgress"
+                                                                 type="success"><b>{{numberProgress}}%</b>
+                                                </uib-progressbar>
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col-md-12 col-sm-12 col-xs-12 form-group has-feedback">
+                                                <form><input type="file" class="file-chooser2" id="files" name="files[]"/></form>
+                                                <div ui-grid="gridOptions2" ui-grid-importer class="grid"></div>
+
+                                                <div>
+                                                    <label>{{gridApi2.grid.getVisibleRows().length}}</label>
+                                                </div>
+                                            </div>
+
+
+                                        </div>
+
+                                    </form>
+
+                                </div>
+
+
+                            </div>
+                        </div>
+                        <div class="clearfix"></div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="row">
+        <div class="col-md-12 col-sm-6 col-xs-12">
+            <div class="x_panel animated fadeIn">
+                <div class="x_title border-0">
+                    <div class="col-md-6 col-sm-6 col-xs-6">
+                        <h2 class="font-robot font-300 text-uppercase font-15">DNC Number List</h2>
+                    </div>
+
+                    <div class="col-xs-12">
+                        <div class="tile-stats m-top15">
+                            <div ui-grid="gridOptions3" ui-grid-grouping ui-grid-selection class="grid"></div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

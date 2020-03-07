@@ -1,0 +1,79 @@
+<div class="x_content pricing_wrapper" ng-controller="pricingCtrl">
+    <!-- price element -->
+    <div>
+        <div class="x_panel main-title">
+            <div class="x_title">
+                <h2>Packages</h2>
+                <div class="clearfix"></div>
+            </div>
+        </div>
+        <div class="col-xs-12">
+            <div class="row">
+                <div ng-repeat="package in packages"
+                     class="col-md-3 col-sm-3 col-xs-12 price-table-wrapper animated zoomIn">
+                    <div class="pricing clearfix">
+                        <div ng-show="package.disable" class="price-water-mark">
+                            <div class="select-package-icon"
+                                 ng-show="package.active">
+                                <i class="ti-check"></i>
+                            </div>
+                        </div>
+                        <div class="pricing-head">
+                            <div class="title">
+                                <h2>{{package.packageName}}</h2>
+                            </div>
+                            <div class="pricing-item">
+                                <div class="pricing-price">
+                                    <span class="pricing-anim pricing-anim-1">
+                                    <span class="pricing-currency">$</span>
+                                        {{package.price}}
+                                    </span>
+                                    <span class="pricing-anim pricing-anim-2">
+                                    <span class="pricing-period">/ Monthly</span>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="x_content">
+
+                            <div class="get-free" ng-if="package.price=='free'">
+                                FREE
+                            </div>
+                            <div class="">
+                                <div class="pricing_features">
+                                    <ul class="list-unstyled text-center">
+                                        <li ng-repeat="console in package.consoles ">
+                                            <strong>{{console}} </strong>
+                                        </li>
+
+                                    </ul>
+                                    <ul class="list-unstyled text-center">
+                                        <li ng-repeat="accessLimit in package.consoleAccessLimit ">
+                                            <strong>{{accessLimit.accessType}}</strong> / {{accessLimit.accessLimit}}
+                                        </li>
+
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="pricing_footer">
+                                <a href="javascript:void(0);"
+                                   ng-click="onClickBuyPackages(package)"
+                                   class="btn btn-success " role="button">BUY NOW
+                                </a>
+                            </div>
+
+                            <!--<div class="pricing_footer">
+                                &lt;!&ndash;<a class="btn btn-success " role="button" stripe-payment="config">Buy
+                                    <span> now!</span></a>&ndash;&gt;
+
+                                <button class="btn btn-success -mouse-pointer" stripe-payment="config">New Card</button>
+                            </div>-->
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

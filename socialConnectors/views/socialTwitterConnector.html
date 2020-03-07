@@ -1,0 +1,176 @@
+<div class="row">
+    <div class="col-md-12 col-lg-12  col-sm-12">
+        <div class="x_panel">
+            <div class="x_title">
+                <h2><i class="fa fa-bars"></i> Add Twitter <small id="message"></small></h2>
+                <div class="clearfix"></div>
+            </div>
+            </br>
+
+            <div class="x_content">
+                <div class="row">
+                    <div class="col-xs-12">
+                        <button ng-click="connectButton()" id="connectButton" type="button" class="btn btn-primary">Connect Twitter</button>
+                        <!--<button ng-click="refreshTimeline()" id="getTimelineButton" type="button" class="btn btn-info" style="display:none;">Get My Timeline</button>-->
+                        <button ng-click="signOut()" id="signOut" type="button" class="btn btn-info" style="display:none;">Sign Out</button>
+                        <!--<button ng-click="signOut()" id="signOut" type="button" class="btn btn-link" style="display:none;">Sign Out</button>-->
+                    </div>
+                </div>
+
+                <br/>
+                <div class="row">
+
+                    <div ng-show="isAddingPage" >
+                        <div class="row ">
+                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                <div class="data-state-wrap">
+                                    Processing...
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <!--<p>Page List</p>
+
+                    <div  class="col-md-55" ng-if="tweetProfile.name!=undefined">
+                        <div id="{{tweetProfile.id}}" class="thumbnail">
+                            <div class="image view view-first">
+                                <img style="width: 100%; display: block;" src="assets/images/noimage.jpg" ng-src="{{tweetProfile.avatar}}" alt="image" />
+                                <div class="mask no-caption">
+                                    <div class="tools tools-bottom">
+                                        <a href="javascript:void(0);"><i class="fa fa-plus" ng-click="addPageToSystem(tweetProfile);" title="Add To System"></i></a>
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="caption">
+                                <p><strong>{{tweetProfile.name}}</strong>
+                                </p>
+                                &lt;!&ndash;<p>{{tweetProfile.category}}</p>&ndash;&gt;
+                            </div>
+                        </div>
+                    </div>
+-->
+                    </br>
+                    </br>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="col-md-12 col-lg-12  col-sm-12">
+        <div class="x_panel">
+            <div class="x_title">
+                <h2> Added Accounts </h2>
+                <ul class="nav navbar-right panel_toolbox">
+                    <li>
+                        <a class="close-link"><i class="fa fa-refresh" ng-click="GetTwitterAccounts()"></i></a>
+                    </li>
+                </ul>
+                <div class="clearfix"></div>
+
+            </div>
+            </br>
+
+            <div class="x_content">
+                <br/>
+                <div class="row">
+
+                    <div ng-show="isLoading" >
+                        <div class="row ">
+                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                <div class="data-state-wrap">
+                                    Loading...
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div ng-hide="isLoading"   class="col-md-55" ng-repeat="page in exssitingPageList" ng-if='page.status == true'>
+                        <div class="thumbnail">
+                            <div class="image view view-first">
+                                <img style="width: 100%; display: block;" src="assets/images/noimage.jpg" ng-src="{{page.avatar}}" alt="image" />
+                                <div class="mask no-caption">
+                                    <div class="tools tools-bottom">
+                                        <!--<a href="javascript:void(0);"><i class="fa fa-plus" ng-click="ActivateFacebookAccount(page)" title="Update Account"></i></a>-->
+                                        <a href="javascript:void(0);"><i class="fa fa-times" ng-click="DeleteTwitterAccount(page);" title="Delete Account"></i></a>
+                                        <a ng-show="page.cron.enable==false" href="javascript:void(0);"><i class="fa fa-play" ng-click="StartCronJob(page);" title="Start Cron Job"></i></a>
+                                        <!--<a href="javascript:void(0);"><i class="fa fa-image" ng-click="updatePicture(page)" title="Update Picture"></i></a>-->
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="caption">
+                                <p><strong>{{page.name}}</strong>
+                                </p>
+                                <!--<p>{{page.fb.lastName}}</p>-->
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                </br>
+                <div class="ln_solid"></div>
+                </br>
+                <p>Deleted Account</p>
+                <div ng-show="isLoading" >
+                    <div class="row ">
+                        <div class="col-md-12 col-sm-12 col-xs-12">
+                            <div class="data-state-wrap">
+                                Loading...
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <div ng-hide="isLoading"   class="col-md-55" ng-repeat="page in exssitingPageList" ng-if='page.status == false'>
+                    <div class="thumbnail">
+                        <div class="image view view-first">
+                            <img style="width: 100%; display: block;" src="assets/images/noimage.jpg" ng-src="{{page.avatar}}" alt="image" />
+                            <div class="mask no-caption">
+                                <div class="tools tools-bottom">
+                                    <a href="javascript:void(0);"><i class="fa fa-plus" ng-click="ActivateTwitterAccount(page)" title="Activate Account"></i></a>
+
+                                    <!--<a href="javascript:void(0);"><i class="fa fa-image" ng-click="updatePicture(page)" title="Update Picture"></i></a>-->
+                                </div>
+                            </div>
+                        </div>
+                        <div class="caption">
+                            <p><strong>{{page.name}}</strong>
+                            </p>
+                            <!--<p>{{page.fb.lastName}}</p>-->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+<!--
+<div class="container" >
+    <h1>Twitter OAuth.io Example</h1>
+    <div class="row">
+        &lt;!&ndash;<div class="col-xs-12">
+            <button ng-click="connectButton()" id="connectButton" type="button" class="btn btn-primary">Connect Twitter</button>
+            <button ng-click="refreshTimeline()" id="getTimelineButton" type="button" class="btn btn-info" style="display:none;">Get My Timeline</button>
+            <button ng-click="signOut()" id="signOut" type="button" class="btn btn-link" style="display:none;">Sign Out</button>
+        </div>&ndash;&gt;
+    </div>
+    <div class="row">
+        <div class="col-xs-12" id="results">
+            <div class="row" ng-repeat="t in tweets">
+                <div class="col-xs-2 col-sm-1">
+                    <img ng-src="{{t.user.profile_image_url}}" class="img-circle">
+                </div>
+                <div class="col-xs-10 col-sm-11">
+                    <small>{{t.user.name}}</small><br>{{t.text}}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>-->

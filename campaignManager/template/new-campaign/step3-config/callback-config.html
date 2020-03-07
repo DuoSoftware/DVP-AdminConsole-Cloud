@@ -1,0 +1,150 @@
+<section class="camp-config-wrapper">
+
+    <div class="col-lg-12 col-xs-12">
+        <div id="callBackOption"
+             class="col-lg-12 col-md-12 col-sm-12 col-xs-12 ">
+            <label for="concurrency" class="cam-label animated fadeIn"> Allow Callback </label>
+            <div class="form-group cam-form-grp">
+
+                <!--<label class="btn cam-textbox">-->
+                <!--<input type="radio" name="options" id="option1"-->
+                <!--ng-model="callback.AllowCallBack" value="true"-->
+                <!--ng-change='setCallback(callback.AllowCallBack)'> Yes-->
+                <!--</label>-->
+                <!--<label class="btn cam-textbox">-->
+                <!--<input type="radio" name="options" id="option2"-->
+                <!--ng-model="callback.AllowCallBack" checked-->
+                <!--value="false"-->
+                <!--ng-change='setCallback(callback.AllowCallBack)'> No-->
+                <!--</label>-->
+
+                <div class="camp-channel-wrp">
+                    <ul class="customer-inline">
+                        <li>
+                            <div ng-class="callback.AllowCallBack ?'active-channel':''"
+                                 class="callback-option"
+                                 ng-click="setCallback('YES')">
+                                Yes
+                            </div>
+                        </li>
+                        <li>
+                            <div ng-class="!callback.AllowCallBack  ? 'active-channel':''"
+                                 class="callback-option"
+                                 ng-click="setCallback('NO')">
+                                No
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div ng-show="callback.AllowCallBack">
+
+        <div class="col-lg-12 col-xs-12">
+            <div class="col-lg-4 col-md-12 col-xs-12">
+                <div id="frmReason"
+                     class="form-group cam-form-grp">
+                    <label for="Reason"
+                           class="cam-label">Reason *</label>
+                    <select class="form-control cam-textbox"
+                            id="Reason"
+                            ng-model="callback.CampCallBackReasons"
+                            ng-options="opt as opt.Reason for opt in reasons"
+                            required>
+                        <option value=''></option>
+                    </select>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-12 col-xs-12">
+                <div id="frmMacCallBackCount"
+                     class="form-group cam-form-grp">
+                    <label for="exampleInputEmail1"
+                           class="cam-label">Max CallBackCount *</label>
+
+                    <input type="number" min="0"
+                           class="form-control cam-textbox"
+                           ng-model="callback.MaxCallBackCount"
+                           placeholder="" required>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-12 col-xs-12">
+                <div id="frmCallBackInterval"
+                     class="form-group cam-form-grp">
+                    <label for="exampleInputEmail1"
+                           class="cam-label">Callback Interval *</label>
+                    <input type="number"
+                           min="0"
+                           class="form-control cam-textbox"
+                           ng-model="callback.CallbackInterval"
+                           placeholder="seconds" required>
+                </div>
+            </div>
+
+            <div class="col-lg-2 col-md-12 col-xs-12">
+                <button ng-if="!updateConfig"
+                        class="btn btn-wizard btn-inside-form"
+                        ng-click="createCallBack(callback)"
+                        style=" margin-top: 22px;">
+                    Add
+                    <i class="ti-plus"></i>
+                </button>
+                <button ng-if="updateConfig"
+                        class="btn btn-wizard btn-inside-form"
+                        disabled
+                        style=" margin-top: 22px;">
+                    <i class="fa fa-circle-o-notch fa-spin fa-3x fa-fw"></i>
+                </button>
+            </div>
+        </div>
+
+        <div class="camp-config-tbl-wrapper">
+            <div class="camp-tbl-header">
+                <div class="col-lg-3">
+                    <div class="tbl-header">Reason</div>
+                </div>
+                <div class="col-lg-3">
+                    <div class="tbl-header">Max CallBack</div>
+                </div>
+                <div class="col-lg-3">
+                    <div class="tbl-header">Callback Inteval</div>
+                </div>
+                <div class="col-lg-3">
+                    <div class="tbl-header">Action</div>
+                </div>
+            </div>
+
+            <div class="camp-tbl-body">
+                <div class="camp-tbl-row"
+                     ng-repeat="cdr in callbacks">
+                    <div class="col-lg-3">
+                        <div class="tbl-body-text">{{cdr.CampCallBackReasons.Reason}}</div>
+                    </div>
+                    <div class="col-lg-3">
+                        <div class="tbl-body-text">{{cdr.MaxCallBackCount}}</div>
+                    </div>
+                    <div class="col-lg-3">
+                        <div class="tbl-body-text">{{cdr.CallbackInterval}}</div>
+                    </div>
+                    <div class="col-lg-3">
+                        <div class="tbl-body-text">
+                            <div ng-if="!cdr.isLoading"
+                                 class="camp-delete-btn"
+                                 ng-click="deleteReason(cdr)">
+                                <i class="ti-trash"></i>
+                                Delete
+                            </div>
+                            <div ng-if="cdr.isLoading"
+                                 class="camp-delete-btn">
+                                <i class="fa fa-circle-o-notch fa-spin"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</section>

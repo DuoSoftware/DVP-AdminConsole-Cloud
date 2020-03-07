@@ -1,0 +1,205 @@
+<div class="row">
+
+    <div class="x_panel bg-light-gray animated fadeIn">
+        <div class="x_title border-0">
+
+            <div class="col-md-12 col-sm-12 col-xs-12 pull-right">
+                <div class="col-md-8 col-sm-8 col-xs-12 color-panel" >
+                    <div class="col-md-3 col-sm-3 col-xs-12 ">
+                        <span class="fa fa-square" style="color: #074DEE"></span> <span> Inbound</span>
+                    </div>
+                    <div class="col-md-3 col-sm-3 col-xs-12 ">
+                        <span class="fa fa-square" style="color: #DF0AF1"></span><span> Outbound</span>
+                    </div>
+                    <div class="col-md-3 col-sm-3 col-xs-12 ">
+                        <span class="fa fa-square" style="color: #0CFF00"></span><span> Register</span>
+                    </div>
+                    <div class="col-md-3 col-sm-3 col-xs-12 ">
+                        <span class="fa fa-square" style="color: #F90422"></span><span> Offline</span>
+                    </div>
+                    <div class="col-md-3 col-sm-3 col-xs-12 ">
+                        <span class="fa fa-square" style="color: #7c7eff"></span><span> Call</span>
+                    </div>
+                    <div class="col-md-3 col-sm-3 col-xs-12 ">
+                        <span class="fa fa-square" style="color: #ff574d"></span><span> Chat</span>
+                    </div>
+                    <div class="col-md-3 col-sm-3 col-xs-12 ">
+                        <span class="fa fa-square" style="color: #000000"></span><span> ACW</span>
+                    </div>
+                    <div class="col-md-3 col-sm-3 col-xs-12 ">
+                        <span class="fa fa-square" style="color: #7b1102"></span><span> Breaks</span>
+                    </div>
+                    <div class="col-md-3 col-sm-3 col-xs-12 ">
+                        <span class="fa fa-square" style="color: #F1C232"></span><span> Default</span>
+                    </div>
+
+                </div>
+                <div class="col-md-3 col-sm-3 col-xs-12 ">
+
+                    <h5>Select view </h5>
+                    <select class="form-control has-feedback-left" ng-model="options.scale" placeholder="Select view">
+                        <option value="minute"  >Minute</option>
+                        <option value="hour">Hour</option>
+                        <option value="day" selected>Day</option>
+
+
+
+                    </select>
+
+                </div>
+                <div class="col-md-1 col-sm-1 col-xs-12 " style="padding-top: 25px">
+
+                    <button type="button" class="btn btn-primary" ng-click="loadChart()" ng-disabled="isLoading!=-1" >
+                        Load
+                    </button>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+</div>
+
+<div class="search-main-wrap" ng-if="isLoading==1">
+    <div class="row ">
+        <div class="col-md-12 col-sm-12 col-xs-12">
+            <div class="data-state-wrap">
+                Please Wait...
+            </div>
+
+        </div>
+    </div>
+</div>
+<div class="row" ng-if="isLoading==0">
+    <div class="row">
+
+        <div class="col-md-6 col-sm-6 col-xs-6 form-group top_search pull-right">
+            <div class="input-group">
+                <input type="text" ng-model="options.filterRow" class="form-control"
+                       placeholder="Search for...">
+                <span class="input-group-btn">
+                                  <button class="btn btn-default" type="button">Search</button>
+                                </span>
+            </div>
+        </div>
+
+        <!--<div class="col-md-4 col-sm-4 col-xs-12 pull-right" style="border-bottom: groove">
+            <h5>Search </h5>
+            <input type="text" class="form-control" style="width: 20em; text-align: left" ng-model="options.filterRow">
+        </div>-->
+    </div>
+
+
+        <div gantt api="options.api" data="statusData" headers="['month', 'day','hour','minute']" view-scale="options.scale" sort-mode="model.name"
+             max-height="600"
+             filter-task="{'name': options.filterTask}"
+             filter-row="{'name': options.filterRow}">
+            <!--<gantt-tree enabled="true" ></gantt-tree>-->
+            <!-- <gantt-table enabled="true" columns="['model.name','from','to']" headers="">
+             </gantt-table>-->
+            <gantt-tree enabled="options.sideMode === 'Tree' || options.sideMode === 'TreeTable'"
+                        header-content="options.treeHeaderContent"
+                        keep-ancestor-on-filter-row="true">
+            </gantt-tree>
+            <gantt-table enabled="options.sideMode === 'Table' || options.sideMode === 'TreeTable'"
+                         columns="options.sideMode === 'TreeTable' ? options.treeTableColumns : options.columns"
+                         headers="options.columnsHeaders"
+                         classes="options.columnsClasses"
+                         formatters="options.columnsFormatters"
+                         contents="options.columnsContents"
+                         header-contents="options.columnsHeaderContents">
+                <gantt-tooltips enabled="true" ></gantt-tooltips>
+                <gantt-sortable enabled="true"></gantt-sortable>
+                <gantt-resize-sensor enabled="true"></gantt-resize-sensor>
+                <gantt-corner headers-labels="options.corner.headersLabels" headers-labels-templates="options.corner.headersLabelsTemplates"></gantt-corner>
+                <gantt-groups enabled="options.groupDisplayMode === 'group' || options.groupDisplayMode === 'overview' || options.groupDisplayMode === 'promote'" display="options.groupDisplayMode"></gantt-groups>
+                <gantt-sortable enabled="true"></gantt-sortable>
+                <gantt-sections></gantt-sections>
+                <gantt-movable enabled="!options.readOnly" allow-row-switching="options.movable.allowRowSwitching"></gantt-movable>
+                <!--<gantt-dependencies enabled="true"
+                                    read-only="false"
+                                    js-plumb-defaults="{
+                                                     Endpoint: ['Dot', {radius: 7}],
+                                                     Connector: 'Flowchart'
+                                                     }">
+                </gantt-dependencies>-->
+        </div>
+
+
+</div>
+
+
+
+
+
+<!--
+<form role="form" class="form-inline">
+    <div class="form-group">
+        <span class="help-block">Action</span>
+    </div>
+    <div class="form-group">
+        <span class="help-block">View scale</span>
+        <select class="form-control" style="width: 100px;" ng-model="scale" ng-options="s for s in ['hour', 'day', 'week', 'month']"></select>
+    </div>
+    <div class="form-group">
+        <span class="help-block">Sort order</span>
+        <select class="form-control" style="width: 100px;" ng-model="mode" ng-options="m for m in ['name', 'date', 'custom']"></select>
+    </div>
+    <div class="form-group text-center">
+        <span class="help-block">Max height</span>
+        <div ng-show="maxHeight > 0">
+            <button class="btn btn-default" ng-click="maxHeight = 0">Deactivate</button>
+        </div>
+        <div ng-show="maxHeight === 0">
+            <button class="btn btn-default" ng-click="maxHeight = 300">Activate</button>
+        </div>
+    </div>
+    <div class="form-group text-center">
+        <span class="help-block">Additional options</span>
+        <div class="btn-group">
+            <button ng-show="showWeekends" class="btn btn-default" ng-click="showWeekends = false">Hide weekends</button>
+            <button ng-show="showWeekends == false" class="btn btn-default" ng-click="showWeekends = true">Show weekends</button>
+            <button ng-show="showNonWorkHours == false" class="btn btn-default" ng-click="showNonWorkHours = true; subScale = 6">Show non working hours</button>
+            <button ng-show="showNonWorkHours" class="btn btn-default" ng-click="showNonWorkHours = false; subScale = 8">Hide non working hours</button>
+        </div>
+    </div>
+</form>
+
+
+<div gantt first-day-of-week="1"
+       data="dt"
+       center-date="scrollToDate = fn"
+       remove-data="removeData = fn"
+       clear-data="clearData = fn"
+       sort-mode="mode"
+       view-scale="scale"
+       column-width="scale === 'month' && 20 || (scale === 'week' && 10 || 4)"
+       column-sub-scale="scale === 'week' && 7 || 6"
+       work-hours="[8,9,10,11,12,13,14,15]"
+       show-non-work-hours="showNonWorkHours"
+       weekend-days="[0,6]"
+       show-weekends="showWeekends"
+       max-height="maxHeight"
+       on-gantt-ready="addSamples()"
+       on-label-clicked="labelEvent(event)"
+       on-label-dbl-clicked="labelEvent(event)"
+       on-label-context-clicked="labelEvent(event)"
+       on-label-header-clicked="labelHeaderEvent(event)"
+       on-label-header-dbl-clicked="labelHeaderEvent(event)"
+       on-label-header-context-clicked="labelHeaderEvent(event)"
+       on-row-added="rowEvent(event)"
+       on-row-clicked="rowEvent(event)"
+       on-row-dbl-clicked="rowEvent(event)"
+       on-row-context-clicked="rowEvent(event)"
+       on-row-updated="rowEvent(event)"
+       on-scroll="scrollEvent(event)"
+       on-task-clicked="taskEvent(event)"
+       on-task-dbl-clicked="taskEvent(event)"
+       on-task-context-clicked="taskEvent(event)"
+       on-task-updated="taskEvent(event)"
+       template-url="template/gantt.tmpl.html"
+>
+    <gantt-table enabled="true">
+    </gantt-table>
+</div>-->
+

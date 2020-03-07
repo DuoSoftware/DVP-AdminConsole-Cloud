@@ -1,0 +1,47 @@
+@font-face {
+    font-family: Ubuntu-Bold;
+    src: url(ubuntu/Ubuntu-Bold.ttf);
+}
+
+@font-face {
+    font-family: Ubuntu-Light;
+    src: url(ubuntu/Ubuntu-Light.ttf);
+}
+
+@font-face {
+    font-family: Ubuntu-Medium;
+    src: url(ubuntu/Ubuntu-Medium.ttf);
+}
+
+@font-face {
+    font-family: Ubuntu-Regular;
+    src: url(ubuntu/Ubuntu-Regular.ttf);
+}
+
+@font-face {
+    font-family: Roboto;
+    src: url(roboto/Roboto-Regular.ttf);
+}
+
+@font-face {
+    font-family: Roboto-light;
+    src: url(roboto/Roboto-Light.ttf);
+}
+
+@font-face {
+    font-family:Roboto-bold;
+    src: url(roboto/Roboto-bold.ttf);
+}
+
+@font-face {
+    font-family: Roboto-medium;
+    src: url(roboto/Roboto-Medium.ttf);
+}
+
+
+
+
+
+
+
+

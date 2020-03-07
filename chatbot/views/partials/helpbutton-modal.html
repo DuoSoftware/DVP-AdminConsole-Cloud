@@ -1,0 +1,27 @@
+<div class="clearfix">
+    <div class="modal-panel-notify">
+        <div class="clearfix">
+            <div class="col-md-3 col-sm-3 col-xs-12 notify-img-modal notifi-sender">
+                <img src="assets/images/help.png" style="width:  50px;height: 50px;">
+            </div>
+            <div class="col-md-9 col-sm-9 col-xs-12">
+                <h3>Chatbot Help</h3>
+            </div>
+        </div>
+        <div class="divider"></div>
+
+        <div class="console-model-block" style="padding: 20px">
+            <p>Feeling blured in any area? Please refer to the following documents to have an clear idea about how things work.</p>
+            <p>{{DisplayHelp}}</p>
+            <ul>
+                <li ng-repeat="link in linklist"><a target="_blank" ng-href="{{link.URL}}">{{link.Title}}</a></li>
+            </ul>
+        </div>
+        <div class="divider"></div>
+    </div>
+    <div class="text-right notify-modal-btn-wrap">
+        <button type="submit" class="btn btn-success" ng-click="closeModal()">Close</button>
+    </div>
+    </br>
+</div>
+</div>

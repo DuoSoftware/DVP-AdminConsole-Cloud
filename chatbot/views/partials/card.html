@@ -1,0 +1,47 @@
+<div>
+    <div ng-show="mode=='view'">
+        <div class="edit-card--title">
+            <b>{{card.title}}</b>
+        </div>
+
+        <div class="edit-card-image">
+            <center>
+                <img ng-src="{{card.image_url}}" style="height:100px;" err-src="http://www.santacruzmentor.org/wp-content/uploads/2012/12/Placeholder.png">
+            </center>
+        </div>
+        <div class="edit-card-description">{{card.sub_title}}</div>
+
+        <input type="button" ng-repeat="button in card.buttons" value="{{button.title}}" class="btn-small" />
+        <!--<input type="button" value="Edit" >-->
+        <div class="edit-card--btn-circle edit-card--edit" ng-click="changeMode('edit')">
+            <i class="fa fa-pencil"></i>
+        </div>
+    </div>
+
+    <div ng-show="mode=='new'" class="new-card">
+        <a class="font-robot font-300 btn-small" ng-click="editCard()">
+            <i class="fa fa-plus"></i> New
+        </a>
+    </div>
+    <div  class="top40" ng-show="mode=='edit'">
+        <input class="form-control" type="text" placeholder="Title" ng-model="card.title" />
+        <input class="form-control" type="text" placeholder="Description" ng-model="card.sub_title" />
+        <input class="form-control" type="text" placeholder="Default Action" ng-model="card.default_action.url" />
+        <input class="form-control" type="text" placeholder="Image URL" ng-model="card.image_url" />
+
+        <input id="inputImage" type="file" accept="image/*" image="image" />
+        <!-- <button ng-click="">Upload</button> -->
+
+        <div ng-repeat="button in card.buttons" class="cardset">
+            <cardbutton button="button"></cardbutton>
+            <a class="edit-card--btn-circle edit-card--remove font-robot font-300" ng-click="removeButton($index)">
+                <i class="fa fa-times"></i>
+            </a>
+        </div>
+        <a class="font-robot font-300 btn-small" ng-click="addNewButton()">
+            <i class="fa fa-plus"></i> New Button
+        </a>
+        <hr>
+        <input type="button" value="Done" ng-click="changeMode('view',image);" class="btn card-btn pull-right"/>
+    </div>
+</div>

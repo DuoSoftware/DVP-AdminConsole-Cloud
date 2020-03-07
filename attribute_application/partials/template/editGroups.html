@@ -1,0 +1,182 @@
+<!--<div class="block">-->
+<!--<div class="tags">-->
+<!--<a class="tag">-->
+<!--<span>{{groupinfo.GroupId}}</span>-->
+<!--</a>-->
+<!--</div>-->
+<!--<div class="block_content">-->
+<!--<h2 class="title">-->
+<!--<a ng-hide="editMode">{{groupinfo.GroupName}}</a>-->
+<!--<a ng-disabled="true" ng-click="deleteGroup(groupinfo)" style="cursor: pointer"><i-->
+<!--class="fa fa-trash-o"></i></a>-->
+<!--<a ng-disabled="true" ng-click="editGroup()" style="cursor: pointer"><i class="fa fa-edit"></i></a>-->
+<!--</h2>-->
+
+<!--<div id="{{groupinfo.AttributeId}}"></div>-->
+
+<!--<div class="col-xs-12" ng-show="editMode">-->
+<!--<div class="tile-stats">-->
+<!--<form class="form-horizontal form-label-left input_mask">-->
+<!--<div class="col-md-12 col-sm-6 col-xs-12 form-group has-feedback">-->
+<!--<input type="text" class="form-control has-feedback-left" ng-model="groupinfo.GroupName"-->
+<!--placeholder="Name">-->
+<!--<span class="fa fa-user form-control-feedback left" aria-hidden="true"></span>-->
+<!--</div>-->
+
+<!--<div class="col-md-12 col-sm-6 col-xs-12 form-group has-feedback">-->
+<!--<input type="text" class="form-control has-feedback-left" ng-model="groupinfo.OtherData"-->
+<!--placeholder="Other">-->
+<!--<span class="fa fa-envelope form-control-feedback left" aria-hidden="true"></span>-->
+<!--</div>-->
+
+<!--<div class="col-md-12 col-sm-6 col-xs-12 form-group has-feedback">-->
+<!--<input type="text" class="form-control has-feedback-left" ng-model="groupinfo.Percentage"-->
+<!--placeholder="Percentage">-->
+<!--<span class="fa fa-envelope form-control-feedback left" aria-hidden="true"></span>-->
+<!--</div>-->
+<!--&lt;!&ndash;<div class="col-md-2">-->
+<!--<p>Percentage</p>-->
+<!--<input class="knob" data-width="110" data-height="120" data-displayPrevious=true data-fgColor="#26B99A" data-skin="tron" data-thickness=".2" value="75">-->
+<!--</div>&ndash;&gt;-->
+
+<!--<div class="form-group">-->
+<!--<label class="control-label col-md-3 col-sm-3 col-xs-12">Attributes</label>-->
+
+<!--<div class="col-md-9 col-sm-9 col-xs-12">-->
+<!--&lt;!&ndash;<select class="select2_multiple form-control" multiple="multiple" >-->
+<!--<option ng-repeat="attr in attribinfo">{{attr.Attribute}}</option>-->
+
+<!--</select>&ndash;&gt;-->
+
+<!--<select class="select2_multiple form-control" multiple="multiple" ng-model="groupinfo.Attributes"-->
+<!--ng-change="selectionsChanged(groupinfo.Attributes)"     ng-options="attr.Attribute for attr in attribinfo track by attr.AttributeId"  ></select>-->
+
+
+<!--</div>-->
+<!--</div>-->
+
+<!--<button type="button" class="btn btn-success btn-xs " ng-click="updateGroup(groupinfo)">Update-->
+<!--</button>-->
+<!--</form>-->
+<!--</div>-->
+<!--</div>-->
+
+
+<!--<div ng-hide="editMode" class="byline">-->
+<!--<span>{{groupinfo.createdAt|date:'MM/dd/yyyy @ h:mma'}}</span>-->
+<!--</div>-->
+<!--<p ng-hide="editMode" class="excerpt">{{groupinfo.OtherData}} </p>-->
+<!--<p ng-hide="editMode" class="excerpt">{{groupinfo.Percentage}}% </p>-->
+
+<!--</div>-->
+<!--</div>-->
+<div class="block">
+    <div class="tags-with-tag">
+        <a class="tag-with-tag">
+            <span>{{groupinfo.GroupId}}</span>
+        </a>
+    </div>
+    <div class="block_content">
+        <div class="row invoice-info">
+            <div class="col-sm-6 invoice-col ">
+                <address class="title">
+                    <a class="font-robot font-15 text-uppercase" style="color: #181818;"><b>Group Name :</b>
+                        {{groupinfo.GroupName}}</a>
+                    <br>
+                    <br>Last Update : {{groupinfo.createdAt|date:'MM/dd/yyyy @ h:mma'}}
+                    <br>Other : {{groupinfo.OtherData}}
+                    <br>Weight : {{groupinfo.Percentage}}
+                </address>
+            </div>
+            <!-- /.col -->
+            <div class="col-sm-6 invoice-col">
+                <div class="pull-left attribute-edit-wrap">
+                    <a ng-disabled="true" class="inline-block" ng-click="deleteGroup(groupinfo)"
+                       style="cursor: pointer"><i
+                            class="fa fa-trash-o"></i></a>
+                    <br>
+                    <a ng-disabled="true" class="inline-block" ng-click="editGroup()" style="cursor: pointer"><i
+                            class="fa fa-edit"></i></a>
+
+                    <!-- <h2 class="title">
+                         <a ng-hide="editMode">{{groupinfo.GroupName}}</a>
+                         <a ng-disabled="true" ng-click="deleteGroup(groupinfo)" style="cursor: pointer"><i
+                                 class="fa fa-trash-o"></i></a>
+                         <a ng-disabled="true" ng-click="editGroup()" style="cursor: pointer"><i class="fa fa-edit"></i></a>
+                     </h2>-->
+                </div>
+            </div>
+            <!-- /.col -->
+            <div class="col-xs-12" ng-show="editMode">
+                <div class="tile-stats">
+                    <form class="form-horizontal form-label-left input_mask">
+                        <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
+                            <input type="text" class="form-control has-feedback-left" ng-model="groupinfo.GroupName"
+                                   placeholder="Name">
+                            <span class="fa fa-user form-control-feedback left" aria-hidden="true"></span>
+                        </div>
+
+
+                        <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
+
+                            <select class="form-control" ng-model="groupinfo.GroupType"
+                                    ng-model-options="{trackBy: '$value'}">
+                                <option ng-repeat="c in taskList" value="{{c.ResTaskInfo.TaskType}}">
+                                    {{c.ResTaskInfo.TaskType}}
+                                </option>
+                            </select>
+                        </div>
+
+                        <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
+                            <input type="number" class="form-control has-feedback-left" ng-model="groupinfo.Percentage"
+                                   placeholder="Weight">
+                            <span class="fa fa-envelope form-control-feedback left" aria-hidden="true"></span>
+                        </div>
+
+                        <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
+                            <input type="text" class="form-control has-feedback-left" ng-model="groupinfo.OtherData"
+                                   placeholder="Other">
+                            <span class="fa fa-envelope form-control-feedback left" aria-hidden="true"></span>
+                        </div>
+
+
+                        <!--<div class="col-md-2">
+                            <p>Percentage</p>
+                            <input class="knob" data-width="110" data-height="120" data-displayPrevious=true data-fgColor="#26B99A" data-skin="tron" data-thickness=".2" value="75">
+                        </div>-->
+
+                        <div class="col-md-12 col-sm-6 col-xs-12 form-group has-feedback">
+                            <button type="button" class="btn btn-success btn-xs " ng-click="updateGroup(groupinfo)">
+                                Update
+                            </button>
+                        </div>
+
+
+                        <div class="col-md-12 col-sm-6 col-xs-12 form-group has-feedback">
+                            <div class="row">
+                                <tags-input class="col-md-11 col-sm-6 col-xs-12 " placeholder="Add Attribute"
+                                            ng-model="attachedAttributes"
+                                            display-property="Attribute"
+                                            add-from-autocomplete-only="true"
+                                            on-tag-added="onChipAdd($tag)"
+                                            on-tag-removed="onChipDelete($tag)"
+                                            ng-disabled="" min-length="1">
+                                    <auto-complete source="querySearch($query)"
+                                                   load-on-empty="true"
+                                                   load-on-focus="true"
+                                                   min-length="1"></auto-complete>
+                                </tags-input>
+                                <div class="col-md-1 col-sm-6 col-xs-12 ">
+                                    <i class="fa fa-refresh" style="cursor: pointer" ng-click="GetAttributes()"></i></div>
+                            </div>
+                            <br><br><br><br>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+</div>

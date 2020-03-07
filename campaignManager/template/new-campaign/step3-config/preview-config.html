@@ -1,0 +1,54 @@
+<section class="camp-config-wrapper">
+    <div class="col-md-12">
+        <div class="form-group cam-form-grp">
+
+            <div class="col-md-12 col-sm-12 col-xs-12 form-group"
+                 ng-show="(campaign.CampaignChannel === 'CALL' )">
+                <div class="col-md-12 col-sm-12 col-xs-12 form-group ">
+                    <label for="exampleInputEmail1" class="cam-label">Add campaign skills</label>
+                    <tags-input ng-model="campAttribute"
+                                display-property="Name"
+                                add-from-autocomplete-only="true"
+                                on-tag-added="onChipAddAttribute($tag)"
+                                on-tag-removed="onChipDeleteAttribute($tag)"
+                                ng-disabled="AdditionalDataRecordId" min-length="1">
+                        <auto-complete source="querySearchAttribute($query)"
+                                       load-on-empty="true"
+                                       load-on-focus="true"
+                                       min-length="1"></auto-complete>
+                    </tags-input>
+                </div>
+                <div class="col-md-12 col-sm-6 col-xs-6 form-group has-feedback">
+
+                    <div ng-if="!AdditionalDataRecordId && !isAttributeAction"
+                         class="">
+                        <div class="rectangle-create-new-c attribute-add"
+                             ng-click="addCampaignAdditionalDataAttribute();">
+                            Add
+                        </div>
+                    </div>
+
+
+                    <div ng-if="AdditionalDataRecordId && !isAttributeAction"
+                         class="">
+                        <div class="rectangle-create-new-c attribute-add attribute-remove"
+                             ng-click="DeleteAdditionalDataByID(AdditionalDataRecordId);">
+                            Remove
+                        </div>
+                    </div>
+
+                    <div ng-if="AdditionalDataRecordId && isAttributeAction ">
+                        <div class="rectangle-create-new-c attribute-add attribute-remove">
+                            <i class="fa fa-circle-o-notch fa-spin"></i>
+                        </div>
+                    </div>
+                    <div ng-if="!AdditionalDataRecordId && isAttributeAction ">
+                        <div class="rectangle-create-new-c attribute-add ">
+                            <i class="fa fa-circle-o-notch fa-spin"></i>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+</section>

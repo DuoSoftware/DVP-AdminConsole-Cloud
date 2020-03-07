@@ -1,0 +1,174 @@
+<div class="page-title">
+    <div class="title_left">
+        <h3 class="font-robot font-600 ">Ring Group Configuration</h3>
+    </div>
+</div>
+
+<div class="clearfix"></div>
+
+<div class="row">
+    <!--<div class="col-md-6">
+        <div class="x_panel">
+            <div class="x_title row">
+                <h2 class="col-md-6">Current ring groups</h2>
+                <div class="input-group col-md-6">
+                    <input type="text" ng-model="searchCriteria" class="form-control ng-pristine ng-valid ng-empty ng-touched" placeholder="Search for..." style="">
+                                <span class="input-group-btn">
+                                  <button class="btn btn-default" type="button">Go!</button>
+                                </span>
+                </div>
+                <div class="clearfix"></div>
+            </div>
+            <div class="x_content">
+
+                <div class="search-main-wrap" ng-if="!dataReady">
+                    <div class="row ">
+                        <div class="col-md-12 col-sm-12 col-xs-12">
+                            <div class="data-state-wrap">
+                                Please Wait...
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+                <ul class="list-unstyled msg_list">
+                    <li ng-repeat="grp in groupList | filterBy: ['GroupName']: searchCriteria">
+                        <a>
+                        <div ng-click="onGroupChange(grp.id)">
+                            <span class="image">
+                                <img src="images/img.jpg" alt="img">
+                            </span>
+                            <span>{{grp.GroupName}}</span>
+                            <span></span>
+                            <span class="message" ng-if="grp.Extension">
+                                {{grp.Extension.Extension}}
+                            </span>
+                        </div>
+
+                            <i class="fa fa-remove" ng-click="onDeletePressed(grp.id, grp.Extension.Extension)"></i>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>-->
+
+    <div class="col-md-6 col-sm-6 col-xs-12">
+        <div class="x_panel">
+            <div class="x_title">
+                <h2 class="col-md-6">Current ring groups</h2>
+                <div class="input-group col-md-6">
+                    <input type="text" ng-model="searchCriteria" class="form-control ng-pristine ng-valid ng-empty ng-touched" placeholder="Search for..." style="">
+                                <span class="input-group-btn">
+                                  <button class="btn btn-default" type="button">Go!</button>
+                                </span>
+                </div>
+                <div class="clearfix"></div>
+
+            </div>
+            <div class="x_content">
+
+                <div class="search-main-wrap" ng-if="!dataReady">
+                    <div class="row ">
+                        <div class="col-md-12 col-sm-12 col-xs-12">
+                            <div class="data-state-wrap">
+                                Please Wait...
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+                <ul class="list-unstyled timeline" style="overflow-y: auto; height: 785px">
+                    <li ng-repeat="grp in groupList | filterBy: ['GroupName', 'Extension.Extension']: searchCriteria">
+                        <div class="block">
+                            <div class="tags">
+                                <a href="" class="tag">
+                                    <span ng-click="onGroupChange(grp.id)">{{grp.GroupName}}</span>
+                                </a>
+                                <br>
+                                <a href="">
+                                    <i class="fa fa-remove" ng-click="onDeletePressed(grp.id, grp.Extension.Extension)"></i>
+                                </a>
+                            </div>
+                            <div class="block_content">
+                                <h2 class="title">
+                                    <a>{{grp.GroupName}}</a>
+                                </h2>
+                                <br>
+                                <p class="excerpt">{{grp.Extension.Extension}}</a>
+                                </p>
+
+                            </div>
+                        </div>
+                    </li>
+
+                </ul>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-6">
+        <div class="x_panel">
+            <div class="x_title">
+                <h2 class="col-md-10">{{EditState}}</h2>
+                <div class="input-group col-md-2">
+                    <button type="button" class="btn btn-round btn-primary" ng-click="onNewPressed()">New</button>
+                </div>
+                <div class="clearfix"></div>
+            </div>
+            <div class="x_content">
+                <form name="groupConfForm">
+
+                    <div class="item form-group bad">
+                        <label>Group Name * :</label>
+                        <input type="text" class="form-control parsley-error" name="groupName" ng-model="basicConfig.GroupName" required ng-disabled="IsEdit">
+                        <div ng-messages="groupConfForm.groupName.$error" ng-if="groupConfForm.groupName.$dirty">
+                            <div class="alert" ng-message="required">This field is required</div>
+                        </div>
+                    </div>
+
+                    <div class="clearfix"></div>
+
+                    <div class="form-group">
+                        <label>Domain :</label>
+                        <select class="select2_single form-control parsley-error" tabindex="-1" aria-hidden="true" name="domain" ng-model="basicConfig.Domain">
+                            <option ng-repeat="eu in endUserList">{{eu.Domain}}</option>
+                        </select>
+                    </div>
+
+                    <div class="clearfix"></div>
+
+                    <div class="item form-group bad">
+                        <label>Extension * :</label>
+                        <input name="ext" class="form-control parsley-error" ng-model="basicConfig.Extension.Extension" ng-model-options="{ updateOn: 'blur' }" ng-disabled="IsEdit" extcheck required>
+                        <div ng-messages="groupConfForm.ext.$error" ng-if="groupConfForm.ext.$dirty">
+                            <div class="alert" ng-message="required">This field is required</div>
+                            <div class="alert" ng-message="extcheck">Extension number already in use</div>
+                        </div>
+                    </div>
+
+                    <div class="clearfix"></div>
+
+                    <div class="form-group">
+                        <label>Users :</label>
+                        <tags-input ng-model="currentGroupUsers" display-property="SipUsername" add-from-autocomplete-only="true" on-tag-added="onChipAdd($tag)" on-tag-removed="onChipDelete($tag)" ng-disabled="!IsEdit" min-length="1">
+                            <auto-complete source="querySearch($query)" load-on-empty="true" load-on-focus="true" min-length="1"></auto-complete>
+                        </tags-input>
+                    </div>
+
+                    <div class="clearfix"></div>
+                    <br>
+
+                    <button class="btn btn-primary" ng-click="onSavePressed()" ng-disabled="groupConfForm.$invalid">Save</button>
+
+                </form>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+

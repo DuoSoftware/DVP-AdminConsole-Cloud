@@ -1,0 +1,57 @@
+<div class="row" ng-show="showModal">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+
+        <div class="x_content">
+            <br />
+            <form class="form-horizontal form-label-left input_mask">
+
+                <div class="form-group col-md-12 col-sm-12 col-xs-12">
+                    <div class="form-group col-md-12 col-sm-12 col-xs-12" ng-show="!showNewForm">
+                        Type new Tag name here
+                    </div>
+                    <div class="col-md-12 col-sm-12 col-xs-12"  ng-show="!showNewForm">
+                        <select class="form-control has-feedback-left ng-pristine ng-untouched ng-valid ng-empty"
+                                ng-model="tagData"
+                                ng-model-options="{trackBy: '$value'}">
+                            <option value="" disabled="" selected="">Select an Tag
+                            </option>
+                            <option ng-repeat="tag in tagList"
+                                    value={{tag}}>
+                                {{tag.name}}
+                            </option>
+                        </select>
+                    </div>
+                    Or add new Tag<h3><small ng-click="showNewTagForm()" style="cursor: pointer"><i
+                        class="fa fa-plus" ng-show="!showNewForm"></i></small></h3>
+                    <h3><small ng-click="showNewTagForm()" style="cursor: pointer"><i
+                            class="fa fa-minus" ng-show="showNewForm"></i></small></h3>
+                    <div class="form-group col-md-12 col-sm-12 col-xs-12" ng-show="showNewForm">
+                        Type new Tag Name here
+                        <input type="text" class="form-control" placeholder=""  ng-model="tagNameData" ng-show="showNewForm"required>
+                        Type new Tag description here
+                        <input type="text" class="form-control" placeholder=""  ng-model="tagDesc" ng-show="showNewForm"required>
+                        <!--<div class="col-md-12 col-sm-12 col-xs-12">
+
+                        </div>-->
+                    </div>
+                    <!--<div class="form-group col-md-12 col-sm-12 col-xs-12" ng-show="showNewForm">
+
+
+                    </div>-->
+
+                    <div class="form-group">
+                        <div class="col-md-12 col-sm-12 col-xs-12 col-md-offset-10">
+                            <button type="submit" class="btn btn-success" ng-click="saveNewTag()">Save</button>
+
+                        </div>
+                    </div>
+                </div>
+
+            </form>
+        </div>
+    </div>
+
+
+</div>
+</div>
+</div>

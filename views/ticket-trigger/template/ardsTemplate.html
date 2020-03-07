@@ -1,0 +1,62 @@
+<div class="x_content">
+    <br>
+    <form id="demo-form2" data-parsley-validate="" class="form-horizontal form-label-left" novalidate="">
+        <div class="row">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                <!-- add permission -->
+                <div class="drop-header">
+                    <i class="fa fa-unlock"></i>
+                    <h2 class="text-center">Selected Skills</h2>
+                </div>
+                <div class="thumbnaildrag drop-area-wrap" data-drop="true" ng-model='selectedAttributes'
+                     data-jqyoui-options="{accept:'.btn-draggable:not([ng-model=selectedAttributes])'}"
+                     jqyoui-droppable="{multiple:false,onDrop: 'assignAttributeToTask'}">
+                    <div class="caption">
+                        <div ng-click="currentDragAttribute(item)"
+                             class="btn btn-round
+                                 btn-warning btn-draggable  draggable-item"
+                             ng-repeat="item in selectedAttributes" ng-show="item.Name"
+                             data-drag="true" data-jqyoui-options="{revert: 'invalid'}"
+                             ng-model="selectedAttributes"
+                             jqyoui-draggable="{index: {{$index}},animate:true}">
+                            {{item.Name}}
+                        </div>
+                        <div class="drop-area-text" ng-if="selectedAttributes.length==0">
+                            drop area
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- end -->
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                <!-- delete permission -->
+                <div class="drop-header">
+                    <i class="fa fa-lock"></i>
+                    <h2 class="text-center">Available Skills </h2>
+                </div>
+                <div class="thumbnaildrag drop-area-wrap" data-drop="true" ng-model='ardsAttributes'
+                     data-jqyoui-options="{accept:'.btn-draggable:not([ng-model=ardsAttributes])'}"
+                     jqyoui-droppable="{multiple:false,onDrop: 'deleteAttributeAssignToTask'}">
+                    <div class="caption">
+                        <div ng-click="currentDragAttribute(item)" class="btn btn-round btn-primary
+                                 btn-draggable  draggable-item"
+                             ng-repeat="item in ardsAttributes" ng-show="item.Name"
+                             data-drag="true" data-jqyoui-options="{revert: 'invalid'}"
+                             ng-model="ardsAttributes"
+                             jqyoui-draggable="{index: {{$index}},animate:true}">
+                            {{item.Name}}
+                        </div>
+                        <div class="drop-area-text" ng-if="ardsAttributes.length==0">
+                            drop area
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- end -->
+
+        <!--<div ng-disabled="active" class="form-group has-feedback">-->
+        <!--<br>-->
+        <!--</div>-->
+    </form>
+</div>

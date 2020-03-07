@@ -1,0 +1,276 @@
+<div class="col-md-12 col-sm-12 col-xs-12" ng-controller="integrationConfigController">
+    <div class="x_panel">
+        <div class="x_title">
+            <h2>Integration Service
+                <small>Configurations</small>
+            </h2>
+            <ul class="nav navbar-right panel_toolbox">
+                <li><a class="close-link" title="Reload"><i class="fa fa-refresh" ng-click="loadConfig()"></i></a></li>
+                <li><a title="Add New Configurations" ng-click="showConfigurations()" class="close-link"><i class="fa fa-plus"></i></a>
+                </li>
+            </ul>
+            <div class="clearfix"></div>
+        </div>
+
+        <!--new configuration-->
+        <div ng-show="showConfiguration" class="well" style="overflow: auto">
+            <ng-form class="" name="fOuter" novalidate>
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback"
+                             ng-class="{ 'has-error' : fOuter.name.$invalid && !fOuter.name.$pristine }">
+                            <input type="text" class="form-control has-feedback-left" name="name"
+                                   ng-model="integrationData.name" placeholder="Name" required>
+                            <span class="fa fa-user form-control-feedback left" aria-hidden="true"></span>
+                            <p ng-show="fOuter.name.$invalid && !fOuter.name.$pristine"
+                               class="help-block">Name is required.</p>
+                        </div>
+
+                        <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback"
+                             ng-class="{ 'has-error' : fOuter.referenceType.$invalid && !fOuter.referenceType.$pristine }">
+
+                            <select required class="form-control has-feedback-left"
+                                    name="referenceType"
+                                    ng-model="integrationData.referenceType" required>
+                                <option value="PROFILE_ADDITIONAL_DATA">PROFILE ADDITIONAL DATA</option>
+                                <option value="PROFILE_IMPORTANT_DATA">PROFILE_IMPORTANT_DATA</option>
+                                <option value="PROFILE_OTHER_DATA">PROFILE_OTHER_DATA</option>
+                                <option value="PROFILE_SEARCH_DATA">PROFILE SEARCH DATA</option>
+                                <!--<option value="BODY">BODY</option>-->
+                            </select>
+
+                            <!--<input required type="text" class="form-control has-feedback-left" name="referenceType"-->
+                                   <!--ng-model="integrationData.referenceType" placeholder="Reference Type" style="width: 100%;">-->
+                            <span class="fa fa-user form-control-feedback left" aria-hidden="true"></span>
+                            <p ng-show="fOuter.referenceType.$invalid && !fOuter.referenceType.$pristine"
+                               class="help-block">Name is required.</p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3 col-sm-12 col-xs-12 form-group has-feedback"
+                             ng-class="{ 'has-error' : fOuter.method.$invalid && !fOuter.method.$pristine }">
+
+                            <select required class="form-control has-feedback-left" name="method"
+                                    style="width: 100%;"
+                                    ng-model="integrationData.method">
+                                <option value="GET">GET</option>
+                                <option value="POST">POST</option>
+                                <option value="PUT">PUT</option>
+                                <option value="DELETE">DELETE</option>
+                            </select>
+                            <p ng-show="fOuter.method.$invalid && !fOuter.method.$pristine"
+                               class="help-block">Name is required.</p>
+                        </div>
+
+                        <div class="col-md-9 col-sm-12 col-xs-12 form-group has-feedback"
+                             ng-class="{ 'has-error' : fOuter.url.$invalid && !fOuter.url.$pristine }">
+
+                            <input style="width: 100%;"
+                                   required type="text" class="form-control has-feedback-left" name="url"
+                                   ng-model="integrationData.url" placeholder="url">
+                            <span class="fa fa-user form-control-feedback left" aria-hidden="true"></span>
+                            <p ng-show="fOuter.url.$invalid && !fOuter.url.$pristine"
+                               class="help-block">Name is required.</p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12 col-sm-12 col-xs-12 form-group has-feedback form-group"
+                             ng-class="{ 'has-error' : fOuter.globalToken.$invalid && !fOuter.globalToken.$pristine }">
+
+                            <input style="width: 100%;"
+                                   required type="text" class="form-control has-feedback-left" name="globalToken"
+                                   ng-model="integrationData.globalToken" placeholder="Global Token">
+                            <span class="fa fa-user form-control-feedback left" aria-hidden="true"></span>
+                            <p ng-show="fOuter.globalToken.$invalid && !fOuter.globalToken.$pristine"
+                               class="help-block">Global Token is required.</p>
+                        </div>
+
+                        <div class="col-md-12 col-sm-12 col-xs-12">
+                            <div class="x_panel">
+                                <div class="x_title">
+                                    <h2>Parameters
+                                        <small>List</small>
+                                    </h2>
+                                    <ul class="nav navbar-right panel_toolbox">
+                                        <li>
+                                            <a title="Add Parameters" ng-click="showParameters()" class="close-link"><i class="fa fa-plus"></i></a>
+                                        </li>
+                                    </ul>
+                                    <div class="clearfix"></div>
+                                </div>
+                                <div ng-show="showParameter" class="col-md-12 col-sm-12 col-xs-12">
+
+                                    <ng-form class="form-horizontal form-label-left" name="fInner" novalidate>
+                                        <div class="x_panel">
+                                            <br>
+
+                                            <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback"
+                                                 ng-class="{ 'has-error' : fInner.parameterName.$invalid && !fInner.parameterName.$pristine }">
+
+                                                <input required type="text" class="form-control has-feedback-left"
+                                                       name="parameterName"
+                                                       ng-model="parameters.name" placeholder="Parameter Name">
+                                                <span class="fa fa-user form-control-feedback left"
+                                                      aria-hidden="true"></span>
+                                            </div>
+                                            <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback"
+                                                 ng-class="{ 'has-error' : fInner.parametersReferenceName.$invalid && !fInner.parametersReferenceName.$pristine }">
+
+                                                <input required type="text" class="form-control has-feedback-left"
+                                                       name="parametersReferenceName"
+                                                       ng-model="parameters.referenceName" placeholder="Reference Name">
+                                                <span class="fa fa-user form-control-feedback left"
+                                                      aria-hidden="true"></span>
+
+                                            </div>
+                                            <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback"
+                                                 ng-class="{ 'has-error' : fInner.parametersParameterType.$invalid && !fInner.parametersParameterType.$pristine }">
+
+                                                <input required type="text" class="form-control has-feedback-left"
+                                                       name="parametersParameterType"
+                                                       ng-model="parameters.parameterType" placeholder="Parameter Type">
+                                                <span class="fa fa-user form-control-feedback left"
+                                                      aria-hidden="true"></span>
+
+                                            </div>
+                                            <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback"
+                                                 ng-class="{ 'has-error' : fInner.parametersParameterLocation.$invalid && !fInner.parametersParameterLocation.$pristine }">
+
+                                                <select required class="form-control has-feedback-left"
+                                                        name="parametersParameterLocation"
+                                                        ng-model="parameters.parameterLocation" required>
+                                                    <option value="QUERY">QUERY</option>
+                                                    <option value="BODY">BODY</option>
+                                                    <option value="PARAMS">PARAMS</option>
+                                                </select>
+
+                                            </div>
+
+                                            <button class="btn btn-success pull-right" title="Add To Parameter List"
+                                                    ng-disabled="!fInner.$valid" ng-click="addParameters(parameters)">
+                                                Add
+                                            </button>
+                                        </div>
+                                    </ng-form>
+
+                                </div>
+
+                                <div class="x_content">
+                                    <ul class="list-unstyled timeline">
+                                        <li ng-repeat="params in integrationData.parameters">
+                                            <div class="block">
+                                                <div class="tags">
+                                                    <a href="" class="tag">
+                                                        <span>{{params.name}}</span>
+                                                    </a>
+                                                </div>
+                                                <div class="block_content">
+                                                    <h2 class="title">
+                                                        <i class="fa fa-trash-o pull-right cursor-pointer"
+                                                           ng-click="deleteParameter(params)"></i>
+                                                    </h2>
+                                                    <div class="excerpt">
+                                                        <b>Reference Name:</b> {{params.referenceName}}
+                                                        <br>
+                                                        <b>Parameter Type:</b> {{params.parameterType}}
+                                                        <br>
+                                                        <b>Parameter Location:</b> {{params.parameterLocation}}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                    </ul>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="ln_solid"></div>
+                <div class="form-group">
+                    <div class="col-md-9 col-sm-9 col-xs-12 col-md-offset-3">
+                        <button ng-disabled="fOuter.name.$invalid||fOuter.referenceType.$invalid||fOuter.method.$invalid||fOuter.url.$invalid"
+                                class="btn btn-success pull-right" ng-click="saveConfig(integrationData)" title="Save Configurations">Save
+                        </button>
+                    </div>
+                </div>
+
+            </ng-form>
+        </div>
+
+        <div class="x_panel" ng-show="isProcessing">
+            <div class="x_content">
+                <div class="col-md-12 col-sm-12 col-xs-12">
+                    <div class="data-state-wrap">
+                        Processing...
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="x_panel" ng-hide="integrationDataList.length">
+            <div class="x_content">
+                <div class="col-md-12 col-sm-12 col-xs-12">
+                    <div class="data-state-wrap">
+                        No Integration Service Configured.
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!--configuration List -->
+        <div class="x_panel" ng-show="integrationDataList.length">
+            <div class="x_content">
+                <ul class="list-unstyled timeline">
+                    <li ng-repeat="data in integrationDataList">
+                        <div class="block">
+                            <div class="tags">
+                                <a href="" class="tag">
+                                    <span>{{data.name}}</span>
+                                </a>
+                            </div>
+                            <div class="block_content">
+                                <h2 class="title">
+                                    <a>Reference Type: {{data.referenceType}}</a>
+                                    <i class="fa fa-trash-o pull-right cursor-pointer"
+                                       ng-click="deleteIntegrationAPIDetails(data)" title="Delete Configurations"></i>
+                                </h2>
+                                <div class="byline">
+                                    <span>{{data.method}} </span> : <a>{{data.url}}</a>
+                                </div>
+                                <div class="tile-stats" ng-if="data.parameters.length">
+                                    <h3>Parameters</h3>
+                                    <div class="panel-body">
+                                        <table class="table table-bordered">
+                                            <thead>
+                                            <tr>
+                                                <th>Parameter Name</th>
+                                                <th>Reference Name</th>
+                                                <th>Parameter Type</th>
+                                                <th>Parameter Location</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            <tr ng-repeat="para in data.parameters">
+                                                <th>{{para.name}}</th>
+                                                <td>{{para.referenceName}}</td>
+                                                <td>{{para.parameterType}}</td>
+                                                <td>{{para.parameterLocation}}</td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+
+
+                            </div>
+                        </div>
+                    </li>
+
+
+                </ul>
+
+            </div>
+        </div>
+    </div>
+</div>

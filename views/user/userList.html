@@ -1,0 +1,795 @@
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+
+        <uib-tabset active="0">
+            <!-- user configuration -->
+            <uib-tab index="0" heading="User Configuration">
+                <div class="x_panel user-group-wrapper">
+                    <div class="clearfix">
+                        <div class="col-md-2 col-lg-2 col-sm-2">
+                            <h2>Users
+                                <span class="iconed-status-pill-header">
+                                    <b>
+                                        <i class="fa fa-user"></i>
+                                        {{userList.length}}
+                                    </b>
+                                </span>
+                            </h2>
+                        </div>
+                        <div class="col-md-4 col-lg-4 col-sm-4">
+                            <div class="input-group full-width" style="width: 100%">
+                                <input type="text" ng-model="searchCriteria" class="form-control" placeholder="Search for...">
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-lg-6 col-sm-6 text-right">
+                            <button type="button" class="btn card-title--btn-add card-btn" style="margin: 0" ng-show="!newUserView" ng-click="toggleNewUserView()">Create User</button>
+                        </div>
+                    </div>
+                    <div class="x_content" id="createNewUser" style="background: #f5f5f5" ng-show="newUserView">
+                        <uib-tabset active="activeCreateUserTab" class="hidden-tab-header">
+                            <uib-tab index="0">
+                                <div class="col-md-12 col-sm-12 col-xs-12">
+                                    <div class="x_title col-md-12 col-sm-12 col-xs-12">
+                                        <div class="col-md-6 col-sm-6 col-lg-6">
+                                            <h2 class="font-robot font-300 text-uppercase font-15">Create new User</h2>
+                                        </div>
+                                        <div class="col-md-6 col-sm-6 col-lg-6">
+                                            <div class="edit-card--btn-circle" style="float: right" ng-click="toggleNewUserView()">
+                                                <i class="fa fa-close"></i>
+                                            </div>
+                                        </div>
+                                        <div class="clearfix"></div>
+                                    </div>
+                                    <br>
+                                    <div class="clearfix">
+                                        <!--<div class="col-md-4 col-sm-4 col-xs-12 form-group has-feedback">-->
+                                        <!--<input type="text" class="form-control has-feedback-left" placeholder="Username"-->
+                                        <!--ng-model="newUser.username">-->
+                                        <!--<span class="fa fa-user form-control-feedback left" aria-hidden="true"></span>-->
+                                        <!--</div>-->
+
+                                        <div class="col-md-4 col-sm-4 col-xs-12 form-group has-feedback">
+                                            <input type="text" class="form-control has-feedback-left"
+                                                   placeholder="E-mail Address"
+                                                   ng-model="newUser.mail">
+                                            <span class="fa fa-envelope form-control-feedback left"
+                                                  aria-hidden="true"></span>
+                                        </div>
+                                        <div class="col-md-4 col-sm-4 col-xs-12 form-group has-feedback">
+                                            <div ng-show="pwdBox">
+                                                <password-strength-box
+                                                        ng-model="newUser.password"
+                                                        invaliduserp="invalidUserPassword"
+                                                        box="pwdBox"
+                                                        confirm="confirmPwd">
+                                                </password-strength-box>
+                                            </div>
+
+                                            <input
+                                                    type="password" class="form-control has-feedback-left"
+                                                    placeholder="Password"
+                                                    ng-model="newUser.password" ng-focus="showPasswordHints()"
+                                                    ng-blur="showPasswordHints()">
+                                            <span class="fa fa-key form-control-feedback left"
+                                                  aria-hidden="true"></span>
+                                        </div>
+                                        <div class="col-md-4 col-sm-4 col-xs-12 form-group has-feedback">
+                                            <select class="select2_single form-control" aria-hidden="true"
+                                                    placeholder="Role" name="role" ng-model="newUser.role" ng-init="newUser.role = 'agent'">
+                                                <option value="agent">Agent</option>
+                                                <option value="supervisor">Supervisor</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-md-2 col-sm-2 col-xs-12 form-group has-feedback">
+                                            <select class="select2_single form-control" tabindex="-1" aria-hidden="true"
+                                                    placeholder="Title" name="title" ng-model="newUser.title">
+                                                <option value="mr">Mr</option>
+                                                <option value="mrs">Mrs</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-md-5 col-sm-5 col-xs-12 form-group has-feedback">
+                                            <input type="text" class="form-control has-feedback-left"
+                                                   placeholder="First Name"
+                                                   ng-model="newUser.firstname">
+                                            <span class="fa fa-meh-o form-control-feedback left"
+                                                  aria-hidden="true"></span>
+                                        </div>
+                                        <div class="col-md-5 col-sm-5 col-xs-12 form-group has-feedback">
+                                            <input type="text" class="form-control has-feedback-left"
+                                                   placeholder="Last Name"
+                                                   ng-model="newUser.lastname">
+                                            <span class="fa fa-meh-o form-control-feedback left"
+                                                  aria-hidden="true"></span>
+                                        </div>
+                                        <div class="col-md-4 col-sm-4 col-xs-12 form-group has-feedback">
+                                            <input type="text" class="form-control has-feedback-left"
+                                                   placeholder="Phone Number"
+                                                   ng-model="newUser.phone">
+                                            <span class="fa fa-phone form-control-feedback left"
+                                                  aria-hidden="true"></span>
+                                        </div>
+                                        <div class="col-md-4 col-sm-4 col-xs-12 form-group has-feedback">
+                                            <input type="text" class="form-control has-feedback-left"
+                                                   placeholder="Nick Name"
+                                                   ng-model="newUser.name">
+                                            <span class="fa fa-meh-o form-control-feedback left"
+                                                  aria-hidden="true"></span>
+                                        </div>
+                                        <div class="col-md-4 col-sm-4 col-xs-12 form-group has-feedback">
+                                            <label>
+                                                <small>Create Resource</small>
+                                            </label>
+                                            <checkbox class="btn" ng-model="newUser.mapToResource"
+                                                      ng-init="newUser.mapToResource=false" style="margin-right: 20px"></checkbox>
+                                            <label>
+                                                <small>Create SIP User</small>
+                                            </label>
+                                            <checkbox class="btn" ng-model="newUser.createSIPUser"
+                                                      ng-init="newUser.createSIPUser=false"></checkbox>
+
+                                        </div>
+                                    </div>
+                                    <div class="clearfix text-right">
+                                        <div class="divider"></div>
+                                        <button ng-if="newUser.createSIPUser" class="btn btn-success" ng-click="addNewUser(true, basicConfig.Extension)"
+                                                ng-disabled="!(newUser.password && newUser.name &&
+                                         newUser.mail && newUser.phone && newUser.role) || invalidUserPassword">
+                                            {{isUserSaving ? "Saving User.." : "Continue"}}
+                                        </button>
+                                        <button ng-if="!newUser.createSIPUser" class="btn btn-success" ng-click="addNewUser()"
+                                                ng-disabled="!(newUser.password && newUser.name &&
+                                         newUser.mail && newUser.phone && newUser.role) || invalidUserPassword">
+                                            Create User
+                                        </button>
+                                    </div>
+                                </div>
+                            </uib-tab>
+                            <uib-tab index="1">
+                                <div ng-if="activeCreateUserTab == 1" ng-controller="sipUserCtrl" ng-init="viewBtnClick()">
+                                    <form name="sipUserConfForm">
+                                        <div class="x_title col-md-12 col-sm-12 col-xs-12">
+                                            <div class="col-md-6 col-sm-6 col-lg-6">
+                                                <h2 class="font-robot font-300 text-uppercase font-15">Create SIP User</h2>
+                                            </div>
+                                            <div class="col-md-6 col-sm-6 col-lg-6">
+                                                <div class="edit-card--btn-circle" data-toggle="collapse" data-target="#createNewUser" style="float: right">
+                                                    <i class="fa fa-close"></i>
+                                                </div>
+                                            </div>
+                                            <div class="clearfix"></div>
+                                        </div>
+                                        <div class="item form-group ">
+                                            <!-- sip user and password -->
+                                            <div class="col-lg-12">
+                                                <div class="col-md-6 animated fadeIn">
+                                                    <h3><label for="NewsipUserName">Sip Username *</label></h3>
+                                                    <p>
+                                                        <input class="form-control" id="NewsipUserName" name="sipUsrName"
+                                                               ng-model="basicConfig.SipUsername"
+                                                               ng-init="basicConfig.SipUsername = sipUserFromUser.SipUsername"
+                                                               ng-trim="true"
+                                                               ng-pattern="/^[a-z0-9]*$/"
+                                                               ng-model-options="{ updateOn: 'blur' }">
+                                                        <span class="invalInput">Use only simple letters and numeric characters for username</span>
+                                                    </p>
+                                                </div>
+                                                <div class="col-md-6 animated fadeIn">
+                                                    <h3><label for="newPassword">Password *</label></h3>
+                                                    <p><input type="password" class="form-control" id="newPassword"
+                                                              ng-init="basicConfig.Password = sipUserFromUser.Password"
+                                                              ng-model="basicConfig.Password"></p>
+                                                </div>
+                                            </div>
+
+                                            <!-- reference ID | extension | PIN -->
+                                            <div class="col-lg-12">
+                                                <div class="col-md-6 animated fadeIn">
+                                                    <h3><label for="newExtensio">Extension *</label></h3>
+                                                    <p><input type="text" class="form-control"
+                                                              id="newExtensio"
+                                                              name="ext"
+                                                              required
+                                                              ng-pattern="/^[0-9]*$/"
+                                                              ng-model="basicConfig.Extension"
+                                                              placeholder="Extension"
+                                                              ng-model-options="{ updateOn: 'blur'}">
+                                                        <span class="invalInput">Use only numbers for extension</span>
+                                                    </p>
+                                                </div>
+                                                <div class="col-md-6 animated fadeIn">
+                                                    <h3><label for="newPinId"> PIN</label></h3>
+                                                    <p><input type="text" class="form-control "
+                                                              id="newPinId"
+                                                              name="pinID"
+                                                              placeholder="PIN"
+                                                              ng-model="basicConfig.Pin"></p>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-lg-12">
+                                                <div class="col-md-8 animated fadeIn">
+                                                    <h3><label for="newEmail">Email Address</label></h3>
+                                                    <p><input type="text" class="form-control "
+                                                              ng-init="basicConfig.EmailAddress = sipUserFromUser.Email"
+                                                              id="newEmail"
+                                                              name="email"
+                                                              placeholder="Email Address"
+                                                              ng-model="basicConfig.EmailAddress"></p>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <h3><label>Voicemail as Email</label></h3>
+                                                    <checkbox class="btn" ng-model="basicConfig.VoicemailAsEmail"
+                                                              ng-init="basicConfig.VoicemailAsEmail=false"></checkbox>
+
+                                                </div>
+                                            </div>
+
+                                            <!-- domain | context -->
+                                            <div class="col-lg-12">
+                                                <div class="col-md-6 animated fadeIn">
+                                                    <h3><label for="newDomain">Domain *</label></h3>
+                                                    <p><select class="select2_single form-control " tabindex="-1"
+                                                               aria-hidden="true"
+                                                               id="newDomain"
+                                                               required
+                                                               placeholder="Domain name"
+                                                               name="domain"
+                                                               ng-model="basicConfig.CloudEndUserId"
+                                                               ng-model-options="{trackBy: '$value'}">
+                                                        <option ng-repeat="eu in endUserList" value="{{eu.id}}" ng-selected="$index==0">{{eu.Domain}}</option>
+                                                    </select></p>
+                                                </div>
+
+                                                <div class="col-md-6 animated fadeIn">
+                                                    <h3><label for="newContext">Context *</label></h3>
+                                                    <p><select class="select2_single form-control" tabindex="-1"
+                                                               aria-hidden="true"
+                                                               required
+                                                               id="newContext"
+                                                               name="context" ng-model="basicConfig.ContextId"
+                                                               ng-model-options="{trackBy: '$value'}">
+                                                        <option ng-repeat="ctxt in contextList" value="{{ctxt.Context}}">{{ctxt.Context}}
+                                                        </option>
+                                                    </select></p>
+                                                </div>
+                                            </div>
+
+                                        </div>
+
+                                        <div class="clearfix"></div>
+                                        <div class="col-lg-12 animated fadeIn">
+                                            <p style="padding-left: 10px;">Attendant Transfer Configuration</p>
+                                            <div class="col-md-3">
+                                                <checkbox class="btn" ng-model="basicConfig.TransInternalEnable"
+                                                          ng-init="basicConfig.TransInternalEnable=false"></checkbox>
+                                                <label>
+                                                    <small>Internal</small>
+                                                </label>
+                                            </div>
+
+                                            <div class="col-md-3">
+                                                <checkbox class="btn" ng-model="basicConfig.TransExternalEnable"
+                                                          ng-init="basicConfig.TransExternalEnable=false"></checkbox>
+                                                <label>
+                                                    <small>External</small>
+                                                </label>
+                                            </div>
+
+                                            <div class="col-md-3">
+                                                <checkbox class="btn" ng-model="basicConfig.TransIVREnable"
+                                                          ng-init="basicConfig.TransIVREnable=false"></checkbox>
+                                                <label>
+                                                    <small>IVR</small>
+                                                </label>
+                                            </div>
+
+                                            <div class="col-md-3">
+                                                <checkbox class="btn" ng-model="basicConfig.TransGroupEnable"
+                                                          ng-init="basicConfig.TransGroupEnable=false"></checkbox>
+                                                <label>
+                                                    <small>Group</small>
+                                                </label>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-12 col-lg-12 col-xs-12">
+                                            <div class="col-md-6 col-lg-6 col-xs-6 animated fadeIn">
+                                                <h3><label>Deny Outbound For</label></h3>
+                                                <p><select class="select2_single form-control" tabindex="-1"
+                                                           aria-hidden="true"
+                                                           name="denyOutboundFor" ng-model="basicConfig.DenyOutboundFor"
+                                                           ng-model-options="{trackBy: '$value'}">
+                                                    <option>ALL</option>
+                                                    <option>GATEWAY</option>
+                                                    <option>NONE</option>
+                                                </select></p>
+                                            </div>
+
+                                            <div class="col-md-6 col-lg-6 col-xs-6 animated fadeIn">
+                                                <checkbox style="position: relative; top: 50px" class="btn" ng-model="basicConfig.RecordingEnabled"
+                                                          ng-init="basicConfig.RecordingEnabled=false"></checkbox>
+                                                <label style="position: relative; top: 50px">
+                                                    <small>Recording Enabled</small>
+                                                </label>
+                                            </div>
+                                        </div>
+
+                                        <!--<div class="col-lg-12">-->
+                                        <!--<div class="sip-user-btn-wrap text-left" style="padding-left: 11px;">-->
+                                        <!--<button ng-disabled="!basicConfig.SipUsername || !sipUserConfForm.$valid" class="btn btn-primary" ng-click="onSavePressed()">-->
+                                        <!--Save-->
+                                        <!--</button>-->
+                                        <!--</div>-->
+                                        <!--</div>-->
+
+                                    </form>
+                                    <div class="clearfix">
+                                        <div class="divider"></div>
+                                        <div class="col-md-6 col-sm-6 col-xs-6 form-group has-feedback">
+                                            <button class="btn btn-default" ng-click="addNewSIPUser('down')"
+                                                    ng-disabled="!(newUser.password && newUser.name &&
+                                     newUser.mail && newUser.phone && newUser.role) || invalidUserPassword">
+                                                < Back
+                                            </button>
+                                        </div>
+                                        <div class="col-md-6 col-sm-6 col-xs-6 form-group has-feedback text-right">
+                                            <button class="btn btn-success" ng-click="onSavePressed()"
+                                                    ng-disabled="!basicConfig.SipUsername || !sipUserConfForm.$valid">
+                                                Create SIP user
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </uib-tab>
+                        </uib-tabset>
+                    </div>
+                    <div class="divider clearfix" style="margin-bottom: 20px"></div>
+                    <!-- view user details -->
+                    <div class="x_content col-md-12 col-sm-12 col-xs-12">
+                        <ul class="list-unstyled msg_list">
+                            <div class="mail_list_column sip-user-wrap">
+                                <a href="javascript:void(0);" class="user-wrap"
+                                   ng-repeat="item in userList | filterBy: ['username']: searchCriteria">
+                                    <div class="mail_list user-list">
+                                        <div class="right user-option-wrap">
+                                            <div class="col-lg-6 col-md-6 col-sm-6">
+                                                <h3 class="font-robot sub-header">
+                                                    {{item.username}}
+                                                </h3>
+                                                <h4 class="sub-header">
+                                                    {{item.firstname}} {{item.lastname}}
+                                                </h4>
+
+                                                <p class="font-robot">
+                                                    <i class="fa fa-envelope-square"
+                                                       style="padding-right: 10px;"></i> {{item.email.contact}}
+                                                </p>
+
+                                                <p class="font-robot">
+                                                    <i class="fa fa-phone"
+                                                       style="padding-right: 10px;"></i>{{item.phoneNumber.contact}}
+                                                </p>
+
+                                                <p>
+                                                    <small class="embed-wrap"> {{item.user_meta.role}}</small>
+                                                </p>
+                                            </div>
+                                            <div class="col-lg-6 col-md-6 col-sm-6 text-right">
+                                                <!--<small ng-if="item.user_meta.role !== 'admin'" class="fa fa-trash"
+                                                   ng-click="removeUser(item.username)"></small>-->
+                                                <switch
+                                                        ng-if="item.user_meta.role !== 'admin'"
+                                                        id="enabled"
+                                                        name="enabled"
+                                                        ng-model="item.Active"
+                                                        on="Active" off="Inactive"
+                                                        class="green"
+                                                        disabled="disableSwitch"
+                                                        ng-change="removeUser(item)"
+                                                        style="margin-right: 10px">
+
+                                                </switch>
+                                                <div class="edit-card--btn-circle"
+                                                     style="float: right"
+                                                     ng-click="viewPermissions(item)">
+                                                    <i class="fa fa-cog"></i>
+                                                </div>
+                                                <div class="edit-card--btn-circle"
+                                                     style="float: right;margin-right: 10px"
+                                                     ng-click="viewProfile(item.username)">
+                                                    <i class="fa fa-user"></i>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="left">
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                        </ul>
+                    </div>
+                    <!-- end -->
+                </div>
+                <!-- end -->
+
+            </uib-tab>
+            <!-- user group -->
+            <uib-tab index="1" heading="User-group Configuration">
+                <div class="row">
+
+                    <div class="col-lg-12  col-md-12 col-xs-12">
+                        <div class="x_panel user-group-wrapper">
+                            <!--user group list -->
+                            <div class="col-lg-4 col-md-5 col-xs-6">
+                                <h2>User Group</h2>
+                                <div class="user-group-list">
+                                    <!-- header -->
+                                    <div class="header">
+                                        <div class="row">
+                                            <div class="col-lg-7 col-md-7 col-xs-7">
+                                                <div class="search-wrapper">
+                                                    <input type="text"
+                                                           ng-model="searchCriteria"
+                                                           placeholder="search group here"
+                                                           class="form-control">
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-5 col-md-5 col-xs-5">
+                                                <div class="create-new">
+                                                    <button class="btn btn-success " ng-click="createNewGroup();">
+                                                        New Group
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- user list wrapper -->
+                                    <div class="group-wrapper">
+                                        <div class="group"
+                                             ng-class="group.name == selectedGroup.name ? 'active-group' : ''"
+                                             ng-click="loadGroupMembers(group)"
+                                             ng-repeat="group in userGroupList | filterBy: ['name']: searchCriteria">
+                                            <groupitemview group="group" selected-group="selectedGroup" check-editing="checkEditing()" units="businessUnits" editing="isEditing" supervisors="adminUserList"></groupitemview>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- create new group -->
+                                <div id="crateNewGroupWrapper" class="new-group-wrapper">
+                                    <ul class="no-padding">
+                                        <li class="pull-left">
+                                            <div class="create-new header">
+                                                <h5>Create New Group</h5>
+                                            </div>
+                                        </li>
+                                        <li class="pull-right">
+                                            <div class="create-new" style="padding-top: 2px;">
+                                                <button class="btn btn-default btn-remove"
+                                                        ng-click="addNewUserGroup();"
+                                                        ng-disabled="!(newUserGroup.name)">
+                                                    save
+                                                </button>
+                                                <button style="margin-right: 0px;"
+                                                        class="btn btn-default btn-remove"
+                                                        ng-click="hiddenNewGroupDIV()">
+                                                    cancel
+                                                </button>
+                                            </div>
+                                        </li>
+                                    </ul>
+
+                                    <div class="row">
+                                        <div class="col-lg-12 col-xs-12">
+                                            <div class="search-wrapper">
+                                                <input type="text" style="width: 100%"
+                                                       ng-model="newUserGroup.name"
+                                                       required
+                                                       placeholder="group name *"
+                                                       class="form-control">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--#add new user to group member  -->
+                            <div class="col-lg-8 col-md-7 col-xs-6">
+                                <h2>Group members</h2>
+                                <div class="group-member-list">
+                                    <!-- header -->
+                                    <div class="header">
+                                        <div class="row">
+                                            <div class="col-lg-6 col-md-6">
+                                                <div class="search-wrapper">
+                                                    <input type="text"
+                                                           ng-model="searchMember"
+                                                           placeholder="search group member / supervisor here"
+                                                           class="form-control">
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6 col-md-6">
+                                                <div class="col-lg-6 col-md-6">
+                                                    <div class="create-new text-right">
+                                                        <button class="btn btn-success"
+                                                                ng-click="addNewGroupMember('member')">
+                                                            Add User
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-6 col-md-6">
+                                                    <div class="create-new">
+                                                        <button class="btn btn-success"
+                                                                ng-click="addNewGroupMember('supervisor')">
+                                                            Add Supervisor
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                    <!-- #view group member -->
+                                    <div class="group-wrapper group-member-wrapper">
+                                        <div class="row">
+                                            <div class="col-md-4 col-lg-4 col-xs-6" style="padding-bottom: 20px">
+                                                <h2><i class="fa fa-cogs" style="opacity: 0.5;margin-right: 10px"></i>Skills</h2>
+
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-12 col-sm-6 col-xs-12 form-group has-feedback">
+                                            <div class="row">
+                                                <tags-input class="col-md-11 col-sm-6 col-xs-12 " placeholder="Add Attribute"
+                                                            ng-model="grpSkills"
+                                                            display-property="Attribute"
+                                                            add-from-autocomplete-only="true"
+                                                            on-tag-adding="onChipAddAttr($tag)"
+                                                            on-tag-removing="onChipDeleteAttr($tag)"
+                                                            ng-disabled="" min-length="1">
+                                                    <auto-complete source="querySearchSkills($query)"
+                                                                   load-on-empty="true"
+                                                                   load-on-focus="true"
+                                                                   min-length="1"></auto-complete>
+                                                </tags-input>
+                                                <div class="col-md-1 col-sm-6 col-xs-12 ">
+                                                    <i class="fa fa-refresh" style="cursor: pointer" ng-click="GetAttributes()"></i></div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    <div class="group-wrapper group-member-wrapper">
+
+                                        <!--<div class="row">-->
+
+                                            <!--<div class="col-lg-4 col-xs-12">-->
+
+                                            <!--</div>-->
+                                            <!--<div class="col-lg-8 col-xs-12">-->
+                                                <!--<div class="search-wrapper">-->
+                                                    <!--<input type="text"-->
+                                                           <!--ng-model="searchMember"-->
+                                                           <!--placeholder="search group member / supervisor here"-->
+                                                           <!--class="form-control">-->
+
+                                                <!--</div>-->
+                                            <!--</div>-->
+                                        <!--</div>-->
+                                        <div class="group-load-wrapper" ng-show="isLoadingUsers">
+                                            <div class="loader-md-90"></div>
+                                        </div>
+                                        <div class="group-data-error"
+                                             ng-show="!isLoadingUsers && groupMemberlist.length==0">
+                                            please add user
+                                        </div>
+
+                                        <div class="row" ng-show="groupMemberlist.length>0">
+
+                                            <div class="col-md-4 col-lg-4 col-xs-6" style="padding-bottom: 20px">
+                                                <h2><i class="fa fa-user" style="opacity: 0.5;margin-right: 10px"></i>Members</h2>
+
+                                            </div>
+                                        </div>
+
+
+                                        <div class="row">
+                                            <div class="col-md-3 col-lg-3 col-xs-6"
+
+                                                 ng-repeat="member in groupMemberlist | filterBy: ['username']: searchMember">
+                                                <div class="group-member" >
+                                                    <div class="member-img">
+                                                        <img ng-src="{{member.avatar}}"
+                                                             src="assets/images/defaultProfile.png">
+                                                    </div>
+                                                    <div class="member-name">
+                                                        <h5>{{member.username}}</h5>
+                                                    </div>
+                                                    <button class="btn btn-sm btn-default btn-remove"
+                                                            ng-click="removeGroupMember(member._id)">
+                                                        remove
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="row" ng-show="selectedGroup.supervisors.length>0">
+                                            <div class="col-md-4 col-lg-4 col-xs-6" style="padding-bottom: 20px">
+                                                <h2><i class="fa fa-user-secret" style="opacity: 0.5;margin-right: 10px"></i>Supervisors</h2>
+                                            </div>
+                                        </div>
+
+
+                                        <div class="row">
+                                            <div class="col-md-3 col-lg-3 col-xs-6"
+
+                                                 ng-repeat="supervisor in selectedGroup.supervisors | filterBy: ['username']: searchMember">
+                                                <div class="group-member" >
+                                                    <div class="member-img" ng-class="{set_gary:supervisor.isTemp}">
+                                                        <img ng-src="{{supervisor.avatar}}"
+                                                             src="assets/images/defaultProfile.png">
+                                                    </div>
+                                                    <div class="member-name">
+                                                        <h5>{{supervisor.username}}</h5>
+                                                    </div>
+                                                    <button class="btn btn-sm btn-default btn-remove" ng-show="!supervisor.isTemp"
+                                                            ng-click="removeSupervisor(supervisor._id)">
+                                                        remove
+                                                    </button>
+                                                    <button class="btn btn-sm btn-default btn-remove" ng-show="supervisor.isTemp"
+                                                            ng-click="addSupervisorsToGroup()">
+                                                        add
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                                <!-- #add new group member -->
+                                <!-- create new group -->
+                                <div id="crateNewGroupMemberWrapper" class="new-group-wrapper new-group-member">
+                                    <ul class="group-inline-des">
+                                        <li>
+                                            <div class="create-new header">
+                                                <h5>{{addingTitle}}</h5>
+                                            </div>
+                                        </li>
+                                        <li class="pull-right" ng-show="addMemRole.toLowerCase()=='member'">
+                                            <div class="create-new" style="padding-top: 2px;">
+                                                <button class="btn btn-default btn-remove"
+                                                        ng-click="addUserToGroup(newMember._id)">
+                                                    save
+                                                </button>
+                                                <button style="margin-right: 0px;"
+                                                        class="btn btn-default btn-remove"
+                                                        ng-click="hiddenNewGroupMember()">
+                                                    cancel
+                                                </button>
+                                            </div>
+                                        </li>
+                                        <li class="pull-right" ng-show="addMemRole.toLowerCase()!='member'">
+                                            <div class="create-new" style="padding-top: 2px;">
+                                                <button class="btn btn-default btn-remove"
+                                                        ng-click="addSupervisorsToGroup()">
+                                                    save
+                                                </button>
+                                                <button style="margin-right: 0px;"
+                                                        class="btn btn-default btn-remove"
+                                                        ng-click="hiddenNewGroupMember()">
+                                                    cancel
+                                                </button>
+                                            </div>
+                                        </li>
+                                    </ul>
+
+                                    <div class="row" ng-show="addMemRole.toLowerCase()=='member'">
+                                        <div class="col-lg-12 col-xs-12">
+                                            <div class="search-wrapper">
+                                                <select class="select2_single form-control" tabindex="-1"
+                                                        aria-hidden="true"
+                                                        placeholder="Title" name="title" ng-model="newMember"
+                                                        ng-options="user.username for user in agents"></select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row" id="fixedCreateNew" ng-show="addMemRole.toLowerCase()!='member'" style="position: fixed;width: 51%;z-index: -1; opacity: 0;">
+                                        <div class="col-lg-12 col-xs-12">
+                                            <div class="search-wrapper">
+                                                <tags-input ng-model="selectedGroup.supervisors"
+                                                            on-tag-added="onChipAdd($tag)"
+                                                            display-property="username"
+                                                            add-from-autocomplete-only="true"  ng-disabled="" min-length="1"
+                                                            placeholder="Add a Supervisor">
+                                                    <auto-complete source="querySearch($query)"
+                                                                   load-on-empty="true"
+                                                                   load-on-focus="true"
+                                                                   min-length="1"
+                                                                   max-results-to-show="100"></auto-complete>
+                                                </tags-input>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </uib-tab>
+
+            <uib-tab index="2" heading="Import Users From AD">
+                <br>
+
+                <div class="col-md-3 col-sm-3 col-xs-12 form-group pull-right top_search">
+                    <div class="input-group">
+                        <input type="search" ng-model="adSearchCriteria" class="form-control"
+                               placeholder="Search AD Users">
+                    </div>
+                </div>
+
+                <div class="col-md-12 col-sm-12 col-xs-12">
+                    <div class="col-md-12 col-sm-12 col-xs-12 table-header-p-space">
+                        <div class="col-md-4 col-sm-4 col-xs-12">
+                            User ID
+                        </div>
+                        <div class="col-md-4 col-sm-4 col-xs-12">
+                            Display Name
+                        </div>
+                        <div class="col-md-1 col-sm-2 col-xs-12">
+                            <center>Supervisor</center>
+                        </div>
+                        <div class="col-md-1 col-sm-2 col-xs-12">
+                            <center>Agent</center>
+                        </div>
+                        <div class="col-md-1 col-sm-2 col-xs-12">
+                        </div>
+                    </div>
+                    <div class="table-row-p-wrap">
+                        <div class="col-md-12 col-sm-12 col-xs-12 table-row-p-space"
+                             ng-show="activeDirectoryUsers.length >0"
+                             ng-repeat="adUser in activeDirectoryUsers| filterBy: ['sAMAccountName']: adSearchCriteria">
+                            <div class="col-md-4 col-sm-4 col-xs-12">
+                                {{adUser.sAMAccountName}}
+                            </div>
+                            <div class="col-md-4 col-sm-4 col-xs-12">
+                                {{adUser.displayName}}
+                            </div>
+                            <div class="col-md-1 col-sm-2 col-xs-12">
+                                <center><input id="supervisor{{adUser.sAMAccountName}}"
+                                               checklist-model="selectedADUsers.supervisors" type="checkbox"
+                                               checklist-value="adUser"
+                                               ng-disabled="selectedADUsers.agents.indexOf(adUser)> -1 || adUser.isProfileExists">
+                                </center>
+                            </div>
+                            <div class="col-md-1 col-sm-2 col-xs-12">
+                                <center><input id="agent{{adUser.sAMAccountName}}"
+                                               checklist-model="selectedADUsers.agents" type="checkbox"
+                                               checklist-value="adUser"
+                                               ng-disabled="selectedADUsers.supervisors.indexOf(adUser)> -1 || adUser.isProfileExists">
+                                </center>
+                            </div>
+                            <div class="col-md-2 col-sm-2 col-xs-12">
+                                <center>
+                                    <a href="" ng-show="!adUser.isProfileExists" ng-click="createUserFromAD(adUser)">Import</a>
+                                    <i class="ti-check" ng-show="adUser.isProfileExists"></i>
+                                </center>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /. end table wrapper -->
+
+                    <div class="col-md-12 col-sm-12 col-xs-12 table-row-p-space"
+                         ng-show="activeDirectoryUsers.length ===0">
+                        <div class="col-md-12 col-sm-12 col-xs-12">
+                            No Data Records Found
+                        </div>
+                    </div>
+                </div>
+                <!--./button -->
+                <!--<div class="col-md-12 col-sm-12 col-xs-12 form-group has-feedback">
+                    <button class="btn btn-success" ng-click="createUsersFromAD()">
+                        Create Users
+                    </button>
+                </div>-->
+            </uib-tab>
+        </uib-tabset>
+    </div>
+
+</div>
+

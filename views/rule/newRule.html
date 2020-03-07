@@ -1,0 +1,449 @@
+<!--<div class="col-md-12 col-sm-6 col-xs-12 col-xs-12" >
+    <div class="tile-stats">
+        <form name="frm_newRule" class="form-horizontal form-label-left input_mask">
+            <label class="control-label col-md-2 col-sm-6 col-xs-12">Direction</label>
+            <div class="col-md-9 col-sm-9 col-xs-12">
+                <select class="form-control" ng-model="newObj.Direction" ng-disabled="editMode">
+                    <option ng-selected="true">INBOUND</option>
+                    <option>OUTBOUND</option>
+
+                </select>
+            </div>
+
+            &lt;!&ndash;<div class="form-horizontal form-label-left input_mask" >
+
+                <div class="col-md-12 col-sm-12 col-xs-12 form-group has-feedback" style="margin-bottom: 15px;">
+
+
+
+                </div>
+            </div>&ndash;&gt;
+
+            <label class="control-label col-md-2 col-sm-6 col-xs-12">Description</label>
+            <div class="col-md-9 col-sm-9 col-xs-12 form-group has-feedback">
+                &lt;!&ndash; <div class="col-md-9 col-sm-9 col-xs-12">&ndash;&gt;
+                <input type="text" class="form-control" placeholder="" name="txt_desc" ng-model="newObj.CallRuleDescription" required>
+                <div ng-messages="frm_newRule.txt_desc.$error">
+                    <div class="alert" ng-message="required">This field is required</div>
+                </div>
+                &lt;!&ndash;</div>&ndash;&gt;
+
+            </div>
+
+            <label class="control-label col-md-2 col-sm-6 col-xs-12">DNIS Pattern</label>
+            <div class="col-md-4 col-sm-6 col-xs-12 form-group">
+                <div class="col-md-9 col-sm-9 col-xs-12">
+                    <select class="form-control" ng-model="newObj.RegExPattern" ng-selected="$first"ng-change="setEnableStatus()">
+                        <option ng-selected="true">STARTWITH</option>
+                        <option>EXTENDED</option>
+                        <option>ANY</option>
+                        <option>CUSTOM</option>
+
+                    </select>
+                </div>
+                &lt;!&ndash;<span class="fa fa-user form-control-feedback left" aria-hidden="true"></span>&ndash;&gt;
+            </div>
+
+
+
+            <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
+                <label class="control-label col-md-3 col-sm-3 col-xs-12">DNIS</label>
+                <div class="col-md-9 col-sm-9 col-xs-12">
+                    <input type="text" class="form-control" name="txt_dnis" ng-model="newObj.DNIS" ng-required="DNISRequired" ng-disabled="!DNISRequired">
+                    <div ng-messages="frm_newRule.txt_dnis.$error">
+                        <div class="alert" ng-message="required">This field is required</div>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
+                <div class="col-md-9 col-sm-9 col-xs-12">
+                    <select class="form-control" ng-model="newObj.ANIRegExPattern" ng-selected="$first" ng-change="setEnableStatus()">
+                        <option ng-selected="true">STARTWITH</option>
+                        <option>EXTENDED</option>
+                        <option>ANY</option>
+                        <option>CUSTOM</option>
+
+                    </select>
+                </div>
+                &lt;!&ndash;<span class="fa fa-user form-control-feedback left" aria-hidden="true"></span>&ndash;&gt;
+            </div>
+
+
+            <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
+                <label class="control-label col-md-3 col-sm-3 col-xs-12">ANI</label>
+                <div class="col-md-9 col-sm-9 col-xs-12">
+                    <input type="text" class="form-control" name="txt_ani" ng-model="newObj.ANI" ng-required="ANIRequired" ng-disabled="!ANIRequired">
+                    <div ng-messages="frm_newRule.txt_ani.$error">
+                        <div class="alert" ng-message="required">This field is required</div>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="form-group">
+                <label class="control-label col-md-3 col-sm-3 col-xs-12">Context</label>
+                <div class="col-md-9 col-sm-9 col-xs-12">
+                    <select class="form-control" ng-model="newObj.Context"   ng-model-options="{trackBy: '$value'}">
+                        <option ng-repeat="context in contextData" value="{{context.Context}}">{{context.Context}}</option>
+                    </select>
+
+                    <i class="fa fa-close" ng-click="makeContextEmpty()"></i>
+
+
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label col-md-3 col-sm-3 col-xs-12">Priority</label>
+                <div class="col-md-9 col-sm-9 col-xs-12">
+                    <input type="number" class="form-control" name="txt_priority"  ng-model="newObj.Priority" required>
+                    <div ng-messages="frm_newRule.txt_priority.$error">
+                        <div class="alert" ng-message="required">This field is required</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label col-md-3 col-sm-3 col-xs-12">Availability</label>
+                <div class="col-md-9 col-sm-9 col-xs-12">
+                    <select class="form-control" ng-model="newObj.Context"   ng-model-options="{trackBy: '$value'}">
+                        <option ng-repeat="context in contextData" value="{{context.Context}}">{{context.Context}}</option>
+                    </select>
+
+                    <i class="fa fa-close" ng-click="makeContextEmpty()"></i>
+
+
+                </div>
+            </div>
+
+
+            <div class="form-group" ng-if="newObj.Direction=='OUTBOUND'">
+                <label class="control-label col-md-3 col-sm-3 col-xs-12">Trunk Number</label>
+                <div class="col-md-9 col-sm-9 col-xs-12">
+                    <select class="form-control" ng-model="newObj.TrunkNumber"   ng-model-options="{trackBy: '$value'}" ng-selected="$first">
+                        <option ng-repeat="trunk in trunkObj" value="{{trunk.PhoneNumber}}">{{trunk.PhoneNumber}}</option>
+                    </select>
+                </div>
+            </div>
+
+            &lt;!&ndash; <div class="form-group" ng-if="newObj.Direction=='OUTBOUND'">
+                 <label class="control-label col-md-3 col-sm-3 col-xs-12">Trunk Number</label>
+                 <div class="col-md-9 col-sm-9 col-xs-12">
+                     <select class="form-control"ng-model="newObj.TrunkNumber" ng-repeat="trunk in trunkObj" value="{{trunk.PhoneNumber}}" ng-model-options="{trackBy: '$value'}" ng-selected="$first" required>
+                         <option>{{trunk.PhoneNumber}}</option>
+
+                     </select>
+                 </div>
+             </div>&ndash;&gt;
+
+
+            <div class="">
+                <label>
+                    Availability  <input type="checkbox" class="js-switch" ng-model="newObj.Enable"/>
+                </label>
+            </div>
+            <div class="ln_solid"></div>
+            <div ng-if="editMode==true">
+                <span class="fa fa-cog" ng-click="showAdvanced()" ></span>
+            </div>
+
+
+            <div ng-if="advancedViewSt==true">
+
+
+                <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
+                    <label class="control-label col-md-3 col-sm-3 col-xs-12">DNIS Translation</label>
+                    <div class="col-md-9 col-sm-9 col-xs-12">
+                        &lt;!&ndash;<select class="form-control" ng-model="newObj.TranslationId"   ng-change="AttachDNISTransToRule()" ng-model-options="{trackBy: '$value'}">
+                            <option ng-repeat="Trans in TransObj" value="{{Trans.id}}">{{Trans.TransName}}</option>
+                        </select>&ndash;&gt;
+
+                        <select class="form-control" ng-options="Trans.TransName for Trans in TransObj track by Trans.id"
+                                ng-model="newObj.TranslationId" ng-change="AttachDNISTransToRule()">
+                        </select>
+
+                    </div>
+                </div>
+
+                <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
+                    <label class="control-label col-md-3 col-sm-3 col-xs-12">ANI Translation</label>
+                    <div class="col-md-9 col-sm-9 col-xs-12">
+                        <select class="form-control" ng-options="Trans.TransName for Trans in TransObj track by Trans.id"
+                                ng-model="newObj.ANITranslationId" ng-change="AttachANITransToRule()">
+                        </select>
+
+                        &lt;!&ndash; <select class="form-control" ng-model="newObj.ANITranslationId"   ng-change="AttachANITranstoRule()" ng-model-options="{trackBy: '$value'}">
+                             <option ng-repeat="Trans in TransObj" value="{{Trans.id}}">{{Trans.TransName}}</option>
+                         </select>&ndash;&gt;
+                    </div>
+                </div>
+
+                &lt;!&ndash; <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback" ng-if="isInbound">
+                     &lt;!&ndash;<label class="control-label col-md-3 col-sm-3 col-xs-12">Applications</label>
+                     <div class="col-md-9 col-sm-9 col-xs-12">
+                         <select name="mySelect" id="mySelect"
+                             ng-options ="App.id for App in AppObj track by App.id"
+                             ng-model="newObj.AppId"
+                         </select>&ndash;&gt;
+
+
+
+
+
+
+                         &lt;!&ndash;<select name="mySelect" id="mySelect"
+                                 ng-options="option.name for option in data.availableOptions track by option.id"
+                                 ng-model="data.selectedOption"></select>&ndash;&gt;
+
+                     </div>
+                 </div>&ndash;&gt;
+
+                &lt;!&ndash;<select name="mySelect" id="mySelect"
+                        ng-options="App.AppName for App in AppObj track by App.id"
+                        ng-model="newObje.AppId">
+
+                </select>&ndash;&gt;
+
+
+
+
+
+                <div class="form-group" ng-show="isInbound">
+                    <label class="control-label col-md-3 col-sm-3 col-xs-12">Application</label>
+                    <div class="col-md-9 col-sm-9 col-xs-12">
+                        <select class="form-control" ng-options="App.AppName for App in AppObj track by App.id"
+                                ng-model="newObj.AppId" ng-change="AttachAppToRule()">
+                        </select>
+                    </div>
+                </div>
+
+
+                &lt;!&ndash;<div class="form-group">
+                    <label class="control-label col-md-3 col-sm-3 col-xs-12">Application</label>
+                    <div class="col-md-9 col-sm-9 col-xs-12">
+                        <select class="form-control" name="APPID" ng-model="newObje.AppId"   ng-model-options="{trackBy: '$value'}">
+                            <option ng-repeat="App in AppObj" value="{{App.id}}">{{App.id}}</option>
+                        </select>
+                    </div>
+                </div>&ndash;&gt;
+
+                &lt;!&ndash;<form name="myForm">
+                    <label for="mySelect">Make a choice:</label>
+                    <select name="mySelect"
+                            ng-options="option.name for option in data.availableOptions track by option.id"
+                            ng-model="datatee.selectedOption"></select>
+                </form>&ndash;&gt;
+                &lt;!&ndash;<md-option ng-repeat="App in Apps" value="{{App.id}}" ng-model-options="{trackBy: '$value'}"   >
+                    {{App.AppName}}
+                </md-option>
+        &ndash;&gt;
+
+
+            </div>
+
+
+            <div class="form-group">
+                <div class="col-md-9 col-sm-9 col-xs-12 col-md-offset-3">
+                    <button class="btn btn-success" ng-click="backToList()">Cancel</button>
+                    <button class="btn btn-success" ng-click="saveNewRule()" ng-disabled="frm_newRule.$invalid">Save</button>
+                </div>
+            </div>
+
+        </form>
+    </div>
+
+</div>-->
+
+<div class="block">
+
+    <div class="block_content">
+
+        <div class="col-md-12 col-sm-12 col-xs-12">
+            <br>
+
+            <div class="col-md-12 col-sm-6 col-xs-12">
+                <div class="tile-stats">
+
+                    <form class="form-horizontal form-label-left input_mask" name="frm_newRule">
+                        <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
+                            <label class="control-label">Direction</label>
+                            <select class="form-control" ng-model="newObj.Direction" ng-disabled="editMode">
+                                <option ng-selected="true">INBOUND</option>
+                                <option>OUTBOUND</option>
+
+                            </select>
+                        </div>
+
+                        <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
+                            <label class="control-label">Description</label>
+                            <input type="text" class="form-control" placeholder="" name="txt_desc" ng-model="newObj.CallRuleDescription" >
+                        </div>
+
+                        <div class="col-md-6 col-sm-6 col-xs-12 form-group">
+                            <label class="control-label">DNIS Pattern</label>
+                            <select class="form-control" ng-model="newObj.RegExPattern" ng-selected="$first"ng-change="setEnableStatus()">
+                                <option ng-selected="true">STARTWITH</option>
+                                <option>EXACTMATCH</option>
+                                <option>ANY</option>
+                                <option>CUSTOM</option>
+
+                            </select>
+
+
+                        </div>
+
+                        <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
+                            <label class="control-label">DNIS</label>
+                            <input type="text" class="form-control" name="txt_dnis" ng-model="newObj.DNIS" ng-required="DNISRequired" ng-disabled="!DNISRequired">
+                        </div>
+
+                        <div class="col-md-6 col-sm-6 col-xs-12 form-group">
+                            <label class="control-label">ANI Pattern</label>
+                            <select class="form-control" ng-model="newObj.ANIRegExPattern" ng-selected="$first" ng-change="setEnableStatus()">
+                                <option ng-selected="true">STARTWITH</option>
+                                <option>EXACTMATCH</option>
+                                <option>ANY</option>
+                                <option>CUSTOM</option>
+
+                            </select>
+
+                        </div>
+
+                        <div class="col-md-6 col-sm-6 col-xs-12 form-group">
+                            <label class="control-label">ANI</label>
+                            <input type="text" class="form-control" name="txt_ani" ng-model="newObj.ANI" ng-required="ANIRequired" ng-disabled="!ANIRequired">
+                        </div>
+
+                        <div class="col-md-5 col-sm-5 col-xs-11 form-group">
+                            <label class="control-label">Context</label>
+                            <select class="form-control" ng-model="newObj.Context"   ng-model-options="{trackBy: '$value'}">
+                                <option ng-repeat="context in contextData" value="{{context.Context}}">{{context.Context}}</option>
+                            </select>
+
+                        </div>
+                        <div class="col-md-1 col-sm-1 col-xs-1 form-group">
+                            <i class="fa fa-close" style="position: relative; top: 37px; color: red" ng-click="makeContextEmpty()"></i>
+                        </div>
+
+                        <div class="col-md-6 col-sm-6 col-xs-12 form-group">
+                            <label class="control-label">Priority</label>
+                            <input type="number" class="form-control" name="txt_priority"  ng-model="newObj.Priority" >
+                        </div>
+
+                        <div class="col-md-1 col-sm-1 col-xs-1 form-group">
+                            <label class="control-label">Availability</label>
+
+                            <checkbox ng-model="newObj.Enable"
+                                      ng-init="newObj.Enable=true"></checkbox>
+
+                            <!--<input type="checkbox" class="js-switch" ng-model="newObj.Enable"/>-->
+                        </div>
+
+                        <div class="col-md-5 col-sm-5 col-xs-11 form-group"></div>
+
+                        <div class="col-md-6 col-sm-6 col-xs-12 form-group">
+                            <label class="control-label">Business Unit</label>
+                            <select class="form-control" ng-model="newObj.BusinessUnit" ng-model-options="{trackBy: '$value'}">
+                                <option value=""></option>
+                                <option ng-repeat="bu in BusinessUnits" value="{{bu.unitName}}">{{bu.unitName}}</option>
+                            </select>
+
+                        </div>
+
+                        <div class="clearfix"></div>
+
+                        <div class="col-md-6 col-sm-6 col-xs-12 form-group">
+                            <label class="control-label">Rule Type</label>
+
+                            <select class="form-control" ng-model="newObj.ObjCategory" ng-selected="$first">
+                                <option>CALL</option>
+                                <option>SMS</option>
+                                <option>CLICKTOCALL</option>
+                            </select>
+                        </div>
+
+                        <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
+                            <label class="control-label">Custom Regex Pattern</label>
+                            <input type="text" class="form-control"  ng-model="newObj.CustomRegEx" >
+                            <span>for sms</span>
+                        </div>
+
+                        <div ng-if="newObj.Direction=='OUTBOUND'">
+                            <div class="col-md-5 col-sm-5 col-xs-11 form-group">
+                                <label class="control-label">Trunk Number</label>
+                                <select class="form-control" ng-model="newObj.TrunkNumber" ng-required="newObj.Direction=='OUTBOUND'"  ng-model-options="{trackBy: '$value'}" ng-selected="$first">
+                                    <option ng-repeat="trunk in trunkObj" value="{{trunk.PhoneNumber}}">{{trunk.PhoneNumber}}</option>
+                                </select>
+                            </div>
+                            <div class="col-md-1 col-sm-1 col-xs-1 form-group">
+                                <i class="fa fa-close" style="position: relative; top: 37px; color: red" ng-click="makeTrunkEmpty()"></i>
+                            </div>
+                        </div>
+
+                        <div class="col-md-12 col-sm-12 col-xs-12 form-group has-feedback"ng-if="editMode==true">
+                            <span class="fa fa-cog" ng-click="showAdvanced()" ></span>
+                        </div>
+
+
+
+
+
+                        <div ng-if="advancedViewSt==true">
+
+                            <label class="control-label col-md-2 col-sm-6 col-xs-12">DNIS Translation</label>
+                            <div class="col-md-4 col-sm-6 col-xs-12 form-group">
+                                <select class="form-control" ng-options="Trans.TransName for Trans in TransObj track by Trans.id"
+                                        ng-model="newObj.TranslationId" ng-change="AttachDNISTransToRule()">
+                                </select>
+                                <i class="fa fa-close" ng-click="makeDNISTransEmpty()"></i>
+
+                            </div>
+
+                            <label class="control-label col-md-2 col-sm-6 col-xs-12">ANI Translations</label>
+                            <div class="col-md-4 col-sm-6 col-xs-12 form-group">
+                                <select class="form-control" ng-options="Trans.TransName for Trans in TransObj track by Trans.id"
+                                        ng-model="newObj.ANITranslationId" ng-change="AttachANITransToRule()">
+                                </select>
+                                <i class="fa fa-close" ng-click="makeANITransEmpty()"></i>
+                            </div>
+
+
+                            <label class="control-label col-md-2 col-sm-6 col-xs-12" >Schedule</label>
+                            <div class="col-md-4 col-sm-6 col-xs-12 form-group">
+                                <select class="form-control" ng-options="schedule.ScheduleName for schedule in scheduleList track by schedule.id"
+                                        ng-model="newObj.ScheduleId">
+                                </select>
+                                <i class="fa fa-close" ng-click="makeScheduleEmpty()"></i>
+
+
+                            </div>
+
+                            <label class="control-label col-md-2 col-sm-6 col-xs-12" ng-show="isInbound">Application</label>
+                            <div class="col-md-4 col-sm-6 col-xs-12 form-group" ng-show="isInbound">
+                                <select class="form-control" ng-options="App.AppName for App in AppObj track by App.id"
+                                        ng-model="newObj.AppId">
+                                </select>
+                                <i class="fa fa-close" ng-click="makeAppEmpty()"></i>
+
+                            </div>
+
+
+                        </div>
+
+
+                        <div class="col-md-12 col-sm-12 col-xs-12 form-group has-feedback">
+                            <button class="btn btn-success" ng-click="backToList()">Cancel</button>
+                            <button class="btn btn-success" ng-click="saveNewRule()" ng-disabled="frm_newRule.$invalid || isPressed">Save</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+
+        </div>
+
+        <div class="clearfix"></div>
+    </div>
+</div>

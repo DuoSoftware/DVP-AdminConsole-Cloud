@@ -1,0 +1,121 @@
+<div class="col-md-6 col-sm-6 col-xs-12 que-wrapper">
+    <div class="que_panel" ng-class="{'pulse':que.isExceeded}" >
+        <!--<div class="que-block">-->
+            <!--<div class="que-chart-wrap">-->
+                <!--<div class="chart">-->
+                    <!--<div easypiechart options="pieoption" percent="que.presentage" class="d1-pie-chart"> <div class="d1-pie-text">{{que.presentage}}%</div></div>-->
+                <!--</div>-->
+                <!--<div class="que-status"><span>ANSWERED</span></div>-->
+            <!--</div>-->
+            <!--<div class="que-detials">-->
+                <!--<div class="que-name">{{ que.queuename | limitTo: 30 }}{{que.queuename.length > 30 ? '...' :''}}</div>-->
+                <!--<div class="que-info">-->
+                    <!--<div>-->
+                        <!--<label>Wait Time : </label>-->
+                        <!--<div class="que-info-timer"><timer start-time="que.MaxWaitingMS" interval="1000"> {{hhours}} : {{mminutes}} : {{sseconds}}</timer></div>-->
+                    <!--</div>-->
+                    <!--<div>-->
+                        <!--<label>Waiting : </label>-->
+                        <!--<div class="que-info-timer">{{que.CurrentWaiting}}</div>-->
+                    <!--</div>-->
+                <!--</div>-->
+            <!--</div>-->
+        <!--</div>-->
+
+        <div class="que-block">
+            <div class="que-chart-wrap">
+                <div class="que-value">
+                    <div class="que-info-timer">{{que.CurrentWaiting}}</div>
+                </div>
+                <div class="que-status"><span>WAITING</span></div>
+            </div>
+            <div class="que-detials">
+                <div class="que-name">{{ que.queuename | limitTo: 30 }}{{que.queuename.length > 30 ? '...' :''}}</div>
+                <div class="que-info">
+                    <div class="floated">
+                        <label>Max Wait Time : </label>
+                        <div class="que-info-timer"><timer start-time="que.MaxWaitingMS" interval="1000"> {{hhours}} : {{mminutes}} : {{sseconds}}</timer></div>
+                    </div>
+                    <div class="floated">
+                        <label>Queued :</label>
+                        <div class="que-info-timer">{{que.TotalQueued}}</div>
+                    </div>
+                    <div class="cleared">
+                        <label>Answered : </label>
+                        <div class="que-progress">
+                            <uib-progressbar class="progress-striped" value="que.presentage" type="{{quePresentageType}}">{{que.presentage}}%</uib-progressbar>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!--<div class="que-block">-->
+            <!--<div class="que-chart-wrap">-->
+                <!--<div class="chart">-->
+                    <!--<div class="que-info-timer">{{que.CurrentWaiting}}</div>-->
+                    <!--&lt;!&ndash;<div easypiechart options="pieoption" percent="que.presentage" class="d1-pie-chart"> <div class="d1-pie-text">{{que.presentage}}%</div></div>&ndash;&gt;-->
+                <!--</div>-->
+                <!--<div class="que-status"><span>WAITING</span></div>-->
+            <!--</div>-->
+            <!--<div class="que-detials">-->
+                <!--<div class="que-name">{{ que.queuename | limitTo: 30 }}{{que.queuename.length > 30 ? '...' :''}}</div>-->
+                <!--<div class="que-info-with-proress">-->
+                    <!--<div>-->
+                        <!--<label>Wait Time : </label>-->
+                        <!--<span class="que-info-timer"><timer start-time="que.MaxWaitingMS" interval="1000"> {{hhours}} : {{mminutes}} : {{sseconds}}</timer></span>-->
+                    <!--</div>-->
+                    <!--<div>-->
+                        <!--<uib-progressbar class="progress-striped" value="que.presentage" type="warning">{{que.presentage}}%</uib-progressbar>-->
+                    <!--</div>-->
+                <!--</div>-->
+            <!--</div>-->
+        <!--</div>-->
+    </div>
+</div>
+
+
+
+
+<!--<div ng-class="{'pulse':que.isExceeded}">
+    <div class="q-chart-wrp " >
+
+        <div class="chart-wrp">
+            <div easypiechart options="pieoption" percent="que.presentage">
+                <div class="d1-pie-text">{{que.presentage}}%</div>
+            </div>
+        </div>
+
+        <div class="q-chart-header-wrp">
+            <div class="header">
+                {{ que.queuename | limitTo: 15 }}{{que.queuename.length > 15 ? '...' :
+                ''}}
+            </div>
+            <div class="chart-name">
+                ANSWERED
+            </div>
+        </div>
+        <div class="q-chart-text-wrp">
+            <div class="header-text">
+                <div class="current-w-text">
+                    Current Waiting
+                </div>
+                <div class="current-w-num">
+                    {{que.CurrentWaiting}}
+                </div>
+            </div>
+            <div class="header-text bottom-t">
+                <div class="current-w-text">
+                    Max Wait Time
+                </div>
+                <div class="current-w-num">
+                    <timer start-time="que.MaxWaitingMS" interval="1000"> {{hhours}} : {{mminutes}} : {{sseconds}}</timer>
+
+                </div>
+               &lt;!&ndash; <div ng-class="{gored:isExceeded}"></div>&ndash;&gt;
+            </div>
+
+
+        </div>
+    </div>
+</div>-->

@@ -1,0 +1,127 @@
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <div class="x_panel main-title">
+            <div class="x_title">
+                <h2><b>REPORT</b> | CAMPAIGN | Agent Dialer - Agent wise Summary</h2>
+                <ul class="nav navbar-right panel_toolbox">
+                    <li><button class="btn btn-success" ng-click="HeaderDetails()"><i class="fa fa-refresh" ></i></button></li>
+                    <li ng-show="!showFilter" ng-click="showFilter= !showFilter"><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                    </li>
+                    <li ng-show="showFilter" ng-click="showFilter= !showFilter"><a class="close-link"><i class="fa fa-chevron-down"></i></a>
+                    </li>
+                </ul>
+                <div class="clearfix"></div>
+            </div>
+
+            <div class="x_content" ng-show="!showFilter">
+                <div class="col-md-12 col-sm-6 col-xs-12">
+                    <form id="campaingForm" name="ivrForm" novalidate class="form-label-left input_mask">
+
+                        <div class="row">
+
+                            <div class="col-md-3 col-sm-3 col-xs-12 form-group">
+                                <label>Batch</label>
+                                <select class="form-control" id="batch"
+                                        ng-model="BatchName"
+                                        ng-options="opt as opt for opt in BatchNames track by opt" required>
+                                    <option value=''>ALL</option>
+                                </select>
+
+                            </div>
+
+                            <div class="col-md-2 col-sm-2 col-xs-12">
+                                <label>Start Date</label>
+                                <input type="text" class="form-control" ng-model="StartDate"
+                                       name="startDate"
+                                       datepicker>
+                            </div>
+
+                            <div class="col-md-2 col-sm-2 col-xs-12">
+                                <label>End Date</label>
+                                <input type="text" class="form-control" ng-model="EndDate"
+                                       name="endDate"
+                                       datepicker>
+                            </div>
+
+                            <div class="col-md-2 col-sm-2 col-xs-12 form-group" style="position: relative; top:24px;">
+                                <button ng-if="!isLoading" ng-disabled="campaingForm.$invalid" type="button"
+                                        class="btn btn-green btn-block"
+                                        ng-click="getPageData();">
+                                    Search
+                                </button>
+                                <button ng-if="isLoading" disabled type="button" class="btn btn-green btn-block"
+                                >
+                                    PLEASE WAIT...
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="x_panel" ng-hide="intiate">
+            <div class="x_title">
+                <h2 class="col-md-8 col-sm-8 col-xs-12" style="padding: 10px 0">Total Numbers Assigned </h2>
+                <ul class="col-md-4 col-sm-4 col-xs-12 nav navbar-right panel_toolbox">
+                    <li>
+                        <div class="input-group" style="margin: 0">
+                            <input type="text" ng-model="searchCriteria" class="form-control"
+                               placeholder="Search for...">
+                            <span class="input-group-btn">
+                                <button class="btn btn-default" type="button">Go!</button>
+                            </span>
+                        </div>
+                    </li>
+                </ul>
+                <div class="clearfix"></div>
+            </div>
+            <div class="x_content">
+
+                <div ng-show="isLoading">
+                    <div class="row ">
+                        <div class="col-md-12 col-sm-12 col-xs-12">
+                            <div class="data-state-wrap">
+                                Please Wait...
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="row" ng-hide="isLoading">
+
+
+                    <div class="col-sm-12">
+                        <div class="widget-dyn">
+                            <div class="widget-dy-wrp" ng-repeat="sum in AgentWiseSummary | filterBy: ['Resource']: searchCriteria">
+                                <div class="active-card">
+                                    <div class="selected-group">
+                                        <i class="ti-check"></i>
+                                    </div>
+                                </div>
+                                <div class="col-xs-12 ">
+                                    <div class="row">
+                                        <div class="w-bg-text text-center ">
+                                            {{sum.Resource}}
+                                        </div>
+                                        <div class="w-bg-text-bg text-center txt-color-b-500 ">
+                                            {{sum.TryCount}}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+	window.scrollTo(0, 0);
+</script>
+

@@ -1,0 +1,13 @@
+<div
+
+        tooltip-placement="top"
+        uib-tooltip-template="'agent_status/view/template/toolTipTemplateTaskList.html'"
+        tooltip-append-to-body="true">
+    <div class='ui-grid-cell-contents'
+         ng-repeat="task in row.entity.taskList">
+        {{task.taskType}} - {{task.skill}} {{task.percentage}}%
+    </div>
+</div>
+
+
+

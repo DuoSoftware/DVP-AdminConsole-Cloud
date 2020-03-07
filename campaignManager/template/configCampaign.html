@@ -1,0 +1,178 @@
+<div class="col-md-12 col-sm-6 col-xs-12 col-xs-12">
+    <div class="tile-stats">
+        <div class="col-md-12 col-sm-6 col-xs-12" >
+            <div class="x_panel">
+                <div class="x_title">
+                    <div class="col-md-6 col-sm-6 col-xs-6">
+                        <h2><i class="fa fa-bullhorn"><small>Campaign</small></i>
+
+                        </h2>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+
+                <div ng-show="updateConfig" >
+                    <div class="row ">
+                        <div class="col-md-12 col-sm-12 col-xs-12">
+                            <div class="data-state-wrap">
+                                Please Wait...
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+                <div ng-hide="updateConfig" class="x_content"  >
+                    <form name="campaingConfigForm" class="col-md-12 col-sm-6 col-xs-12 col-xs-12" novalidate>
+                        <br>
+
+                        <div class="col-md-3 col-sm-3 col-xs-3 form-group"
+                             ng-class="{ 'has-error' : campaingConfigForm.ChannelConcurrency.$invalid && !campaingConfigForm.ChannelConcurrency.$pristine }">
+
+                            <input type="number" min="1" class="form-control has-feedback-left"
+                                   ng-model="callback.ChannelConcurrency"
+                                   placeholder="Channel Concurrency">
+                            <span class="fa fa-sort-numeric-asc form-control-feedback left" aria-hidden="true"></span>
+                            <p ng-show="campaingConfigForm.ChannelConcurrency.$invalid && !campaingConfigForm.ChannelConcurrency.$pristine"
+                               class="help-block">Channel Concurrency is required.</p>
+                        </div>
+
+                        <div class="col-md-9 col-sm-9 col-xs-9 form-group"     >
+                            <div class="col-md-3 col-sm-3 col-xs-7 form-group" >
+                                <label >Allow Callback</label>
+                            </div>
+
+                            <div class="col-md-6 col-sm-7 col-xs-7 form-group" >
+                                <label class="btn btn-default">
+                                    <input type="radio" name="options" id="option1" ng-model="callback.AllowCallBack" value="true" ng-change='setCallback(callback.AllowCallBack)'> Yes
+                                </label>
+                                <label class="btn btn-default">
+                                    <input type="radio" name="options" id="option2" ng-model="callback.AllowCallBack" checked value="false" ng-change='setCallback(callback.AllowCallBack)'> No
+                                </label>
+                            </div>
+                        </div>
+
+
+
+                        <!--callback reasons-->
+                        <div class="col-md-12 col-sm-6 col-xs-12" ng-show="showCallback" >
+                            <div class="x_panel">
+                                <div class="x_title">
+                                    <div class="col-md-6 col-sm-6 col-xs-6">
+                                        <h2><i class="fa fa-reply-all"><small>Callback</small></i>
+
+                                        </h2>
+                                    </div>
+                                    <div class="clearfix"></div>
+                                </div>
+
+                                <div class="x_content"  >
+                                    <div class="col-md-3 col-sm-3 col-xs-3 form-group"
+                                         ng-class="{ 'has-error' : campaingConfigForm.Reason.$invalid && !campaingConfigForm.Reason.$pristine }">
+
+                                        <select class="form-control has-feedback-left"  id="Reason" ng-model="callback.CampCallBackReasons"
+                                                ng-options="opt as opt.Reason for opt in reasons"  required>
+                                            <option value=''>Reason</option>
+                                        </select>
+                                        <span class="fa fa-indent form-control-feedback left" aria-hidden="true"></span>
+
+                                        <p ng-show="campaingConfigForm.Reason.$invalid && !campaingConfigForm.Reason.$pristine" class="help-block">
+                                            Reason is required.</p>
+                                    </div>
+
+                                    <div class="col-md-3 col-sm-3 col-xs-3 form-group"
+                                         ng-class="{ 'has-error' : campaingConfigForm.MaxCallBackCount.$invalid && !campaingConfigForm.MaxCallBackCount.$pristine }">
+
+                                        <input type="number" min="0" class="form-control has-feedback-left"
+                                               ng-model="callback.MaxCallBackCount"
+                                               placeholder="Max CallBack Count" required>
+                                        <span class="fa fa-sort-numeric-asc form-control-feedback left" aria-hidden="true"></span>
+                                        <p ng-show="campaingConfigForm.MaxCallBackCount.$invalid && !campaingConfigForm.MaxCallBackCount.$pristine"
+                                           class="help-block">Max CallBackCount is required.</p>
+                                    </div>
+
+                                    <div class="col-md-3 col-sm-3 col-xs-3 form-group"
+                                         ng-class="{ 'has-error' : campaingConfigForm.CallbackInterval.$invalid && !campaingConfigForm.CallbackInterval.$pristine }">
+
+                                        <input type="number" min="0" class="form-control has-feedback-left"
+                                               ng-model="callback.CallbackInterval"
+                                               placeholder="Callback Interval(sec)" required>
+                                        <span class="fa fa-sort-numeric-asc form-control-feedback left" aria-hidden="true"></span>
+                                        <p ng-show="campaingConfigForm.CallbackInterval.$invalid && !campaingConfigForm.CallbackInterval.$pristine"
+                                           class="help-block">Callback Interval is required.</p>
+                                    </div>
+
+                                    <div class="col-md-3 col-sm-3 col-xs-3 form-group">
+                                        <button type="button" class="btn btn-success btn-xs " ng-disabled="campaingConfigForm.$invalid" ng-click="AddCallBack(callback)">
+                                            Add
+                                        </button>
+
+                                    </div>
+
+                                    <div class="col-sm-12">
+                                        <div class="table-wrapper daynamic-s-tble" >
+                                            <table  dt-options="dtOptions" datatable="ng"
+                                                   class="table table-striped table-bordered dt-responsive nowrap dataTable no-footer dtr-inline"
+                                                   cellspacing="0" width="100%" role="grid"
+                                                   aria-describedby="datatable-responsive_info">
+                                                <thead>
+                                                <tr role="row">
+                                                    <th class="sorting" tabindex="0" aria-controls="datatable-responsive"
+                                                        rowspan="1"
+                                                        colspan="1" aria-label="From">Reason
+                                                    </th>
+                                                    <th class="sorting" tabindex="0" aria-controls="datatable-responsive"
+                                                        rowspan="1"
+                                                        colspan="1" aria-label="To">Max Callback
+                                                    </th>
+                                                    <th class="sorting" tabindex="0" aria-controls="datatable-responsive"
+                                                        rowspan="1"
+                                                        colspan="1" aria-label="AgentSkill">Callback Interval
+                                                    </th>
+                                                    <th class="sorting" tabindex="0" aria-controls="datatable-responsive"
+                                                        rowspan="1"
+                                                        colspan="1" aria-label="AgentSkill">Delete
+                                                    </th>
+                                                </tr>
+                                                </thead>
+                                                <tbody>
+                                                <tr role="row" class="odd"
+                                                    ng-repeat="cdr in callbacks">
+
+                                                    <td>{{cdr.CampCallBackReasons.Reason}}</td>
+                                                    <td>{{cdr.MaxCallBackCount}}</td>
+                                                    <td>{{cdr.CallbackInterval}}</td>
+                                                    <td><a ng-disabled="true" ng-click="deleteReason(cdr)" style="cursor: pointer"><i
+                                                            class="fa fa-trash-o" ng-show="cdr.CampCallBackReasons.Status"></i></a> <i
+                                                            class="fa fa-times" ng-hide="cdr.CampCallBackReasons.Status"></i></td>
+                                                </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                        </div>
+
+
+
+                        <div class="col-md-12 col-sm-12 col-xs-12 form-group has-feedback">
+                            <button type="button" class="btn btn-success btn-xs " ng-click="updateCampaignConfig(callback)">
+                                Update
+                            </button>
+
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+</div>
+
+
+
+

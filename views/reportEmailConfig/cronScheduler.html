@@ -1,0 +1,147 @@
+<div ng-controller="cronScheduleCtrl" class="col-md-12 col-sm-12 col-xs-12">
+    <br><br>
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <div class="col-md-11 col-sm-11 col-xs-11">
+            <h3 ng-show="newDropDownState">New Schedule Configuration</h3>
+        </div>
+        <div class="col-md-1 col-sm-1 col-xs-1">
+            <button class="btn btn-success" ng-click="pressNewButton()">
+                +
+            </button>
+        </div>
+    </div>
+
+    <div class="col-md-12 col-sm-12 col-xs-12" ng-show="newDropDownState">
+        <div class="x_content">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="col-md-12 col-sm-12 col-xs-12">
+
+                    <div class="col-md-12 col-sm-12 col-xs-12 form-group has-feedback">
+                        <label>Description</label>
+                        <input type="text" class="form-control" ng-model="currentCron.Description">
+                    </div>
+
+                    <div class="col-md-12 col-sm-12 col-xs-12 form-group has-feedback">
+                        <label>Time Zone</label>
+
+                        <timezone-selector ng-model="currentCron.Timezone"></timezone-selector>
+                    </div>
+
+                    <div class="col-md-12 col-sm-12 col-xs-12 form-group has-feedback">
+                        <label>CRON Pattern</label>
+                        <cron-selection ng-model="currentCron.CronePattern" config="cronConfig"></cron-selection>
+                    </div>
+
+                    <div class="col-md-12 col-sm-12 col-xs-12 form-group has-feedback">
+                        <label>Callback URL</label>
+                        <input type="text" class="form-control" ng-model="currentCron.CallbackURL">
+                    </div>
+
+                    <div class="col-md-12 col-sm-12 col-xs-12 form-group has-feedback">
+                        <label>Callback Data</label>
+                        <textarea class="form-control" rows="10" ng-model="currentCron.CallbackData"></textarea>
+                    </div>
+
+                    <div class="col-md-12 col-sm-12 col-xs-12 form-group has-feedback">
+                        <button class="btn btn-success" ng-click="addNewCron()" ng-disabled="!currentCron.CronePattern || !currentCron.Description || !currentCron.CallbackURL">
+                            Add Schedule
+                        </button>
+
+                        <button class="btn btn-success" ng-click="pressCancelButton()">
+                            Cancel
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <br>
+        <div class="x_panel">
+            <div class="x_content col-md-12 col-sm-12 col-xs-12">
+                <ul>
+                    <div class="mail_list_column sip-user-wrap"
+                         ng-mouseover="viewScroll()"
+                         ng-mouseleave="hideScroll()"
+                         ng-slimscroll
+                         height="670" width="100%" opacity="0.2" distance="0px"
+                         enabled="{{ scrollEnabled }}">
+                        <div class="col-md-6 col-sm-6 col-xs-6">
+
+                        </div>
+                        <div class="col-md-6 col-sm-6 col-xs-6 form-group top_search">
+                            <div class="input-group">
+                                <input type="text" ng-model="searchCriteria" class="form-control"
+                                       placeholder="Search for...">
+                                <span class="input-group-btn">
+                                  <button class="btn btn-default" type="button">Go!</button>
+                                </span>
+                            </div>
+                        </div>
+                        <a href="javascript:void(0);" class="user-wrap hover-none"
+                           ng-repeat="cron in cronList | filterBy: ['Description']: searchCriteria">
+                            <div class="mail_list user-list">
+                                <div class="right user-option-wrap">
+                                    <h3 class="font-robot sub-header">
+                                        {{cron.Description}}
+                                        <small class="fa fa-trash" ng-click="removeCron(cron)"></small>
+                                        <small class="fa fa-pencil" ng-click="cronEditMode(cron)"></small>
+                                    </h3>
+
+                                    <p class="font-robot">
+                                        Pattern : {{cron.CronePattern}}
+                                    </p>
+                                    <p class="font-robot">
+                                        Unique Id : {{cron.UniqueId}}
+                                    </p>
+                                </div>
+                                <div class="left">
+                                </div>
+                            </div>
+
+                            <br>
+
+                            <div class="col-md-12 col-sm-12 col-xs-12" style="border: 1px solid #ccc!important; border-radius: 5px" ng-if="cron.OpenStatus">
+
+                                <br>
+                                <h4>Schedule - Additional Info</h4>
+                                <br>
+                                <div class="col-md-12 col-sm-12 col-xs-12 form-group has-feedback">
+                                    <label>Description</label>
+                                    <input type="text" class="form-control"
+                                           ng-model="cron.Description">
+                                </div>
+
+                                <fieldset ng-disabled="true" class="col-md-12 col-sm-12 col-xs-12 form-group has-feedback">
+                                    <label>CRON Pattern *(Read Only)</label>
+                                    <cron-selection ng-model="cron.CronePattern" config="cronConfig"></cron-selection>
+                                </fieldset>
+
+                                <div class="col-md-12 col-sm-12 col-xs-12 form-group has-feedback">
+                                    <label>Callback URL</label>
+                                    <input type="text" class="form-control" ng-model="cron.CallbackURL">
+                                </div>
+
+                                <div class="col-md-12 col-sm-12 col-xs-12 form-group has-feedback">
+                                    <label>Callback Data</label>
+                                    <textarea class="form-control" rows="10" ng-model="cron.CallbackData"></textarea>
+                                </div>
+
+                                <div class="clearfix"></div>
+
+                                <div class="col-md-12 col-sm-12 col-xs-12 form-group has-feedback">
+                                    <button class="btn btn-success" ng-click="updateCron(cron)">
+                                        Update
+                                    </button>
+                                </div>
+
+                            </div>
+                        </a>
+                    </div>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+</div>

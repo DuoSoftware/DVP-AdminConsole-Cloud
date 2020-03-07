@@ -1,0 +1,346 @@
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12 animated fadeIn">
+        <div class="x_panel main-title">
+            <div class="x_title">
+                <h2><b>REPORT</b> | AGENT - ACW Details</h2>
+                <ul class="nav navbar-right panel_toolbox">
+                    <li ng-show="!showFilter" ng-click="showFilter= !showFilter"><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                    </li>
+                    <li ng-show="showFilter" ng-click="showFilter= !showFilter"><a class="close-link"><i class="fa fa-chevron-down"></i></a>
+                    </li>
+                </ul>
+                <div class="clearfix"></div>
+            </div>
+            <div class="x_content" ng-show="!showFilter">
+
+                <div class="col-md-2 col-sm-2 col-xs-12">
+                    <label>Agents</label>
+
+
+                        <input type="text" class="form-control" ng-model="obj.resourceId" data-min-length="1" data-html="1"
+                               data-limit="1000" data-auto-select="true" data-animation="am-flip-x"
+                               bs-options="user as user.ResourceName for user in resourceDetails"
+                               placeholder="Agent" bs-typeahead>
+
+
+
+                    <!--<select class="form-control" ng-model="obj.resourceId"
+                            ng-model-options="{trackBy: '$value'}">
+                        <option value=""></option>
+                        <option ng-repeat="resourceDetail in resourceDetails" value="{{resourceDetail.ResourceId}}">
+                            {{resourceDetail.ResourceName}}
+                        </option>
+                    </select>-->
+                </div>
+                <div class="col-md-2 col-sm-2 col-xs-12">
+                    <label>Queue</label>
+                    <input type="text" class="form-control" ng-model="skillFilter" min-length="0" data-html="1" data-auto-select="true" data-animation="am-flip-x" bs-options="queue.QueueName as queue.QueueName for queue in qList" placeholder="Skill" bs-typeahead>
+                </div>
+                <div class="col-md-2 col-sm-2 col-xs-12">
+                    <label>Start Date</label>
+                    <input type="text" class="form-control" ng-model="obj.startDay" name="startDate" ng-change="onDateChange()" datepicker>
+                </div>
+                <fieldset class="col-md-2 col-sm-2 col-xs-12">
+                    <label>Start Time</label>
+                    <div class="bootstrap-timepicker">
+                        <input id="timepickerSt" type="text" class="form-control" ng-model="startTime">
+                        <i class="icon-time"></i>
+                    </div>
+                </fieldset>
+                <div class="col-md-2 col-sm-2 col-xs-12">
+                    <label>End Date</label>
+                    <input type="text" class="form-control" ng-model="obj.endDay" name="endDate" ng-change="onDateChange()" datepicker>
+                </div>
+                <fieldset class="col-md-2 col-sm-2 col-xs-12">
+                    <label>End Time</label>
+                    <div class="bootstrap-timepicker">
+                        <input id="timepickerEt" type="text" class="form-control" ng-model="endTime">
+                        <i class="icon-time"></i>
+                    </div>
+                </fieldset>
+                <div class="col-lg-1 col-md-2 col-sm-3 col-xs-6" style="padding-top: 25px">
+                    <button type="button" class="btn btn-success" ng-click="getAcwSummery()">
+                        Search
+                    </button>
+                </div>
+                <div class="col-lg-1 col-md-2 col-sm-3 col-xs-6" style="padding-top: 25px">
+                    <a ng-if="fileDownloadState === 'READY'" class="btn btn-success" role="button" target="_self" href="{{DownloadCSVFileUrl}}" download="{{currentCSVFilename}}" ng-click="downloadPress()">CSV&nbsp;&nbsp;&nbsp;&nbsp;
+                        <i class="fa fa-download"></i></a>
+                    <button ng-if="fileDownloadState === 'RESET'" ng-disabled="!cancelDownload" class="btn btn-success" type="button" ng-click="processDownloadRequest()">
+                        CSV&nbsp;&nbsp;&nbsp;&nbsp;
+                        <i ng-class="buttonClass"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div ng-if="obj.isTableLoading==0">
+            <div class="row ">
+                <div class="col-md-12 col-sm-12 col-xs-12">
+                    <div class="data-state-wrap">
+                        Please Wait...
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="x_panel" style="z-index:0" ng-if="obj.isTableLoading==1">
+            <div class>
+                <div class="row top_tiles">
+                    <div class="animated fadeIn col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                        <div class="tile-stats bg-purple acwdetails-title">
+                            <div class="count">{{totalAcwSessions}}</div>
+                            <h3 class="font-robot font-700" style="color: #ccc!important;">
+                                Total ACW Sessions
+                            </h3>
+                        </div>
+                    </div>
+                    <div class="animated fadeIn col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                        <div class="tile-stats bg-purple500 acwdetails-title">
+                            <div class="count">{{timeStr}}</div>
+                            <h3 class="font-robot font-700 font-yellow800">Total ACW Time Spent</h3>
+                        </div>
+                    </div>
+                    <div class="animated fadeIn col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                        <div class="tile-stats bg-purple700 acwdetails-title">
+                            <div class="count">{{averageAcwTime}} sec</div>
+                            <h3 class="font-robot font-700 font-orange800">Average ACW Time Per Call</h3>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <uib-accordion>
+                <div uib-accordion-group class="panel-default">
+                    <uib-accordion-heading>
+                        ACW Details<i class="pull-right glyphicon"
+                                      ng-class="{'glyphicon-chevron-down': true, 'glyphicon-chevron-right': false}"></i>
+                    </uib-accordion-heading>
+                    <div class="col-md-12 col-sm-12 col-xs-12"
+                         style="padding: 10px;background-color: #eee">
+                        <div class="col-md-3 col-sm-2 col-xs-3">Agent Name</div>
+                        <div class="col-md-1 col-sm-2 col-xs-2">Call Direction</div>
+                        <div class="col-md-2 col-sm-2 col-xs-2">From Number</div>
+                        <div class="col-md-2 col-sm-2 col-xs-2">To Number</div>
+                        <div class="col-md-2 col-sm-2 col-xs-2">Skill</div>
+                        <div class="col-md-1 col-sm-2 col-xs-2">Hangup Party</div>
+                        <div class="col-md-1 col-sm-2 col-xs-3">ACW Duration(in sec)</div>
+                    </div>
+                    <div class="col-md-12 col-sm-12 col-xs-12">
+                        <div ng-show="showTable" ng-repeat="acwRecord in allAcwRecords">
+
+                            <div class="col-md-12 col-sm-12 col-xs-12"
+                                 style="border: 1px solid #ccc!important;padding: 15px;border-radius: 2px;
+                                             font-size: 15px;margin-bottom: 10px;">
+                                <div class="col-md-3 col-sm-2 col-xs-4">{{acwRecord.ResResource ? acwRecord.ResResource.ResourceName : 'undefined';}}</div>
+                                <div class="col-md-1 col-sm-2 col-xs-2">{{acwRecord.CallCDRProcessed ? acwRecord.CallCDRProcessed.DVPCallDirection:'undefined'}}</div>
+                                <div class="col-md-2 col-sm-2 col-xs-2">{{acwRecord.CallCDRProcessed ? acwRecord.CallCDRProcessed.SipFromUser:'undefined'}}</div>
+                                <div class="col-md-2 col-sm-2 col-xs-2">{{acwRecord.CallCDRProcessed ? acwRecord.CallCDRProcessed.SipToUser:'undefined'}}</div>
+                                <div class="col-md-2 col-sm-2 col-xs-2">{{acwRecord.CallCDRProcessed ? acwRecord.CallCDRProcessed.AgentSkill:'undefined'}}</div>
+                                <div class="col-md-1 col-sm-2 col-xs-2">{{acwRecord.CallCDRProcessed ? acwRecord.CallCDRProcessed.HangupParty:'undefined'}}</div>
+                                <div class="col-md-1 col-sm-2 col-xs-3">{{acwRecord.Duration}}</div>
+                            </div>
+                        </div>
+                        <div class="col-md-12 col-sm-12 col-xs-12">
+                            <ul uib-pagination total-items="totalAcwSessions" items-per-page="20" ng-model="pagination.currentPage" max-size="5" class="pagination-sm" boundary-link-numbers="true" ng-change="getAcwRecords()"></ul>
+                        </div>
+                        <!--<div class="col-md-12 col-sm-12 col-xs-12" ng-show="showPaging"
+                             style="border: 1px solid #ccc!important;padding: 15px;border-radius: 2px;
+                                 font-size: 15px;margin-bottom: 10px;">
+                            <div class="col-md-2 col-sm-3 col-xs-3"></div>
+                            <div class="col-md-2 col-sm-2 col-xs-2"><a id="link-1" href ng-click="getAcwRecords(currentPage)">more</a></div>
+                            <div class="col-md-3 col-sm-3 col-xs-3"></div>
+                        </div>-->
+                    </div>
+                </div>
+            </uib-accordion>
+        </div>
+    </div>
+</div>
+
+<!--Old-->
+<!--<div>-->
+    <!--<div class="page-title">-->
+        <!--<div class="title_left">-->
+            <!--<h3 class="font-robot font-600 ">Agent ACW Detail Report</h3>-->
+        <!--</div>-->
+    <!--</div>-->
+
+
+    <!--<div class="col-md-12 col-sm-12 col-xs-12 animated fadeIn">-->
+        <!--<div class="row">-->
+            <!--<div class="x_panel">-->
+                <!--<div class="x_content">-->
+
+                    <!--<div class="col-md-2 col-sm-2 col-xs-12">-->
+                        <!--<label>Agents</label>-->
+                        <!--<select class="form-control" ng-model="obj.resourceId"-->
+                                <!--ng-model-options="{trackBy: '$value'}">-->
+                            <!--<option ng-repeat="resourceDetail in resourceDetails" value="{{resourceDetail.ResourceId}}">-->
+                                <!--{{resourceDetail.ResourceName}}-->
+                            <!--</option>-->
+                        <!--</select>-->
+                    <!--</div>-->
+
+                    <!--<div class="col-md-2 col-sm-2 col-xs-12">-->
+
+                        <!--<label>Queue</label>-->
+                        <!--<input type="text" class="form-control" ng-model="skillFilter" min-length="0" data-html="1" data-auto-select="true" data-animation="am-flip-x" bs-options="queue.QueueName as queue.QueueName for queue in qList" placeholder="Skill" bs-typeahead>-->
+
+                    <!--</div>-->
+
+                    <!--<div class="col-md-2 col-sm-2 col-xs-12">-->
+                        <!--<label>Start Date</label>-->
+                        <!--<input type="text" class="form-control" ng-model="obj.startDay" name="startDate" datepicker>-->
+                    <!--</div>-->
+
+                    <!--<fieldset class="col-md-2 col-sm-2 col-xs-12">-->
+                        <!--<label>Start Time</label>-->
+                        <!--<div class="bootstrap-timepicker">-->
+                            <!--<input id="timepickerSt" type="text" class="form-control" ng-model="startTime">-->
+                            <!--<i class="icon-time"></i>-->
+                        <!--</div>-->
+                    <!--</fieldset>-->
+
+
+                    <!--<div class="col-md-2 col-sm-2 col-xs-12">-->
+                        <!--<label>End Date</label>-->
+                        <!--<input type="text" class="form-control" ng-model="obj.endDay" name="endDate" datepicker>-->
+                    <!--</div>-->
+
+                    <!--<fieldset class="col-md-2 col-sm-2 col-xs-12">-->
+                        <!--<label>End Time</label>-->
+                        <!--<div class="bootstrap-timepicker">-->
+                            <!--<input id="timepickerEt" type="text" class="form-control" ng-model="endTime">-->
+                            <!--<i class="icon-time"></i>-->
+                        <!--</div>-->
+                    <!--</fieldset>-->
+
+                    <!--<div class="col-lg-1 col-md-2 col-sm-3 col-xs-6">-->
+                        <!--<div class="x_content btn-wrap-header" style="position: relative; top: 10px">-->
+                            <!--<button type="button" class="btn btn-success" ng-click="getAcwSummery()">-->
+                                <!--Search-->
+                            <!--</button>-->
+                        <!--</div>-->
+                    <!--</div>-->
+                    <!--<div class="col-lg-1 col-md-2 col-sm-3 col-xs-6" style="position: relative; top: 25px">-->
+                        <!--<a ng-if="fileDownloadState === 'READY'" class="btn btn-default" style="background-color: #a3d100; color: #000000; font-weight: 500" role="button" target="_self" href="{{DownloadCSVFileUrl}}" download="{{currentCSVFilename}}" ng-click="downloadPress()">CSV&nbsp;&nbsp;&nbsp;&nbsp;-->
+                            <!--<i class="fa fa-download"></i></a>-->
+                        <!--<button ng-if="fileDownloadState === 'RESET'" ng-disabled="!cancelDownload" class="btn" style="background-color: #a3d100; color: #000000; font-weight: 500" type="button" ng-click="processDownloadRequest()">-->
+                            <!--CSV&nbsp;&nbsp;&nbsp;&nbsp;-->
+                            <!--<i ng-class="buttonClass"></i>-->
+                        <!--</button>-->
+
+                    <!--</div>-->
+                    <!--<div class="clearfix"></div>-->
+                    <!--<br>-->
+
+                    <!--<div class="col-md-12 col-sm-12 col-xs-12" style="z-index:0" ng-if="obj.isTableLoading==1">-->
+
+                        <!--<div class>-->
+                            <!--<div class="row top_tiles">-->
+                                <!--<div class="animated fadeIn col-lg-4 col-md-4 col-sm-4 col-xs-12">-->
+                                    <!--<div class="tile-stats bg-red50 acwdetails-title">-->
+                                        <!--<div class="count">{{totalAcwSessions}}</div>-->
+                                        <!--<h3 class="font-robot font-700 font-gray800">-->
+                                            <!--Total ACW Sessions-->
+                                        <!--</h3>-->
+                                    <!--</div>-->
+                                <!--</div>-->
+                                <!--<div class="animated fadeIn col-lg-4 col-md-4 col-sm-4 col-xs-12">-->
+                                    <!--<div class="tile-stats bg-green100 acwdetails-title">-->
+                                        <!--<div class="count">{{timeStr}}</div>-->
+                                        <!--<h3 class="font-robot font-700 font-yellow800">Total ACW Time Spent</h3>-->
+                                    <!--</div>-->
+                                <!--</div>-->
+                                <!--<div class="animated fadeIn col-lg-4 col-md-4 col-sm-4 col-xs-12">-->
+                                    <!--<div class="tile-stats bg-blue700 acwdetails-title">-->
+                                        <!--<div class="count">{{averageAcwTime}} sec</div>-->
+                                        <!--<h3 class="font-robot font-700 font-orange800">Average ACW Time Per Call</h3>-->
+                                    <!--</div>-->
+                                <!--</div>-->
+                            <!--</div>-->
+                        <!--</div>-->
+
+                        <!--<uib-accordion>-->
+                            <!--<div uib-accordion-group class="panel-default">-->
+                                <!--<uib-accordion-heading>-->
+                                    <!--ACW Details<i class="pull-right glyphicon"-->
+                                                  <!--ng-class="{'glyphicon-chevron-down': true, 'glyphicon-chevron-right': false}"></i>-->
+                                <!--</uib-accordion-heading>-->
+                                <!--<div class="col-md-12 col-sm-12 col-xs-12">-->
+                                    <!--<div class="col-md-12 col-sm-12 col-xs-12"-->
+                                         <!--style="border: 1px solid #ccc!important;padding: 15px;border-radius: 2px;-->
+                                             <!--font-size: 15px;margin-bottom: 10px; background-color: rgb(193, 193, 193);">-->
+                                        <!--<div class="col-md-2 col-sm-2 col-xs-2">Call Direction</div>-->
+                                        <!--<div class="col-md-2 col-sm-2 col-xs-2">From Number</div>-->
+                                        <!--<div class="col-md-2 col-sm-2 col-xs-2">To Number</div>-->
+                                        <!--<div class="col-md-2 col-sm-2 col-xs-2">Skill</div>-->
+                                        <!--<div class="col-md-2 col-sm-2 col-xs-2">Hangup Party</div>-->
+                                        <!--<div class="col-md-2 col-sm-2 col-xs-3">ACW Duration(in sec)</div>-->
+
+                                    <!--</div>-->
+                                    <!--<div ng-show="showTable" ng-repeat="acwRecord in allAcwRecords">-->
+
+                                        <!--<div class="col-md-12 col-sm-12 col-xs-12"-->
+                                             <!--style="border: 1px solid #ccc!important;padding: 15px;border-radius: 2px;-->
+                                             <!--font-size: 15px;margin-bottom: 10px;">-->
+                                            <!--<div class="col-md-2 col-sm-2 col-xs-2">{{acwRecord.DVPCallDirection}}</div>-->
+                                            <!--<div class="col-md-2 col-sm-2 col-xs-2">{{acwRecord.SipFromUser}}</div>-->
+                                            <!--<div class="col-md-2 col-sm-2 col-xs-2">{{acwRecord.SipToUser}}</div>-->
+                                            <!--<div class="col-md-2 col-sm-2 col-xs-2">{{acwRecord.AgentSkill}}</div>-->
+                                            <!--<div class="col-md-2 col-sm-2 col-xs-2">{{acwRecord.HangupParty}}</div>-->
+                                            <!--<div class="col-md-2 col-sm-2 col-xs-3">{{acwRecord.Duration}}</div>-->
+                                        <!--</div>-->
+                                    <!--</div>-->
+                                    <!--<div class="col-md-12 col-sm-12 col-xs-12">-->
+                                        <!--<ul uib-pagination total-items="totalAcwSessions" items-per-page="20" ng-model="pagination.currentPage" max-size="5" class="pagination-sm" boundary-link-numbers="true" ng-change="getAcwRecords()"></ul>-->
+                                    <!--</div>-->
+                                    <!--&lt;!&ndash;<div class="col-md-12 col-sm-12 col-xs-12" ng-show="showPaging"-->
+                                         <!--style="border: 1px solid #ccc!important;padding: 15px;border-radius: 2px;-->
+                                             <!--font-size: 15px;margin-bottom: 10px;">-->
+                                        <!--<div class="col-md-2 col-sm-3 col-xs-3"></div>-->
+                                        <!--<div class="col-md-2 col-sm-2 col-xs-2"><a id="link-1" href ng-click="getAcwRecords(currentPage)">more</a></div>-->
+                                        <!--<div class="col-md-3 col-sm-3 col-xs-3"></div>-->
+                                    <!--</div>&ndash;&gt;-->
+                                <!--</div>-->
+                            <!--</div>-->
+                        <!--</uib-accordion>-->
+                    <!--</div>-->
+                <!--</div>-->
+
+            <!--</div>-->
+        <!--</div>-->
+    <!--</div>-->
+
+    <!--<div class="search-main-wrap" ng-if="obj.isTableLoading==0">-->
+        <!--<div class="row ">-->
+            <!--<div class="col-md-12 col-sm-12 col-xs-12">-->
+                <!--<div class="data-state-wrap">-->
+                    <!--Please Wait...-->
+                <!--</div>-->
+
+            <!--</div>-->
+        <!--</div>-->
+    <!--</div>-->
+
+
+<!--</div>-->
+<!--Old-->
+
+<script>
+	window.scrollTo(0, 0);
+</script>
+
+<script type="text/javascript">
+    $('#timepickerSt').timepicker({
+        template: false,
+        showInputs: false,
+        minuteStep: 5
+    });
+</script>
+
+<script type="text/javascript">
+    $('#timepickerEt').timepicker({
+        template: false,
+        showInputs: false,
+        minuteStep: 5
+    });
+</script>

@@ -1,0 +1,57 @@
+
+<div class="modal-header">
+    <h3 class="modal-title">Skill : {{selectedTask.ResTaskInfo.TaskName}}</h3>
+</div>
+<div class="modal-body">
+    <div class="x_content">
+
+        <form class="form-horizontal form-label-left input_mask">
+
+            <div class="col-md-12 col-sm-6 col-xs-12 form-group has-feedback">
+                <input type="text" class="form-control has-feedback-left" ng-model="selectedTask.Percentage" id="Percentage" placeholder="Percentage">
+                <span class="fa fa-user form-control-feedback left" aria-hidden="true"></span>
+            </div>
+
+
+            <div class='content'>
+                <div class="row-fluiddrag">
+                    <ul class="thumbnailsdrag">
+                        <li class="span3drag" style='margin-left:10px;'>
+                            <div class="thumbnaildrag" data-drop="true" ng-model='selectedAttribute'
+                                 data-jqyoui-options="{accept:'.btn-draggable:not([ng-model=selectedAttribute])'}"
+                                 jqyoui-droppable="{multiple:true}">
+                                <div class="caption">
+                                    <div ng-click="setObject(item)" class="btn btn-info btn-draggable" ng-repeat="item in selectedAttribute" ng-show="item.Attribute"
+                                         data-drag="true" data-jqyoui-options="{revert: 'invalid'}"
+                                         ng-model="selectedAttribute" jqyoui-draggable="{index: {{$index}},animate:true}">{{item.Attribute}}
+
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+
+                        <li class="span3drag" style='margin-left:10px;'>
+                            <div class="thumbnaildrag" data-drop="true" ng-model='assignSkill_selectedTask.attributes'
+                                 data-jqyoui-options="{accept:'.btn-draggable:not([ng-model=assignSkill_selectedTask.attributes])'}"
+                                 jqyoui-droppable="{multiple:true}">
+                                <div class="caption">
+                                    <div ng-click="setObject(item)" class="btn btn-info btn-draggable" ng-repeat="item in assignSkill_selectedTask.attributes" ng-show="item.Attribute"
+                                         data-drag="true" data-jqyoui-options="{revert: 'invalid'}"
+                                         ng-model="assignSkill_selectedTask.attributes" jqyoui-draggable="{index: {{$index}},animate:true}">{{item.Attribute}}
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+        </form>
+    </div>
+</div>
+<div class="modal-footer">
+    <button class="btn btn-primary" type="button" ng-click="ok()">OK</button>
+    <button class="btn btn-warning" type="button" ng-click="cancel()">Cancel</button>
+</div>
+
+

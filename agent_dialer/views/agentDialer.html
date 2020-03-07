@@ -1,0 +1,257 @@
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <div class="x_panel">
+            <div class="x_title">
+                <h2>Agent Dialer
+                    <small>Number Upload</small>
+                </h2>
+
+                <div class="clearfix"></div>
+            </div>
+
+            <div class="x_content">
+
+
+                <div class="x_panel">
+                    <form class="form-horizontal form-label-left" name="campaingForm" novalidate>
+                        <div class="row">
+
+
+                            <div class="col-md-12 col-sm-12 col-xs-12 form-group has-feedback"
+                                 ng-class="{ 'has-error' : campaingForm.agentList.$invalid && !campaingForm.agentList.$pristine }">
+                                <tags-input id="agentList" ng-model="agentList" display-property="displayName"
+                                            add-from-autocomplete-only="true" placeholder="Add Agent"
+                                            replace-spaces-with-dashes="false" required>
+                                    <auto-complete source="loadCountries($query)"
+                                                   min-length="0"
+                                                   load-on-focus="true"
+                                                   load-on-empty="true"></auto-complete>
+                                </tags-input>
+                                <p ng-show="campaingForm.agentList.$invalid && !campaingForm.agentList.$pristine"
+                                   class="help-block">Agent List is required.</p>
+                            </div>
+
+                            <div class="col-md-12 col-sm-12 col-xs-12 form-group has-feedback"
+                                 ng-class="{ 'has-error' : campaingForm.batchname.$invalid && !campaingForm.batchname.$pristine }">
+
+                                <input type="text" class="form-control has-feedback-left"
+                                       ng-model="agentDial.BatchName"
+                                       placeholder="Batch Name" required>
+                                <span class="fa fa-user form-control-feedback left" aria-hidden="true"></span>
+
+                                <p ng-show="campaingForm.batchname.$invalid && !campaingForm.batchname.$pristine"
+                                   class="help-block">Batch Name is required.</p>
+                            </div>
+
+                            <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
+                                <input accept=".csv" type="file" class="file-chooser" id="files123"
+                                       name="files[]"/>
+                            </div>
+                            <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
+                                <ul class="nav navbar-right panel_toolbox">
+                                    <li ng-click="resetUploader(campaingForm);" title="Reset" ><a class="close-link" ng-click="resetUploader(campaingForm);"><i
+                                            class="fa fa-refresh"></i></a>
+                                    </li>
+
+                                </ul>
+                            </div>
+                            <div class="col-md-12 col-sm-12 col-xs-12 form-group has-feedback">
+
+                                <div ui-grid="gridOptions" ui-grid-importer class="grid"></div>
+
+                                <div>
+                                    <label>rows: {{gridApi.grid.getVisibleRows().length}}</label>
+                                </div>
+                            </div>
+
+                            <div class="col-md-2 col-sm-2 col-xs-2 form-group has-feedback">
+                                <label class="control-label col-md-6 col-sm-6 col-xs-6" >Validate</label>
+                                <div class="col-md-6 col-sm-6 col-xs-6">
+                                    <checkbox class="btn-success" ng-model="agentDial.validateNo"
+                                              ng-change="ValidateNumberSet();" ></checkbox>
+                                </div>
+                            </div>
+
+
+
+                            <div class="col-md-5 col-sm-5 col-xs-5 form-group has-feedback"
+                                 ng-class="{ 'has-error' : campaingForm.columnName.$invalid && !campaingForm.columnName.$pristine }">
+                                <select id="columnName" class="form-control has-feedback-left"
+
+                                        ng-model="agentDial.columnName"
+                                        ng-model-options="{trackBy: '$value'}" ng-change="ValidateNumberSet();" required>
+                                    <option value="" disabled selected>Select Number Column
+                                    </option>
+                                    <option ng-repeat="hData in headerData"
+                                            value="{{hData.name}}">
+                                        {{hData.name}}
+                                    </option>
+                                </select>
+                                <p ng-show="campaingForm.columnName.$invalid && !campaingForm.columnName.$pristine"
+                                   class="help-block">Column Name is required.</p>
+                            </div>
+
+                            <div class="col-md-5 col-sm-5 col-xs-5 form-group has-feedback"
+                                 ng-class="{ 'has-error' : campaingForm.dataColumnName.$invalid && !campaingForm.dataColumnName.$pristine }">
+                                <select id="dataColumnName" class="form-control has-feedback-left"
+                                        ng-change="loadNumbers()"
+                                        ng-model="agentDial.dataColumnName"
+                                        ng-model-options="{trackBy: '$value'}" required>
+                                    <option value="" disabled selected>Select Data Column
+                                    </option>
+                                    <option ng-repeat="hData in headerData"
+                                            value="{{hData.name}}">
+                                        {{hData.name}}
+                                    </option>
+                                </select>
+                                <p ng-show="campaingForm.dataColumnName.$invalid && !campaingForm.dataColumnName.$pristine"
+                                   class="help-block">Column Name is required.</p>
+                            </div>
+
+                            <div class="col-md-2 col-sm2 col-xs-2 form-group has-feedback">
+                                <div class="input-group">
+                                    <input type="text" class="form-control input-group"
+                                           ng-model="leftAddValue"
+                                           placeholder="Left Add">
+                                    <span class="input-group-btn">
+                                                                        <button type="button" class="btn btn-primary"
+                                                                                ng-click="numberLeftAdd()">
+                                                                            Add
+                                                                        </button>
+
+                                                                    </span>
+                                </div>
+                            </div>
+
+                            <div class="col-md-5 col-sm-5 col-xs-5 form-group has-feedback"
+                                 ng-class="{ 'has-error' : campaingForm.Mechanism.$invalid && !campaingForm.Mechanism.$pristine }">
+                                <select id="Mechanism" class="form-control has-feedback-left"
+                                        ng-change="loadNumbers()"
+                                        ng-model="agentDial.Mechanism" required
+                                >
+                                    <option value="" disabled selected>Selection Mechanism</option>
+                                    <option value="Random">Random</option>
+                                    <option value="Sequential">Sequential</option>
+                                </select>
+                                <p ng-show="campaingForm.Mechanism.$invalid && !campaingForm.Mechanism.$pristine"
+                                   class="help-block">Mechanism is required.</p>
+                            </div>
+
+                            <div class="col-md-3 col-sm-3  col-xs-3 form-group has-feedback"
+                                 ng-class="{ 'has-error' : campaingForm.StartDate.$invalid && !campaingForm.StartDate.$pristine }">
+                                <input id="StartDate" type="text" class="form-control"
+                                       ng-model="agentDial.StartDate"
+                                       name="startDate"
+                                       placeholder="Start Date"
+                                       datepicker required>
+                                <p ng-show="campaingForm.StartDate.$invalid && !campaingForm.StartDate.$pristine"
+                                   class="help-block">Start Date is required.</p>
+                            </div>
+
+                            <!--<div class="col-md-10 col-sm-10 col-xs-10 form-group has-feedback"
+                                 ng-class="{ 'has-error' : campaingForm.CampaignName.$invalid && !campaingForm.CampaignName.$pristine }">
+
+                                <uib-progressbar animate="false" value="numberProgress"
+                                                 type="success"><b>{{numberProgress}}%</b>
+                                </uib-progressbar>
+                            </div>-->
+
+
+                            <!--<div class="col-md-2 col-sm-2 col-xs-2 form-group has-feedback">
+                                <button ng-if="!isUploading" type="button" class="btn btn-success right"
+                                        ng-disabled="campaingForm.$invalid" ng-click="ValidateNumberSet()"
+                                        ng-disabled="uploadButtonValue == 'Uploading...'">Validate Numbers
+                                </button>
+                                <button ng-if="isUploading" disabled type="button" class="btn btn-green btn-block"
+                                >
+                                    PLEASE WAIT...
+                                </button>
+                            </div>-->
+
+                            <div class="col-md-2 col-sm-2 col-xs-2 form-group has-feedback">
+                                <button ng-hide="isUploading" type="button" class="btn btn-success right"
+                                        ng-disabled="campaingForm.$invalid" ng-click="assignNumbers()"
+                                        ng-disabled="uploadButtonValue == 'Uploading...'">{{uploadButtonValue}}
+                                </button>
+                                <button ng-show="isUploading" disabled type="button" class="btn btn-green btn-block">
+                                    PLEASE WAIT...
+                                </button>
+                            </div>
+
+
+                        </div>
+                    </form>
+                </div>
+
+                <div class="x_title">
+                    <h2>
+                        <small>Pending Jobs</small>
+                    </h2>
+                    <ul class="nav navbar-right panel_toolbox">
+                        <li ng-click="loadPendingJobs();" title="Reload" ><a class="close-link" ng-click="loadPendingJobs();"><i
+                                class="fa fa-refresh"></i></a>
+                        </li>
+                    </ul>
+                    <div class="clearfix"></div>
+                </div>
+
+                <div class="x_panel">
+
+
+                    <div ng-show="isLoading">
+                        <div class="row ">
+                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                <div class="data-state-wrap">
+                                    Please Wait...
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row" ng-hide="isLoading">
+                        <div ng-hide="pendingJobs.length">
+                            <div class="row ">
+                                <div class="col-md-12 col-sm-12 col-xs-12">
+                                    <div class="data-state-wrap">
+                                        No Pending Jobs.
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-2 col-sm-2 col-xs-2 form-group has-feedback" ng-repeat="p in pendingJobs">
+                            <label ng-click="CheckJobStatus(p);" style="cursor: pointer">BatchName :
+                                {{p.BatchName}}</label>
+                            <label ng-click="CheckJobStatus(p);" style="cursor: pointer">ID : {{p.id}}</label>
+                        </div>
+
+                    </div>
+                    <!--<div class="row">
+
+                        <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
+                            <input accept=".csv" type="file" class="file-chooser" id="files123"
+                                   name="files[]"/>
+                        </div>
+
+
+                        <div class="col-md-12 col-sm-12 col-xs-12 form-group has-feedback">
+
+                            <div ui-grid="gridOptions" ui-grid-importer class="grid"></div>
+
+                            <div>
+                                <label>rows: {{gridApi.grid.getVisibleRows().length}}</label>
+                            </div>
+                        </div>
+                    </div>-->
+
+                </div>
+
+                <!--<div class="ln_solid"></div>-->
+
+
+            </div>
+        </div>
+    </div>
+</div>

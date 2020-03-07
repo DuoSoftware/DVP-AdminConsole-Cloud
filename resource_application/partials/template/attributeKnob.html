@@ -1,0 +1,34 @@
+<!--<small>{{selectedAttribute.Attribute}}</small>-->
+<div class="knob-wrapper">
+
+    <h5> {{selectedAttribute.Attribute}}</h5>
+
+    <div class="knob-container" ng-class="{'knob-container-active' : attrEditOn}">
+        <i class="fa fa-edit knob-edit" ng-if="!attrEditOn" ng-click="initAttributeEdit()"></i>
+        <i class="fa fa-check knob-done" ng-if="attrEditOn" ng-click="initAttributeEdit()"></i>
+        <input class="knob resources-knob" data-width="60"
+               data-height="60"
+               data-displayPrevious=true
+               data-fgColor="#26B99A"
+               data-skin="tron"
+               data-linecap=round
+               data-thickness=".2"
+               value="{{ knobValue }}" id="{{knobId}}">
+    </div>
+
+    <div class="know-delete-wrp" >
+        <button class="btn btn-sm"  ng-click="deleteAttribute(selectedAttribute)">
+            delete
+        </button>
+    </div>
+    <!--<i class="fa fa-times-circle-o "-->
+
+    <!--style="cursor: pointer">-->
+
+    <!--</i>-->
+
+</div>
+
+
+<!--<div  range-slider min="0" max="100" model-min="0" model-max="valurA" pin-handle="min" disabled="false"> </div>-->
+

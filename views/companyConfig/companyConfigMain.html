@@ -1,0 +1,348 @@
+<div class="row">
+    <div class="col-md-12 col-sm-6 col-xs-12 " >
+        <scrollable-tabset show-tooltips="true">
+            <uib-tabset active="0">
+                <uib-tab index="0" heading="Company Details">
+                    <div ng-include="'views/companyConfig/companyDetails.html'">
+                    </div>
+                </uib-tab>
+
+                <uib-tab index="1" heading="Cloud Enduser">
+
+                    <br>
+
+                    <!-- application list -->
+                    <div class="x_panel bg-light-gray animated fadeIn">
+                        <div class="x_title border-0">
+                            <h2 class="font-robot font-300 text-uppercase font-15">Cloud Enduser Details</h2>
+                            <div class="col-xs-12">
+                                <div class="tile-stats m-top15">
+                                    <form class="form-horizontal form-label-left input_mask">
+                                        <div class="row">
+                                            <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
+                                                <span>Domain</span>
+                                                <input type="text" class="form-control has-feedback-left"
+                                                       ng-model="CloudEndUser.Domain"
+                                                       placeholder="Domain">
+                                            </div>
+
+                                            <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
+                                                <span>Connectivity Provision</span>
+                                                <select class="form-control has-feedback-left"
+                                                        ng-model="CloudEndUser.ConnectivityProvision"
+                                                        placeholder="Choose Protocol">
+                                                    <option>SINGLE</option>
+                                                    <option>PROFILE</option>
+                                                    <option>SHARED</option>
+                                                </select>
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col-md-3 col-sm-3 col-xs-12  ">
+                                                <button type="button" class="btn btn-success"
+                                                        ng-click="saveEndUser()">
+                                                    Add
+                                                </button>
+
+                                            </div>
+                                        </div>
+
+                                    </form>
+                                </div>
+                            </div>
+                            <div class="clearfix"></div>
+                        </div>
+                    </div>
+                    <!-- end -->
+
+                    <!-- view application users -->
+
+
+
+                    <div class="x_panel bg-light-gray animated fadeIn">
+                        <div class="x_title border-0">
+                            <h2 class="font-robot font-300 text-uppercase font-15">New Context</h2>
+                            <div class="col-xs-12">
+                                <div class="tile-stats m-top15">
+                                    <form class="form-horizontal form-label-left input_mask">
+                                        <div class="row">
+                                            <div class="col-md-4 col-sm-4 col-xs-12 form-group has-feedback">
+                                                <input type="text" class="form-control has-feedback-left"
+                                                       ng-model="newContext.Context"
+                                                       placeholder="Context Name">
+                                                <span class="form-control-feedback left" aria-hidden="true"><h6 style="color: black">{{contextPrefix}}</h6></span>
+                                            </div>
+
+                                            <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
+                                                <input type="text" class="form-control has-feedback-left"
+                                                       ng-model="newContext.Description"
+                                                       placeholder="Description">
+                                                <span class="fa fa-envelope form-control-feedback left" aria-hidden="true"></span>
+                                            </div>
+
+                                            <div class="col-md-2 col-sm-2 col-xs-12 form-group has-feedback">
+                                                <checkbox class="btn-success" ng-model="newContext.RecordingEnabled"
+                                                          ng-init="newContext.RecordingEnabled=false"></checkbox>
+                                                <label>
+                                                    <small>Recording Enabled</small>
+                                                </label>
+                                            </div>
+
+
+                                        </div>
+
+
+                                        <div class="row">
+
+
+                                            <div class="col-md-3 col-sm-3 col-xs-12  ">
+                                                <button type="button" class="btn btn-success"
+                                                        ng-click="saveNewContext()">
+                                                    Add
+                                                </button>
+
+                                            </div>
+                                        </div>
+
+                                    </form>
+                                </div>
+                            </div>
+                            <div class="clearfix"></div>
+                        </div>
+                    </div>
+
+
+                    <div class="x_panel">
+                        <div class="x_content">
+                            <ul class="list-unstyled timeline">
+                                <li ng-repeat="context in contextList">
+                                    <editcontext context="context" contextlist="contextList" update-Context="removeDeleted(context)">
+
+                                    </editcontext>
+                                </li>
+
+                                <paging ng-show="showPaging"
+                                        class="small"
+                                        page="currentPage"
+                                        page-size="pageSize"
+                                        total="pageTotal"
+                                        show-prev-next="true"
+                                        show-first-last="true"
+                                        text-next-class="glyphicon glyphicon-chevron-right"
+                                        text-prev-class="glyphicon glyphicon-chevron-left"
+                                        text-first-class="glyphicon glyphicon-backward"
+                                        text-last-class="glyphicon glyphicon-forward"
+                                        paging-action="getPageData('attribute', page, pageSize, total)">
+                                </paging>
+                            </ul>
+                        </div>
+                    </div>
+                    <!-- end -->
+
+
+
+                </uib-tab>
+
+                <uib-tab index="2" heading="Ticket Types">
+                    <div ng-include="'views/companyConfig/dynamicTicketTypes.html'">
+                    </div>
+                </uib-tab>
+
+                <uib-tab index="3" heading="Ticket Status">
+                    <div ng-include="'views/companyConfig/customTicketStatus.html'">
+                    </div>
+                </uib-tab>
+
+                <uib-tab index="4" heading="Ticket Prefixes">
+
+                    <div class="x_panel bg-light-gray animated fadeIn">
+                        <div class="x_title border-0">
+                            <h2 class="font-robot font-300 text-uppercase font-15">New Ticket Prefix</h2>
+                            <div class="col-xs-12">
+                                <div class="tile-stats m-top15">
+                                    <form class="form-horizontal form-label-left input_mask">
+                                        <div class="row">
+                                            <div class="col-md-3 col-sm-3 col-xs-12 form-group has-feedback">
+                                                <form>
+                                                    <span style="color: black;">Prefix Name</span>
+                                                    <input type="text" class="form-control "
+                                                           ng-model="newPrefix.name"
+                                                           placeholder="Prefix Name" ng-change="setChangeStatus()" required>
+                                                    <span  ng-if="!isValidPrefix && validmsg"><h4 style="color: red ;">{{validmsg}}</h4></span>
+                                                    <span  ng-if="isValidPrefix && validmsg"><h4 style="color: green; ">{{validmsg}}</h4></span>
+
+                                                    <div class="row">
+                                                        <div class="col-md-9 col-sm-9 col-xs-12  ">
+
+                                                            <button type="button" class="btn btn-success btn-block  btn- pull-right"
+                                                                    ng-click="checkPrefixAvailability()">
+                                                                check availability
+                                                            </button>
+
+                                                        </div>
+                                                    </div>
+                                                </form>
+
+                                            </div>
+
+
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col-md-3 col-sm-3 col-xs-12  ">
+
+                                            </div>
+                                            <div class="col-md-3 col-sm-3 col-xs-12  ">
+
+                                            </div>
+                                            <div class="col-md-3 col-sm-3 col-xs-12  ">
+
+                                            </div>
+                                            <div class="col-md-3 col-sm-3 col-xs-12  ">
+                                                <button ng-disabled="!isValidPrefix" type="button" class="btn btn-success btn-block  btn- pull-right"
+                                                        ng-click="saveNewTicketPrefix()">
+                                                    Add
+                                                </button>
+
+                                            </div>
+                                        </div>
+
+                                    </form>
+                                </div>
+                            </div>
+                            <div class="clearfix"></div>
+                        </div>
+                    </div>
+
+
+
+                    <div class="x_panel">
+                        <div class="x_content">
+                            <ul class="list-unstyled timeline">
+                                <li ng-repeat="prefix in prefixList">
+                                    <editprefix prefix="prefix" prefixlist="prefixList" reloadpage="getTicketPrefixes()">
+
+                                    </editprefix>
+                                </li>
+
+                                <paging ng-show="showPaging"
+                                        class="small"
+                                        page="currentPage"
+                                        page-size="pageSize"
+                                        total="pageTotal"
+                                        show-prev-next="true"
+                                        show-first-last="true"
+                                        text-next-class="glyphicon glyphicon-chevron-right"
+                                        text-prev-class="glyphicon glyphicon-chevron-left"
+                                        text-first-class="glyphicon glyphicon-backward"
+                                        text-last-class="glyphicon glyphicon-forward"
+                                        paging-action="getPageData('attribute', page, pageSize, total)">
+                                </paging>
+                            </ul>
+                        </div>
+                    </div>
+
+
+                </uib-tab>
+
+                <uib-tab index="5" heading="User Tags">
+                    <div class="x_panel bg-light-gray animated fadeIn">
+                        <div class="x_title border-0">
+                            <h2 class="font-robot font-300 text-uppercase font-15">New User Tag</h2>
+                            <div class="col-xs-12">
+                                <div class="tile-stats m-top15">
+                                    <form class="form-horizontal form-label-left input_mask">
+                                        <div class="row">
+                                            <div class="col-md-3 col-sm-3 col-xs-12 form-group has-feedback">
+
+                                                <span style="color: black;">User Tag</span>
+                                                <input type="text" class="form-control "
+                                                       ng-model="newUserTag.name"
+                                                       placeholder="User Tag" required>
+
+                                            </div>
+
+
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col-md-3 col-sm-3 col-xs-12  ">
+
+                                            </div>
+                                            <div class="col-md-3 col-sm-3 col-xs-12  ">
+
+                                            </div>
+                                            <div class="col-md-3 col-sm-3 col-xs-12  ">
+
+                                            </div>
+                                            <div class="col-md-3 col-sm-3 col-xs-12  ">
+                                                <button  type="button" class="btn btn-success btn-block  btn- pull-right"
+                                                         ng-click="createNewUserTag(newUserTag.name)">
+                                                    Add
+                                                </button>
+
+                                            </div>
+                                        </div>
+
+                                    </form>
+                                </div>
+                            </div>
+                            <div class="clearfix"></div>
+                        </div>
+                    </div>
+                    <div class="x_panel">
+                        <div class="x_content">
+                            <ul class="list-unstyled timeline">
+                                <li ng-repeat="usertag in userTagList">
+                                    <editusertags usertag="usertag" taglist="userTagList" reloadpage="removeDeletedTags(usertag)">
+
+                                    </editusertags>
+                                </li>
+
+                                <paging ng-show="showPaging"
+                                        class="small"
+                                        page="currentPage"
+                                        page-size="pageSize"
+                                        total="pageTotal"
+                                        show-prev-next="true"
+                                        show-first-last="true"
+                                        text-next-class="glyphicon glyphicon-chevron-right"
+                                        text-prev-class="glyphicon glyphicon-chevron-left"
+                                        text-first-class="glyphicon glyphicon-backward"
+                                        text-last-class="glyphicon glyphicon-forward"
+                                        paging-action="getPageData('attribute', page, pageSize, total)">
+                                </paging>
+                            </ul>
+                        </div>
+                    </div>
+                </uib-tab>
+
+                <uib-tab index="6" heading="Phone Config">
+                    <div ng-include="'views/companyConfig/phoneConfig.html'">
+                    </div>
+                </uib-tab>
+
+                <uib-tab index="7" heading="Break Types">
+                    <div ng-include="'views/companyConfig/customBreakTypes.html'">
+                    </div>
+                </uib-tab>
+
+                <uib-tab index="8" heading="Business Unit Config">
+                    <div ng-include="'views/companyConfig/businessUnitConfiguration.html'">
+                    </div>
+                </uib-tab>
+                <uib-tab index="9" heading="Accessible Fields">
+                    <div ng-include="'views/companyConfig/accessibleFileds.html'">
+                    </div>
+                </uib-tab>
+
+                <uib-tab index="10" heading="Chat Config">
+                    <div ng-include="'views/companyConfig/chatConfig.html'">
+                    </div>
+                </uib-tab>
+            </uib-tabset>
+        </scrollable-tabset>
+    </div>
+
+</div>

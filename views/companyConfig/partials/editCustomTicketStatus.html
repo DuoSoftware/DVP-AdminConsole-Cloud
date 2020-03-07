@@ -1,0 +1,113 @@
+<div>
+    <div>
+
+        <div class="col-lg-12">
+            <div class="row">
+                <div class="col-md-9">
+                    <h2 class=" font-300">
+                        <a ng-hide="editMode">Status : {{customStatus.status_node}}</a>
+
+                    </h2>
+                </div>
+                <div class="col-md-3 ">
+                    <div class="pull-right user-option-wrap" ng-show="!editMode">
+                        <h3>
+                            <small ng-disabled="true" ng-click="removeCustomTicketStatus()" style="cursor: pointer"><i
+                                    class="fa fa-trash-o"></i></small>
+                            <small ng-disabled="true" ng-click="editApplication()" style="cursor: pointer"><i
+                                    class="fa fa-edit"></i></small>
+                        </h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-12 col-sm-12 col-xs-12 edit-main-wrap" ng-show="editMode">
+            <div class="application-edit">
+                <div class="col-sm-12">
+                    <div class="col-sm-6">
+                        <h2 class="font-robot font-300 text-uppercase font-15">Edit {{customStatus.status_node}}</h2>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="edit-close pull-right">
+                            <i class="fa fa-close" ng-click="editApplication()"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12 col-sm-6 col-xs-12 col-xs-12">
+                    <div class="tile-stats  m-top15">
+                        <form class="form-horizontal form-label-left input_mask">
+                            <div class="row">
+                                <div class="col-md-4 col-sm-4 col-xs-12  form-group has-feedback">
+                                    <label>Status</label>
+                                    <input type="text" class="form-control has-feedback-left"
+                                           ng-model="customStatus.status_node"
+                                           placeholder="Custom Status">
+                                    <span class="fa fa-user form-control-feedback left" aria-hidden="true"></span>
+                                </div>
+
+                                <div class="col-md-4 col-sm-4 col-xs-12  form-group has-feedback">
+                                    <label>Description</label>
+                                    <input type="text" class="form-control has-feedback-left"
+                                           ng-model="customStatus.description"
+                                           placeholder="Description">
+                                    <span class="fa fa-user form-control-feedback left" aria-hidden="true"></span>
+                                </div>
+                                <div class="col-md-4 col-sm-4 col-xs-12  form-group has-feedback">
+                                    <label>Category</label>
+                                    <select class="form-control has-feedback-left"
+                                            ng-model="customStatus.category"
+                                            placeholder="Choose Category">
+                                        <option>TODO</option>
+                                        <option>INPROGRESS</option>
+                                        <option>DONE</option>
+                                    </select>
+                                </div>
+                            </div>
+
+
+
+                            <div class="row">
+                                <div class="col-md-12 col-sm-12 col-xs-12 m-top15">
+                                    <div class="col-md-12 col-sm-12 col-xs-12">
+                                        <button type="button" class="btn btn-success btn-sm pull-right"
+                                                ng-click="updateCustomTicketStatus()" ng-disabled="!customStatus.status_node">
+                                            Update
+                                        </button>
+                                    </div>
+                                </div>
+
+                            </div>
+
+
+
+
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div ng-hide="editMode">
+
+            <div class="col-md-3 col-sm-3 col-xs-12 form-group ">
+                <label class="form-control-static">Status</label>
+                <p>{{customStatus.status_node}} </p>
+            </div>
+
+            <div class="col-md-3 col-sm-3 col-xs-12 form-group ">
+                <label class="form-control-static">Description</label>
+                <p>{{customStatus.description}} </p>
+            </div>
+            <div class="col-md-3 col-sm-3 col-xs-12 form-group ">
+                <label class="form-control-static">Category</label>
+                <p>{{customStatus.category}} </p>
+            </div>
+            <div class="col-md-3 col-sm-3 col-xs-12 form-group ">
+            </div>
+
+        </div>
+        <div class="clearfix"></div>
+    </div>
+</div>

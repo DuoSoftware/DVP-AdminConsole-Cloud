@@ -1,0 +1,392 @@
+<div class="page-title">
+    <div class="title_left">
+        <h3 class="font-robot font-600 ">Sip Device Configuration</h3>
+    </div>
+</div>
+
+<div class="clearfix"></div>
+
+<div class="row">
+    <div class="col-md-6 col-sm-4 col-xs-12" style="padding-right: 0px;">
+        <div class="x_panel">
+            <div class="x_title">
+                <div class="col-md-6">
+                    <h2 class="font-robot font-300 text-uppercase font-15">Current sip users</h2>
+                </div>
+                <div class="col-md-6 form-group pull-right top_search">
+                    <div class="input-group">
+                        <input type="text" ng-model="searchCriteria" class="form-control"
+                               placeholder="Search for...">
+                                <span class="input-group-btn">
+                                  <button class="btn btn-default" type="button">Go!</button>
+                                </span>
+                    </div>
+                </div>
+                <div class="clearfix"></div>
+            </div>
+            <div class="x_content">
+
+                <div class="search-main-wrap" ng-if="!dataReady">
+                    <div class="row ">
+                        <div class="col-md-12 col-sm-12 col-xs-12">
+                            <div class="data-state-wrap">
+                                Please Wait...
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="mail_list_column sip-user-wrap"
+                     ng-mouseover="viewScroll()"
+                     ng-mouseleave="hideScroll()"
+                     ng-slimscroll
+                     height="670" width="100%" opacity="0.2" distance="0px"
+                     enabled="{{ scrollEnabled }}">
+                    <a href="javascript:void(0);" class="user-wrap" ng-click="onEditPressed(item.SipUsername)"
+                       ng-repeat="item in sipUsrList | filter : item.Enabled : true | filterBy: ['SipUsername', 'Extension.Extension']: searchCriteria">
+                        <div class="mail_list user-list">
+                            <div class="right">
+                                <h3 class="font-robot ">{{item.SipUsername}}
+                                    <small class="fa fa-trash" ng-click="onDeleteUser(item.SipUsername)"></small>
+
+                                    <small>Extension : {{item.Extension.Extension}}</small>
+                                </h3>
+                                <p> {{item.CloudEndUser.Domain}}</p>
+                            </div>
+                            <div class="left">
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-6 col-md-8 col-xs-12" style="padding-left: 0px;">
+        <!-- user view mode -->
+
+
+        <!-- user edit view -->
+        <!--<div ng-show="viewDivState==0 || viewDivState==1" class="user-details-view">
+            <form name="sipUserConfForm">
+                <div class="col-xs-12 invoice-header user-view-header">
+                    <h1 class="font-robot text-uppercase">
+                        {{basicConfig.SipUsername}}
+
+                        <small class="pull-right new-user"
+                               ng-click="viewBtnClick(2)">
+                            <i class="fa fa-user"></i>
+                            New
+                        </small>
+                    </h1>
+                </div>
+                <div class="item form-group ">
+                    &lt;!&ndash; sip user and password &ndash;&gt;
+                    <div class="col-lg-12">
+                        <div class="col-md-6 animated fadeIn">
+                            <h3><label for="sipUserName">Sip Username *</label></h3>
+                            <p><input class="form-control" id="sipUserName"
+                                      ng-model="basicConfig.SipUsername"
+                                      ng-disabled="IsEdit"
+                                      ng-model-options="{ updateOn: 'blur' }"
+                                      placeholder="Sip Username"></p>
+                        </div>
+                        <div class="col-md-6 animated fadeIn">
+                            <h3><label for="password">Password *</label></h3>
+                            <p><input type="password" class="form-control" id="password" placeholder="password"
+                                      ng-model="basicConfig.Password"></p>
+                        </div>
+                    </div>
+
+                    &lt;!&ndash; email address &ndash;&gt;
+
+
+                    &lt;!&ndash; reference ID | extension | PIN &ndash;&gt;
+                    <div class="col-lg-12">
+                        <div class="col-md-5 animated fadeIn">
+                            <h3><label for="refID">Reference Id</label></h3>
+                            <p><input type="text" class="form-control "
+                                      id="refID"
+                                      name="refID"
+                                      ng-model="basicConfig.GuRefId"></p>
+                        </div>
+
+                        <div class="col-md-4 animated fadeIn">
+                            <h3><label for="ext">Extension *</label></h3>
+                            <p><input type="text" class="form-control "
+                                      id="ext"
+                                      name="ext"
+                                      ng-model="basicConfig.Extension"
+                                      ng-model-options="{ updateOn: 'blur'}"
+                                      ng-disabled="IsEdit">
+                            </p>
+                        </div>
+                        <div class="col-md-3 animated fadeIn">
+                            <h3><label for="pinID"> PIN</label></h3>
+                            <p><input type="text" class="form-control "
+                                      id="pinID"
+                                      name="pinID"
+                                      ng-model="basicConfig.Pin"></p>
+                        </div>
+                    </div>
+
+                    &lt;!&ndash; domain | context &ndash;&gt;
+                    <div class="col-lg-12">
+                        <div class="col-md-6 animated fadeIn">
+                            <h3><label for="refID">Domain</label></h3>
+                            <p><select class="select2_single form-control " tabindex="-1"
+                                       aria-hidden="true"
+                                       name="domain" ng-model="basicConfig.CloudEndUserId"
+                                       ng-model-options="{trackBy: '$value'}">
+                                <option ng-repeat="eu in endUserList" value="{{eu.id}}">{{eu.Domain}}</option>
+                            </select></p>
+                        </div>
+
+                        <div class="col-md-6 animated fadeIn">
+                            <h3><label for="refID">Context</label></h3>
+                            <p><select class="select2_single form-control" tabindex="-1"
+                                       aria-hidden="true"
+                                       name="context" ng-model="basicConfig.ContextId"
+                                       ng-model-options="{trackBy: '$value'}">
+                                <option ng-repeat="ctxt in contextList" value="{{ctxt.Context}}">{{ctxt.Context}}
+                                </option>
+                            </select></p>
+                        </div>
+
+                        <div class="col-md"></div>
+                    </div>
+
+                </div>
+
+                <div class="clearfix"></div>
+                <div class="col-lg-12 animated fadeIn">
+                    <p style="padding-left: 10px;">Attendant Transfer Configuration</p>
+
+                    <div class="col-md-3">
+                        <checkbox class="btn-success" ng-model="basicConfig.TransInternalEnable"
+                                  ng-init="basicConfig.TransInternalEnable=false"></checkbox>
+                        <label>
+                            <small>Internal</small>
+                        </label>
+                    </div>
+
+                    <div class="col-md-3">
+                        <checkbox class="btn-success" ng-model="basicConfig.TransExternalEnable"
+                                  ng-init="basicConfig.TransExternalEnable=false"></checkbox>
+                        <label>
+                            <small>External</small>
+                        </label>
+                    </div>
+
+                    <div class="col-md-3">
+                        <checkbox class="btn-success" ng-model="basicConfig.TransConferenceEnable"
+                                  ng-init="basicConfig.TransConferenceEnable=false"></checkbox>
+                        <label>
+                            <small>Conference</small>
+                        </label>
+                    </div>
+
+                    <div class="col-md-3">
+                        <checkbox class="btn-success" ng-model="basicConfig.TransGroupEnable"
+                                  ng-init="basicConfig.TransGroupEnable=false"></checkbox>
+                        <label>
+                            <small>Group</small>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="col-lg-12">
+                    <div class="sip-user-btn-wrap text-left">
+                        <button class="btn btn-primary" ng-click="onSavePressed()"
+                                ng-disabled="sipUserConfForm.$invalid">
+                            Save
+                        </button>
+                    </div>
+                </div>
+
+            </form>
+        </div>-->
+
+        <!-- create new user -->
+        <div class="user-details-view">
+            <form name="sipUserConfForm">
+                <div class="col-xs-12 invoice-header user-view-header">
+                    <h1 class="font-robot text-uppercase">
+                        {{SipUsernameDisplay}}
+                        <small ng-show="FormState" class="pull-right new-user"
+                               ng-click="viewBtnClick()">
+                            <i class="fa fa-user"></i>
+                            {{FormState}}
+                        </small>
+                    </h1>
+                </div>
+                <div class="item form-group ">
+                    <!-- sip user and password -->
+                    <div class="col-lg-12">
+                        <div class="col-md-6 animated fadeIn">
+                            <h3><label for="NewsipUserName">Sip Username *</label></h3>
+                            <p>
+                                <input class="form-control" id="NewsipUserName" name="sipUsrName"
+                                      ng-model="basicConfig.SipUsername"
+                                      ng-disabled="IsEdit"
+                                      ng-trim="true"
+                                      ng-pattern="/^[a-z0-9]*$/"
+                                      ng-model-options="{ updateOn: 'blur' }">
+                                <span class="invalInput">Use only simple letters and numeric characters for username</span>
+                            </p>
+                        </div>
+                        <div class="col-md-6 animated fadeIn">
+                            <h3><label for="newPassword">Password *</label></h3>
+                            <p><input type="password" class="form-control" id="newPassword"
+                                      ng-model="basicConfig.Password"></p>
+                        </div>
+                    </div>
+
+
+
+                    <!-- reference ID | extension | PIN -->
+                    <div class="col-lg-12">
+                        <div class="col-md-6 animated fadeIn">
+                            <h3><label for="newExtensio">Extension *</label></h3>
+                            <p><input type="text" class="form-control"
+                                      id="newExtensio"
+                                      name="ext"
+                                      required
+                                      ng-pattern="/^[0-9]*$/"
+                                      ng-model="basicConfig.Extension"
+                                      placeholder="Extension"
+                                      ng-model-options="{ updateOn: 'blur'}"
+                                      ng-disabled="IsEdit">
+                                <span class="invalInput">Use only numbers for extension</span>
+                            </p>
+                        </div>
+                        <div class="col-md-6 animated fadeIn">
+                            <h3><label for="newPinId"> PIN</label></h3>
+                            <p><input type="text" class="form-control "
+                                      id="newPinId"
+                                      name="pinID"
+                                      placeholder="PIN"
+                                      ng-model="basicConfig.Pin"></p>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-12">
+                        <div class="col-md-8 animated fadeIn">
+                            <h3><label for="newEmail">Email Address</label></h3>
+                            <p><input type="text" class="form-control "
+                                      id="newEmail"
+                                      name="email"
+                                      placeholder="Email Address"
+                                      ng-model="basicConfig.EmailAddress"></p>
+                        </div>
+                        <div class="col-md-4">
+                            <h3><label>Voicemail as Email</label></h3>
+                            <checkbox class="btn-success" ng-model="basicConfig.VoicemailAsEmail"
+                                      ng-init="basicConfig.VoicemailAsEmail=false"></checkbox>
+
+                        </div>
+                    </div>
+
+                    <!-- domain | context -->
+                    <div class="col-lg-12">
+                        <div class="col-md-6 animated fadeIn">
+                            <h3><label for="newDomain">Domain</label></h3>
+                            <p><select class="select2_single form-control " tabindex="-1"
+                                       aria-hidden="true"
+                                       id="newDomain"
+                                       placeholder="Domain name"
+                                       name="domain" ng-model="basicConfig.CloudEndUserId"
+                                       ng-model-options="{trackBy: '$value'}">
+                                <option ng-repeat="eu in endUserList" value="{{eu.id}}">{{eu.Domain}}</option>
+                            </select></p>
+                        </div>
+
+                        <div class="col-md-6 animated fadeIn">
+                            <h3><label for="newContext">Context</label></h3>
+                            <p><select class="select2_single form-control" tabindex="-1"
+                                       aria-hidden="true"
+                                       id="newContext"
+                                       name="context" ng-model="basicConfig.ContextId"
+                                       ng-model-options="{trackBy: '$value'}">
+                                <option ng-repeat="ctxt in contextList" value="{{ctxt.Context}}">{{ctxt.Context}}
+                                </option>
+                            </select></p>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="clearfix"></div>
+                <div class="col-lg-12 animated fadeIn">
+                    <p style="padding-left: 10px;">Attendant Transfer Configuration</p>
+                    <div class="col-md-3">
+                        <checkbox class="btn-success" ng-model="basicConfig.TransInternalEnable"
+                                  ng-init="basicConfig.TransInternalEnable=false"></checkbox>
+                        <label>
+                            <small>Internal</small>
+                        </label>
+                    </div>
+
+                    <div class="col-md-3">
+                        <checkbox class="btn-success" ng-model="basicConfig.TransExternalEnable"
+                                  ng-init="basicConfig.TransExternalEnable=false"></checkbox>
+                        <label>
+                            <small>External</small>
+                        </label>
+                    </div>
+
+                    <div class="col-md-3">
+                        <checkbox class="btn-success" ng-model="basicConfig.TransIVREnable"
+                                  ng-init="basicConfig.TransIVREnable=false"></checkbox>
+                        <label>
+                            <small>IVR</small>
+                        </label>
+                    </div>
+
+                    <div class="col-md-3">
+                        <checkbox class="btn-success" ng-model="basicConfig.TransGroupEnable"
+                                  ng-init="basicConfig.TransGroupEnable=false"></checkbox>
+                        <label>
+                            <small>Group</small>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="col-md-12 col-lg-12 col-xs-12">
+                    <div class="col-md-6 col-lg-6 col-xs-6 animated fadeIn">
+                        <h3><label>Deny Outbound For</label></h3>
+                        <p><select class="select2_single form-control" tabindex="-1"
+                                   aria-hidden="true"
+                                   name="denyOutboundFor" ng-model="basicConfig.DenyOutboundFor"
+                                   ng-model-options="{trackBy: '$value'}">
+                            <option>ALL</option>
+                            <option>GATEWAY</option>
+                            <option>NONE</option>
+                        </select></p>
+                    </div>
+
+                    <div class="col-md-6 col-lg-6 col-xs-6 animated fadeIn">
+                        <checkbox style="position: relative; top: 50px" class="btn-success" ng-model="basicConfig.RecordingEnabled"
+                                  ng-init="basicConfig.RecordingEnabled=false"></checkbox>
+                        <label style="position: relative; top: 50px">
+                            <small>Recording Enabled</small>
+                        </label>
+                    </div>
+                </div>
+
+
+
+                <div class="col-lg-12">
+                    <div class="sip-user-btn-wrap text-left" style="padding-left: 11px;">
+                        <button ng-disabled="!basicConfig.SipUsername || !sipUserConfForm.$valid" class="btn btn-primary" ng-click="onSavePressed()">
+                            Save
+                        </button>
+                    </div>
+                </div>
+
+            </form>
+        </div>
+
+    </div>
+</div>
+

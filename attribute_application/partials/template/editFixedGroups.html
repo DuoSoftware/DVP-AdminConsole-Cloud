@@ -1,0 +1,67 @@
+<div>
+
+    <div>
+        <div class="row invoice-info">
+            <div class="col-sm-6 invoice-col ">
+                <address class="title">
+                    <a class="font-robot font-15 text-uppercase" style="color: #181818;">
+                        {{groupinfo.GroupName}}</a>
+                </address>
+            </div>
+            <!-- /.col -->
+            <div class="col-xs-12">
+                <div class="tile-stats">
+                    <form class="form-horizontal form-label-left input_mask">
+                        <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
+                            <input type="number" class="form-control has-feedback-left" ng-model="groupinfo.Percentage"
+                                   placeholder="Weight">
+                            <span class="fa fa-envelope form-control-feedback left" aria-hidden="true"></span>
+                        </div>
+
+                        <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
+                            <input type="text" class="form-control has-feedback-left" ng-model="groupinfo.OtherData"
+                                   placeholder="Other">
+                            <span class="fa fa-envelope form-control-feedback left" aria-hidden="true"></span>
+                        </div>
+
+
+                        <!--<div class="col-md-2">
+                            <p>Percentage</p>
+                            <input class="knob" data-width="110" data-height="120" data-displayPrevious=true data-fgColor="#26B99A" data-skin="tron" data-thickness=".2" value="75">
+                        </div>-->
+
+                        <div class="col-md-12 col-sm-6 col-xs-12 form-group has-feedback">
+                            <button type="button" class="btn btn-success btn-xs " ng-click="updateGroup(groupinfo)">
+                                Update
+                            </button>
+                        </div>
+
+
+                        <div class="col-md-12 col-sm-6 col-xs-12 form-group has-feedback">
+                            <div class="row">
+                                <tags-input class="col-md-11 col-sm-6 col-xs-12 " placeholder="Add Attribute"
+                                            ng-model="attachedAttributes"
+                                            display-property="Attribute"
+                                            add-from-autocomplete-only="true"
+                                            on-tag-added="onChipAdd($tag)"
+                                            on-tag-removed="onChipDelete($tag)"
+                                            ng-disabled="" min-length="1">
+                                    <auto-complete source="querySearch($query)"
+                                                   load-on-empty="true"
+                                                   load-on-focus="true"
+                                                   min-length="1"></auto-complete>
+                                </tags-input>
+                                <div class="col-md-1 col-sm-6 col-xs-12 ">
+                                    <i class="fa fa-refresh" style="cursor: pointer" ng-click="GetAttributes()"></i></div>
+                            </div>
+                            <br><br><br><br>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+</div>

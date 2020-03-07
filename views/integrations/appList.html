@@ -1,0 +1,144 @@
+<div class="col-md-12 col-sm-12 col-xs-12">
+    <div class="x_panel" ng-class="{ 'ui-disabled' : isProcessing }">
+        <div class="x_title">
+            <h2>Apps
+                <small>Configurations</small>
+            </h2>
+            <ul class="nav navbar-right panel_toolbox">
+                <li><a class="close-link" title="Reload"><i class="fa fa-refresh" ng-click="loadApps()"></i></a></li>
+                <li><a title="Add New Configurations" ng-click="showConfigurations()" class="close-link"><i class="fa fa-plus"></i></a>
+                </li>
+            </ul>
+            <div class="clearfix"></div>
+        </div>
+
+        <!--new configuration-->
+        <div ng-show="showConfiguration" class="well" id="appEditWindow" tabindex="0">
+            <div class="closebtn" ng-click="showConfigurations()"><span class="glyphicon glyphicon-remove"></span></div>
+            <ng-form class="" name="fOuter" novalidate>
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="row">
+                                    <div class="col-md-12 col-sm-12 col-xs-12 form-group"
+                                            ng-class="{ 'has-error' : fOuter.name.$invalid && !fOuter.name.$pristine }">
+                                        <span>Name</span>
+                                        <input type="text" class="form-control" name="name"
+                                                ng-model="appData.name" id="int_app_name" required>
+                                        <p ng-show="fOuter.name.$invalid && !fOuter.name.$pristine"
+                                            class="help-block">Name is required.</p>
+                                    </div>
+                                </div>
+                                
+                                <div class="row">
+                                    <div class="col-md-6 col-sm-6 col-xs-12 form-group" ng-class="{ 'has-error' : fOuter.trycount.$invalid && !fOuter.trycount.$pristine }">
+                                        <span>Try Count</span>
+                                        <input type="number" max="5" min="1" class="form-control" name="trycount"
+                                                ng-model="appData.trycount" required>
+                                        <p ng-show="fOuter.trycount.$invalid && !fOuter.trycount.$pristine" class="help-block">Try Count is invalid. (Max 5, Min 1)</p>
+                                    </div>
+                                    <div class="col-md-6 col-sm-6 col-xs-12 form-group" ng-class="{ 'has-error' : fOuter.timeout.$invalid && !fOuter.timeout.$pristine }">
+                                        <span>Timeout</span>
+                                        <input type="number" max="15" min="5" class="form-control" name="timeout"
+                                                ng-model="appData.timeout" required>
+                                        <p ng-show="fOuter.timeout.$invalid && !fOuter.timeout.$pristine" class="help-block">Timeout is invalid. (Max 15, Min 5)</p>
+                                    </div>
+                                </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="row">
+                                <div class="col-md-12 col-sm-12 col-xs-12 form-group">
+                                    <span>Description</span>
+                                    <textarea name="description" ng-model="appData.description" class="form-control" style="height:114px"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="ln_solid"></div>
+                <div class="form-group">
+                    <div class="col-md-9 col-sm-9 col-xs-12 col-md-offset-3">
+                        <button ng-if="!isUpdate" ng-disabled="fOuter.name.$invalid||fOuter.trycount.$invalid||fOuter.timeout.$invalid"
+                                class="btn btn-success pull-right" ng-click="saveApp(appData)" title="Save App">Save
+                        </button>
+                        <button ng-if="isUpdate" ng-disabled="fOuter.name.$invalid||fOuter.trycount.$invalid||fOuter.timeout.$invalid"
+                                class="btn btn-success pull-right" ng-click="updateApp(appData)" title="Save App">Update
+                        </button>
+                    </div>
+                </div>
+
+            </ng-form>
+        </div>
+
+        <div class="x_panel" ng-show="isProcessing">
+            <div class="x_content">
+                <div class="col-md-12 col-sm-12 col-xs-12">
+                    <div class="data-state-wrap">
+                        Processing...
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="x_panel" ng-show="!appList.length && !isProcessing">
+            <div class="x_content">
+                <div class="col-md-12 col-sm-12 col-xs-12">
+                    <div class="data-state-wrap">
+                        No Apps Configured.
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!--configuration List -->
+        <div class="x_panel" ng-show="appList.length">
+            <div class="x_content">
+                <ul class="list-unstyled timeline">
+                    <li ng-repeat="data in appList">
+                        <div class="block">
+                            <div class="tags">
+                                <a href="" class="tag">
+                                    <span>{{data.name}}</span>
+                                </a>
+                            </div>
+                            <div class="block_content">
+                                <h2 class="title">
+                                    <a>{{data.description}}</a>
+                                    <i class="fa fa-trash-o pull-right cursor-pointer" ng-click="deleteApp(data)" title="Delete App"></i>
+                                    <i class="fa fa-pencil-square-o pull-right cursor-pointer" ng-click="editApp(data)" title="Edit App"></i>
+                                    <i class="fa fa-cog pull-right cursor-pointer" ng-click="configureApp(data._id)" title="Configure App"></i>
+                                </h2>
+                                <div class="byline">
+                                    <span>{{data.method}} </span> : <a>{{data.url}}</a>
+                                </div>
+                                <div class="tile-stats" ng-if="data.parameters.length">
+                                    <h3>Parameters</h3>
+                                    <div class="panel-body">
+                                        <table class="table table-bordered">
+                                            <thead>
+                                            <tr>
+                                                <th>Parameter Name</th>
+                                                <th>Reference Name</th>
+                                                <th>Parameter Type</th>
+                                                <th>Parameter Location</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            <tr ng-repeat="para in data.parameters">
+                                                <th>{{para.name}}</th>
+                                                <td>{{para.referenceName}}</td>
+                                                <td>{{para.parameterType}}</td>
+                                                <td>{{para.parameterLocation}}</td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>

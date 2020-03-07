@@ -1,0 +1,139 @@
+<div class="row">
+    <div class="col-md-12 col-sm-6 col-xs-12">
+        <div class="x_panel">
+            <div class="x_title">
+                <div class="col-md-6 col-sm-6 col-xs-6">
+                    <h2><i class="fa fa-bullhorn"></i> Campaign
+                        <small>Manager</small>
+                    </h2>
+                </div>
+
+                <div class="col-md-6 col-sm-6 col-xs-6 form-group top_search">
+                    <div class="input-group">
+                        <input type="text" ng-model="searchCriteria" class="form-control"
+                               placeholder="Search for...">
+                        <span class="input-group-btn">
+                                  <button class="btn btn-default" type="button">Go!</button>
+                                </span>
+                    </div>
+                </div>
+                <ul class="nav navbar-right panel_toolbox">
+                    <li><a class="close-link"><i class="fa fa-refresh" ng-click="loadCampaign()"></i></a></li>
+                    <li><a ng-click="addCampaign()" class="close-link"><i class="fa fa-plus"></i></a>
+                    </li>
+                </ul>
+
+
+
+                <div ng-show="isProgress" >
+                    <div class="row ">
+                        <div class="col-md-12 col-sm-12 col-xs-12">
+                            <div class="data-state-wrap">
+                                {{progressMsg}}...
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xs-12" ng-hide="isProgress">
+                    <div class="col-md-12 col-sm-12 col-xs-12" ng-show="addNewCampaign">
+
+                        <form class="form-horizontal form-label-left" name="campaingForm" novalidate>
+
+                            <div ng-include="'campaignManager/template/campaignForm.html'"></div>
+
+
+                            <div class="clearfix"></div>
+                            <div class="ln_solid"></div>
+
+                            <div class="form-group">
+                                <button class="btn btn-success" ng-click="createCampaign(campaign)"
+                                        ng-disabled="campaingForm.$invalid">
+                                    Save
+                                </button>
+                            </div>
+
+                        </form>
+
+                    </div>
+                </div>
+
+
+                <div class="clearfix"></div>
+            </div>
+
+            <div ng-show="isLoading" >
+                <div class="row ">
+                    <div class="col-md-12 col-sm-12 col-xs-12">
+                        <div class="data-state-wrap">
+                            Please Wait...
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="x_content" ng-hide="isLoading" >
+                <ul class="list-unstyled timeline-with-tag">
+                    <li ng-repeat="cam in campaigns | filterBy: ['CampaignName']: searchCriteria | orderBy : '-updatedAt'">
+                        <editcampaign reload-campaign="loadCampaign()" reasons="reasons" ards-attributes="ardsAttributes"  mechanisms="mechanisms" modes="modes" channels="channels" campaigns="campaigns" campaign="cam" extensions="extensions"></editcampaign>
+                    </li>
+
+                    <paging ng-show="showPaging"
+                            class="small"
+                            page="currentPage"
+                            page-size="pageSize"
+                            total="pageTotal"
+                            show-prev-next="true"
+                            show-first-last="true"
+                            text-next-class="glyphicon glyphicon-chevron-right"
+                            text-prev-class="glyphicon glyphicon-chevron-left"
+                            text-first-class="glyphicon glyphicon-backward"
+                            text-last-class="glyphicon glyphicon-forward"
+                            paging-action="getPageData('attribute', page, pageSize, total)">
+                    </paging>
+                </ul>
+
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+
+
+<!--<div class="row">
+    <div class="col-md-12 col-sm-6 col-xs-12">
+
+        <div class="x_panel ">
+            <div class="x_content">
+                <ul class="list-unstyled timeline-with-tag">
+                   &lt;!&ndash; <li ng-repeat="grp in groupsData | filterBy: ['GroupName']: searchCriteria">
+                        <editgroups task-list="Tasks" groupinfo="grp" attribinfo="attribData"
+                                    update-groups="relaodPageData(grp)"></editgroups>
+                    </li>&ndash;&gt;
+
+                    <li ng-repeat="cam in campaigns | filterBy: ['CampaignName']: searchCriteria | orderBy : '-updatedAt'">
+                        <editcampaign reload-campaign="loadCampaign()" reasons="reasons" ards-attributes="ardsAttributes"  mechanisms="mechanisms" modes="modes" channels="channels" campaigns="campaigns" campaign="cam" extensions="extensions"></editcampaign>
+                    </li>
+
+                    <paging ng-show="showPaging"
+                            class="small"
+                            page="currentGrpPage"
+                            page-size="pageSize"
+                            total="pageGrpTotal"
+                            show-prev-next="true"
+                            show-first-last="true"
+                            text-next-class="glyphicon glyphicon-chevron-right"
+                            text-prev-class="glyphicon glyphicon-chevron-left"
+                            text-first-class="glyphicon glyphicon-backward"
+                            text-last-class="glyphicon glyphicon-forward"
+                            paging-action="getPageData('groups', page, pageSize, total)">
+                    </paging>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+</div>-->

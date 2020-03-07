@@ -1,0 +1,708 @@
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <div class="x_panel main-title">
+            <div class="x_title">
+                <h2><b>REPORT</b> | CALL - IVR Node Count</h2>
+                <ul class="nav navbar-right panel_toolbox">
+                    <li ng-show="!showFilter" ng-click="showFilter= !showFilter"><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                    </li>
+                    <li ng-show="showFilter" ng-click="showFilter= !showFilter"><a class="close-link"><i class="fa fa-chevron-down"></i></a>
+                    </li>
+                </ul>
+                <div class="clearfix"></div>
+            </div>
+
+            <div class="x_content" ng-show="!showFilter">
+                <div class="col-md-12 col-sm-12 col-xs-12">
+                    <form id="ivrForm" name="ivrForm" novalidate class="form-label-left input_mask">
+                        <div class="row">
+                            <div class="col-md-3 col-sm-3 col-xs-12 has-feedback"
+                                 ng-class="{ 'has-error' : ivrForm.ivrapplication.$invalid && !ivrForm.ivrapplication.$pristine }">
+                                <div class="form-group">
+                                    <label>Application</label>
+                                    <select class="form-control" name="ivrapplication" ng-model="application"
+                                            ng-options="opt.id as opt.AppName for opt in applicationList"
+                                            required
+                                            ng-class="{ 'has-error' : ivrForm.ivrapplication.$invalid && !ivrForm.ivrapplication.$pristine }">
+                                    </select>
+
+                                    <p ng-show="ivrForm.ivrapplication.$error.required && !ivrForm.ivrapplication.$pristine"
+                                       class="help-block">
+                                        Select Application</p>
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="col-md-9 col-sm-9 col-xs-12 has-feedback">
+                                <div class="form-group">
+                                    <label>Tags</label>
+                                    <div class="input-group col-md-12">
+                                        <tags-input ng-model="tags" display-property="Name" key-property="Name"
+                                                    placeholder="Select Tag"
+                                                    add-from-autocomplete-only="true" min-length="0">
+                                            <auto-complete source="querySearch($query)" load-on-empty="true"
+                                                           max-results-to-show="10000" min-length="1"
+                                                           load-on-focus="true"></auto-complete>
+                                        </tags-input>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+
+                            <div class="col-md-3 col-sm-3 col-xs-12"
+                                 ng-class="{ 'has-error' : userForm.StartTime.$invalid && !userForm.StartTime.$pristine }">
+                                <label>Start Date</label>
+
+                                <div>
+                                    <p class="input-group">
+                                        <input type="text" class="form-control" ng-model="fileSerach.StartTime" name="StartTime"
+                                               datepicker>
+                                        <!--<input name="EndTime" type="text" class="form-control"-->
+                                               <!--datetime-picker="MM/dd/yyyy HH:mm"-->
+                                               <!--ng-model="fileSerach.StartTime" is-open="StartTime.open" required/>-->
+                                        <!--<span class="input-group-btn">-->
+                                          <!--<button type="button" class="btn btn-default"-->
+                                                  <!--ng-click="openCalendar('StartTime')">-->
+                                              <!--<i-->
+                                                      <!--class="fa fa-calendar"></i></button>-->
+                                      <!--</span>-->
+
+                                    <p ng-show="userForm.StartTime.$error.required && !userForm.StartTime.$pristine"
+                                       class="help-block">
+                                        Start date is required.</p>
+
+                                    <!--<p ng-show="userForm.StartTime.$error.min && !userForm.StartTime.$pristine"-->
+                                       <!--class="help-block">-->
+                                        <!--End date should be greater than start time.</p>-->
+                                    <!--</p>-->
+                                </div>
+                            </div>
+
+                            <div class="col-md-3 col-sm-3 col-xs-12"
+                                 ng-class="{ 'has-error' : userForm.EndTime.$invalid && !userForm.EndTime.$pristine }">
+                                <label>End Date</label>
+
+                                <div>
+                                    <p class="input-group">
+                                        <input type="text" class="form-control" ng-model="fileSerach.EndTime" name="EndTime"
+                                               datepicker>
+                                        <!--<input name="EndTime" type="text" class="form-control"-->
+                                               <!--datetime-picker="MM/dd/yyyy HH:mm"-->
+                                               <!--ng-model="fileSerach.EndTime" is-open="EndTime.open" required/>-->
+                                        <!--<span class="input-group-btn">-->
+                                          <!--<button type="button" class="btn btn-default" ng-click="openCalendar('EndTime')">-->
+                                              <!--<i-->
+                                                      <!--class="fa fa-calendar"></i></button>-->
+                                      <!--</span>-->
+
+                                    <p ng-show="userForm.EndTime.$error.required && !userForm.EndTime.$pristine"
+                                       class="help-block">
+                                        EndTime is required.</p>
+
+                                    <p ng-show="fileSerach.EndTime < fileSerach.StartTime && !userForm.EndTime.$pristine"
+                                       class="help-block">
+                                        End time should be greater than start time.</p>
+                                    </p>
+                                </div>
+                            </div>
+
+                            <!--<div class="col-md-5 col-sm-5 col-xs-12  form-group has-feedback"
+                                 ng-class="{ 'has-error' : ivrForm.EndTime.$invalid && !ivrForm.EndTime.$pristine }">
+                                <label>End Date</label>
+
+                                <div>
+                                    <p class="input-group">
+                                        <input name="EndTime" type="text" class="form-control"
+                                               datetime-picker="MM/dd/yyyy HH:mm" min="fileSerach.StartTime"
+                                               ng-model="fileSerach.EndTime" is-open="EndTime.open" required/>
+                                        <span class="input-group-btn">
+                                      <button type="button" class="btn btn-default" ng-click="openCalendar('EndTime')">
+                                          <i
+                                                  class="fa fa-calendar"></i></button>
+                                  </span>
+
+                                    <p ng-show="ivrForm.EndTime.$error.required && !ivrForm.EndTime.$pristine"
+                                       class="help-block">
+                                        EndTime is required.</p>
+
+                                    <p ng-show="ivrForm.EndTime.$error.min && !ivrForm.EndTime.$pristine"
+                                       class="help-block">
+                                        End time should be greater than start time.</p>
+                                    </p>
+                                </div>
+                            </div>-->
+
+                            <div class="col-md-6 col-sm-6 col-xs-12 has-feedback">
+                                <button ng-if="!isLoading" ng-disabled="ivrForm.$invalid" type="button"
+                                        class="btn btn-success"
+                                        style="
+        margin-top: 24px;" ng-click="LoadNodeData();">
+                                    Search
+                                </button>
+                                <button ng-if="isLoading" disabled type="button" class="btn btn-success"
+                                        style="
+        margin-top: 24px;" ng-click="LoadNodeData();">
+                                    PLEASE WAIT...
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- chart area -->
+        <div ng-hide="intiate" class="row">
+
+            <div class="col-lg-6 col-md-6 col-xs-12">
+                <div class="chart-widget  animated fadeIn ">
+                    <div class="widget-m-wrp">
+                        <div class="widget-h">
+                            <h2>IVR NOTE - Doughnut Chart </h2>
+                        </div>
+                        <div class="widget-body chart-center">
+                            <canvas id="doughnut" class="chart chart-doughnut"
+                                    width="300" height="300"
+                                    chart-data="doughnutObj.data"
+                                    chart-labels="doughnutObj.labels"
+                                    chart-legend="true"
+                                    chart-options="options">
+                            </canvas>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="col-lg-6 col-md-6 col-xs-12">
+                <div class="chart-widget  chart-ng-w-tr animated fadeIn ">
+                    <div class="widget-m-wrp">
+                        <div class="widget-h">
+                            <h2>IVR NOTE - Polar Area Chart </h2>
+                        </div>
+                        <div class="widget-body chart-center">
+                            <canvas id="polar-area" class="chart chart-polar-area"
+                                    width="300" height="300"
+                                    chart-data="doughnutObj.data"
+                                    chart-labels="doughnutObj.labels"
+                                    chart-legend="true"
+                                    chart-options="options">
+                            </canvas>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <div ng-hide="intiate || doughnutObj.node.length == 0" class="row">
+            <div class="widget-dyn">
+
+                <div class="widget-dy-wrp "
+                     id="{{ivrnode.EventParams}}"
+                     ng-repeat="ivrnode in doughnutObj.node track by $index"
+                     ng-click="LoadDataByNode(ivrnode.EventParams);">
+                    <div class="active-card">
+                        <div class="selected-group">
+                            <i class="ti-check"></i>
+                        </div>
+                    </div>
+                    <div class="col-xs-12 ">
+                        <div class="row">
+                            <div class="w-bg-text text-left ">
+                                {{ivrnode.EventParams}}
+                            </div>
+                            <div class="w-bg-text-bg text-left txt-color-b-500 ">
+                                {{ivrnode.count}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="x_panel" ng-hide="intiate">
+            <div class="x_title">
+                <h2>Details
+                    <small> {{fileSerach.StartTime| date : 'dd-MM-yyyy HH:mm'}} To {{fileSerach.EndTime| date :
+                        'dd-MM-yyyy HH:mm'}}
+                    </small>
+                </h2>
+                <h2>
+                    <small> Total : {{pageTotal}}</small>
+                </h2>
+
+                <div class="clearfix"></div>
+            </div>
+
+
+            <div class="x_content">
+
+                <div ng-show="isLoading">
+                    <div class="row ">
+                        <div class="col-md-12 col-sm-12 col-xs-12">
+                            <div class="data-state-wrap">
+                                Please Wait...
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+                <!--<div ng-show="noDataToshow">
+                    <div class="row ">
+                        <div class="col-md-12 col-sm-12 col-xs-12">
+                            <div class="data-state-wrap">
+                                No Data...
+                            </div>
+
+                        </div>
+                    </div>
+                </div>-->
+
+                <div class="row" ng-hide="isLoading">
+
+                    <div class="col-sm-12">
+                        <div class="table-wrapper daynamic-s-tble">
+                            <table id="datatable-responsive" dt-options="dtOptions" datatable="ng"
+                                   class="table table-striped table-bordered dt-responsive nowrap dataTable no-footer dtr-inline"
+                                   cellspacing="0" width="100%" role="grid"
+                                   aria-describedby="datatable-responsive_info">
+                                <thead>
+                                <tr role="row">
+                                    <th class="sorting" tabindex="0" aria-controls="datatable-responsive"
+                                        rowspan="1"
+                                        colspan="1" aria-label="From">Event Name
+                                    </th>
+                                    <th class="sorting" tabindex="1" aria-controls="datatable-responsive"
+                                        rowspan="1"
+                                        colspan="1" aria-label="To">Event Class
+                                    </th>
+                                    <th class="sorting" tabindex="2" aria-controls="datatable-responsive"
+                                        rowspan="1"
+                                        colspan="1" aria-label="AgentSkill">Event Type
+                                    </th>
+                                    <th class="sorting" tabindex="3" aria-controls="datatable-responsive"
+                                        rowspan="1"
+                                        colspan="1" aria-label="Call Time">Event Category
+                                    </th>
+                                    <th class="sorting" tabindex="4" aria-controls="datatable-responsive"
+                                        rowspan="1"
+                                        colspan="1" aria-label="Answer Duration">Event Params
+                                    </th>
+                                    <th class="sorting" tabindex="5" aria-controls="datatable-responsive"
+                                        rowspan="1"
+                                        colspan="1" aria-label="Total Duration">Event Time
+                                    </th>
+                                    <th class="sorting" tabindex="6" aria-controls="datatable-responsive"
+                                        rowspan="1"
+                                        colspan="1" aria-label="Answer Duration">Event Data
+                                    </th>
+
+                                    <th class="sorting" tabindex="7" aria-controls="datatable-responsive"
+                                        rowspan="1"
+                                        colspan="1" aria-label="Call Direction">SessionId
+                                    </th>
+                                    <th class="sorting" tabindex="8" aria-controls="datatable-responsive"
+                                        rowspan="1"
+                                        colspan="1" aria-label="Answer Duration">created At
+                                    </th>
+
+                                </thead>
+                                <tbody>
+                                <tr role="row" class="odd"
+                                    ng-repeat="cdr in satisfactionRequest">
+
+                                    <td>{{cdr.EventName}}</td>
+                                    <td>{{cdr.EventClass}}</td>
+                                    <td>{{cdr.EventType}}</td>
+                                    <td>{{cdr.EventCategory}}</td>
+                                    <td>{{cdr.EventParams}}</td>
+                                    <td>{{cdr.EventTime| date : 'dd-MM-yyyy, HH:mm'}}</td>
+                                    <td>{{cdr.EventData}}</td>
+                                    <td>{{cdr.SessionId}}</td>
+                                    <td>{{cdr.createdAt| date : 'dd-MM-yyyy, HH:mm'}}</td>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <paging ng-show="showPaging"
+                            class="small"
+                            page="currentPage"
+                            page-size="pageSize"
+                            total="pageTotal"
+                            show-prev-next="true"
+                            show-first-last="true"
+                            text-next-class="glyphicon glyphicon-chevron-right"
+                            text-prev-class="glyphicon glyphicon-chevron-left"
+                            text-first-class="glyphicon glyphicon-backward"
+                            text-last-class="glyphicon glyphicon-forward"
+                            paging-action="getPageData('Paging Clicked', page, pageSize, total)">
+                    </paging>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!--Old-->
+<!--<div class="row">-->
+    <!--<div class="col-md-12 col-sm-6 col-xs-12">-->
+        <!--<div class="x_panel">-->
+            <!--<div class="x_title">-->
+                <!--<h2>IVR Node Count</h2>-->
+                <!--<div class="clearfix"></div>-->
+            <!--</div>-->
+
+            <!--<div class="x_content">-->
+                <!--<div class="col-md-12 col-sm-6 col-xs-12">-->
+                    <!--<form id="ivrForm" name="ivrForm" novalidate class="form-label-left input_mask">-->
+
+                        <!--<div class="row">-->
+                            <!--<div class="col-md-3 col-sm-3 col-xs-12  form-group has-feedback"-->
+                                 <!--ng-class="{ 'has-error' : ivrForm.ivrapplication.$invalid && !ivrForm.ivrapplication.$pristine }">-->
+                                <!--<div class="form-group">-->
+                                    <!--<label>Application</label>-->
+                                    <!--<select class="form-control" name="ivrapplication" ng-model="application"-->
+                                            <!--ng-options="opt.id as opt.AppName for opt in applicationList"-->
+                                            <!--required-->
+                                            <!--ng-class="{ 'has-error' : ivrForm.ivrapplication.$invalid && !ivrForm.ivrapplication.$pristine }">-->
+                                    <!--</select>-->
+
+                                    <!--<p ng-show="ivrForm.ivrapplication.$error.required && !ivrForm.ivrapplication.$pristine"-->
+                                       <!--class="help-block">-->
+                                        <!--Select Application</p>-->
+                                    <!--</p>-->
+                                <!--</div>-->
+                            <!--</div>-->
+
+
+                            <!--<div class="col-md-9 col-sm-9 col-xs-12  form-group has-feedback">-->
+                                <!--<div class="form-group">-->
+                                    <!--<label>Tags</label>-->
+                                    <!--<div class="input-group col-md-12">-->
+                                        <!--<tags-input ng-model="tags" display-property="Name" key-property="Name"-->
+                                                    <!--placeholder="Select Tag"-->
+                                                    <!--add-from-autocomplete-only="true" min-length="0">-->
+                                            <!--<auto-complete source="querySearch($query)" load-on-empty="true"-->
+                                                           <!--max-results-to-show="10000" min-length="1"-->
+                                                           <!--load-on-focus="true"></auto-complete>-->
+                                        <!--</tags-input>-->
+                                    <!--</div>-->
+                                <!--</div>-->
+                            <!--</div>-->
+                        <!--</div>-->
+
+                        <!--<div class="row">-->
+
+                            <!--<div class="col-md-5 col-sm-5 col-xs-5 form-group"-->
+                                 <!--ng-class="{ 'has-error' : userForm.StartTime.$invalid && !userForm.StartTime.$pristine }">-->
+                                <!--<label>Start Date</label>-->
+
+                                <!--<div>-->
+                                    <!--<p class="input-group">-->
+                                        <!--<input name="EndTime" type="text" class="form-control"-->
+                                               <!--datetime-picker="MM/dd/yyyy HH:mm"-->
+                                               <!--ng-model="fileSerach.StartTime" is-open="StartTime.open" required/>-->
+                                        <!--<span class="input-group-btn">-->
+                                      <!--<button type="button" class="btn btn-default"-->
+                                              <!--ng-click="openCalendar('StartTime')">-->
+                                          <!--<i-->
+                                                  <!--class="fa fa-calendar"></i></button>-->
+                                  <!--</span>-->
+
+                                    <!--<p ng-show="userForm.StartTime.$error.required && !userForm.StartTime.$pristine"-->
+                                       <!--class="help-block">-->
+                                        <!--EndTime is required.</p>-->
+
+                                    <!--<p ng-show="userForm.StartTime.$error.min && !userForm.StartTime.$pristine"-->
+                                       <!--class="help-block">-->
+                                        <!--End time should be greater than start time.</p>-->
+                                    <!--</p>-->
+                                <!--</div>-->
+                            <!--</div>-->
+
+                            <!--<div class="col-md-5 col-sm-5 col-xs-5 form-group"-->
+                                 <!--ng-class="{ 'has-error' : userForm.EndTime.$invalid && !userForm.EndTime.$pristine }">-->
+                                <!--<label>End Date</label>-->
+
+                                <!--<div>-->
+                                    <!--<p class="input-group">-->
+                                        <!--<input name="EndTime" type="text" class="form-control"-->
+                                               <!--datetime-picker="MM/dd/yyyy HH:mm"-->
+                                               <!--ng-model="fileSerach.EndTime" is-open="EndTime.open" required/>-->
+                                        <!--<span class="input-group-btn">-->
+                                      <!--<button type="button" class="btn btn-default" ng-click="openCalendar('EndTime')">-->
+                                          <!--<i-->
+                                                  <!--class="fa fa-calendar"></i></button>-->
+                                  <!--</span>-->
+
+                                    <!--<p ng-show="userForm.EndTime.$error.required && !userForm.EndTime.$pristine"-->
+                                       <!--class="help-block">-->
+                                        <!--EndTime is required.</p>-->
+
+                                    <!--<p ng-show="userForm.EndTime.$error.min && !userForm.EndTime.$pristine"-->
+                                       <!--class="help-block">-->
+                                        <!--End time should be greater than start time.</p>-->
+                                    <!--</p>-->
+                                <!--</div>-->
+                            <!--</div>-->
+
+                            <!--&lt;!&ndash;<div class="col-md-5 col-sm-5 col-xs-12  form-group has-feedback"-->
+                                 <!--ng-class="{ 'has-error' : ivrForm.EndTime.$invalid && !ivrForm.EndTime.$pristine }">-->
+                                <!--<label>End Date</label>-->
+
+                                <!--<div>-->
+                                    <!--<p class="input-group">-->
+                                        <!--<input name="EndTime" type="text" class="form-control"-->
+                                               <!--datetime-picker="MM/dd/yyyy HH:mm" min="fileSerach.StartTime"-->
+                                               <!--ng-model="fileSerach.EndTime" is-open="EndTime.open" required/>-->
+                                        <!--<span class="input-group-btn">-->
+                                      <!--<button type="button" class="btn btn-default" ng-click="openCalendar('EndTime')">-->
+                                          <!--<i-->
+                                                  <!--class="fa fa-calendar"></i></button>-->
+                                  <!--</span>-->
+
+                                    <!--<p ng-show="ivrForm.EndTime.$error.required && !ivrForm.EndTime.$pristine"-->
+                                       <!--class="help-block">-->
+                                        <!--EndTime is required.</p>-->
+
+                                    <!--<p ng-show="ivrForm.EndTime.$error.min && !ivrForm.EndTime.$pristine"-->
+                                       <!--class="help-block">-->
+                                        <!--End time should be greater than start time.</p>-->
+                                    <!--</p>-->
+                                <!--</div>-->
+                            <!--</div>&ndash;&gt;-->
+
+                            <!--<div class="col-md-2 col-sm-2 col-xs-12  form-group has-feedback">-->
+                                <!--<button ng-if="!isLoading" ng-disabled="ivrForm.$invalid" type="button"-->
+                                        <!--class="btn btn-green btn-block"-->
+                                        <!--style="-->
+    <!--margin-top: 24px;" ng-click="LoadNodeData();">-->
+                                    <!--Search-->
+                                <!--</button>-->
+                                <!--<button ng-if="isLoading" disabled type="button" class="btn btn-green btn-block"-->
+                                        <!--style="-->
+    <!--margin-top: 24px;" ng-click="LoadNodeData();">-->
+                                    <!--PLEASE WAIT...-->
+                                <!--</button>-->
+                            <!--</div>-->
+                        <!--</div>-->
+
+
+                    <!--</form>-->
+                <!--</div>-->
+            <!--</div>-->
+        <!--</div>-->
+    <!--</div>-->
+<!--</div>-->
+
+
+<!--&lt;!&ndash; chart area &ndash;&gt;-->
+<!--<div ng-hide="intiate" class="row">-->
+
+    <!--<div class="col-lg-6 col-md-6 col-xs-12">-->
+        <!--<div class="chart-widget  animated fadeIn ">-->
+            <!--<div class="widget-m-wrp">-->
+                <!--<div class="widget-h">-->
+                    <!--<h2>IVR NOTE - Doughnut Chart </h2>-->
+                <!--</div>-->
+                <!--<div class="widget-body chart-center">-->
+                    <!--<canvas id="doughnut" class="chart chart-doughnut"-->
+                            <!--width="300" height="300"-->
+                            <!--chart-data="doughnutObj.data"-->
+                            <!--chart-labels="doughnutObj.labels"-->
+                            <!--chart-legend="true"-->
+                            <!--chart-options="options">-->
+                    <!--</canvas>-->
+                <!--</div>-->
+            <!--</div>-->
+
+        <!--</div>-->
+    <!--</div>-->
+
+    <!--<div class="col-lg-6 col-md-6 col-xs-12">-->
+        <!--<div class="chart-widget  chart-ng-w-tr animated fadeIn ">-->
+            <!--<div class="widget-m-wrp">-->
+                <!--<div class="widget-h">-->
+                    <!--<h2>IVR NOTE - Polar Area Chart </h2>-->
+                <!--</div>-->
+                <!--<div class="widget-body chart-center">-->
+                    <!--<canvas id="polar-area" class="chart chart-polar-area"-->
+                            <!--width="300" height="300"-->
+                            <!--chart-data="doughnutObj.data"-->
+                            <!--chart-labels="doughnutObj.labels"-->
+                            <!--chart-legend="true"-->
+                            <!--chart-options="options">-->
+                    <!--</canvas>-->
+                <!--</div>-->
+            <!--</div>-->
+
+        <!--</div>-->
+    <!--</div>-->
+<!--</div>-->
+
+<!--<div ng-hide="intiate" class="row">-->
+    <!--<div class="widget-dyn">-->
+
+        <!--<div class="widget-dy-wrp "-->
+             <!--id="{{ivrnode.EventParams}}"-->
+             <!--ng-repeat="ivrnode in doughnutObj.node track by $index"-->
+             <!--ng-click="LoadDataByNode(ivrnode.EventParams);">-->
+            <!--<div class="active-card">-->
+                <!--<div class="selected-group">-->
+                    <!--<i class="ti-check"></i>-->
+                <!--</div>-->
+            <!--</div>-->
+            <!--<div class="col-xs-12 ">-->
+                <!--<div class="row">-->
+                    <!--<div class="w-bg-text text-left ">-->
+                        <!--{{ivrnode.EventParams}}-->
+                    <!--</div>-->
+                    <!--<div class="w-bg-text-bg text-left txt-color-b-500 ">-->
+                        <!--{{ivrnode.count}}-->
+                    <!--</div>-->
+                <!--</div>-->
+            <!--</div>-->
+        <!--</div>-->
+
+    <!--</div>-->
+<!--</div>-->
+
+<!--<div class="row">-->
+    <!--<div class="col-md-12 col-sm-6 col-xs-12" ng-hide="intiate">-->
+        <!--<div class="x_panel">-->
+            <!--<div class="x_title">-->
+                <!--<h2>Details-->
+                    <!--<small> {{fileSerach.StartTime| date : 'dd-MM-yyyy HH:mm'}} To {{fileSerach.EndTime| date :-->
+                        <!--'dd-MM-yyyy HH:mm'}}-->
+                    <!--</small>-->
+                <!--</h2>-->
+                <!--<h2>-->
+                    <!--<small> Total : {{pageTotal}}</small>-->
+                <!--</h2>-->
+
+                <!--<div class="clearfix"></div>-->
+            <!--</div>-->
+
+
+            <!--<div class="x_content">-->
+
+                <!--<div ng-show="isLoading">-->
+                    <!--<div class="row ">-->
+                        <!--<div class="col-md-12 col-sm-12 col-xs-12">-->
+                            <!--<div class="data-state-wrap">-->
+                                <!--Please Wait...-->
+                            <!--</div>-->
+
+                        <!--</div>-->
+                    <!--</div>-->
+                <!--</div>-->
+
+                <!--&lt;!&ndash;<div ng-show="noDataToshow">-->
+                    <!--<div class="row ">-->
+                        <!--<div class="col-md-12 col-sm-12 col-xs-12">-->
+                            <!--<div class="data-state-wrap">-->
+                                <!--No Data...-->
+                            <!--</div>-->
+
+                        <!--</div>-->
+                    <!--</div>-->
+                <!--</div>&ndash;&gt;-->
+
+                <!--<div class="row" ng-hide="isLoading">-->
+
+                    <!--<div class="col-sm-12">-->
+                        <!--<div class="table-wrapper daynamic-s-tble">-->
+                            <!--<table id="datatable-responsive" dt-options="dtOptions" datatable="ng"-->
+                                   <!--class="table table-striped table-bordered dt-responsive nowrap dataTable no-footer dtr-inline"-->
+                                   <!--cellspacing="0" width="100%" role="grid"-->
+                                   <!--aria-describedby="datatable-responsive_info">-->
+                                <!--<thead>-->
+                                <!--<tr role="row">-->
+                                    <!--<th class="sorting" tabindex="0" aria-controls="datatable-responsive"-->
+                                        <!--rowspan="1"-->
+                                        <!--colspan="1" aria-label="From">Event Name-->
+                                    <!--</th>-->
+                                    <!--<th class="sorting" tabindex="1" aria-controls="datatable-responsive"-->
+                                        <!--rowspan="1"-->
+                                        <!--colspan="1" aria-label="To">Event Class-->
+                                    <!--</th>-->
+                                    <!--<th class="sorting" tabindex="2" aria-controls="datatable-responsive"-->
+                                        <!--rowspan="1"-->
+                                        <!--colspan="1" aria-label="AgentSkill">Event Type-->
+                                    <!--</th>-->
+                                    <!--<th class="sorting" tabindex="3" aria-controls="datatable-responsive"-->
+                                        <!--rowspan="1"-->
+                                        <!--colspan="1" aria-label="Call Time">Event Category-->
+                                    <!--</th>-->
+                                    <!--<th class="sorting" tabindex="4" aria-controls="datatable-responsive"-->
+                                        <!--rowspan="1"-->
+                                        <!--colspan="1" aria-label="Answer Duration">Event Params-->
+                                    <!--</th>-->
+                                    <!--<th class="sorting" tabindex="5" aria-controls="datatable-responsive"-->
+                                        <!--rowspan="1"-->
+                                        <!--colspan="1" aria-label="Total Duration">Event Time-->
+                                    <!--</th>-->
+                                    <!--<th class="sorting" tabindex="6" aria-controls="datatable-responsive"-->
+                                        <!--rowspan="1"-->
+                                        <!--colspan="1" aria-label="Answer Duration">Event Data-->
+                                    <!--</th>-->
+
+                                    <!--<th class="sorting" tabindex="7" aria-controls="datatable-responsive"-->
+                                        <!--rowspan="1"-->
+                                        <!--colspan="1" aria-label="Call Direction">SessionId-->
+                                    <!--</th>-->
+                                    <!--<th class="sorting" tabindex="8" aria-controls="datatable-responsive"-->
+                                        <!--rowspan="1"-->
+                                        <!--colspan="1" aria-label="Answer Duration">created At-->
+                                    <!--</th>-->
+
+                                <!--</thead>-->
+                                <!--<tbody>-->
+                                <!--<tr role="row" class="odd"-->
+                                    <!--ng-repeat="cdr in satisfactionRequest">-->
+
+                                    <!--<td>{{cdr.EventName}}</td>-->
+                                    <!--<td>{{cdr.EventClass}}</td>-->
+                                    <!--<td>{{cdr.EventType}}</td>-->
+                                    <!--<td>{{cdr.EventCategory}}</td>-->
+                                    <!--<td>{{cdr.EventParams}}</td>-->
+                                    <!--<td>{{cdr.EventTime| date : 'dd-MM-yyyy, HH:mm'}}</td>-->
+                                    <!--<td>{{cdr.EventData}}</td>-->
+                                    <!--<td>{{cdr.SessionId}}</td>-->
+                                    <!--<td>{{cdr.createdAt| date : 'dd-MM-yyyy, HH:mm'}}</td>-->
+                                <!--</tbody>-->
+                            <!--</table>-->
+                        <!--</div>-->
+                    <!--</div>-->
+                    <!--<paging ng-show="showPaging"-->
+                            <!--class="small"-->
+                            <!--page="currentPage"-->
+                            <!--page-size="pageSize"-->
+                            <!--total="pageTotal"-->
+                            <!--show-prev-next="true"-->
+                            <!--show-first-last="true"-->
+                            <!--text-next-class="glyphicon glyphicon-chevron-right"-->
+                            <!--text-prev-class="glyphicon glyphicon-chevron-left"-->
+                            <!--text-first-class="glyphicon glyphicon-backward"-->
+                            <!--text-last-class="glyphicon glyphicon-forward"-->
+                            <!--paging-action="getPageData('Paging Clicked', page, pageSize, total)">-->
+                    <!--</paging>-->
+
+                <!--</div>-->
+
+            <!--</div>-->
+        <!--</div>-->
+    <!--</div>-->
+<!--</div>-->
+<!--Old-->
+
+<script>
+	window.scrollTo(0, 0);
+</script>
+

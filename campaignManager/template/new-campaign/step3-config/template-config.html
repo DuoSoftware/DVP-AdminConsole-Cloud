@@ -1,0 +1,89 @@
+<section class="camp-config-wrapper">
+    <div class="col-lg-4">
+        <div id="formExtension"
+             class="form-group cam-form-grp">
+            <label for="extension"
+                   class="cam-label">File Name With Extension *</label>
+            <input type="text"
+                   class="form-control cam-textbox"
+                   id="extension"
+                   ng-model="campaign.AdditionalData.FileName">
+        </div>
+    </div>
+
+
+    <div class="col-lg-5">
+        <div id="formTemplate"
+             class="form-group cam-form-grp">
+            <label for="templates" class="cam-label">Template *</label>
+
+            <select ng-if="campaignAdditionalData.length==0"
+                    class="form-control cam-textbox"
+                    id="templates"
+                    ng-model="campaign.AdditionalData.Template"
+                    ng-options="opt.name as opt.name for opt in Templates track by opt._id"
+                    required>
+                <!--<option disabled value='' selected>Select Tempalte</option>   -->
+                <option disabled value='' selected></option>
+            </select>
+            <input type="text"
+                   ng-if="campaignAdditionalData.length!=0"
+                   class="form-control cam-textbox"
+                   disabled
+                   ng-model="campaign.AdditionalData.Template"/>
+        </div>
+    </div>
+
+    <div class="col-lg-3">
+        <button ng-if="!isTemplateConfigLoading"
+                class="btn btn-wizard btn-inside-form"
+                ng-click="addNewSmsConfig(campaign.AdditionalData)"
+                style=" margin-top: 22px;">
+            Add
+            <i class="ti-plus"></i>
+        </button>
+        <button class="btn btn-wizard btn-inside-form"
+                ng-if="isTemplateConfigLoading"
+                disabled
+                style=" margin-top: 22px;">
+            <i class="fa fa-circle-o-notch fa-spin fa-3x fa-fw"></i>
+        </button>
+    </div>
+
+
+    <div class="camp-config-tbl-wrapper">
+        <div class="camp-tbl-header">
+            <div class="col-lg-4">
+                <div class="tbl-header">File Name</div>
+            </div>
+            <div class="col-lg-4">
+                <div class="tbl-header">File Type</div>
+            </div>
+            <div class="col-lg-4">
+                <div class="tbl-header">Action</div>
+            </div>
+        </div>
+
+        <div class="camp-tbl-body">
+            <div class="camp-tbl-row"
+
+                 ng-repeat="tempData in campaignAdditionalData">
+                <div class="col-lg-4" >
+                    <div class="tbl-body-text">{{tempData.AdditionalData}}</div>
+                </div>
+                <div class="col-lg-4" >
+                    <div class="tbl-body-text">{{tempData.Category}}</div>
+                </div>
+                <div class="col-lg-4" >
+                    <div class="tbl-body-text">
+                        <div class="camp-delete-btn"
+                             ng-click="DeleteAdditionalDataByID(tempData.AdditionalDataId);">
+                            <i class="ti-trash"></i>
+                            Delete
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

@@ -1,0 +1,1736 @@
+{
+  "Exception": null,
+  "CustomMessage": "Get Schema worked",
+  "IsSuccess": true,
+  "Result": {
+    "created_at": {
+      "path": "created_at",
+      "instance": "Date",
+      "validators": [],
+      "setters": [],
+      "getters": [],
+      "options": {
+        "require": true
+      },
+      "_index": null
+    },
+    "updated_at": {
+      "path": "updated_at",
+      "instance": "Date",
+      "validators": [],
+      "setters": [],
+      "getters": [],
+      "options": {
+        "require": true
+      },
+      "_index": null
+    },
+    "due_at": {
+      "path": "due_at",
+      "instance": "Date",
+      "validators": [],
+      "setters": [],
+      "getters": [],
+      "options": {},
+      "_index": null
+    },
+    "time_estimation": {
+      "enumValues": [],
+      "regExp": null,
+      "path": "time_estimation",
+      "instance": "String",
+      "validators": [],
+      "setters": [],
+      "getters": [],
+      "options": {},
+      "_index": null
+    },
+    "active": {
+      "path": "active",
+      "instance": "Boolean",
+      "validators": [],
+      "setters": [],
+      "getters": [],
+      "options": {},
+      "_index": null
+    },
+    "tid": {
+      "path": "tid",
+      "instance": "Number",
+      "validators": [
+        {
+          "message": "Path `{PATH}` is required.",
+          "type": "required"
+        }
+      ],
+      "setters": [],
+      "getters": [],
+      "options": {
+        "required": true
+      },
+      "_index": null,
+      "isRequired": true,
+      "originalRequiredValue": true
+    },
+    "is_sub_ticket": {
+      "path": "is_sub_ticket",
+      "instance": "Boolean",
+      "validators": [
+        {
+          "message": "Path `{PATH}` is required.",
+          "type": "required"
+        }
+      ],
+      "setters": [],
+      "getters": [],
+      "options": {
+        "required": true
+      },
+      "_index": null,
+      "isRequired": true,
+      "originalRequiredValue": true
+    },
+    "type": {
+      "enumValues": [
+        "question",
+        "complain",
+        "incident",
+        "action"
+      ],
+      "regExp": null,
+      "path": "type",
+      "instance": "String",
+      "validators": [
+        {
+          "message": "Path `{PATH}` is required.",
+          "type": "required"
+        },
+        {
+          "message": "`{VALUE}` is not a valid enum value for path `{PATH}`.",
+          "type": "enum",
+          "enumValues": [
+            "question",
+            "complain",
+            "incident",
+            "action"
+          ]
+        }
+      ],
+      "setters": [],
+      "getters": [],
+      "options": {
+        "enum": [
+          "question",
+          "complain",
+          "incident",
+          "action"
+        ],
+        "default": "question",
+        "required": true
+      },
+      "_index": null,
+      "defaultValue": "question",
+      "isRequired": true,
+      "originalRequiredValue": true
+    },
+    "subject": {
+      "enumValues": [],
+      "regExp": null,
+      "path": "subject",
+      "instance": "String",
+      "validators": [
+        {
+          "message": "Path `{PATH}` is required.",
+          "type": "required"
+        }
+      ],
+      "setters": [
+        null
+      ],
+      "getters": [],
+      "options": {
+        "required": true,
+        "trim": true
+      },
+      "_index": null,
+      "isRequired": true,
+      "originalRequiredValue": true
+    },
+    "reference": {
+      "enumValues": [],
+      "regExp": null,
+      "path": "reference",
+      "instance": "String",
+      "validators": [
+        {
+          "message": "Path `{PATH}` is required.",
+          "type": "required"
+        }
+      ],
+      "setters": [],
+      "getters": [],
+      "options": {
+        "required": true,
+        "unique": true
+      },
+      "_index": {
+        "unique": true,
+        "background": true
+      },
+      "isRequired": true,
+      "originalRequiredValue": true
+    },
+    "description": {
+      "enumValues": [],
+      "regExp": null,
+      "path": "description",
+      "instance": "String",
+      "validators": [
+        {
+          "message": "Path `{PATH}` is required.",
+          "type": "required"
+        }
+      ],
+      "setters": [
+        null
+      ],
+      "getters": [],
+      "options": {
+        "required": true,
+        "trim": true
+      },
+      "_index": null,
+      "isRequired": true,
+      "originalRequiredValue": true
+    },
+    "priority": {
+      "enumValues": [
+        "urgent",
+        "high",
+        "normal",
+        "low"
+      ],
+      "regExp": null,
+      "path": "priority",
+      "instance": "String",
+      "validators": [
+        {
+          "message": "Path `{PATH}` is required.",
+          "type": "required"
+        },
+        {
+          "message": "`{VALUE}` is not a valid enum value for path `{PATH}`.",
+          "type": "enum",
+          "enumValues": [
+            "urgent",
+            "high",
+            "normal",
+            "low"
+          ]
+        }
+      ],
+      "setters": [],
+      "getters": [],
+      "options": {
+        "enum": [
+          "urgent",
+          "high",
+          "normal",
+          "low"
+        ],
+        "default": "normal",
+        "required": true
+      },
+      "_index": null,
+      "defaultValue": "normal",
+      "isRequired": true,
+      "originalRequiredValue": true
+    },
+    "status": {
+      "enumValues": [
+        "new",
+        "open",
+        "progressing",
+        "parked",
+        "solved",
+        "closed"
+      ],
+      "regExp": null,
+      "path": "status",
+      "instance": "String",
+      "validators": [
+        {
+          "message": "Path `{PATH}` is required.",
+          "type": "required"
+        },
+        {
+          "message": "`{VALUE}` is not a valid enum value for path `{PATH}`.",
+          "type": "enum",
+          "enumValues": [
+            "new",
+            "open",
+            "progressing",
+            "parked",
+            "solved",
+            "closed"
+          ]
+        }
+      ],
+      "setters": [],
+      "getters": [],
+      "options": {
+        "enum": [
+          "new",
+          "open",
+          "progressing",
+          "parked",
+          "solved",
+          "closed"
+        ],
+        "default": "new",
+        "required": true
+      },
+      "_index": null,
+      "defaultValue": "new",
+      "isRequired": true,
+      "originalRequiredValue": true
+    },
+    "requester": {
+      "path": "requester",
+      "instance": "ObjectID",
+      "validators": [],
+      "setters": [],
+      "getters": [],
+      "options": {
+        "ref": "ExternalUser"
+      },
+      "_index": null
+    },
+    "submitter": {
+      "path": "submitter",
+      "instance": "ObjectID",
+      "validators": [],
+      "setters": [],
+      "getters": [],
+      "options": {
+        "ref": "User"
+      },
+      "_index": null
+    },
+    "assignee": {
+      "path": "assignee",
+      "instance": "ObjectID",
+      "validators": [],
+      "setters": [],
+      "getters": [],
+      "options": {
+        "ref": "User"
+      },
+      "_index": null
+    },
+    "assignee_group": {
+      "path": "assignee_group",
+      "instance": "ObjectID",
+      "validators": [],
+      "setters": [],
+      "getters": [],
+      "options": {
+        "ref": "UserGroup"
+      },
+      "_index": null
+    },
+    "company": {
+      "path": "company",
+      "instance": "Number",
+      "validators": [
+        {
+          "message": "Path `{PATH}` is required.",
+          "type": "required"
+        }
+      ],
+      "setters": [],
+      "getters": [],
+      "options": {
+        "required": true
+      },
+      "_index": null,
+      "isRequired": true,
+      "originalRequiredValue": true
+    },
+    "tenant": {
+      "path": "tenant",
+      "instance": "Number",
+      "validators": [
+        {
+          "message": "Path `{PATH}` is required.",
+          "type": "required"
+        }
+      ],
+      "setters": [],
+      "getters": [],
+      "options": {
+        "required": true
+      },
+      "_index": null,
+      "isRequired": true,
+      "originalRequiredValue": true
+    },
+    "collaborators": {
+      "caster": {
+        "path": "collaborators",
+        "instance": "ObjectID",
+        "validators": [],
+        "setters": [],
+        "getters": [],
+        "options": {
+          "ref": "User"
+        },
+        "_index": null
+      },
+      "path": "collaborators",
+      "instance": "Array",
+      "validators": [],
+      "setters": [],
+      "getters": [],
+      "options": {
+        "type": [
+          {
+            "ref": "User"
+          }
+        ]
+      },
+      "_index": null
+    },
+    "watchers": {
+      "caster": {
+        "path": "watchers",
+        "instance": "ObjectID",
+        "validators": [],
+        "setters": [],
+        "getters": [],
+        "options": {
+          "ref": "User"
+        },
+        "_index": null
+      },
+      "path": "watchers",
+      "instance": "Array",
+      "validators": [],
+      "setters": [],
+      "getters": [],
+      "options": {
+        "type": [
+          {
+            "ref": "User"
+          }
+        ]
+      },
+      "_index": null
+    },
+    "attachments": {
+      "caster": {
+        "path": "attachments",
+        "instance": "ObjectID",
+        "validators": [],
+        "setters": [],
+        "getters": [],
+        "options": {
+          "ref": "Attachment"
+        },
+        "_index": null
+      },
+      "path": "attachments",
+      "instance": "Array",
+      "validators": [],
+      "setters": [],
+      "getters": [],
+      "options": {
+        "type": [
+          {
+            "ref": "Attachment"
+          }
+        ]
+      },
+      "_index": null
+    },
+    "sub_tickets": {
+      "caster": {
+        "path": "sub_tickets",
+        "instance": "ObjectID",
+        "validators": [],
+        "setters": [],
+        "getters": [],
+        "options": {
+          "ref": "Ticket"
+        },
+        "_index": null
+      },
+      "path": "sub_tickets",
+      "instance": "Array",
+      "validators": [],
+      "setters": [],
+      "getters": [],
+      "options": {
+        "type": [
+          {
+            "ref": "Ticket"
+          }
+        ]
+      },
+      "_index": null
+    },
+    "related_tickets": {
+      "caster": {
+        "path": "related_tickets",
+        "instance": "ObjectID",
+        "validators": [],
+        "setters": [],
+        "getters": [],
+        "options": {
+          "ref": "Ticket"
+        },
+        "_index": null
+      },
+      "path": "related_tickets",
+      "instance": "Array",
+      "validators": [],
+      "setters": [],
+      "getters": [],
+      "options": {
+        "type": [
+          {
+            "ref": "Ticket"
+          }
+        ]
+      },
+      "_index": null
+    },
+    "merged_tickets": {
+      "caster": {
+        "path": "merged_tickets",
+        "instance": "ObjectID",
+        "validators": [],
+        "setters": [],
+        "getters": [],
+        "options": {
+          "ref": "Ticket"
+        },
+        "_index": null
+      },
+      "path": "merged_tickets",
+      "instance": "Array",
+      "validators": [],
+      "setters": [],
+      "getters": [],
+      "options": {
+        "type": [
+          {
+            "ref": "Ticket"
+          }
+        ]
+      },
+      "_index": null
+    },
+    "engagement_session": {
+      "enumValues": [],
+      "regExp": null,
+      "path": "engagement_session",
+      "instance": "String",
+      "validators": [],
+      "setters": [],
+      "getters": [],
+      "options": {
+        "ref": "EngagementSession"
+      },
+      "_index": null
+    },
+    "channel": {
+      "enumValues": [],
+      "regExp": null,
+      "path": "channel",
+      "instance": "String",
+      "validators": [
+        {
+          "message": "Path `{PATH}` is required.",
+          "type": "required"
+        }
+      ],
+      "setters": [],
+      "getters": [],
+      "options": {
+        "required": true
+      },
+      "_index": null,
+      "isRequired": true,
+      "originalRequiredValue": true
+    },
+    "tags": {
+      "caster": {
+        "enumValues": [],
+        "regExp": null,
+        "path": "tags",
+        "instance": "String",
+        "validators": [],
+        "setters": [],
+        "getters": [],
+        "options": {},
+        "_index": null
+      },
+      "path": "tags",
+      "instance": "Array",
+      "validators": [],
+      "setters": [],
+      "getters": [],
+      "options": {
+        "type": [
+          null
+        ]
+      },
+      "_index": null
+    },
+    "isolated_tags": {
+      "caster": {
+        "path": "isolated_tags",
+        "instance": "Mixed",
+        "validators": [],
+        "setters": [],
+        "getters": [],
+        "options": {},
+        "_index": null
+      },
+      "path": "isolated_tags",
+      "instance": "Array",
+      "validators": [],
+      "setters": [],
+      "getters": [],
+      "options": {
+        "type": []
+      },
+      "_index": null
+    },
+    "custom_fields": {
+      "caster": {},
+      "path": "custom_fields",
+      "instance": "Array",
+      "validators": [],
+      "setters": [],
+      "getters": [],
+      "options": {
+        "type": [
+          {
+            "field": {
+              "require": true
+            },
+            "value": {},
+            "_id": false
+          }
+        ]
+      },
+      "_index": null,
+      "schema": {
+        "paths": {
+          "field": {
+            "enumValues": [],
+            "regExp": null,
+            "path": "field",
+            "instance": "String",
+            "validators": [],
+            "setters": [],
+            "getters": [],
+            "options": {
+              "require": true
+            },
+            "_index": null
+          },
+          "value": {
+            "path": "value",
+            "instance": "Mixed",
+            "validators": [],
+            "setters": [],
+            "getters": [],
+            "options": {},
+            "_index": null
+          },
+          "_id": {
+            "path": "_id",
+            "instance": "Mixed",
+            "validators": [],
+            "setters": [],
+            "getters": [],
+            "options": {
+              "type": false
+            },
+            "_index": null
+          }
+        },
+        "subpaths": {},
+        "virtuals": {
+          "id": {
+            "path": "id",
+            "getters": [
+              null
+            ],
+            "setters": [],
+            "options": {}
+          }
+        },
+        "singleNestedPaths": {},
+        "nested": {},
+        "inherits": {},
+        "callQueue": [
+          [
+            "pre",
+            {
+              "0": "save",
+              "1": false
+            }
+          ],
+          [
+            "pre",
+            {
+              "0": "save",
+              "1": true
+            }
+          ],
+          [
+            "pre",
+            {
+              "0": "remove",
+              "1": true
+            }
+          ]
+        ],
+        "_indexes": [],
+        "methods": {},
+        "statics": {},
+        "tree": {
+          "field": {
+            "require": true
+          },
+          "value": {},
+          "_id": false,
+          "id": {
+            "path": "id",
+            "getters": [
+              null
+            ],
+            "setters": [],
+            "options": {}
+          }
+        },
+        "_requiredpaths": [],
+        "query": {},
+        "s": {
+          "hooks": {
+            "_pres": {},
+            "_posts": {}
+          },
+          "kareemHooks": {
+            "count": true,
+            "find": true,
+            "findOne": true,
+            "findOneAndUpdate": true,
+            "findOneAndRemove": true,
+            "insertMany": true,
+            "update": true
+          }
+        },
+        "options": {
+          "minimize": true,
+          "typeKey": "type",
+          "id": true,
+          "noVirtualId": false,
+          "_id": true,
+          "noId": false,
+          "validateBeforeSave": true,
+          "read": null,
+          "shardKey": null,
+          "autoIndex": null,
+          "discriminatorKey": "__t",
+          "versionKey": "__v",
+          "capped": false,
+          "bufferCommands": true,
+          "strict": true
+        }
+      }
+    },
+    "form_submission": {
+      "path": "form_submission",
+      "instance": "ObjectID",
+      "validators": [],
+      "setters": [],
+      "getters": [],
+      "options": {
+        "ref": "FormSubmission"
+      },
+      "_index": null
+    },
+    "sla": {
+      "path": "sla",
+      "instance": "ObjectID",
+      "validators": [],
+      "setters": [],
+      "getters": [],
+      "options": {
+        "ref": "SLA"
+      },
+      "_index": null
+    },
+    "comments": {
+      "caster": {
+        "path": "comments",
+        "instance": "ObjectID",
+        "validators": [],
+        "setters": [],
+        "getters": [],
+        "options": {
+          "ref": "Comment"
+        },
+        "_index": null
+      },
+      "path": "comments",
+      "instance": "Array",
+      "validators": [],
+      "setters": [],
+      "getters": [],
+      "options": {
+        "type": [
+          {
+            "ref": "Comment"
+          }
+        ]
+      },
+      "_index": null
+    },
+    "events": {
+      "caster": {
+        "_id": "57ebbfb843f6d33821768d1b",
+        "type": "comment"
+      },
+      "path": "events",
+      "instance": "Array",
+      "validators": [],
+      "setters": [],
+      "getters": [],
+      "options": {
+        "type": [
+          {
+            "paths": {
+              "type": {
+                "enumValues": [
+                  "comment",
+                  "status",
+                  "notification",
+                  "reassign",
+                  "tracker"
+                ],
+                "regExp": null,
+                "path": "type",
+                "instance": "String",
+                "validators": [
+                  {
+                    "message": "Path `{PATH}` is required.",
+                    "type": "required"
+                  },
+                  {
+                    "message": "`{VALUE}` is not a valid enum value for path `{PATH}`.",
+                    "type": "enum",
+                    "enumValues": [
+                      "comment",
+                      "status",
+                      "notification",
+                      "reassign",
+                      "tracker"
+                    ]
+                  }
+                ],
+                "setters": [],
+                "getters": [],
+                "options": {
+                  "enum": [
+                    "comment",
+                    "status",
+                    "notification",
+                    "reassign",
+                    "tracker"
+                  ],
+                  "default": "comment",
+                  "required": true
+                },
+                "_index": null,
+                "defaultValue": "comment",
+                "isRequired": true,
+                "originalRequiredValue": true
+              },
+              "body": {
+                "path": "body",
+                "instance": "Mixed",
+                "validators": [],
+                "setters": [],
+                "getters": [],
+                "options": {},
+                "_index": null
+              },
+              "_id": {
+                "path": "_id",
+                "instance": "ObjectID",
+                "validators": [],
+                "setters": [
+                  null
+                ],
+                "getters": [],
+                "options": {
+                  "auto": true
+                },
+                "_index": null
+              },
+              "__v": {
+                "path": "__v",
+                "instance": "Number",
+                "validators": [],
+                "setters": [],
+                "getters": [],
+                "options": {},
+                "_index": null
+              }
+            },
+            "subpaths": {},
+            "virtuals": {
+              "id": {
+                "path": "id",
+                "getters": [
+                  null
+                ],
+                "setters": [],
+                "options": {}
+              }
+            },
+            "singleNestedPaths": {},
+            "nested": {},
+            "inherits": {},
+            "callQueue": [
+              [
+                "pre",
+                {
+                  "0": "save",
+                  "1": false
+                }
+              ],
+              [
+                "pre",
+                {
+                  "0": "save",
+                  "1": true
+                }
+              ],
+              [
+                "pre",
+                {
+                  "0": "remove",
+                  "1": true
+                }
+              ]
+            ],
+            "_indexes": [],
+            "methods": {},
+            "statics": {},
+            "tree": {
+              "type": {
+                "required": true,
+                "default": "comment",
+                "enum": [
+                  "comment",
+                  "status",
+                  "notification",
+                  "reassign",
+                  "tracker"
+                ]
+              },
+              "body": {},
+              "_id": {
+                "auto": true
+              },
+              "id": {
+                "path": "id",
+                "getters": [
+                  null
+                ],
+                "setters": [],
+                "options": {}
+              }
+            },
+            "_requiredpaths": [
+              "type"
+            ],
+            "query": {},
+            "s": {
+              "hooks": {
+                "_pres": {},
+                "_posts": {}
+              },
+              "kareemHooks": {
+                "count": true,
+                "find": true,
+                "findOne": true,
+                "findOneAndUpdate": true,
+                "findOneAndRemove": true,
+                "insertMany": true,
+                "update": true
+              }
+            },
+            "options": {
+              "typeKey": "type",
+              "id": true,
+              "noVirtualId": false,
+              "_id": true,
+              "noId": false,
+              "validateBeforeSave": true,
+              "read": null,
+              "shardKey": null,
+              "autoIndex": null,
+              "minimize": true,
+              "discriminatorKey": "__t",
+              "versionKey": "__v",
+              "capped": false,
+              "bufferCommands": true,
+              "strict": true,
+              "pluralization": true
+            }
+          }
+        ]
+      },
+      "_index": null,
+      "schema": {
+        "paths": {
+          "type": {
+            "enumValues": [
+              "comment",
+              "status",
+              "notification",
+              "reassign",
+              "tracker"
+            ],
+            "regExp": null,
+            "path": "type",
+            "instance": "String",
+            "validators": [
+              {
+                "message": "Path `{PATH}` is required.",
+                "type": "required"
+              },
+              {
+                "message": "`{VALUE}` is not a valid enum value for path `{PATH}`.",
+                "type": "enum",
+                "enumValues": [
+                  "comment",
+                  "status",
+                  "notification",
+                  "reassign",
+                  "tracker"
+                ]
+              }
+            ],
+            "setters": [],
+            "getters": [],
+            "options": {
+              "enum": [
+                "comment",
+                "status",
+                "notification",
+                "reassign",
+                "tracker"
+              ],
+              "default": "comment",
+              "required": true
+            },
+            "_index": null,
+            "defaultValue": "comment",
+            "isRequired": true,
+            "originalRequiredValue": true
+          },
+          "body": {
+            "path": "body",
+            "instance": "Mixed",
+            "validators": [],
+            "setters": [],
+            "getters": [],
+            "options": {},
+            "_index": null
+          },
+          "_id": {
+            "path": "_id",
+            "instance": "ObjectID",
+            "validators": [],
+            "setters": [
+              null
+            ],
+            "getters": [],
+            "options": {
+              "auto": true
+            },
+            "_index": null
+          },
+          "__v": {
+            "path": "__v",
+            "instance": "Number",
+            "validators": [],
+            "setters": [],
+            "getters": [],
+            "options": {},
+            "_index": null
+          }
+        },
+        "subpaths": {},
+        "virtuals": {
+          "id": {
+            "path": "id",
+            "getters": [
+              null
+            ],
+            "setters": [],
+            "options": {}
+          }
+        },
+        "singleNestedPaths": {},
+        "nested": {},
+        "inherits": {},
+        "callQueue": [
+          [
+            "pre",
+            {
+              "0": "save",
+              "1": false
+            }
+          ],
+          [
+            "pre",
+            {
+              "0": "save",
+              "1": true
+            }
+          ],
+          [
+            "pre",
+            {
+              "0": "remove",
+              "1": true
+            }
+          ]
+        ],
+        "_indexes": [],
+        "methods": {},
+        "statics": {},
+        "tree": {
+          "type": {
+            "required": true,
+            "default": "comment",
+            "enum": [
+              "comment",
+              "status",
+              "notification",
+              "reassign",
+              "tracker"
+            ]
+          },
+          "body": {},
+          "_id": {
+            "auto": true
+          },
+          "id": {
+            "path": "id",
+            "getters": [
+              null
+            ],
+            "setters": [],
+            "options": {}
+          }
+        },
+        "_requiredpaths": [
+          "type"
+        ],
+        "query": {},
+        "s": {
+          "hooks": {
+            "_pres": {},
+            "_posts": {}
+          },
+          "kareemHooks": {
+            "count": true,
+            "find": true,
+            "findOne": true,
+            "findOneAndUpdate": true,
+            "findOneAndRemove": true,
+            "insertMany": true,
+            "update": true
+          }
+        },
+        "options": {
+          "typeKey": "type",
+          "id": true,
+          "noVirtualId": false,
+          "_id": true,
+          "noId": false,
+          "validateBeforeSave": true,
+          "read": null,
+          "shardKey": null,
+          "autoIndex": null,
+          "minimize": true,
+          "discriminatorKey": "__t",
+          "versionKey": "__v",
+          "capped": false,
+          "bufferCommands": true,
+          "strict": true,
+          "pluralization": true
+        }
+      }
+    },
+    "ticket_matrix": {
+      "schema": {
+        "paths": {
+          "groups": {
+            "path": "groups",
+            "instance": "Number",
+            "validators": [],
+            "setters": [],
+            "getters": [],
+            "options": {},
+            "_index": null
+          },
+          "assignees": {
+            "path": "assignees",
+            "instance": "Number",
+            "validators": [],
+            "setters": [],
+            "getters": [],
+            "options": {},
+            "_index": null
+          },
+          "reopens": {
+            "path": "reopens",
+            "instance": "Number",
+            "validators": [],
+            "setters": [],
+            "getters": [],
+            "options": {},
+            "_index": null
+          },
+          "replies": {
+            "path": "replies",
+            "instance": "Number",
+            "validators": [],
+            "setters": [],
+            "getters": [],
+            "options": {},
+            "_index": null
+          },
+          "external_replies": {
+            "path": "external_replies",
+            "instance": "Number",
+            "validators": [],
+            "setters": [],
+            "getters": [],
+            "options": {},
+            "_index": null
+          },
+          "last_assigned": {
+            "path": "last_assigned",
+            "instance": "Date",
+            "validators": [],
+            "setters": [],
+            "getters": [],
+            "options": {},
+            "_index": null
+          },
+          "last_updated": {
+            "path": "last_updated",
+            "instance": "Date",
+            "validators": [],
+            "setters": [],
+            "getters": [],
+            "options": {},
+            "_index": null
+          },
+          "last_status_changed": {
+            "path": "last_status_changed",
+            "instance": "Date",
+            "validators": [],
+            "setters": [],
+            "getters": [],
+            "options": {},
+            "_index": null
+          },
+          "last_commented": {
+            "path": "last_commented",
+            "instance": "Date",
+            "validators": [],
+            "setters": [],
+            "getters": [],
+            "options": {},
+            "_index": null
+          },
+          "created_at": {
+            "path": "created_at",
+            "instance": "Date",
+            "validators": [],
+            "setters": [],
+            "getters": [],
+            "options": {},
+            "_index": null
+          },
+          "opened_at": {
+            "path": "opened_at",
+            "instance": "Date",
+            "validators": [],
+            "setters": [],
+            "getters": [],
+            "options": {},
+            "_index": null
+          },
+          "solved_at": {
+            "path": "solved_at",
+            "instance": "Date",
+            "validators": [],
+            "setters": [],
+            "getters": [],
+            "options": {},
+            "_index": null
+          },
+          "waited_time": {
+            "path": "waited_time",
+            "instance": "Number",
+            "validators": [],
+            "setters": [],
+            "getters": [],
+            "options": {},
+            "_index": null
+          },
+          "worked_time": {
+            "path": "worked_time",
+            "instance": "Number",
+            "validators": [],
+            "setters": [],
+            "getters": [],
+            "options": {},
+            "_index": null
+          },
+          "resolution_time": {
+            "path": "resolution_time",
+            "instance": "Number",
+            "validators": [],
+            "setters": [],
+            "getters": [],
+            "options": {},
+            "_index": null
+          },
+          "sla_violated": {
+            "path": "sla_violated",
+            "instance": "Boolean",
+            "validators": [],
+            "setters": [],
+            "getters": [],
+            "options": {},
+            "_index": null
+          },
+          "_id": {
+            "path": "_id",
+            "instance": "ObjectID",
+            "validators": [],
+            "setters": [
+              null
+            ],
+            "getters": [],
+            "options": {
+              "auto": true
+            },
+            "_index": null
+          },
+          "__v": {
+            "path": "__v",
+            "instance": "Number",
+            "validators": [],
+            "setters": [],
+            "getters": [],
+            "options": {},
+            "_index": null
+          }
+        },
+        "subpaths": {},
+        "virtuals": {
+          "id": {
+            "path": "id",
+            "getters": [
+              null
+            ],
+            "setters": [],
+            "options": {}
+          }
+        },
+        "singleNestedPaths": {},
+        "nested": {},
+        "inherits": {},
+        "callQueue": [
+          [
+            "pre",
+            {
+              "0": "save",
+              "1": false
+            }
+          ],
+          [
+            "pre",
+            {
+              "0": "save",
+              "1": true
+            }
+          ],
+          [
+            "pre",
+            {
+              "0": "remove",
+              "1": true
+            }
+          ]
+        ],
+        "_indexes": [],
+        "methods": {},
+        "statics": {},
+        "tree": {
+          "_id": {
+            "auto": true
+          },
+          "id": {
+            "path": "id",
+            "getters": [
+              null
+            ],
+            "setters": [],
+            "options": {}
+          }
+        },
+        "query": {},
+        "s": {
+          "hooks": {
+            "_pres": {},
+            "_posts": {}
+          },
+          "kareemHooks": {
+            "count": true,
+            "find": true,
+            "findOne": true,
+            "findOneAndUpdate": true,
+            "findOneAndRemove": true,
+            "insertMany": true,
+            "update": true
+          }
+        },
+        "options": {
+          "typeKey": "type",
+          "id": true,
+          "noVirtualId": false,
+          "_id": true,
+          "noId": false,
+          "validateBeforeSave": true,
+          "read": null,
+          "shardKey": null,
+          "autoIndex": null,
+          "minimize": true,
+          "discriminatorKey": "__t",
+          "versionKey": "__v",
+          "capped": false,
+          "bufferCommands": true,
+          "strict": true,
+          "pluralization": true
+        }
+      },
+      "$isSingleNested": true,
+      "path": "ticket_matrix",
+      "instance": "Embedded",
+      "validators": [],
+      "setters": [],
+      "getters": [],
+      "options": {
+        "type": {
+          "paths": {
+            "groups": {
+              "path": "groups",
+              "instance": "Number",
+              "validators": [],
+              "setters": [],
+              "getters": [],
+              "options": {},
+              "_index": null
+            },
+            "assignees": {
+              "path": "assignees",
+              "instance": "Number",
+              "validators": [],
+              "setters": [],
+              "getters": [],
+              "options": {},
+              "_index": null
+            },
+            "reopens": {
+              "path": "reopens",
+              "instance": "Number",
+              "validators": [],
+              "setters": [],
+              "getters": [],
+              "options": {},
+              "_index": null
+            },
+            "replies": {
+              "path": "replies",
+              "instance": "Number",
+              "validators": [],
+              "setters": [],
+              "getters": [],
+              "options": {},
+              "_index": null
+            },
+            "external_replies": {
+              "path": "external_replies",
+              "instance": "Number",
+              "validators": [],
+              "setters": [],
+              "getters": [],
+              "options": {},
+              "_index": null
+            },
+            "last_assigned": {
+              "path": "last_assigned",
+              "instance": "Date",
+              "validators": [],
+              "setters": [],
+              "getters": [],
+              "options": {},
+              "_index": null
+            },
+            "last_updated": {
+              "path": "last_updated",
+              "instance": "Date",
+              "validators": [],
+              "setters": [],
+              "getters": [],
+              "options": {},
+              "_index": null
+            },
+            "last_status_changed": {
+              "path": "last_status_changed",
+              "instance": "Date",
+              "validators": [],
+              "setters": [],
+              "getters": [],
+              "options": {},
+              "_index": null
+            },
+            "last_commented": {
+              "path": "last_commented",
+              "instance": "Date",
+              "validators": [],
+              "setters": [],
+              "getters": [],
+              "options": {},
+              "_index": null
+            },
+            "created_at": {
+              "path": "created_at",
+              "instance": "Date",
+              "validators": [],
+              "setters": [],
+              "getters": [],
+              "options": {},
+              "_index": null
+            },
+            "opened_at": {
+              "path": "opened_at",
+              "instance": "Date",
+              "validators": [],
+              "setters": [],
+              "getters": [],
+              "options": {},
+              "_index": null
+            },
+            "solved_at": {
+              "path": "solved_at",
+              "instance": "Date",
+              "validators": [],
+              "setters": [],
+              "getters": [],
+              "options": {},
+              "_index": null
+            },
+            "waited_time": {
+              "path": "waited_time",
+              "instance": "Number",
+              "validators": [],
+              "setters": [],
+              "getters": [],
+              "options": {},
+              "_index": null
+            },
+            "worked_time": {
+              "path": "worked_time",
+              "instance": "Number",
+              "validators": [],
+              "setters": [],
+              "getters": [],
+              "options": {},
+              "_index": null
+            },
+            "resolution_time": {
+              "path": "resolution_time",
+              "instance": "Number",
+              "validators": [],
+              "setters": [],
+              "getters": [],
+              "options": {},
+              "_index": null
+            },
+            "sla_violated": {
+              "path": "sla_violated",
+              "instance": "Boolean",
+              "validators": [],
+              "setters": [],
+              "getters": [],
+              "options": {},
+              "_index": null
+            },
+            "_id": {
+              "path": "_id",
+              "instance": "ObjectID",
+              "validators": [],
+              "setters": [
+                null
+              ],
+              "getters": [],
+              "options": {
+                "auto": true
+              },
+              "_index": null
+            },
+            "__v": {
+              "path": "__v",
+              "instance": "Number",
+              "validators": [],
+              "setters": [],
+              "getters": [],
+              "options": {},
+              "_index": null
+            }
+          },
+          "subpaths": {},
+          "virtuals": {
+            "id": {
+              "path": "id",
+              "getters": [
+                null
+              ],
+              "setters": [],
+              "options": {}
+            }
+          },
+          "singleNestedPaths": {},
+          "nested": {},
+          "inherits": {},
+          "callQueue": [
+            [
+              "pre",
+              {
+                "0": "save",
+                "1": false
+              }
+            ],
+            [
+              "pre",
+              {
+                "0": "save",
+                "1": true
+              }
+            ],
+            [
+              "pre",
+              {
+                "0": "remove",
+                "1": true
+              }
+            ]
+          ],
+          "_indexes": [],
+          "methods": {},
+          "statics": {},
+          "tree": {
+            "_id": {
+              "auto": true
+            },
+            "id": {
+              "path": "id",
+              "getters": [
+                null
+              ],
+              "setters": [],
+              "options": {}
+            }
+          },
+          "query": {},
+          "s": {
+            "hooks": {
+              "_pres": {},
+              "_posts": {}
+            },
+            "kareemHooks": {
+              "count": true,
+              "find": true,
+              "findOne": true,
+              "findOneAndUpdate": true,
+              "findOneAndRemove": true,
+              "insertMany": true,
+              "update": true
+            }
+          },
+          "options": {
+            "typeKey": "type",
+            "id": true,
+            "noVirtualId": false,
+            "_id": true,
+            "noId": false,
+            "validateBeforeSave": true,
+            "read": null,
+            "shardKey": null,
+            "autoIndex": null,
+            "minimize": true,
+            "discriminatorKey": "__t",
+            "versionKey": "__v",
+            "capped": false,
+            "bufferCommands": true,
+            "strict": true,
+            "pluralization": true
+          }
+        },
+        "require": true
+      },
+      "_index": null
+    },
+    "_id": {
+      "path": "_id",
+      "instance": "ObjectID",
+      "validators": [],
+      "setters": [
+        null
+      ],
+      "getters": [],
+      "options": {
+        "auto": true
+      },
+      "_index": null
+    },
+    "__v": {
+      "path": "__v",
+      "instance": "Number",
+      "validators": [],
+      "setters": [],
+      "getters": [],
+      "options": {},
+      "_index": null
+    }
+  }
+}

@@ -1,0 +1,23 @@
+<div class="row x_panel">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <div class="col-md-4 col-sm-4 col-xs-4">
+            <h2><b>Old Value</b></h2>
+            <pre ng-bind-html="oldValueJsonView"></pre>
+        </div>
+        <div class="col-md-4 col-sm-4 col-xs-4">
+            <h2><b>New Value</b></h2>
+            <pre ng-bind-html="newValueJsonView"></pre>
+        </div>
+        <div class="col-md-4 col-sm-4 col-xs-4">
+            <h2><b>Difference</b></h2>
+            <pre ng-bind-html="diffValue"></pre>
+        </div>
+
+    </div>
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <button class="btn btn-success" ng-click="closeModal()">
+            Cancel
+        </button>
+    </div>
+
+</div>

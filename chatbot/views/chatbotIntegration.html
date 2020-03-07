@@ -1,0 +1,234 @@
+<div class="row">
+
+    <div class="col-md-12 col-sm-6 col-xs-12">
+
+        <!-- Bot list -->
+        <div class="x_panel animated fadeIn bot-card">
+            <div class="x_title card-title">
+                <div class="col-md-6 col-sm-6 col-xs-6">
+                    <h2 class="font-robot font-300">Integration</h2>
+                </div>
+
+                <div class="col-md-5 col-sm-5 col-xs-5 form-group top_search card-search">
+                    <helpbutton class="helpbutton" displayhelp="'integrations'"></helpbutton>
+                    <div class="card-search--form">
+                        <i class="fa fa-search"></i>
+                        <div class="input-group">
+                            <input type="text" ng-model="searchCriteria" class="form-control" placeholder="Search for...">
+                        </div>
+                    </div>
+                </div>
+                <div class="card-add">
+                    <button type="button" class="btn card-title--btn-add card-btn" ng-click="openNewIntegration()" data-toggle="collapse" ng-show="showNewCardForm == false"
+                        data-target="#addNewIntCollapse">Add New</button>
+
+                    <div id="addNewIntCollapse" ng-if="showNewCardForm == true" class="collapse">
+                        <div class="subcard">
+                            <div class="col-sm-12 subcard-title ">
+                                <h2 class="font-robot font-300 font-15">Create New Integration</h2>
+                                <div data-toggle="collapse" data-target="#addNewIntCollapse" ng-click="closeNewIntegration()" class="btn-circle pull-right">
+                                    <i class="fa fa-times"></i>
+                                </div>
+                            </div>
+
+                            <form name="createIntegration" ng-submit="save()" class="form-horizontal form-label-left input_mask">
+                                <div class="col-12 col-md-3 form-group">
+                                    <input type="text" class="form-control width-100" name="createIntegration.name" ng-model="integration.name" placeholder="Name"
+                                        required>
+                                </div>
+
+                                <div class="col-12 col-md-3 form-group">
+                                    <select class="form-control width-100" name="createIntegration.method" ng-model="integration.method" placeholder="Method"
+                                        ng-change="setbody(integration.method)" required>
+                                        <option value="" selected disabled>Method</option>
+                                        <option value="POST" ng-value="POST">POST</option>
+                                        <option value="GET" ng-value="GET"> GET</option>
+                                    </select>
+                                </div>
+
+                                <div class="col-12 col-md-6 form-group">
+                                    <input type="url" class="form-control width-100" name="createIntegration.url" ng-model="integration.url" placeholder="Url"
+                                        required>
+                                </div>
+
+                                <div class="col-md-6 col-xs-12 col-sm-12 card-form--subform">
+                                    <h3 class="card-form--subtitle">Url Params</h3>
+                                    <div class="multiplerow-inline-form" ng-repeat="field in urlParamsArray track by $index">
+                                        <div class="form-inline">
+                                            <input type="text" class="form-control" ng-model='field.key' placeholder="key">
+                                            <input type="text" class="form-control" ng-model='field.value' placeholder="value">
+                                        </div>
+
+                                        <div class="inline-button">
+                                            <div ng-hide="$index==0" ng-click='deleteUrlParams(field,$index)' class="btn-circle">
+                                                <i class='fa fa-trash-o'></i>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <button type="button" class="multiplerow-inline-form-btn btn card-btn pull-right" ng-click="addUrlParams()">Add Params</button>
+
+                                </div>
+
+                                <div class="col-md-6 col-xs-12 col-sm-12">
+                                    <div class="card-form--subform">
+                                        <h3 class="card-form--subtitle">Headers</h3>
+                                        <div class="multiplerow-inline-form" ng-repeat="field in headersArray track by $index">
+                                            <div class="form-inline">
+                                                <input type="text" class="form-control" ng-model='field.key' placeholder="key">
+                                                <input type="text" class="form-control" ng-model='field.value' placeholder="value">
+                                            </div>
+                                            <div class="inline-button">
+                                                <div ng-hide="$index==0" ng-click='deleteHeader($index)' class="btn-circle">
+                                                    <i class='fa fa-trash-o'></i>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <button class="multiplerow-inline-form-btn btn card-btn pull-right" type="button" ng-click="addCheckHeaders()">Add Headers</button>
+                                    </div>
+                                </div>
+
+                                <div class="card-form--subform col-md-12 col-xs-12 col-sm-12">
+                                    <h3 class="card-form--subtitle">Body</h3>
+                                    <div class="">
+                                        <textarea ng-model="integration.body" class="form-control width-100" style="height:150px" ng-disabled="bodyDisabled" ng-required="!bodyDisabled"></textarea>
+                                    </div>
+                                    <div ng-show="errorMsg">
+                                        <span style="color:red; font-size:12px;">Enter valid json</span>
+                                    </div>
+                                </div>
+
+                                <div class="card-form--subform col-md-12 col-xs-12 col-sm-12">
+                                    <h3 class="card-form--subtitle">Response</h3>
+                                    <div class="row">
+                                        <div class="col-12 col-md-6 form-group has-feedback">
+                                            <div class="s-panel qa-section ng-scope">
+                                                <h3>Success</h3>
+                                                <!-- s-panel body wrapper -->
+                                                <div class="s-panel-body">
+                                                    <div class="ng-dirty ng-valid-parse ng-valid ng-valid-required" style="">
+                                                        <div class="form-group">
+                                                            <input type="number" class="form-control width-100  ng-not-empty ng-dirty ng-valid-parse ng-valid ng-valid-required ng-touched"
+                                                                ng-model="integration.response.success.http_code" name="Http Code*"
+                                                                required="" id="sectionName" placeholder="Http Code*">
+                                                        </div>
+
+                                                        <div class="form-group">
+                                                            <input type="text" class="form-control width-100 ng-not-empty ng-dirty ng-valid-parse ng-valid ng-touched" ng-model="integration.response.success.out_message_field"
+                                                                name="sectionDesc" id="sectionDesc" placeholder="Bind Data Field">
+                                                        </div>
+
+                                                        <div class="form-group">
+                                                            <select class="form-control width-100" name="createIntegration.response.success.fieldCheckCondition" ng-model="integration.response.success.fieldCheckCondition"
+                                                                placeholder="Check Condition" required>
+                                                                <option value="" selected disabled>Check Condition</option>
+                                                                <option value="and" ng-value="and">and</option>
+                                                                <option value="or" ng-value="or">or</option>
+                                                            </select>
+                                                        </div>
+
+                                                        <div class="multiplerow-inline-form--sm multiplerow-inline-form" ng-repeat="field in successCheckFieldsArray track by $index">
+                                                            <div class="form-inline">
+                                                                <input type="text" class="form-control" ng-model='field.name' placeholder="name">
+                                                                <select class="form-control" ng-model="field.type" placeholder="">
+                                                                    <option value="" selected disabled>Type</option>
+                                                                    <option value="boolean" ng-value="boolean">boolean</option>
+                                                                    <option value="string" ng-value="string">string</option>
+                                                                    <option value="number" ng-value="number">number</option>
+                                                                </select>
+                                                                <input type="text" class="form-control" ng-model='field.value' placeholder="value">
+                                                            </div>
+                                                            <div class="inline-button">
+                                                                <div ng-hide="$index==0" ng-click='successDeleteCheckFields($index)' class="btn-circle">
+                                                                    <i class='fa fa-trash-o'></i>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                        <button class="multiplerow-inline-form-btn btn card-btn pull-right" type="button" ng-click="addSuccessCheckFields()">Add check field</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-12 col-md-6 form-group has-feedback">
+                                            <div class="s-panel qa-section ng-scope">
+                                                <h3>Error</h3>
+                                                <!-- s-panel body wrapper -->
+                                                <div class="s-panel-body">
+                                                    <div class="ng-dirty ng-valid-parse ng-valid ng-valid-required" style="">
+                                                        <div class="form-group">
+                                                            <input type="number" class="form-control width-100  ng-not-empty ng-dirty ng-valid-parse ng-valid ng-valid-required ng-touched"
+                                                                ng-model="integration.response.error.http_code" name="sectionName"
+                                                                required="" id="sectionName" placeholder="Http Code*">
+                                                        </div>
+
+                                                        <div class="form-group">
+                                                            <input type="text" class="form-control width-100 ng-not-empty ng-dirty ng-valid-parse ng-valid ng-touched" ng-model="integration.response.error.out_message_field"
+                                                                name="sectionDesc" id="sectionDesc" placeholder="Bind Data Field">
+                                                        </div>
+
+                                                        <div class="form-group">
+                                                            <select class="form-control width-100" name="createIntegration.response.error.fieldCheckCondition" ng-model="integration.response.error.fieldCheckCondition"
+                                                                placeholder="Check Condition" required>
+                                                                <option value="" selected disabled>Check Condition</option>
+                                                                <option value="and" ng-value="and">and</option>
+                                                                <option value="or" ng-value="or">or</option>
+                                                            </select>
+                                                        </div>
+
+                                                        <div class="multiplerow-inline-form--sm multiplerow-inline-form" ng-repeat="field in errorCheckFieldsArray track by $index">
+                                                            <div class="form-inline">
+                                                                <input type="text" class="form-control" ng-model='field.name' placeholder="name">
+                                                                <select class="form-control" ng-model="field.type" placeholder="">
+                                                                    <option value="" selected disabled>Type</option>
+                                                                    <option value="boolean" ng-value="boolean">boolean</option>
+                                                                    <option value="string" ng-value="string">string</option>
+                                                                    <option value="number" ng-value="number">number</option>
+                                                                </select>
+                                                                <input type="text" class="form-control" ng-model='field.value' placeholder="value">
+                                                            </div>
+                                                            <div class="inline-button">
+                                                                <div ng-hide="$index==0" ng-click='errordeleteCheckFields($index)' class="btn-circle">
+                                                                    <i class='fa fa-trash-o'></i>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                        <button class="multiplerow-inline-form-btn btn card-btn pull-right" type="button" ng-click="addErrorCheckFields()">Add check field</button>
+                                                    </div>
+                                                    <!-- s-panel btn wrapper -->
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                                <button type="submit" ng-disabled="createIntegration.$invalid" class="btn card-btn pull-right">
+                                    {{buttonName}}
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div class="clearfix"></div>
+            </div>
+
+            <div class="x_content">
+                <ul class="list-unstyled">
+                    <li ng-repeat="template in allintegration | filterBy: ['name']: searchCriteria | orderBy:'-created_at'" style="border-bottom: 1px solid #efefef;">
+                        <!-- <editachatbot bot="bot" update-application="deleteIntegration(bot)" reloadpage="reloadPage()">
+                        </editachatbot> -->
+                        <editintegration template="template" template-type="TemplateCategory" update-integration="updateIntegration(template)" delete-integration="deleteIntegration(template)"
+                            template-Types="TemplateTypes"></editintegration>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <!-- end -->
+
+    </div>
+
+</div>

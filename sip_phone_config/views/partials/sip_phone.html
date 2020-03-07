@@ -1,0 +1,89 @@
+<div class="block">
+    <div class="tags">
+        <a class="tag">
+            <span>{{phone.mac}}</span>
+        </a>
+    </div>
+    <div class="block_content">
+        <div class="row invoice-info">
+            <div class="col-sm-6 invoice-col " ng-hide="editMode">
+
+                <address class="title">
+                    <a class="font-robot font-15 text-uppercase" style="color: #d2d1d1;"><b>SIP Account :</b>
+                        {{phone.configdata.username}}</a>
+                    <br>
+                    <br>Model : {{phone.model}}
+                    <br>Mac : {{phone.mac}}
+                    <br>Last Update : {{phone.updatedAt|date:'MM/dd/yyyy @ h:mma'}}
+                </address>
+            </div>
+            <!-- /.col -->
+            <div class="col-sm-6 invoice-col" ng-hide="editMode">
+                <div class="pull-left attribute-edit-wrap">
+                    <!--<a ng-disabled="true" class="inline-block" ng-click="deleteAttribute(attribute)"
+                       style="cursor: pointer"><i
+                            class="fa fa-trash-o"></i></a>
+                    <br>-->
+                    <a ng-disabled="true" class="inline-block" ng-click="addSipAccount()" style="cursor: pointer"><i
+                            class="fa fa-cog"></i></a>
+                </div>
+            </div>
+
+            <div class="col-md-12 col-sm-12 col-xs-12 edit-main-wrap" ng-show="editMode">
+                <div class="application-edit">
+                    <div class="col-sm-12">
+                        <div class="col-sm-6">
+                            <h2 class="font-robot font-300 text-uppercase font-15">Edit {{template.name}}</h2>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="edit-close pull-right">
+                                <i class="fa fa-close" ng-click="addSipAccount()"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12 col-sm-6 col-xs-12 col-xs-12">
+                        <div class="tile-stats  m-top15">
+                            <form class="form-horizontal form-label-left input_mask">
+                                <div class="col-md-12 col-sm-12 col-xs-12 form-group has-feedback"
+                                     style="margin-bottom: 15px;">
+                                    <label>Mac</label>
+                                    <input type="text" class="form-control has-feedback-left"
+                                           ng-model="phone.mac"
+                                           placeholder="Template Name" ng-disabled="true">
+                                    <span class="fa fa-user form-control-feedback left" aria-hidden="true"></span>
+                                </div>
+
+
+                                <div class="col-md-4 col-sm-6 col-xs-12 form-group has-feedback"
+                                     style="margin-bottom: 15px;">
+                                    <label>SIP User's</label>
+                                    <ui-select ng-model="selected_sip_user.value">
+                                        <ui-select-match>
+                                            <span ng-bind="$select.selected.SipUsername"></span>
+                                        </ui-select-match>
+                                        <ui-select-choices
+                                                repeat="item in (sipusers | filter: $select.search)  track by item.id">
+                                            <span ng-bind="item.SipUsername"></span>
+                                        </ui-select-choices>
+                                    </ui-select>
+                                </div>
+
+                                <div class="col-md-12 col-sm-9 col-xs-12 m-top15">
+                                    <div class="col-md-6 col-sm-6 col-xs-12">
+
+                                    </div>
+                                    <div class="col-md-6 col-sm-6 col-xs-12">
+                                        <button type="button" class="btn btn-success btn-sm pull-right"
+                                                ng-click="update_ip_phone(false)" ng-disabled="isUpdate">
+                                            Update
+                                        </button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

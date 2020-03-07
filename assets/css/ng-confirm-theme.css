@@ -1,0 +1,65 @@
+.ng-confirm.ng-confirm-my-theme {
+}
+.ng-confirm.ng-confirm-my-theme .ng-confirm-success-bg {
+    background: mediumseagreen;
+    color: #ffffff;
+}
+.ng-confirm.ng-confirm-my-theme .ng-confirm-bg.ng-confirm-bg-h {
+}
+.ng-confirm.ng-confirm-my-theme .ng-confirm-scrollpane {
+}
+.ng-confirm.ng-confirm-my-theme .ng-confirm-box {
+}
+.ng-confirm.ng-confirm-type-green .ng-confirm-box {
+    background: #2ecc71;
+    color: #fff;
+}
+.ng-confirm.ng-confirm-my-theme .ng-confirm-box.ng-confirm-loading {
+}
+.ng-confirm.ng-confirm-my-theme .ng-confirm-box.ng-confirm-loading:before {
+}
+.ng-confirm.ng-confirm-my-theme .ng-confirm-box.ng-confirm-loading:after {
+}
+.ng-confirm.ng-confirm-my-theme .ng-confirm-box div.ng-confirm-closeIcon {
+}
+.ng-confirm.ng-confirm-my-theme .ng-confirm-box div.ng-confirm-closeIcon:empty {
+}
+.ng-confirm.ng-confirm-my-theme .ng-confirm-box div.ng-confirm-closeIcon .fa,
+.ng-confirm.ng-confirm-my-theme .ng-confirm-box div.ng-confirm-closeIcon .glyphicon,
+.ng-confirm.ng-confirm-my-theme .ng-confirm-box div.ng-confirm-closeIcon .zmdi {
+}
+.ng-confirm.ng-confirm-my-theme .ng-confirm-box div.ng-confirm-closeIcon:hover {
+}
+.ng-confirm.ng-confirm-my-theme .ng-confirm-box div.ng-confirm-title-c {
+    display: flex;
+    align-items: center;
+}
+.ng-confirm.ng-confirm-my-theme .ng-confirm-box div.ng-confirm-title-c .ng-confirm-icon-c {
+    margin-right: 10px;
+}
+.ng-confirm.ng-confirm-my-theme .ng-confirm-box div.ng-confirm-title-c .ng-confirm-icon-c i {
+}
+.ng-confirm.ng-confirm-my-theme .ng-confirm-box div.ng-confirm-title-c .ng-confirm-icon-c:empty {
+}
+.ng-confirm.ng-confirm-my-theme .ng-confirm-box div.ng-confirm-title-c .ng-confirm-title {
+}
+.ng-confirm.ng-confirm-my-theme .ng-confirm-box div.ng-confirm-title-c .ng-confirm-title:empty {
+}
+.ng-confirm.ng-confirm-my-theme .ng-confirm-box div.ng-confirm-content-pane {
+}
+.ng-confirm.ng-confirm-my-theme .ng-confirm-box div.ng-confirm-content-pane .ng-confirm-content {
+}
+.ng-confirm.ng-confirm-my-theme .ng-confirm-box div.ng-confirm-content-pane .ng-confirm-content img {
+}
+.ng-confirm.ng-confirm-my-theme .ng-confirm-box div.ng-confirm-content-pane .ng-confirm-content:empty {
+}
+.ng-confirm.ng-confirm-my-theme .ng-confirm-box .ng-confirm-buttons {
+}
+.ng-confirm.ng-confirm-my-theme .ng-confirm-box .ng-confirm-buttons button {
+}
+.ng-confirm.ng-confirm-my-theme .ng-confirm-clear {
+}
+.ng-confirm.ng-confirm-my-theme.ng-confirm-rtl {
+}
+.ng-confirm.ng-confirm-my-theme.ng-confirm-rtl .ng-confirm-closeIcon {
+}

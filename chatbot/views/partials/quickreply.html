@@ -1,0 +1,38 @@
+<div>
+    <div ng-show="mode=='view'">
+        <div class="edit-card--title">
+            <b>{{card.title}}</b>
+        </div>
+
+        <div class="edit-card--btn-circle edit-card--edit" ng-click="changeMode('edit')">
+            <i class="fa fa-pencil"></i>
+        </div>
+
+        <div class="edit-card-image">
+            <center>
+                <img ng-src="{{card.image}}" style="height:100px;" err-src="http://www.santacruzmentor.org/wp-content/uploads/2012/12/Placeholder.png">
+            </center>
+        </div>
+
+        <div class="edit-card-description">{{card.payload}} : {{card.type}}</div>
+    </div>
+
+    <div ng-show="mode=='new'" class="new-card">
+        <a class="font-robot font-300 btn-small" ng-click="editCard()">
+            <i class="fa fa-plus"></i> New
+        </a>
+    </div>
+
+    <div class="top40" ng-show="mode=='edit'">
+        <input class="form-control" type="text" placeholder="Title" ng-model="card.title" />
+        <input class="form-control" type="text" placeholder="Payload" ng-model="card.payload" />
+        <select class="form-control" placeholder="Select Type" ng-model="card.type">
+            <option value="" disabled selected>Select Type</option>
+            <option value="text">Text</option>
+            <option value="location">Location</option>
+        </select>
+        <input class="form-control" type="url" placeholder="Image" ng-model="card.image" />
+
+        <input type="button" value="Done" ng-click="changeMode('view')" class="btn card-btn pull-right"/>
+    </div>
+</div>

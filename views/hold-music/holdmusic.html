@@ -1,0 +1,296 @@
+<div class="row">
+
+
+    <div class="col-md-12 col-sm-6 col-xs-12">
+        <div class="x_panel">
+            <div class="x_title border-0">
+                <div class="col-md-6 col-sm-6 col-xs-6">
+                    <h2><i class="fa fa-child"></i> Queue Music Profile
+                    </h2></div>
+
+                <div class="col-md-6 col-sm-6 col-xs-6 form-group top_search">
+                    <div class="input-group">
+                        <input type="text" ng-model="searchCriteria" class="form-control"
+                               placeholder="Search for...">
+                        <span class="input-group-btn">
+                                  <button class="btn btn-default" type="button">Go!</button>
+                                </span>
+                    </div>
+                </div>
+                <ul class="nav navbar-right panel_toolbox">
+                    <li><a ng-click="addHoldMusic()" class="close-link"><i class="fa fa-plus"></i></a>
+                    </li>
+                </ul>
+
+                <!--<div class="col-xs-12" ng-show="addNew">
+                    <div class="tile-stats">
+                        <form class="form-horizontal form-label-left input_mask">
+                            <label class="control-label col-md-2 col-sm-6 col-xs-12 pull-left">Name</label>
+                            <div class="col-md-4 col-sm-6 col-xs-12 form-group has-feedback">
+                                <input type="text" class="form-control has-feedback-left" ng-model="newHoldMusic.Name"
+                                       placeholder="Hold Music Name">
+
+
+                            </div>
+                            <label class="control-label col-md-2 col-sm-6 col-xs-12">Description</label>
+                            <div class="col-md-4 col-sm-6 col-xs-12 form-group has-feedback">
+                                <input type="text" class="form-control has-feedback-left" ng-model="newHoldMusic.Description"
+                                       placeholder="Description">
+
+                            </div>
+
+                            <label class="control-label col-md-2 col-sm-6 col-xs-12">Hold Music</label>
+                            <div class="col-md-4 col-sm-6 col-xs-12 form-group has-feedback">
+
+                                <select class="form-control" ng-model="newHoldMusic.MOH"   ng-model-options="{trackBy: '$value'}" ng-change="selectionsChanged()">
+                                    <option ng-repeat="holdmusic in holdMusicFiles" value="{{holdmusic.Filename}}" >{{holdmusic.Filename}}</option>
+                                </select>
+
+                                <i class="fa fa-close" ng-click="makeMOHEmpty()"></i>
+
+                            </div>
+
+                            <label class="control-label col-md-2 col-sm-6 col-xs-12">Announcement</label>
+                            <div class="col-md-4 col-sm-6 col-xs-12 form-group has-feedback">
+                                <select class="form-control" ng-model="newHoldMusic.Announcement"   ng-model-options="{trackBy: '$value'}" ng-change="selectionsChanged()">
+                                    <option ng-repeat="holdmusic in holdMusicFiles" value="{{holdmusic.Filename}}" >{{holdmusic.Filename}}</option>
+                                </select>
+                                <i class="fa fa-close " ng-click="makeAnnouncementEmpty()"></i>
+                            </div>
+
+                            <label class="control-label col-md-2 col-sm-6 col-xs-12">First Announement</label>
+                            <div class="col-md-4 col-sm-6 col-xs-12 form-group has-feedback">
+                                <select class="form-control" ng-model="newHoldMusic.FirstAnnounement"   ng-model-options="{trackBy: '$value'}" ng-change="selectionsChanged()">
+                                    <option ng-repeat="holdmusic in holdMusicFiles" value="{{holdmusic.Filename}}" >{{holdmusic.Filename}}</option>
+                                </select>
+                                <i class="fa fa-close" ng-click="makeFirstAnnounementEmpty()"></i>
+                            </div>
+                            <label class="control-label col-md-2 col-sm-6 col-xs-12">Business Unit</label>
+                            <div class="col-md-4 col-sm-6 col-xs-12 form-group has-feedback">
+                                <select class="select2_single form-control" tabindex="-1"
+                                        aria-hidden="true"
+                                        id="unitEdit"
+                                        name="unit" ng-model="newHoldMusic.BusinessUnit"
+                                        ng-model-options="{trackBy: '$value'}">
+                                    <option value=""></option>
+                                    <option ng-repeat="unit in businessUnits" value="{{unit.unitName}}">{{unit.unitName}}
+                                    </option>
+                                </select>
+                                <i class="fa fa-close" ng-click="makeFirstAnnounementEmpty()"></i>
+                            </div>
+                            <label class="control-label col-md-2 col-sm-6 col-xs-12">Position / Announcement Time</label>
+                            <div class="col-md-4 col-sm-6 col-xs-12 form-group has-feedback">
+                                <input type="number" class="form-control has-feedback-left" ng-model="newHoldMusic.AnnouncementTime" min="0">
+                                <span class="form-control-feedback right" aria-hidden="true">ms</span>
+                            </div>
+
+                            <label class="control-label col-md-2 col-sm-6 col-xs-12">Max Queue Time</label>
+                            <div class="col-md-4 col-sm-6 col-xs-12 form-group">
+                                <input type="number" class="form-control has-feedback-left" ng-model="holdmusic.MaxQueueTime" min="0">
+                                <span class="form-control-feedback right" aria-hidden="true">ms</span>
+                            </div>
+
+                            <label class="control-label col-md-2 col-sm-6 col-xs-12">Position Announcement</label>
+                            <div class="col-md-4 col-sm-6 col-xs-12 form-group has-feedback">
+                                <input type="checkbox"  ng-model="newHoldMusic.PositionAnnouncement">
+
+                            </div>
+
+                            <label class="control-label col-md-2 col-sm-6 col-xs-12">Dial Time</label>
+                            <div class="col-md-4 col-sm-6 col-xs-12 form-group">
+                                <input type="number" class="form-control has-feedback-left" ng-model="holdmusic.DialTime" min="10" max="100">
+                                <span class="form-control-feedback right" aria-hidden="true">s</span>
+                            </div>
+
+                            <label class="control-label col-md-2 col-sm-6 col-xs-12">Language</label>
+                            <div class="col-md-4 col-sm-6 col-xs-12 form-group has-feedback">
+                                <label>Locale</label>
+                                <select class="select2_single form-control"
+                                        tabindex="-1"
+                                        aria-hidden="true"
+                                        name="contactType" ng-model="newHoldMusic.Language">
+                                    <option ng-repeat="locale in languages" value="{{locale.code}}">
+                                        {{locale.name}}
+                                    </option>
+                                </select>
+                            </div>
+
+                        </form>
+                    </div>
+                    <div class="col-md-12 col-sm-12 col-xs-12 col-md-offset-10">
+                        <button type="submit" class="btn btn-success" ng-click="saveHoldMusic(newHoldMusic)">
+                            Save
+                        </button>
+                        <button type="submit" class="btn btn-primary" ng-click="cancelSave()">
+                            Cancel
+                        </button>
+                    </div>
+                </div>
+                <div class="clearfix"></div>-->
+
+                <div class="col-xs-12" ng-show="addNew" style="border-style: outset">
+                    <div >
+                        <div class="col-md-6 col-sm-6 col-xs-6" style="padding-top: 10px">
+                            <h2 class="font-robot font-300 text-uppercase font-15">New Queue Music Profile</h2>
+                        </div>
+                        <div class="col-md-6 col-sm-6 col-xs-6">
+
+                        </div>
+
+                        <div class="col-xs-12">
+                            <div class="tile-stats m-top15">
+                                <form class="form-horizontal form-label-left input_mask">
+                                    <div class="row">
+                                        <div class="col-md-4 col-sm-4 col-xs-12 form-group has-feedback">
+                                            <label>Name</label>
+                                            <input type="text" class="form-control" ng-model="newHoldMusic.Name"
+                                                   placeholder="Hold Music Name">
+
+                                        </div>
+                                        <div class="col-md-4 col-sm-4 col-xs-12 form-group has-feedback">
+                                            <label>Hold Music</label>
+                                            <select class="form-control" ng-model="newHoldMusic.MOH"   ng-model-options="{trackBy: '$value'}" ng-change="selectionsChanged()">
+                                                <option ng-repeat="holdmusic in holdMusicFiles" value="{{holdmusic.Filename}}" >{{holdmusic.Filename}}</option>
+                                            </select>
+
+                                            <i class="fa fa-close" ng-click="makeMOHEmpty()"></i>
+
+                                        </div>
+                                        <div class="col-md-4 col-sm-4 col-xs-12 form-group has-feedback">
+                                            <label >Announcement</label>
+
+                                            <select class="form-control" ng-model="newHoldMusic.Announcement"   ng-model-options="{trackBy: '$value'}" ng-change="selectionsChanged()">
+                                                <option ng-repeat="holdmusic in holdMusicFiles" value="{{holdmusic.Filename}}" >{{holdmusic.Filename}}</option>
+                                            </select>
+                                            <i class="fa fa-close " ng-click="makeAnnouncementEmpty()"></i>
+
+
+                                        </div>
+                                    </div>
+                                    <div class="row">
+
+                                        <div class="col-md-4 col-sm-4 col-xs-12 form-group">
+                                            <label>First Announcement</label>
+                                            <select class="form-control" ng-model="newHoldMusic.FirstAnnounement"   ng-model-options="{trackBy: '$value'}" ng-change="selectionsChanged()">
+                                                <option ng-repeat="holdmusic in holdMusicFiles" value="{{holdmusic.Filename}}" >{{holdmusic.Filename}}</option>
+                                            </select>
+                                            <i class="fa fa-close" ng-click="makeFirstAnnounementEmpty()"></i>
+                                        </div>
+
+                                        <div class="col-md-4 col-sm-4 col-xs-12 form-group ">
+                                            <label >Business Unit</label>
+                                            <select class="select2_single form-control" tabindex="-1"
+                                                    aria-hidden="true"
+                                                    id="unitEdit"
+                                                    name="unit" ng-model="newHoldMusic.BusinessUnit"
+                                                    ng-model-options="{trackBy: '$value'}">
+                                                <option value=""></option>
+                                                <option ng-repeat="unit in businessUnits" value="{{unit.unitName}}">{{unit.unitName}}
+                                                </option>
+                                            </select>
+                                            <i class="fa fa-close" ng-click="makeBusinessUnitEmpty()"></i>
+                                        </div>
+
+                                        <div class="col-md-4 col-sm-4 col-xs-12 form-group ">
+                                            <label >Language/Locale</label><label>Locale</label>
+                                            <select class="select2_single form-control"
+                                                    tabindex="-1"
+                                                    aria-hidden="true"
+                                                    name="contactType" ng-model="newHoldMusic.Language">
+                                                <option ng-repeat="locale in languages" value="{{locale.code}}">
+                                                    {{locale.name}}
+                                                </option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+
+                                        <div class="col-md-4 col-sm-4 col-xs-12 form-group has-feedback">
+                                            <label>Position / Announcement Time </label><span>(ms)</span>
+                                            <input type="number" class="form-control " ng-model="newHoldMusic.AnnouncementTime" min="0">
+                                        </div>
+
+                                        <div class="col-md-4 col-sm-4 col-xs-12 form-group">
+                                            <label >Max Queue Time </label><span>(s)</span>
+                                            <input type="number" class="form-control has-feedback-left" ng-model="holdmusic.MaxQueueTime" min="0">
+
+                                        </div>
+
+                                        <div class="col-md-4 col-sm-4 col-xs-12 form-group">
+                                            <label >Dial Time </label><span>(s)</span>
+                                            <input type="number" class="form-control has-feedback-left" ng-model="holdmusic.DialTime" min="10" max="100">
+
+                                        </div>
+                                    </div>
+                                    <div class="row">
+
+                                        <div class="col-md-12 col-sm-12 col-xs-12 form-group ">
+                                            <label >Description</label>
+                                            <input type="text" class="form-control " ng-model="newHoldMusic.Description"
+                                                   placeholder="Description">
+
+                                        </div>
+                                    </div>
+                                    <div class="row">
+
+                                        <div class="col-md-6 col-sm-6 col-xs-12 form-group ">
+
+                                            <label >Position Announcement</label>
+                                        </div>
+
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6 col-sm-6 col-xs-12 form-group ">
+                                            <switch  ng-model="newHoldMusic.PositionAnnouncement" class="form-control "></switch>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12 col-sm-12 col-xs-12 col-md-offset-10">
+                                            <button type="submit" class="btn btn-success" ng-click="saveHoldMusic(newHoldMusic)">
+                                                Save
+                                            </button>
+                                            <button type="submit" class="btn btn-primary" ng-click="cancelSave()">
+                                                Cancel
+                                            </button>
+                                        </div>
+                                    </div>
+
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+
+
+
+            </div>
+
+            <div class="x_content">
+                <ul class="list-unstyled timeline">
+                    <li ng-repeat="holdMusic in holdMusicList| filterBy: ['Name']: searchCriteria">
+                        <editholdmusic holdmusic="holdMusic" updateholdmusic="removeDeleted(holdMusic)" reloadpage="reloadMusicListPage()" units="businessUnits"></editholdmusic>
+                    </li>
+
+                    <paging ng-show="showPaging"
+                            class="small"
+                            page="currentPage"
+                            page-size="pageSize"
+                            total="pageTotal"
+                            show-prev-next="true"
+                            show-first-last="true"
+                            text-next-class="glyphicon glyphicon-chevron-right"
+                            text-prev-class="glyphicon glyphicon-chevron-left"
+                            text-first-class="glyphicon glyphicon-backward"
+                            text-last-class="glyphicon glyphicon-forward"
+                            paging-action="getPageData('attribute', page, pageSize, total)">
+                    </paging>
+                </ul>
+
+            </div>
+        </div>
+
+    </div>
+
+</div>

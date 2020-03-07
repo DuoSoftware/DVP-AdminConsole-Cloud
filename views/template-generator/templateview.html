@@ -1,0 +1,236 @@
+
+<div class="row">
+
+    <div class="col-md-12 col-sm-6 col-xs-12">
+
+        <uib-tabset active="0">
+            <uib-tab index="0" heading="Email/Text Templates">
+
+                <br>
+
+                <div class="col-md-12 col-sm-6 col-xs-12">
+
+                    <!-- application list -->
+                    <div class="x_panel bg-light-gray animated fadeIn">
+                        <div class="x_title border-0">
+                            <div class="col-md-6 col-sm-6 col-xs-6">
+                                <h2 class="font-robot font-300 text-uppercase font-15">New Template</h2>
+                            </div>
+
+                            <div class="col-md-6 col-sm-6 col-xs-6 form-group top_search">
+                                <div class="input-group">
+                                    <input type="text" ng-model="searchCriteria" class="form-control"
+                                           placeholder="Search for...">
+                                    <span class="input-group-btn">
+                                  <button class="btn btn-default" type="button">Go!</button>
+                                </span>
+                                </div>
+                            </div>
+                            <div class="col-xs-12">
+                                <div class="tile-stats m-top15">
+                                    <form class="form-horizontal form-label-left input_mask">
+                                        <div class="row">
+                                            <div class="col-md-9 col-sm-9 col-xs-12 form-group has-feedback">
+                                                <input type="text" class="form-control has-feedback-left"
+                                                       ng-model="newTemplate.TemplateName"
+                                                       placeholder="Template Name">
+                                                <span class="fa fa-user form-control-feedback left" aria-hidden="true"></span>
+                                            </div>
+
+                                            <div class="col-md-3 col-sm-3 col-xs-12 form-group has-feedback">
+                                                <select class="form-control has-feedback-left" placeholder="select file type"
+                                                        ng-model="newTemplate.FileType">
+                                                    <option value="" disabled selected>Select File Type</option>
+                                                    <option>html</option>
+                                                    <option>text</option>
+                                                </select>
+                                                <span class="fa fa-user form-control-feedback left" aria-hidden="true"></span>
+                                            </div>
+                                            <div class="col-md-8 col-sm-8 col-xs-8 form-group has-feedback" ng-show="newTemplate.FileType=='html'">
+                                                <input type="text" class="form-control" ng-model="newTemplate.TemplateSubject" placeholder="Enter subject here">
+
+                                            </div>
+                                            <div class="col-md-12 col-sm-12 col-xs-12 form-group has-feedback">
+                                                <textarea class="resizable_textarea form-control" ng-model="newTemplate.TemplateContent" placeholder="Enter content here"></textarea>
+
+                                            </div>
+
+
+
+                                            <div class="row">
+
+                                                <div class="col-md-10 col-sm-12 col-xs-12 form-group has-feedback">
+                                                </div>
+                                                <div class="col-md-2 col-sm-12 col-xs-12 form-group has-feedback">
+                                                    <button type="button" class="btn btn-success btn-block  btn- pull-right"
+                                                            ng-click="validateContent()" ng-show="newTemplate.TemplateContent">
+                                                        Validate
+                                                    </button>
+                                                </div>
+                                            </div>
+
+
+                                            <div class="col-md-9 col-sm-12 col-xs-12 form-group has-feedback" ng-if="newTemplate.FileType=='html'">
+                                                Styles <small ng-disabled="true" ng-click="addStyle()" style="cursor: pointer"><i
+                                                    class="fa fa-plus"></i></small>
+
+                                                <ul class="list-unstyled">
+                                                    <li ng-repeat="StyleItem in StyleList">
+                                                        <newstylecollection styleitem="StyleItem" add-new-style="addStyle(StyleItem)" remove-assigned-style="removeAssignedStyle(StyleItem)"></newstylecollection>
+
+                                                    </li>
+
+                                                </ul>
+                                            </div>
+
+
+                                            <div class="row">
+
+                                                <div class="col-md-10 col-sm-12 col-xs-12 form-group has-feedback">
+                                                </div>
+                                                <div class="col-md-2 col-sm-12 col-xs-12 form-group has-feedback">
+                                                    <button type="button" class="btn btn-success btn-block  btn- pull-right"
+                                                            ng-click="saveNewTemplate()" ng-disabled="!newTemplate.TemplateName">
+                                                        Save
+                                                    </button>
+                                                </div>
+                                            </div>
+
+
+
+
+
+
+
+                                        </div>
+
+
+
+                                    </form>
+                                </div>
+                            </div>
+                            <div class="clearfix"></div>
+                        </div>
+                    </div>
+                    <!-- end -->
+
+                    <!-- view application users -->
+                    <div class="x_panel">
+                        <div class="x_content">
+                            <ul class="list-unstyled timeline">
+                                <li ng-repeat="Template in Templates | filterBy: ['name']: searchCriteria">
+                                    <templatemakerdir template="Template" template-list="Templates" update-application="removeDeleted(App)"
+                                                      reloadpage="reloadPage()"></templatemakerdir>
+                                </li>
+
+                                <paging ng-show="showPaging"
+                                        class="small"
+                                        page="currentPage"
+                                        page-size="pageSize"
+                                        total="pageTotal"
+                                        show-prev-next="true"
+                                        show-first-last="true"
+                                        text-next-class="glyphicon glyphicon-chevron-right"
+                                        text-prev-class="glyphicon glyphicon-chevron-left"
+                                        text-first-class="glyphicon glyphicon-backward"
+                                        text-last-class="glyphicon glyphicon-forward"
+                                        paging-action="getPageData('attribute', page, pageSize, total)">
+                                </paging>
+                            </ul>
+                        </div>
+                    </div>
+                    <!-- end -->
+                </div>
+
+
+            </uib-tab>
+
+            <uib-tab index="1" heading="Chat Templates">
+                <div class="col-md-12 col-sm-6 col-xs-12">
+
+                    <!-- application list -->
+                    <div class="x_panel bg-light-gray animated fadeIn">
+                        <div class="x_title border-0">
+                            <div class="col-md-6 col-sm-6 col-xs-6">
+                                <h2 class="font-robot font-300 text-uppercase font-15">New Chat Template</h2>
+                            </div>
+
+                            <div class="col-xs-12">
+                                <div class="tile-stats m-top15">
+                                    <form class="form-horizontal form-label-left input_mask">
+                                        <div class="row">
+
+
+
+                                            <div class="col-md-12 col-sm-12 col-xs-12 form-group has-feedback">
+                                                <textarea class="resizable_textarea form-control" ng-model="newChatTemplate.content" placeholder="Enter content here"></textarea>
+
+                                            </div>
+
+                                            <div class="row">
+
+                                                <div class="col-md-10 col-sm-12 col-xs-12 form-group has-feedback">
+                                                </div>
+                                                <div class="col-md-2 col-sm-12 col-xs-12 form-group has-feedback">
+                                                    <button type="button" class="btn btn-success btn-block  btn- pull-right"
+                                                            ng-click="addNewChatTemplate()" ng-disabled="!newChatTemplate.content">
+                                                        Save
+                                                    </button>
+                                                </div>
+                                            </div>
+
+
+
+
+
+
+
+                                        </div>
+
+
+
+                                    </form>
+                                </div>
+                            </div>
+                            <div class="clearfix"></div>
+                        </div>
+                    </div>
+                    <!-- end -->
+
+                    <!-- view application users -->
+                    <div class="x_panel">
+                        <div class="x_content">
+                            <ul class="list-unstyled timeline">
+                                <li ng-repeat="chatTemplate in ChatTemplates">
+                                    <chattemplatemakerdir chattemplate="chatTemplate" chattemplate-list="ChatTemplates" update-application="removeDeleted(App)"
+                                                      reloadpage="reloadPage()"></chattemplatemakerdir>
+                                </li>
+
+                                <paging ng-show="showPaging"
+                                        class="small"
+                                        page="currentPage"
+                                        page-size="pageSize"
+                                        total="pageTotal"
+                                        show-prev-next="true"
+                                        show-first-last="true"
+                                        text-next-class="glyphicon glyphicon-chevron-right"
+                                        text-prev-class="glyphicon glyphicon-chevron-left"
+                                        text-first-class="glyphicon glyphicon-backward"
+                                        text-last-class="glyphicon glyphicon-forward"
+                                        paging-action="getPageData('attribute', page, pageSize, total)">
+                                </paging>
+                            </ul>
+                        </div>
+                    </div>
+                    <!-- end -->
+                </div>
+            </uib-tab>
+
+
+        </uib-tabset>
+    </div>
+
+</div>
+
+
+</div>

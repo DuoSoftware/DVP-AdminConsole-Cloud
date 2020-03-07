@@ -1,0 +1,327 @@
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12 animated fadeIn">
+        <div class="x_panel main-title">
+            <div class="x_title">
+                <h2><b>REPORT</b> | TICKET - Ticket Details</h2>
+                <ul class="nav navbar-right panel_toolbox">
+                    <li ng-show="!showFilter" ng-click="showFilter= !showFilter"><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                    </li>
+                    <li ng-show="showFilter" ng-click="showFilter= !showFilter"><a class="close-link"><i class="fa fa-chevron-down"></i></a></li>
+                </ul>
+                <div class="clearfix"></div>
+            </div>
+
+            <div class="x_content" ng-show="!showFilter">
+                <div class="clearfix">
+                    <div class="col-md-2 col-sm-2 col-xs-12">
+                        <label>Start Date</label>
+                        <input type="text" class="form-control" ng-model="obj.startDay" name="startDate" ng-change="onDateChange()" datepicker>
+                    </div>
+                    <div class="col-md-2 col-sm-2 col-xs-12">
+                        <label>End Date</label>
+                        <input type="text" class="form-control" ng-model="obj.endDay" name="endDate" ng-change="onDateChange()" datepicker>
+                    </div>
+                    <div class="col-md-2 col-sm-2 col-xs-12">
+                        <label>Requester</label><i ng-show="isReqLoading" class="fa fa-spinner fa-spin" style="margin-left: 6px"></i>
+                        <!--<select name="requesterList" class="select2_single form-control" tabindex="-1" aria-hidden="true"
+                                ng-model="selectedExtUser" ng-model-options="{trackBy: '$value'}">
+                            <option value=""></option>
+                            <option ng-repeat="extUsr in extUserList" value="{{extUsr._id}}">
+                                {{extUsr.name}}
+                            </option>
+                        </select>-->
+
+                        <div class="form-group">
+                            <input id="extUser" type="text" class="form-control" ng-model="selectedExtUser"  data-min-length="1" data-html="4" data-auto-select="true" data-animation="am-flip-x" bs-options="extUsr as extUsr.Display for extUsr in extUserList" placeholder="Requester"  bs-typeahead>
+                        </div>
+
+                        <!--<div class="form-group">
+                            <input type="text" class="form-control" ng-model="selectedExtUser" data-min-length="0" data-html="2" data-auto-select="true" bs-options='extUsr._id as (extUsr.firstname + " " + extUsr.lastname) for extUsr in extUserList' placeholder="Enter icon" bs-typeahead>
+                        </div>-->
+                    </div>
+                    <div class="col-md-2 col-sm-2 col-xs-12">
+                        <label>Assignee</label>
+
+                        <div class="form-group">
+                            <input type="text" class="form-control" ng-model="selectedAssignee" data-min-length="0" data-html="1" data-auto-select="true" data-animation="am-flip-x" bs-options="usr as usr.Display for usr in userList" placeholder="Assignee" bs-typeahead>
+                        </div>
+
+                        <!--<select name="assigneeList" class="select2_single form-control" tabindex="-1" aria-hidden="true"
+                                ng-model="selectedAssignee" ng-model-options="{trackBy: '$value'}">
+                            <option value=""></option>
+                            <option ng-repeat="usr in userList" value="{{usr._id}}">
+                                {{usr.name}}
+                            </option>
+                        </select>-->
+                    </div>
+                    <div class="col-md-2 col-sm-2 col-xs-12">
+                        <label>Submitter</label>
+                        <div class="form-group">
+                           <!-- <input type="text" class="form-control" ng-model="selectedSubmitter" data-min-length="0" data-html="1" data-auto-select="true" data-animation="am-flip-x" bs-options="usr.UniqueId as usr.Display for usr in userList" placeholder="Submitter" bs-typeahead>-->
+                            <input type="text" class="form-control" ng-model="selectedSubmitter" data-min-length="0" data-html="1" data-auto-select="true" data-animation="am-flip-x" bs-options="usr as usr.Display for usr in userList" placeholder="Submitter" bs-typeahead>
+
+                        </div>
+                        <!--<select name="submitterList" class="select2_single form-control" tabindex="-1" aria-hidden="true"
+                                ng-model="selectedSubmitter" ng-model-options="{trackBy: '$value'}">
+                            <option value=""></option>
+                            <option ng-repeat="usr in userList" value="{{usr._id}}">
+                                {{usr.name}}
+                            </option>
+                        </select>-->
+                    </div>
+                    <div class="col-md-2 col-sm-2 col-xs-12">
+                        <label>Show
+                            <select name="datatable-responsive_length" ng-model="recLimit"
+                                    aria-controls="datatable-responsive" class="form-control select-limit">
+                                <option value="10">10</option>
+                                <option value="25">25</option>
+                                <option value="50">50</option>
+                                <option value="100">100</option>
+                            </select>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="clearfix">
+                    <div class="col-md-2 col-sm-2 col-xs-12">
+                        <label>Tag</label>
+                        <!--<select name="tagList" class="select2_single form-control" tabindex="-1" aria-hidden="true"
+                                ng-model="selectedTag" ng-model-options="{trackBy: '$value'}">
+                            <option ng-repeat="tag in tagList | groupBy: 'tag.TagType'" value="{{tag.name}}">
+                                {{tag.name}}
+                            </option>
+                        </select>-->
+
+                        <select class="select2_single form-control" tabindex="-1" aria-hidden="true" ng-options="tag.name group by tag.TagType for tag in tagList"
+                                ng-model="selectedTag">
+                            <option value=""></option>
+                        </select>
+                    </div>
+                    <div class="col-md-2 col-sm-2 col-xs-12">
+                        <label>Channel</label>
+                        <select name="datatable-responsive_length" ng-model="channelType"
+                                aria-controls="datatable-responsive" class="form-control">
+                            <option value=""></option>
+                            <option value="call">Call</option>
+                            <option value="sms">SMS</option>
+                            <option value="chat">Chat</option>
+                            <option value="facebook-post">Facebook Post</option>
+                            <option value="facebook-chat">Facebook Chat</option>
+                            <option value="facebook-comment">Facebook Comment</option>
+                            <option value="twitter">Twitter</option>
+                            <option value="skype">Skype</option>
+                            <option value="voicemail">Voicemail</option>
+                            <option value="appointment">Appointment</option>
+                            <option value="api">API</option>
+                            <option value="web-widget">Web Widget</option>
+                            <option value="viber">Viber</option>
+                            <option value="slack">Slack</option>
+                            <option value="email">Email</option>
+                            <option value="webchat">Web Chat</option>
+                        </select>
+                    </div>
+                    <div class="col-md-2 col-sm-2 col-xs-12">
+                        <label>Priority</label>
+                        <select name="datatable-responsive_length" ng-model="priorityType"
+                                aria-controls="datatable-responsive" class="form-control">
+                            <option value=""></option>
+                            <option value="urgent">Urgent</option>
+                            <option value="high">High</option>
+                            <option value="normal">Normal</option>
+                            <option value="low">Low</option>
+                        </select>
+                    </div>
+                    <div class="col-md-2 col-sm-2 col-xs-12">
+                        <label>Ticket Type</label>
+                        <select name="datatable-responsive_length" class="select2_single form-control" tabindex="-1" aria-hidden="true" ng-options="item as item for item in ticketTypesList track by item"
+                                ng-model="ticketType">
+                            <option value=""></option>
+                        </select>
+                    </div>
+                    <div class="col-md-2 col-sm-2 col-xs-12">
+                        <label>Ticket Status</label>
+
+                        <select name="datatable-responsive_length" class="select2_single form-control" tabindex="-1" aria-hidden="true" ng-options="item.status_node as item.status_node for item in ticketStatusList track by item.status_node"
+                                ng-model="ticketStatus">
+                            <option value=""></option>
+                        </select>
+                    </div>
+                    <div class="col-md-2 col-sm-2 col-xs-12">
+                        <label>SLA Status</label>
+                        <select name="datatable-responsive_length" ng-model="slaStatus"
+                                aria-controls="datatable-responsive" class="form-control">
+                            <option value=""></option>
+                            <option value="true">Violated</option>
+                            <option value="false">Not-Violated</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="clearfix">
+                    <div class="col-md-2 col-sm-2 col-xs-12">
+                        <label>Tag Count</label>
+                        <input type="number" min="1" max="1000" class="form-control" name="tagCount" ng-model="tagCount">
+                    </div>
+                    <div class="col-md-10 col-sm-10 col-xs-12">
+                        <div class="col-md-3 col-sm-3 col-xs-12" style="padding-top: 25px">
+                            <button type="button" class="btn btn-success" ng-click="searchWithNewFilter()">
+                                Search
+                            </button>
+                        </div>
+                        <div class="col-md-9 col-sm-9 col-xs-12 locaocaltext-right" style="padding-top: 25px">
+                            <div>
+                                <a ng-if="fileDownloadState === 'READY'" class="btn btn-success" role="button" target="_self" href="{{DownloadCSVFileUrl}}" download="{{currentCSVFilename}}" ng-click="downloadPress()">CSV&nbsp;&nbsp;&nbsp;&nbsp;
+                                    <i class="fa fa-download"></i></a>
+                                <button ng-if="fileDownloadState === 'RESET'" class="btn btn-success" type="button" ng-click="getTicketSummaryCSVPrepare()">
+                                    CSV&nbsp;&nbsp;&nbsp;&nbsp;
+                                    <i ng-class="buttonClass"></i>
+                                </button>
+                                <!--<button type="button" style="width:60px; height:30px; background-image: url(assets/images/csv.png); background-size: 100% 100%;" ng-click="prepareDownloadCSV()"></button>-->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--<div class="col-md-1 col-sm-1 col-xs-12">
+                <button type="button" class="btn" style="background-color: #a3d100; color: #000000; font-weight: 500; position: relative; top: 20px;" csv-header="tagHeaders" csv-column-order="tagOrder" ng-csv="getTicketSummaryCSV()" filename="{{DownloadFileName}}.csv">
+                    CSV&nbsp;&nbsp;&nbsp;&nbsp;
+                    <i class="fa fa-download"></i>
+                </button>
+            </div>-->
+        </div>
+        <div class="search-main-wrap" ng-if="obj.isTableLoading==0">
+            <div class="row ">
+                <div class="col-md-12 col-sm-12 col-xs-12">
+                    <div class="data-state-wrap">
+                        Please Wait...
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="x_panel" ng-if="obj.isTableLoading==1">
+
+            <div id="datatable-responsive_wrapper"
+                 class="dataTables_wrapper form-inline dt-bootstrap no-footer col-md-12 col-sm-12 col-xs-12">
+                <div class="row">
+                    <div class="col-md-12 col-sm-12 col-xs-12">
+
+                        <div class="table-wrapper"
+                             ng-slimscroll horizontal-scroll="true"
+                             height="100%"
+                             horizontal-scroll-position="bottom"
+                             size="5px" opacity="0.4">
+                            <table id="datatable-responsive" dt-options="dtOptions" datatable="ng"
+                                   class="table table-striped table-bordered dt-responsive nowrap dataTable no-footer dtr-inline"
+                                   cellspacing="0" width="100%" role="grid"
+                                   aria-describedby="datatable-responsive_info">
+                                <thead>
+                                <tr role="row">
+                                    <th class="sorting" tabindex="0" aria-controls="datatable-responsive"
+                                        rowspan="1"
+                                        colspan="1" aria-label="Reference">Reference
+                                    </th>
+                                    <th class="sorting" tabindex="0" aria-controls="datatable-responsive"
+                                        rowspan="1"
+                                        colspan="1" aria-label="Subject">Subject
+                                    </th>
+                                    <th class="sorting" tabindex="0" aria-controls="datatable-responsive"
+                                        rowspan="1"
+                                        colspan="1" aria-label="Assignee">Assignee
+                                    </th>
+                                    <th class="sorting" tabindex="0" aria-controls="datatable-responsive"
+                                        rowspan="1"
+                                        colspan="1" aria-label="Submitter">Submitter
+                                    </th>
+                                    <th class="sorting" tabindex="0" aria-controls="datatable-responsive"
+                                        rowspan="1"
+                                        colspan="1" aria-label="Requester">Requester
+                                    </th>
+                                    <th class="sorting" tabindex="0" aria-controls="datatable-responsive"
+                                        rowspan="1"
+                                        colspan="1" aria-label="Created">Created At
+                                    </th>
+                                    <th class="sorting" tabindex="0" aria-controls="datatable-responsive"
+                                        rowspan="1"
+                                        colspan="1" aria-label="Channel">Channel
+                                    </th>
+                                    <th class="sorting" tabindex="0" aria-controls="datatable-responsive"
+                                        rowspan="1"
+                                        colspan="1" aria-label="Status">Status
+                                    </th>
+                                    <th class="sorting" tabindex="0" aria-controls="datatable-responsive"
+                                        rowspan="1"
+                                        colspan="1" aria-label="Priority">Priority
+                                    </th>
+                                    <th class="sorting" tabindex="0" aria-controls="datatable-responsive"
+                                        rowspan="1"
+                                        colspan="1" aria-label="Type">Type
+                                    </th>
+                                    <th class="sorting" tabindex="0" aria-controls="datatable-responsive"
+                                        rowspan="1"
+                                        colspan="1" aria-label="BUnit">Business Unit
+                                    </th>
+                                    <th class="sorting" tabindex="0" aria-controls="datatable-responsive"
+                                        rowspan="1"
+                                        colspan="1" aria-label="SLA Violated">SLA Violated
+                                    </th>
+                                    <th class="sorting" tabindex="0" aria-controls="datatable-responsive"
+                                        rowspan="1"
+                                        colspan="1" aria-label="Tags">Tags
+                                    </th>
+                                </thead>
+                                <tbody>
+                                <tr role="row" class="odd"
+                                    ng-repeat="ticket in ticketList">
+                                    <td>{{ticket.reference}}</td>
+                                    <td>{{ticket.subject}}</td>
+                                    <td>{{ticket.assignee ? ticket.assignee.name : ''}}</td>
+                                    <td>{{ticket.submitter ? ticket.submitter.name : ''}}</td>
+                                    <td>{{ticket.requester ? ticket.requester.name : ''}}</td>
+                                    <td>{{moment(ticket.created_at).local().format("YYYY-MM-DD HH:mm:ss")}}</td>
+                                    <td>{{ticket.channel}}</td>
+                                    <td>{{ticket.status}}</td>
+                                    <td>{{ticket.priority}}</td>
+                                    <td>{{ticket.type}}</td>
+                                    <td>{{ticket.businessUnit}}</td>
+                                    <td>{{ticket.ticket_matrix ? ticket.ticket_matrix.sla_violated : false}}</td>
+                                    <td ng-if="ticket.tags && ticket.tags.length > 0">{{ticket.tags[0]}}</td>
+                                    <td ng-if="!ticket.tags || ticket.tags.length <= 0"></td>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                <ul uib-pagination total-items="pagination.totalItems"
+                    items-per-page="pagination.itemsPerPage" ng-model="pagination.currentPage"
+                    max-size="pagination.maxSize" class="pagination-sm" boundary-link-numbers="true"
+                    ng-change="pageChanged()"></ul>
+            </div>
+
+        </div>
+    </div>
+</div>
+<script>
+	window.scrollTo(0, 0);
+</script>
+
+<!--
+<script type="text/javascript">
+    $('#timepickerSt').timepicker({
+        template: false,
+        showInputs: false,
+        minuteStep: 5
+    });
+</script>
+
+<script type="text/javascript">
+    $('#timepickerEt').timepicker({
+        template: false,
+        showInputs: false,
+        minuteStep: 5
+    });
+</script>-->

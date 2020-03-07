@@ -1,0 +1,240 @@
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <div class="x_panel main-title">
+            <div class="x_title">
+                <h2><b>REPORT</b> | CAMPAIGN - Summary</h2>
+                <ul class="nav navbar-right panel_toolbox">
+                    <li ng-show="!showFilter" ng-click="showFilter= !showFilter"><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                    </li>
+                    <li ng-show="showFilter" ng-click="showFilter= !showFilter"><a class="close-link"><i class="fa fa-chevron-down"></i></a>
+                    </li>
+                </ul>
+                <div class="clearfix"></div>
+            </div>
+            <div class="x_content" ng-show="!showFilter">
+                <div class="col-md-12 col-sm-6 col-xs-12">
+                    <form id="userForm" name="ivrForm" novalidate class="form-label-left input_mask">
+
+                        <div class="row">
+                            <div class="col-md-3 col-sm-3 col-xs-12">
+                                <checkbox class="btn" ng-model="summeryCondition.Create"
+                                          ng-click="addConditions('create')"></checkbox>
+                                <label>
+                                    <small>Create</small>
+                                </label>
+                            </div>
+                            <div class="col-md-3 col-sm-3 col-xs-12">
+                                <checkbox class="btn" ng-model="summeryCondition.Ongoing"
+                                          ng-click="addConditions('ongoing')"></checkbox>
+                                <label>
+                                    <small>Ongoing</small>
+                                </label>
+                            </div>
+                            <div class="col-md-3 col-sm-3 col-xs-12">
+                                <checkbox class="btn" ng-model="summeryCondition.Offline"
+                                          ng-click="addConditions('offline')"></checkbox>
+                                <label>
+                                    <small>Offline</small>
+                                </label>
+                            </div>
+                            <div class="col-md-3 col-sm-3 col-xs-12">
+                                <checkbox class="btn" ng-model="summeryCondition.Start"
+                                          ng-click="addConditions('start')"></checkbox>
+                                <label>
+                                    <small>Start</small>
+                                </label>
+                            </div>
+                            <div class="col-md-3 col-sm-3 col-xs-12">
+                                <checkbox class="btn" ng-model="summeryCondition.Pause"
+                                          ng-click="addConditions('pause')"></checkbox>
+                                <label>
+                                    <small>Pause</small>
+                                </label>
+                            </div>
+                            <div class="col-md-3 col-sm-3 col-xs-12">
+                                <checkbox class="btn" ng-model="summeryCondition.Stop"
+                                          ng-click="addConditions('stop')"></checkbox>
+                                <label>
+                                    <small>Stop</small>
+                                </label>
+                            </div>
+                            <div class="col-md-3 col-sm-3 col-xs-12">
+                                <checkbox class="btn" ng-model="summeryCondition.Done"
+                                          ng-click="addConditions('done')"></checkbox>
+                                <label>
+                                    <small>Done</small>
+                                </label>
+                            </div>
+                            <div class="col-md-3 col-sm-3 col-xs-12">
+                                <checkbox class="btn" ng-model="summeryCondition.All"
+                                          ng-click="addConditions('All')"></checkbox>
+                                <label>
+                                    <small>All</small>
+                                </label>
+                            </div>
+                            <div class="col-md-12 col-sm-12 col-xs-12  form-group has-feedback">
+                                <button ng-if="!isLoading" ng-disabled="ivrForm.$invalid" type="button"
+                                        class="btn btn-green"
+                                        ng-click="GetCampaignSummery();">
+                                    Load
+                                </button>
+                                <button ng-if="isLoading" disabled type="button" class="btn btn-green btn-block"
+                                        ng-click="GetCampaignSummery();">
+                                    PLEASE WAIT...
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="x_panel">
+            <div class="x_title">
+                <h2>Details
+                    <!--<small> {{campaingSerachData.StartTime| date : 'dd-MM-yyyy HH:mm'}} To {{campaingSerachData.EndTime| date :
+                        'dd-MM-yyyy HH:mm'}}
+                    </small>-->
+                </h2>
+                <!--<h2>
+                    <small> Total Page : {{pageTotal}}</small>
+                </h2>-->
+
+                <div class="clearfix"></div>
+            </div>
+
+
+            <div class="x_content">
+
+                <div ng-show="isLoading">
+                    <div class="row ">
+                        <div class="col-md-12 col-sm-12 col-xs-12">
+                            <div class="data-state-wrap">
+                                Please Wait...
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="row" ng-hide="isLoading">
+
+
+                    <div class="col-lg-12 col-md-12 col-xs-12">
+                        <div class="col-lg-4 col-md-4 col-xs-12" ng-show="showDoughnut" id="doughnut">
+                            <div class="chart-widget  animated fadeIn ">
+                                <div class="widget-m-wrp">
+                                    <div class="widget-h">
+                                        <h2>Summery </h2>
+                                    </div>
+                                    <div class="widget-body chart-center">
+                                        <canvas  class="chart chart-doughnut"
+                                                 width="300" height="300"
+                                                 chart-data="doughnutObj.data"
+                                                 chart-labels="doughnutObj.labels"
+                                                 chart-legend="true"
+                                                 chart-options="options">
+                                        </canvas>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <button type="button"
+                                    class="btn btn-green btn-block"
+                                    ng-click="hideGraph();">
+                                Close
+                            </button>
+                        </div>
+
+                        <div class="table-wrapper daynamic-s-tble">
+                            <table id="datatable-responsive" dt-options="dtOptions" datatable="ng"
+                                   class="table table-striped table-bordered dt-responsive nowrap dataTable no-footer dtr-inline"
+                                   cellspacing="0" width="100%" role="grid"
+                                   aria-describedby="datatable-responsive_info">
+                                <thead>
+                                <tr role="row">
+                                    <th class="sorting" tabindex="0" aria-controls="datatable-responsive"
+                                        rowspan="1"
+                                        colspan="1" aria-label="From">Campaign Name
+                                    </th>
+                                    <th class="sorting" tabindex="0" aria-controls="datatable-responsive"
+                                        rowspan="1"
+                                        colspan="1" aria-label="To">Total
+                                    </th>
+                                    <th class="sorting" tabindex="0" aria-controls="datatable-responsive"
+                                        rowspan="1"
+                                        colspan="1" aria-label="AgentSkill">Answered
+                                    </th>
+                                    <th class="sorting" tabindex="0" aria-controls="datatable-responsive"
+                                        rowspan="1"
+                                        colspan="1" aria-label="Call Time">Dial Success
+                                    </th>
+                                    <th class="sorting" tabindex="0" aria-controls="datatable-responsive"
+                                        rowspan="1"
+                                        colspan="1" aria-label="Answer Duration">Dial Failed
+                                    </th>
+                                    <th class="sorting" tabindex="0" aria-controls="datatable-responsive"
+                                        rowspan="1"
+                                        colspan="1" aria-label="Total Duration">Percentage
+                                    </th>
+                                    <!--<th class="sorting" tabindex="0" aria-controls="datatable-responsive"
+                                        rowspan="1"
+                                        colspan="1" aria-label="Total Duration">Durations
+                                    </th>-->
+                                    <th class="sorting" tabindex="0" aria-controls="datatable-responsive"
+                                        rowspan="1"
+                                        colspan="1" aria-label="Answer Duration">Status
+                                    </th>
+                                    <th class="sorting" tabindex="0" aria-controls="datatable-responsive"
+                                        rowspan="1"
+                                        colspan="1" aria-label="Total Duration">Start Date
+                                    </th>
+                                    <th class="sorting" tabindex="0" aria-controls="datatable-responsive"
+                                        rowspan="1"
+                                        colspan="1" aria-label="Total Duration">End Date
+                                    </th>
+
+                                </thead>
+                                <tbody>
+                                <tr role="row" class="odd"
+                                    ng-repeat="c in campaignSummery" ng-click="showGraph($event,c);">
+
+                                    <td>{{c.campaignName}}</td>
+                                    <td>{{c.total_dial}}</td>
+                                    <td>{{c.channel_answered}}</td>
+                                    <td>{{c.dial_success}}</td>
+                                    <td>{{c.dial_failed}}</td>
+                                    <td>{{c.percentage| number:2}}</td>
+                                    <!--<td>{{c.durations}}</td>-->
+                                    <td>{{c.status}}</td>
+                                    <td>{{c.startEndDate.StartDate? (c.startEndDate.StartDate| date : 'dd-MM-yyyy'):'N/A'}}</td>
+                                    <td>{{c.startEndDate.EndDate? (c.startEndDate.EndDate| date : 'dd-MM-yyyy'):'N/A'}}</td>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <paging
+                            class="small"
+                            page="currentPage"
+                            page-size="pageSize"
+                            total="pageTotal"
+                            show-prev-next="true"
+                            show-first-last="true"
+                            text-next-class="glyphicon glyphicon-chevron-right"
+                            text-prev-class="glyphicon glyphicon-chevron-left"
+                            text-first-class="glyphicon glyphicon-backward"
+                            text-last-class="glyphicon glyphicon-forward"
+                            paging-action="getPageData('Paging Clicked', page, pageSize, total)">
+                    </paging>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+	window.scrollTo(0, 0);
+</script>
+
+

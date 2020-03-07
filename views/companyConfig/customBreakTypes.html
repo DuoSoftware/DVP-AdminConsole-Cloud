@@ -1,0 +1,95 @@
+<div class="row">
+
+    <div class="col-md-12 col-sm-6 col-xs-12">
+
+        <!-- application list -->
+        <div class="x_panel bg-light-gray animated fadeIn">
+            <div class="x_title border-0">
+
+                <div class="custom-type">
+                    <div class="col-md-6 col-sm-6 col-xs-6">
+                        <h2 class="font-robot font-300 text-uppercase font-15">Custom Break Type configuration</h2>
+                    </div>
+
+                    <div class="col-xs-12">
+                        <div class="tile-stats m-top15">
+                            <form class="form-horizontal form-label-left input_mask" novalidate name="frmBreakType">
+                                <div class="row">
+                                    <!--<label class="control-label col-md-2 col-sm-6 col-xs-12">Server Type</label>-->
+                                    <div class="col-md-5 col-sm-4 col-xs-12 form-group has-feedback ">
+                                        <input type="text" class="form-control has-feedback-left"
+                                               ng-model="breakType.BreakType"
+                                               name="breakType"
+                                               ng-pattern="/^[a-zA-Z0-9-_\\s]+$/"
+                                               placeholder="Break Type" required>
+                                        <span class="error-msg" ng-show="frmBreakType.breakType.$error.pattern">Invalid break type</span>
+                                    </div>
+
+                                    <div class="col-md-5 col-sm-4 col-xs-12 form-group has-feedback ">
+                                        <input type="number" class="form-control has-feedback-left"
+                                               placeholder="Threshold Value (min)"
+                                               ng-model="breakType.MaxDurationPerDay" required
+                                               data-validate-minmax="0,120">
+                                        <span class="fa fa-user form-control-feedback left" aria-hidden="true"></span>
+                                    </div>
+                                    <div class="col-md-2 col-sm-4 col-xs-12 form-group has-feedback item">
+                                        <button ng-disabled="frmBreakType.$invalid" type="button"
+                                                class="btn btn-success  btn-block pull-right"
+                                                ng-click="createBreakType()">
+                                            Add
+                                        </button>
+                                    </div>
+                                </div>
+
+                            </form>
+                        </div>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+
+            </div>
+        </div>
+        <!-- end -->
+
+        <!-- view application users -->
+
+
+        <div class="x_panel " ng-if="breakTypes.length > 0">
+
+            <div class="col-md-6 col-sm-6 col-xs-6 form-group top_search">
+                <div class="input-group">
+                    <input type="text" ng-model="searchCriteria" class="form-control"
+                           placeholder="Search for...">
+                                <span class="input-group-btn">
+                                  <button class="btn btn-default" type="button">Go!</button>
+                                </span>
+                </div>
+            </div>
+
+            <div class="x_content">
+                <ul class="list-unstyled ">
+                    <li ng-repeat="bType in breakTypes | filterBy: ['BreakType']: searchCriteria">
+                        <custom-break-type-directive custom-break-type="bType"
+                                                     update-custom-break-types="getBreakTypes()"></custom-break-type-directive>
+                    </li>
+
+                    <paging ng-show="showPaging"
+                            class="small"
+                            page="currentPage"
+                            page-size="pageSize"
+                            total="pageTotal"
+                            show-prev-next="true"
+                            show-first-last="true"
+                            text-next-class="glyphicon glyphicon-chevron-right"
+                            text-prev-class="glyphicon glyphicon-chevron-left"
+                            text-first-class="glyphicon glyphicon-backward"
+                            text-last-class="glyphicon glyphicon-forward"
+                            paging-action="getPageData('attribute', page, pageSize, total)">
+                    </paging>
+                </ul>
+            </div>
+        </div>
+
+    </div>
+
+</div>

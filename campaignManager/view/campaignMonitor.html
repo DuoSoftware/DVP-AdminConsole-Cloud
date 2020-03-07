@@ -1,0 +1,185 @@
+<div class="col-md-12 col-sm-12 col-xs-12">
+
+    <!--Ongoing Campaign-->
+    <div class="x_panel tile ">
+        <div class="x_title">
+            <div class="col-md-6 col-sm-6 col-xs-6">
+                <h2><i class="fa fa-calendar-o"> Ongoing Campaign <small>List</small></i>
+
+                </h2>
+            </div>
+            <div class="clearfix"></div>
+        </div>
+        <div ng-show="isProgress" >
+            <div class="row ">
+                <div class="col-md-12 col-sm-12 col-xs-12">
+                    <div class="data-state-wrap">
+                        Please Wait...
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <div  class="x_content">
+
+            <div class="col-lg-12 col-xs-12">
+                <campaignmonitor reload-campaign="GetOngoingCampaign()" campaign="oncom" ng-repeat="oncom in ongoingCampaign"></campaignmonitor>
+
+                <!--<div class="table-wrapper daynamic-s-tble" >
+                    <table id="datatable-responsive" dt-options="dtOptions" datatable="ng"
+                           class="table table-striped table-bordered dt-responsive nowrap dataTable no-footer dtr-inline"
+                           cellspacing="0" width="100%" role="grid"
+                           aria-describedby="datatable-responsive_info">
+                        <thead>
+                        <tr role="row">
+                            <th class="sorting" tabindex="0" aria-controls="datatable-responsive"
+                                rowspan="1"
+                                colspan="1" aria-label="From">Campaign Name
+                            </th>
+                            <th class="sorting" tabindex="0" aria-controls="datatable-responsive"
+                                rowspan="1"
+                                colspan="1" aria-label="To">Campaign Mode
+                            </th>
+                            <th class="sorting" tabindex="0" aria-controls="datatable-responsive"
+                                rowspan="1"
+                                colspan="1" aria-label="AgentSkill">Campaign Channel
+                            </th>
+                            <th class="sorting" tabindex="0" aria-controls="datatable-responsive"
+                                rowspan="1"
+                                colspan="1" aria-label="AgentSkill">Dialout Mechanism
+                            </th>
+                            <th class="sorting" tabindex="0" aria-controls="datatable-responsive"
+                                rowspan="1"
+                                colspan="1" aria-label="AgentSkill">Extensions
+                            </th>
+                            <th class="sorting" tabindex="0" aria-controls="datatable-responsive"
+                                rowspan="1"
+                                colspan="1" aria-label="AgentSkill">LastResponsTime
+                            </th>
+                            <th class="sorting" tabindex="0" aria-controls="datatable-responsive"
+                                rowspan="1"
+                                colspan="1" aria-label="AgentSkill">State
+                            </th>
+                            <th class="sorting" tabindex="0" aria-controls="datatable-responsive"
+                                rowspan="1"
+                                colspan="1" aria-label="AgentSkill">Stop
+                            </th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr role="row" class="odd"
+                            ng-repeat="cmp in ongoingCampaign">
+
+                            <td>{{cmp.CampCampaignInfo.CampaignName}}</td>
+                            <td>{{cmp.CampCampaignInfo.CampaignMode}}</td>
+                            <td>{{cmp.CampCampaignInfo.CampaignChannel}}</td>
+                            <td>{{cmp.CampCampaignInfo.DialoutMechanism}}</td>
+                            <td>{{cmp.CampCampaignInfo.Extensions}}</td>
+                            <td>{{cmp.LastResponsTime| date : 'dd-MM-yyyy, HH:mm'}}</td>
+                            <td>{{cmp.CampaignState}}</td>
+                            <td><a ng-disabled="true"  style="cursor: pointer">
+                                <i ng-show="cmp.CampaignState==='start'" class="fa fa-pause" ng-click="SendCommandToCampaign(cmp,'pause')"></i>
+                                <i ng-show="cmp.CampaignState==='pause'" class="fa fa-step-forward" ng-click="SendCommandToCampaign(cmp,'resume')" ></i>
+                                <i ng-show="cmp.CampaignState==='pause'" class="fa fa-stop" ng-click="SendCommandToCampaign(cmp,'stop')" ></i>
+                                <i ng-show="cmp.CampaignState==='stop'" class="fa fa-eject" ng-click="SendCommandToCampaign(cmp,'end')" ></i>
+                            </a> </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>-->
+            </div>
+        </div>
+    </div>
+
+    <!--PendingCampaign Campaign-->
+    <div class="x_panel tile ">
+        <div class="x_title">
+            <div class="col-md-6 col-sm-6 col-xs-6">
+                <h2><i class="fa fa-calendar-o"> Pending Campaign <small>List</small></i>
+
+                </h2>
+            </div>
+            <div class="clearfix"></div>
+        </div>
+        <div ng-show="scheduleList" >
+            <div class="row ">
+                <div class="col-md-12 col-sm-12 col-xs-12">
+                    <div class="data-state-wrap">
+                        Please Wait...
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <div ng-hide="scheduleList" class="x_content">
+
+            <div class="col-lg-12 col-xs-12">
+                <campaignmonitor reload-campaign="ResetCampaignList();" campaign="cmp" ng-repeat="cmp in pendingCampaign"></campaignmonitor>
+                <!--<div class="table-wrapper daynamic-s-tble" >
+                    <table id="Pending-datatable-responsive" dt-options="dtOptions" datatable="ng"
+                           class="table table-striped table-bordered dt-responsive nowrap dataTable no-footer dtr-inline"
+                           cellspacing="0" width="100%" role="grid"
+                           aria-describedby="datatable-responsive_info">
+                        <thead>
+                        <tr role="row">
+                            <th class="sorting" tabindex="0" aria-controls="datatable-responsive"
+                                rowspan="1"
+                                colspan="1" aria-label="From">Campaign Name
+                            </th>
+                            <th class="sorting" tabindex="0" aria-controls="datatable-responsive"
+                                rowspan="1"
+                                colspan="1" aria-label="To">Campaign Mode
+                            </th>
+                            <th class="sorting" tabindex="0" aria-controls="datatable-responsive"
+                                rowspan="1"
+                                colspan="1" aria-label="AgentSkill">Campaign Channel
+                            </th>
+                            <th class="sorting" tabindex="0" aria-controls="datatable-responsive"
+                                rowspan="1"
+                                colspan="1" aria-label="AgentSkill">Dialout Mechanism
+                            </th>
+                            <th class="sorting" tabindex="0" aria-controls="datatable-responsive"
+                                rowspan="1"
+                                colspan="1" aria-label="AgentSkill">Extensions
+                            </th>
+                           &lt;!&ndash; <th class="sorting" tabindex="0" aria-controls="datatable-responsive"
+                                rowspan="1"
+                                colspan="1" aria-label="AgentSkill">StartDate
+                            </th>
+                            <th class="sorting" tabindex="0" aria-controls="datatable-responsive"
+                                rowspan="1"
+                                colspan="1" aria-label="AgentSkill">EndDate
+                            </th>&ndash;&gt;
+                            <th class="sorting" tabindex="0" aria-controls="datatable-responsive"
+                                rowspan="1"
+                                colspan="1" aria-label="AgentSkill">Start
+                            </th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr role="row" class="odd"
+                            ng-repeat="cmp in pendingCampaign">
+
+                            <td>{{cmp.CampaignName}}</td>
+                            <td>{{cmp.CampaignMode}}</td>
+                            <td>{{cmp.CampaignChannel}}</td>
+                            <td>{{cmp.DialoutMechanism}}</td>
+                            <td>{{cmp.Extensions}}</td>
+                            &lt;!&ndash;<td>{{cmp.CampConfigurations.StartDate}}</td>
+                            <td>{{cmp.CampConfigurations.EndDate}}</td>&ndash;&gt;
+                            <td>
+                                <a ng-disabled="true" ng-click="StartCampaign(cmp)" style="cursor: pointer">
+                                <i class="fa fa-play" ></i>
+                                &lt;!&ndash;<i ng-show="cmp.OperationalStatus==='start'" class="fa fa-stop" ></i>&ndash;&gt;
+                                </a>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>-->
+            </div>
+        </div>
+    </div>
+</div>

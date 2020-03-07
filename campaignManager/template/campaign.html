@@ -1,0 +1,67 @@
+<div class="block">
+    <div class="tags-with-tag">
+        <a class="tag-with-tag">
+            <span>{{campaign.CampaignId}}</span>
+        </a>
+    </div>
+
+    <div ng-show="deleteConfig" >
+        <div class="row ">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="data-state-wrap">
+                    Please Wait...
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="block_content" ng-hide="deleteConfig" >
+        <h2 class="title">
+            <a>Name : {{campaign.CampaignName}}</a>
+            <a title="Delete Campaign" ng-disabled="true" ng-click="deleteCampaign(campaign)" style="cursor: pointer"><i
+                    class="fa fa-trash-o"></i></a>
+            <a title="Edit Campaign" ng-disabled="true" ng-click="editCampaign()" style="cursor: pointer"><i class="fa fa-edit"></i></a>
+            <a title="Config Campaign" ng-disabled="true" ng-click="configCampaign()" style="cursor: pointer"><i class="fa fa-cog"></i></a>
+            <a title="Schedule Campaign" ng-disabled="true" ng-click="scheduleCampaign()" style="cursor: pointer"><i class="fa fa-calendar"></i></a>
+            <a title="Add Additional Data To Campaign" ng-show="showAdditionalDataPanel" ng-disabled="true" ng-click="additionalDataCampaign()" style="cursor: pointer"><i class="fa fa-plus-square"></i></a>
+
+        </h2>
+
+
+        <div class="col-md-12 col-sm-12 col-xs-12" ng-show="editMode==='edit'">
+            <br>
+            <div ng-include="'campaignManager/template/editCampaign.html'"></div>
+        </div>
+
+        <div class="col-md-12 col-sm-12 col-xs-12" ng-show="editMode==='config'">
+            <br>
+            <div ng-include="'campaignManager/template/configCampaign.html'"></div>
+        </div>
+
+        <div class="col-md-12 col-sm-12 col-xs-12" ng-show="editMode==='schedule'">
+            <br>
+            <div ng-include="'campaignManager/template/mapSchedule.html'"></div>
+        </div>
+
+        <div class="col-md-12 col-sm-12 col-xs-12" ng-show="editMode==='additionalData'">
+            <br>
+            <div ng-include="'campaignManager/template/additionalData.html'"></div>
+        </div>
+
+        <div class="byline" ng-show="editMode==='view'">
+            <span>{{campaign.createdAt|date:'MM/dd/yyyy @ h:mma'}}</span>
+        </div>
+        <div ng-show="editMode==='view'">
+            <p class="excerpt col-md-4"> Campaign Name : {{campaign.CampaignName}} </p>
+
+            <p class="excerpt col-md-4"> Campaign Mode : {{campaign.CampaignMode}} </p>
+
+            <p class="excerpt col-md-4"> Campaign Channel: {{campaign.CampaignChannel}} </p>
+
+            <p class="excerpt col-md-12"> Dialout Mechanism : {{campaign.DialoutMechanism}} </p>
+        </div>
+        <div class="clearfix"></div>
+    </div>
+</div>
+

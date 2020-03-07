@@ -1,0 +1,487 @@
+<div>
+    <div>
+        <div class="col-lg-12">
+            <div class="row">
+                <div class="col-md-9">
+                    <h2 class=" font-300">
+                        <a ng-hide="editMode">Bot: {{bot.name}}</a>
+                    </h2>
+                    <span ng-hide="editMode">{{bot.description}}</span>
+                    <br>
+                    <span ng-hide="editMode">Last updated at {{bot.updated_at}}</span>
+                </div>
+                <div class="col-md-3 ">
+                    <div class="pull-right user-option-wrap" ng-show="!editMode">
+                        <div ng-disabled="true" ng-click="editbotdetails()" class="btn-circle">
+                            <i class="fa fa-pencil"></i>
+                        </div>
+                        <div ng-disabled="true" ng-click="deleteBot(bot)" class="btn-circle">
+                            <i class="fa fa-trash-o"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12 col-sm-3 col-xs-12 form-group " ng-show="!editMode">
+                    <label class="form-control-static">Bot ID</label>
+                    <div class="copy-form">
+                        <input type="text" ng-readonly="true" ng-model="bot._id" id="{{bot._id}}" class="form-control">
+                        <input type="button" value="Copy" ng-click="copytoClipboard(bot._id,'Bot ID','Bot ID successfully copied into the Clipboard.')"
+                            class="btn card-btn btn-copy">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-12 col-sm-12 col-xs-12 edit-main-wrap" ng-show="editMode">
+            <div class="application-edit">
+                <div class="col-sm-12 subcard-title ">
+                    <div class="col-sm-6">
+                        <h2 class="font-robot font-300 font-15">Edit {{bot.name}}</h2>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="edit-close pull-right">
+                            <i class="fa fa-close" ng-click="editbotdetails()"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12 col-sm-6 col-xs-12 col-xs-12">
+                    <div class="tile-stats  m-top15">
+                        <form class="form-horizontal form-label-left input_mask">
+                            <div class="col-md-12 col-sm-12 col-xs-12 form-group has-feedback" style="margin-bottom: 15px;">
+                                <label>Bot Name</label>
+                                <input type="text" class="form-control" ng-model="bot.name" placeholder="Bot Name">
+                            </div>
+                            <div class="col-md-12 col-sm-12 col-xs-12 form-group" style="margin-bottom: 15px;">
+                                <label>Description</label>
+                                <input type="text" class="form-control" ng-model="bot.description" placeholder="Description">
+                            </div>
+                            <div class="row no-gutters">
+                                <div class="col-6 col-md-8"></div>
+                                <div class="col-6 col-md-4 form-group has-feedback">
+                                    <button type="button" class="btn card-title--btn-add card-btn pull-right" ng-click="modifyBotDetails(bot)">
+                                        Update
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12 col-sm-12 col-xs-12">
+                        <uib-tabset class="card-tab" active="0">
+                            <uib-tabset class="card-inner" active="0">
+                                <uib-tab class="card-tab--headering" index="0" heading="Integrations">
+                                    <uib-tabset class="card-tab--subcard" active="0">
+                                        <uib-tab index="0" heading="Facebook">
+                                            <h2 class="card-tab--subcard-title font-robot font-300 ">FaceBook Integrations</h2>
+
+                                            <div class="card-tab--subcard-form">
+                                                <div class="col-md-4 col-sm-6 col-xs-12 form-group has-feedback">
+                                                    <label>Verification Token</label>
+                                                    <div class="copy-form">
+                                                        <input readonly type="text" class="col-md-6 form-control" id="verificationfield" ng-model="bot.channel_facebook.verification_token"
+                                                            placeholder="Facebook Verification Token">
+                                                        <input type="button" value="Copy" ng-click="copytoClipboard('verificationfield','Verification Token','Verification Token successfully copied into the Clipboard.')"
+                                                            class="btn card-btn btn-copy">
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4 col-sm-6 col-xs-12 form-group has-feedback">
+                                                    <label>Callback URL</label>
+                                                    <div class="copy-form">
+                                                        <input readonly type="text" class="col-md-6 form-control" id="callbackurlfield" ng-model="generatedCallbackURL" placeholder="Facebook Callback URL">
+                                                        <input type="button" value="Copy" ng-click="copytoClipboard('callbackurlfield','Callback URL','Callback URL successfully copied into the Clipboard.')"
+                                                            class="btn card-btn btn-copy">
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4 col-sm-6 col-xs-12 form-group">
+                                                    <label>Page ID</label>
+                                                    <div class="copy-form">
+                                                        <input type="text" class="form-control" ng-model="bot.channel_facebook.page_id" placeholder="Facebook Page ID">
+                                                        <button type="button" ng-click="" class="btn card-btn btn-copy">
+                                                            <i class="fa fa-question"></i>
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4 col-sm-6 col-xs-12 form-group">
+                                                    <label>App ID</label>
+                                                    <div class="copy-form">
+                                                        <input type="text" class="form-control" ng-model="bot.channel_facebook.app_id" placeholder="Facebook App ID">
+                                                        <button type="button" ng-click="" class="btn card-btn btn-copy">
+                                                            <i class="fa fa-question"></i>
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4 col-sm-6 col-xs-12 form-group">
+                                                    <label>App Secret</label>
+                                                    <div class="copy-form">
+                                                        <input type="text" class="form-control" ng-model="bot.channel_facebook.app_secret" placeholder="Facebook App Secret">
+                                                        <button type="button" ng-click="" class="btn card-btn btn-copy">
+                                                            <i class="fa fa-question"></i>
+                                                        </button>
+                                                    </div>
+
+                                                </div>
+                                                <div class="col-md-4 col-sm-6 col-xs-12 form-group">
+                                                    <label>Page Token</label>
+                                                    <div class="copy-form">
+                                                        <input type="text" class="form-control" ng-model="bot.channel_facebook.page_token" placeholder="Facebook Page Token">
+                                                        <button type="button" ng-click="" class="btn card-btn btn-copy">
+                                                            <i class="fa fa-question"></i>
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="card-tab--subcard-form">
+                                                <h4 class="subcard-title ">Whitelist</h4>
+                                                <div>
+                                                    <form name="Whitelist">
+                                                        <!-- <div class="col-md-9"> -->
+                                                        <div class="col-md-8 col-sm-6 col-xs-12 form-group has-feedback">
+                                                            <!-- <label>Url</label> -->
+                                                            <input type="text" class="form-control has-feedback-left" name="url" ng-pattern="/^(http[s]?:\/\/){0,1}(www\.){0,1}[a-zA-Z0-9\.\-]+\.[a-zA-Z]{2,5}[\.]{0,1}/"
+                                                                ng-model="url" placeholder="White-List Url" required>
+                                                            <span class="fa fa-user form-control-feedback left" aria-hidden="true"></span>
+                                                        </div>
+                                                        <!-- </div> -->
+                                                        <div class="col-md-3 ">
+                                                            <button type="button" class="btn card-btn" ng-disabled="Whitelist.url.$invalid" ng-click="addnewurl(url)">
+                                                                Add to List
+                                                            </button>
+                                                        </div>
+                                                    </form>
+                                                    <ul class="list-group">
+                                                        <li class="list-group-item" style="background-color: #efefef;" ng-repeat="url in urllist">{{url}}
+                                                            <small ng-disabled="true" ng-click="deleteurl(url)" style="cursor: pointer;font-size: 21px;float: right;">
+                                                                <i class="fa fa-trash-o"></i>
+                                                            </small>
+
+                                                        </li>
+                                                        <!-- <li class="list-group-item">Deleted
+                                                                    <small ng-disabled="true" ng-click="" style="cursor: pointer;font-size: 21px;float: right;">
+                                                                        <i class="fa fa-trash-o"></i>
+                                                                    </small>
+                                                                </li>
+                                                                <li class="list-group-item">Warnings
+                                                                    <small ng-disabled="true" ng-click="" style="cursor: pointer;font-size: 21px;float: right;">
+                                                                        <i class="fa fa-trash-o"></i>
+                                                                    </small>
+                                                                </li> -->
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                            <div class="card-tab--subcard-form">
+                                                <h4 class="subcard-title ">Persist Menu</h4>
+                                                <label class="radio-inline">
+                                                    <input type="radio" ng-model="enablepersistmenu" value="enabled" name="optradio">Enable</label>
+                                                <label class="radio-inline">
+                                                    <input type="radio" ng-model="enablepersistmenu" value="disabled" name="optradio">Disable</label>
+                                                <div ng-hide="enablepersistmenu == 'disabled'">
+                                                    <div class="col-md-8 col-sm-6 col-xs-12 form-group has-feedback">
+                                                        <div style="background-color: #e0e0e0">
+                                                            <div ng-repeat="button in persisMenu.persistent_menu[0].call_to_actions" class="cardset">
+                                                                <persistbutton button="button"></persistbutton>
+                                                                <a class="edit-card--btn-circle edit-card--remove font-robot font-300" ng-click="removepersistButton($index)">
+                                                                    <i class="fa fa-times"></i>
+                                                                </a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-3 ">
+                                                        <select class="form-control" placeholder="Select Button Type" ng-model="buttontype">
+                                                            <option value="" disabled selected>Select Button Type</option>
+                                                            <option value="postback">Simple</option>
+                                                            <option value="web_url">Web URL</option>
+                                                            <option disabled value="nested">Nested</option>
+                                                        </select>
+                                                        <button type="button" class="btn card-btn" ng-click="addnewButtons(buttontype)">
+                                                            Add Button
+                                                        </button>
+                                                        <button type="button" class="btn card-btn" ng-click="updatePersistantMenu()">
+                                                            Save Persist Menu
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </uib-tab>
+                                        <uib-tab index="1" heading="Slack">
+                                            <h2 class="card-tab--subcard-title font-robot font-300 ">Slack Integrations</h2>
+
+                                            <div class="card-tab--subcard-form">
+                                                <div class="col-6 col-md-4 form-group">
+                                                    <label>Verification Token</label>
+                                                    <input type="text" class="form-control" ng-model="bot.channel_slack.verification_token" placeholder="Slack Verification Token">
+                                                </div>
+                                                <div class="col-6 col-md-4 form-group">
+                                                    <label>Client Secret</label>
+                                                    <input type="text" class="form-control" ng-model="bot.channel_slack.client_secret" placeholder="Slack Client Secret">
+                                                </div>
+                                                <div class="col-6 col-md-4 form-group">
+                                                    <label>Client ID</label>
+                                                    <input type="text" class="form-control" ng-model="bot.channel_slack.client_id" placeholder="Slack Client ID">
+                                                </div>
+                                                <div class="col-6 col-md-8 form-group">
+                                                    <label>Bot Token</label>
+                                                    <input type="text" class="form-control" ng-model="bot.channel_slack.bot_token" placeholder="Slack Bot Token">
+                                                </div>
+                                            </div>
+                                        </uib-tab>
+
+                                    </uib-tabset>
+
+                                </uib-tab>
+                                <uib-tab index="1" heading="Config">
+                                    <div class="card-tab--subcard">
+                                        <h2 class="card-tab--subcard-title font-robot font-300 ">New Bot Apps</h2>
+                                        <div class="card-tab--subcard-form">
+                                            <div class="col-md-10">
+                                                <select class="form-control" id="Bot_Apps" ng-model="item.app">
+                                                    <option value="" selected disabled>Select App</option>
+                                                    <option value='apiai'>Apiai</option>
+                                                    <option value='smoothflow'>Smoothflow</option>
+                                                    <option value='ARDS' disabled>ARDS (coming soon)</option>
+                                                </select>
+                                            </div>
+                                            <div class=" col-md-2">
+                                                <button type="button" class="btn card-btn pull-right" ng-click="addnewBotApp(item);">
+                                                    New Bot App
+                                                </button>
+                                            </div>
+                                        </div>
+
+                                        <div class="card-tab--list">
+                                            <ul class="sortable" id="bot._id">
+                                                <!-- <div class="col-lg-12"> -->
+                                                <li class="ui-state-default" ng-repeat="item in slectedConfig | orderBy : 'order'" id={{item}}>
+                                                    <div class="row layer-draggable" ng-mousedown="init()">
+                                                        <div class="col-md-11">
+                                                            <span class="ui-icon ui-icon-arrowthick-2-n-s"> {{item.app}}</span>
+                                                        </div>
+                                                        <div class="col-md-1">
+                                                            <div class="btn-circle" ng-disabled="true" ng-click="botappedit = !botappedit; editbotappdetails(item);" style="cursor: pointer">
+                                                                <i class="fa fa-edit"></i>
+                                                            </div>
+                                                            <div class="btn-circle" ng-disabled="true" ng-click="deletebotapp(item)" style="cursor: pointer">
+                                                                <i class="fa fa-trash-o"></i>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="col-md-12">
+                                                            <div ng-show="botappedit">
+                                                                <div>
+                                                                    <div class="card-tab--subcard-form">
+                                                                        <div class="subcard-title " style="padding:0 !important;">
+                                                                            <div class="col-md-9">
+                                                                                <h4>{{item.app}} </h4>
+                                                                            </div>
+                                                                            <div class="col-md-3 ">
+                                                                                <button type="button" class="btn btn-success btn-sm pull-right" ng-click="updatebotapp(item)">
+                                                                                    Update
+                                                                                </button>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div ng-repeat="(key,value) in item.config">
+
+                                                                            <div class="col-md-12 form-group">
+                                                                                <label>{{key}}</label>
+                                                                                <input type="text" class="form-control" ng-model="item.config[key]">
+                                                                            </div>
+                                                                        </div>
+
+                                                                    </div>
+                                                                </div>
+
+
+                                                                <!-- <div ng-show="item.app=='Smoothflow'" ng-if="selectedBot.app=='Smoothflow'">
+                                
+                                                                    <div class="card-tab--subcard-form">
+                                                                        <div class="subcard-title ">
+                                                                            <div class="col-md-9">
+                                                                                <h4>{{selectedBot.app}} </h4>
+                                                                            </div>
+                                                                            <div class="col-md-3 ">
+                                                                                <button type="button" class="btn btn-success btn-sm pull-right" ng-click="updatebotapp(selectedBot)">
+                                                                                    Update
+                                                                                </button>
+                                                                            </div>
+                                                                        </div>
+
+                                                                        <div class="col-md-12 form-group">
+                                                                            <label>Security key</label>
+                                                                            <input type="text" class="form-control has-feedback-left" ng-model="selectedBot.config.Securitykey" placeholder="Security key">
+                                                                        </div>
+                                                                    </div>
+                                                                </div> -->
+
+                                                                <!-- <div ng-show="item.app=='ARDS'" ng-if="selectedBot.app=='ARDS'">
+                                                                    <div class="card-tab-subcard-form">
+                                                                        <div class="subcard-title ">
+                                                                            <div class="col-md-9">
+                                                                                <h4>{{selectedBot.app}} </h4>
+                                                                            </div>
+                                                                            <div class="col-md-3 ">
+                                                                                <button type="button" class="btn btn-success btn-sm pull-right" ng-click="updatebotapp(selectedBot)">
+                                                                                    Update
+                                                                                </button>
+                                                                            </div>
+                                                                        </div>
+
+                                                                        <div class="col-md-12 form-group">
+
+                                                                            <label>Inputs</label>
+                                                                            <input type="text" class="form-control has-feedback-left" ng-model="selectedBot.config.Securitykey" placeholder="Inputs">
+                                                                        </div>
+                                                                    </div>
+                                                                </div>  -->
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                </li>
+
+                                                <!-- <li class="ui-state-default"><span class="ui-icon ui-icon-arrowthick-2-n-s"></span>SmoothFlow</li>
+                                            <li class="ui-state-default"><span class="ui-icon ui-icon-arrowthick-2-n-s"></span>ARDS</li> -->
+
+                                            </ul>
+                                        </div>
+
+                                    </div>
+
+
+                                </uib-tab>
+                                <uib-tab index="2" heading="AI">
+                                    <div class="card-tab--subcard">
+                                        <h2 class="card-tab--subcard-title font-robot font-300 ">Default AI</h2>
+                                        <div class="card-tab--subcard-form">
+                                            <div class="col-md-10">
+                                                <select class="form-control" id="Bot_Apps" ng-model="item.app">
+                                                    <option value="" selected disabled>Select AI</option>
+                                                    <option value='default'>Smoothflow AI</option>
+                                                    <option value='gnlp'>Googlenlp</option>
+                                                    <option value='witai' disabled>Witai (coming soon)</option>
+                                                    <option value='msnlp' disabled>MSNLP (coming soon)</option>
+                                                </select>
+                                            </div>
+                                            <div class=" col-md-2">
+                                                <button type="button" class="btn card-btn pull-right" ng-click="addnewDefaultAi(item);">
+                                                    Add Default AI
+                                                </button>
+                                            </div>
+                                        </div>
+
+                                        <div class="card-tab--list">
+                                            <ul>
+                                                <!-- <div class="col-lg-12"> -->
+                                                <li class="ui-state-default">
+                                                    <div class="row">
+                                                        <div class="col-md-11">
+                                                            <span class="ui-icon ui-icon-arrowthick-2-n-s"> {{displayNameAi}}</span>
+                                                        </div>
+                                                        <div class="col-md-1">
+                                                            <div class="btn-circle" ng-disabled="true" ng-click="botappedit = !botappedit;" style="cursor: pointer">
+                                                                <i class="fa fa-edit"></i>
+                                                            </div>
+                                                            <!-- <div class="btn-circle" ng-disabled="true" ng-click="deletebotapp(item)" style="cursor: pointer">
+                                                                <i class="fa fa-trash-o"></i>
+                                                            </div> -->
+                                                        </div>
+
+                                                        <div class="col-md-12">
+                                                            <div ng-show="botappedit">
+                                                                <div>
+                                                                    <div class="card-tab--subcard-form">
+                                                                        <form name="addDeafultAi" ng-submit="updateDeafultAi(slectedDefaultAi.ai)">
+                                                                            <div class="subcard-title " style="padding:0 !important;">
+                                                                                <div class="col-md-9">
+                                                                                    <h4>{{displayNameAi}} </h4>
+                                                                                </div>
+                                                                                <div class="col-md-3 ">
+                                                                                    <button type="submit" ng-disabled="addDeafultAi.$invalid" class="btn btn-success btn-sm pull-right">
+                                                                                        Update
+                                                                                    </button>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div>
+                                                                                <div class="col-md-12 form-group">
+                                                                                    <label>Key</label>
+                                                                                    <input type="text" class="form-control" name="addDeafultAi.key" ng-model="slectedDefaultAi.ai.key" required ng-disabled="disabledField">
+                                                                                </div>
+                                                                                <div class="col-md-12 form-group">
+                                                                                    <label>Description</label>
+                                                                                    <input type="text" class="form-control" name="addDeafultAi.description" ng-model="slectedDefaultAi.ai.description" required
+                                                                                        ng-disabled="disabledField">
+                                                                                </div>
+                                                                            </div>
+                                                                        </form>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                </li>
+                                            </ul>
+                                        </div>
+
+                                    </div>
+
+                                </uib-tab>
+                                <uib-tab index="3" heading="Entity"> 
+                                    <div class="card-tab--subcard">
+                                        <h2 class="card-tab--subcard-title font-robot font-300 ">Entities</h2>
+                                        <div class="card-tab--subcard-form">
+                                            <div class="col-md-10">
+                                                <select class="form-control" id="Bot_Apps" ng-model="item.app" ng-options="x as x.entityName for x in allEntities">
+                                                    <option value="" disabled>Select Entity</option>
+                                                    
+                                                </select>
+                                            </div>
+                                            <div class=" col-md-2">
+                                                <button type="button" class="btn card-btn pull-right" ng-click="addnewEntity(item);">
+                                                    Add Entity
+                                                </button>
+                                            </div>
+                                        </div>
+
+                                        <div class="card-tab--list">
+                                            <ul>
+                                                <!-- <div class="col-lg-12"> -->
+                                                <li class="ui-state-default" ng-repeat="item in selectEntities">
+                                                    <div class="row">
+                                                        <div class="col-md-11">
+                                                            <span class="ui-icon ui-icon-arrowthick-2-n-s"> {{item.entityName}}</span>
+                                                        </div>
+                                                        <div class="col-md-1">
+                                                            <!-- <div class="btn-circle" ng-disabled="true" ng-click="botappedit = !botappedit;" style="cursor: pointer">
+                                                                <i class="fa fa-edit"></i>
+                                                            </div> -->
+                                                            <div class="btn-circle" ng-disabled="true" ng-click="deletebotEntity(item)" style="cursor: pointer">
+                                                                <i class="fa fa-trash-o"></i>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                </li>
+                                            </ul>
+                                        </div>
+
+                                    </div>
+    
+                                </uib-tab>
+                                <!-- <uib-tab index="2" heading="White-list">
+
+                                </uib-tab> -->
+                            </uib-tabset>
+                        </uib-tabset>
+
+                    </div>
+
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="clearfix"></div>
+</div>
+</div>

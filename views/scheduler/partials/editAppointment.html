@@ -1,0 +1,175 @@
+<div>
+    <div>
+
+        <div class="col-lg-12">
+            <div class="row">
+                <div class="col-md-9">
+                    <h2 class=" font-300">
+                        <a ng-hide="editMode">Name : {{appointment.AppointmentName}}</a>
+
+                    </h2>
+                </div>
+                <div class="col-md-3 " style="position: inherit;">
+                    <div class="pull-right user-option-wrap" ng-show="!editMode">
+                        <h3>
+                            <small ng-disabled="true" ng-click="deleteAppointment()" style="cursor: pointer"><i
+                                    class="fa fa-trash-o"></i></small>
+                            <small ng-disabled="true" ng-click="editAppointment()" style="cursor: pointer"><i
+                                    class="fa fa-edit"></i></small>
+                        </h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-12 col-sm-12 col-xs-12 edit-main-wrap" ng-show="editMode">
+            <div class="application-edit">
+                <div class="col-sm-12">
+                    <div class="col-sm-6">
+                        <h2 class="font-robot font-300 text-uppercase font-15">Edit {{appointment.AppointmentName}}</h2>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="edit-close pull-right">
+                            <i class="fa fa-close" ng-click="hideEdit()"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12 col-sm-6 col-xs-12 col-xs-12">
+                    <div class="tile-stats  m-top15">
+                        <form class="form-horizontal form-label-left input_mask">
+                            <div class="col-md-12 col-sm-12 col-xs-12 form-group has-feedback"
+                                 style="margin-bottom: 15px;">
+                                <label>Appointment Name</label>
+                                <input type="text" class="form-control has-feedback-left"
+                                       ng-model="appointment.AppointmentName"
+                                       placeholder="Appointment Name" ng-disabled="true">
+                                <span class="fa fa-user form-control-feedback left" aria-hidden="true"></span>
+                            </div>
+
+                            <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback"
+                                 style="margin-bottom: 15px;">
+                                <label>Action</label>
+                                <input type="text" class="form-control has-feedback-left"
+                                       ng-model="appointment.Action"
+                                       placeholder="Action">
+                                <span class="fa fa-user form-control-feedback left" aria-hidden="true"></span>
+                            </div>
+
+                            <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback"
+                                 style="margin-bottom: 15px;">
+                                <label>Recurrence Pattern</label>
+                                <select class="form-control has-feedback-left" placeholder="select application type"
+                                        ng-model="appointment.RecurrencePattern"
+                                        ng-change="optionChanger('RecurrencePattern')">
+                                    <option value="" disabled selected>Select Recurrence Pattern</option>
+                                    <option selected>NONE</option>
+                                    <option>WEEKLY</option>
+
+                                </select>
+                            </div>
+
+                            <div class="col-md-3 col-sm-6 col-xs-12 form-group has-feedback"
+                                 style="margin-bottom: 15px;">
+                                <label>Start Date</label>
+                                <input type="text" class="form-control" ng-model="appointment.StartDate"
+                                       ng-change="appointmentSummary(newAppointment)" name="startDate"
+                                       ng-required="appointment.EndDate"
+                                       datepicker>
+                            </div>
+                            <div class="col-md-3 col-sm-6 col-xs-12 form-group has-feedback"
+                                 style="margin-bottom: 15px;">
+                                <label>Start Time</label>
+                                <input type="text" class="form-control" pattern="([01]?[0-9]|2[0-3]):[0-5][0-9]"
+                                       name="startTime" ng-model="appointment.StartTime"
+                                       ng-change="appointmentSummary(appointment)"/>
+                                <span style="color: blue" class="pull-right"> (ex :- 01:30 , 23:22)</span>
+                            </div>
+                            <div class="col-md-3 col-sm-6 col-xs-12 form-group has-feedback"
+                                 style="margin-bottom: 15px;">
+                                <label>End Date</label>
+                                <input type="text" class="form-control" ng-model="appointment.EndDate"
+                                       ng-change="appointmentSummary(newAppointment)"
+                                       ng-required="newAppointment.StartDate" name="startDate"
+                                       datepicker>
+                            </div>
+                            <div class="col-md-3 col-sm-6 col-xs-12 form-group has-feedback"
+                                 style="margin-bottom: 15px;">
+                                <label>End Time</label>
+                                <input type="text" class="form-control" name="startTime"
+                                       pattern="([01]?[0-9]|2[0-3]):[0-5][0-9]" ng-model="appointment.EndTime"
+                                       ng-required="appointment.StartTime" ng-change="appointmentSummary(appointment)"/>
+                                <span style="color: blue" class="pull-right"> (ex :- 01:30 , 23:22)</span>
+                            </div>
+
+                            <div class="col-md-12 col-sm-12 col-xs-12 form-group has-feedback"
+                                 style="margin-bottom: 15px;">
+                                <label>Days of Week</label>
+
+                                <tags-input ng-model="currentDayList" display-property="DayName"
+
+                                            add-from-autocomplete-only="true" on-tag-added="onChipAdd($tag)"
+                                            on-tag-removed="onChipDelete($tag)" ng-disabled="!dayListMode"
+                                            min-length="1"
+                                            placeholder="Add Days" ng-change="appointmentSummary(appointment)"
+                                            ng-required="appointment.RecurrencePattern=='WEEKLY'">
+                                    <auto-complete source="querySearch($query)" load-on-empty="true"
+                                                   load-on-focus="true" min-length="1"></auto-complete>
+                                </tags-input>
+
+
+                            </div>
+
+                            <div class="col-md-12 col-sm-9 col-xs-12 m-top15">
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+
+                                </div>
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                    <button type="button" class="btn btn-success btn-sm pull-right"
+                                            ng-click="modifyAppointment()" ng-disabled="newApp.$invalid">
+                                        Update
+                                    </button>
+
+                                </div>
+                            </div>
+
+                            <div ng-show="showSummary" class="pull-left">{{summaryText}}</div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="byline">
+            <span>{{resource.createdAt|date:'MM/dd/yyyy @ h:mma'}}</span>
+        </div>
+        <div ng-hide="editMode">
+            <div class="col-md-3 col-sm-3 col-xs-12 form-group ">
+                <label class="form-control-static">Action</label>
+                <p>{{appointment.Action}} </p>
+            </div>
+
+            <div class="col-md-3 col-sm-3 col-xs-12 form-group ">
+                <label class="form-control-static">Recurrence Pattern</label>
+                <p>{{appointment.RecurrencePattern}} </p>
+            </div>
+
+            <div class="col-md-3 col-sm-3 col-xs-12 form-group ">
+                <label class="form-control-static">StartDate/Time</label>
+                <p>{{appointment.StartDate}} / {{appointment.StartTime}} </p>
+            </div>
+            <div class="col-md-3 col-sm-3 col-xs-12 form-group ">
+                <label class="form-control-static">EndDate/Time</label>
+                <p>{{appointment.EndDate}} / {{appointment.EndTime}} </p>
+            </div>
+            <div class="col-md-3 col-sm-3 col-xs-12 form-group " ng-show="newDayList.length>0">
+                <label class="form-control-static">Days of Week</label>
+                <p>{{dayString}} </p>
+            </div>
+
+
+            <!--<p class="excerpt col-md-3" ng-if="IsDeveloper"> Developer : {{application.AppDeveloper.Username}} </p>-->
+        </div>
+        <div class="clearfix"></div>
+    </div>
+</div>

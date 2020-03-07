@@ -1,0 +1,176 @@
+<div class="row">
+
+    <div class="col-md-12 col-sm-6 col-xs-12">
+
+        <!-- application list -->
+        <div class="x_panel bg-light-gray animated fadeIn">
+            <div class="x_title border-0">
+                <div class="col-md-6 col-sm-6 col-xs-6">
+                    <h2 class="font-robot font-300 text-uppercase font-15">New Queue Setting Configuration</h2>
+                </div>
+
+                <div class="col-md-6 col-sm-6 col-xs-6 form-group top_search">
+                    <div class="input-group">
+                        <input type="text" ng-model="searchCriteria" class="form-control"
+                               placeholder="Search for...">
+                        <span class="input-group-btn">
+                                  <button class="btn btn-default" type="button">Go!</button>
+                                </span>
+                    </div>
+                </div>
+                <div class="col-xs-12">
+                    <div class="tile-stats m-top15">
+                        <form class="form-horizontal form-label-left input_mask" name="queuesettings">
+
+                            <div class="row">
+                                <div class="col-md-3 col-sm-3 col-xs-12 form-group has-feedback">
+
+                                    <input type="text" class="form-control has-feedback-left"
+                                           placeholder="Queue Name"
+                                           ng-model="newSetting.QueueName" required>
+                                    <span class="fa fa-user form-control-feedback left" aria-hidden="true"></span>
+
+                                </div>
+                                <div class="col-md-3 col-sm-3 col-xs-12 form-group has-feedback">
+                                    <input type="number" class="form-control has-feedback-left"
+                                           placeholder="Max Wait Time"
+                                           ng-model="newSetting.MaxWaitTime" required min="0">
+                                    <span class="form-control-feedback left" aria-hidden="true">sec</span>
+                                </div>
+                                <div class="col-md-3 col-sm-3 col-xs-12 form-group has-feedback">
+                                    <input type="number" class="form-control has-feedback-left"
+                                           placeholder="Call Abandoned Threshold"
+                                           ng-model="newSetting.CallAbandonedThreshold" required min="0">
+                                    <span class="form-control-feedback left" aria-hidden="true">sec</span>
+                                </div>
+                                <div class="col-md-1 col-sm-1 col-xs-12 form-group has-feedback">
+                                    <h5>Publish Position</h5>
+                                </div>
+                                <div class="col-md-1 col-sm-1 col-xs-12 form-group has-feedback">
+
+                                    <div style="padding-top: 5px">
+                                        <switch id="enabled" name="enabled" ng-model="newSetting.PublishPosition" class="green pull-left"  disabled="disableSwitch"></switch>
+                                    </div>
+
+                                </div>
+
+                            </div>
+                            <div class="row " >
+
+
+                                    <div class="col-md-3 col-sm-3 col-xs-12 form-group has-feedback">
+                                        <select class="form-control has-feedback-left" ng-model="newSetting.ards"
+                                                ng-model-options="{trackBy: '$value'}" ng-change=LoadAttributes(newSetting.ards) ng-disabled="!showArds">
+                                            <option value="" disabled selected>Select Server type and Request Type</option>
+                                            <option ng-repeat="ards in ArdsList" value="{{ards}}">
+                                                {{ards.ServerType}} - {{ards.RequestType}}
+                                            </option>
+                                        </select>
+                                        <span class="fa fa-server  form-control-feedback left" aria-hidden="true"></span>
+                                    </div>
+
+                                    <div class="col-md-3 col-sm-3 col-xs-12 form-group has-feedback">
+                                        <select class="form-control has-feedback-left" ng-model="newSetting.attribute"
+                                                ng-model-options="{trackBy: '$value'}" ng-disabled="!showAttrib" ng-change=LoadSkills(newSetting.attribute)>
+                                            <option value="" disabled selected>Select Attribute</option>
+                                            <option ng-repeat="attribute in groupAttributes" value="{{attribute}}">
+                                                {{attribute.AttributeGroupName}}
+                                            </option>
+                                        </select>
+                                        <span class="fa fa-object-group form-control-feedback left" aria-hidden="true"></span>
+                                    </div>
+                                    <div class="col-md-3 col-sm-3 col-xs-12 form-group has-feedback">
+                                        <select class="form-control has-feedback-left" ng-model="newSetting.skill"
+                                                ng-model-options="{trackBy: '$value'}" ng-disabled="!showSkill">
+                                            <option value="" disabled selected>Select Skill</option>
+                                            <option ng-repeat="skill in attributeSkills" value="{{skill}}">
+                                                {{skill.Name}}
+                                            </option>
+                                        </select>
+                                        <span class="fa fa-circle form-control-feedback left" aria-hidden="true"></span>
+                                    </div>
+                                    <div class="col-md-3 col-sm-3 col-xs-12 form-group has-feedback">
+                                        <button type="button" class="btn btn-success  btn- pull-left" ng-disabled="!newSetting.ards || !newSetting.attribute || !newSetting.skill "
+                                                ng-click="AddNewCombination(newSetting.ards,newSetting.attribute,newSetting.skill)">
+                                            Add Combination
+                                        </button>
+                                    </div>
+
+
+
+
+                            </div>
+                            <!--<div class="row">
+                                <div class="col-md-12 col-sm-12 col-xs-12 form-group has-feedback">
+                                    <button type="button" class="btn btn-success  btn- pull-right" ng-disabled="!newSetting.ards || !newSetting.attribute || !newSetting.skill "
+                                            ng-click="AddNewCombination(newSetting.ards,newSetting.attribute,newSetting.skill)">
+                                        Add Combination
+                                    </button>
+                                </div>
+                            </div>-->
+                            <div class="row">
+                                <div class="form-group">
+                                    <div class="col-md-12 col-sm-12 col-xs-12  ">
+                                        <tags-input ng-model="newSetting.skillObj" display-property="skillName"
+                                                    add-from-autocomplete-only="true" on-tag-added="onChipAdd($tag)"
+                                                    on-tag-removed="onChipDelete($tag)" ng-disabled="" min-length="1"
+                                                    placeholder="Add a combination" required>
+                                            <auto-complete source="querySearch($query)"
+                                                           load-on-empty="true"
+                                                           load-on-focus="true"
+                                                           min-length="1"></auto-complete>
+                                        </tags-input>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+
+
+                                <div class="col-md-12 col-sm-12 col-xs-12  ">
+                                    <button type="submit" class="btn btn-success  btn- pull-right"
+                                            ng-click="addQueueSettings()" ng-disabled=" queuesettings.$invalid || isDisabled ">
+                                        Save Queue Settings
+                                    </button>
+
+                                </div>
+                            </div>
+
+                        </form>
+                    </div>
+                </div>
+                <div class="clearfix"></div>
+            </div>
+        </div>
+        <!-- end -->
+
+        <!-- view application users -->
+
+
+        <div class="x_panel ">
+            <div class="x_content">
+                <ul class="list-unstyled ">
+                    <li ng-repeat="setting in  settingList | filterBy: ['QueueName']: searchCriteria">
+                        <editqsettings setting="setting" reloadpage="reloadPage()" reloadrecords="LoadARDSRecords()"></editqsettings>
+                    </li>
+
+                    <paging ng-show="showPaging"
+                            class="small"
+                            page="currentPage"
+                            page-size="pageSize"
+                            total="pageTotal"
+                            show-prev-next="true"
+                            show-first-last="true"
+                            text-next-class="glyphicon glyphicon-chevron-right"
+                            text-prev-class="glyphicon glyphicon-chevron-left"
+                            text-first-class="glyphicon glyphicon-backward"
+                            text-last-class="glyphicon glyphicon-forward"
+                            paging-action="getPageData('attribute', page, pageSize, total)">
+                    </paging>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+</div>

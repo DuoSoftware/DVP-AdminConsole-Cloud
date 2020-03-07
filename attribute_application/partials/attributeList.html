@@ -1,0 +1,205 @@
+
+
+
+<div class="row">
+    <div class="col-lg-12">
+        <div class="attribute customer-side-header">
+            <div class="tab1 m-r-10"
+                 ng-class="attributes==1?'selected-attr-btn':
+                 'select-attr-btn'" ng-click="changeView(1)">
+                ATTRIBUTES
+            </div>
+            <div class="tab2 m-r-10"
+                 ng-class="attributes==2?'selected-attr-btn':
+                 'select-attr-btn'" ng-click="changeView(2)">
+                GROUP MANAGER
+            </div>
+            <div class="tab2"
+                 ng-class="attributes==3?'selected-attr-btn':
+                 'select-attr-btn'" ng-click="changeView(3)">
+                FIXED GROUPS
+            </div>
+        </div>
+    </div>
+
+    <div ng-show="attributes==1" class="new-attribute col-md-8 col-sm-6 col-xs-12 col-md-offset-2 ">
+        <div class="x_panel bg-light-gray ">
+            <div class="x_title border-0">
+                <div class="col-md-6 col-sm-6 col-xs-6">
+                    <h2 class="font-robot font-300 text-uppercase font-15">Add new attribute</h2>
+                </div>
+                <div class="col-md-6 col-sm-6 col-xs-6 form-group top_search">
+                    <div class="input-group">
+                        <input type="text" ng-model="searchCriteria" class="form-control"
+                               placeholder="Search for...">
+                                <span class="input-group-btn">
+                                  <button class="btn btn-default" type="button">Go!</button>
+                                </span>
+                    </div>
+                </div>
+
+                <div class="col-xs-12">
+                    <div class="tile-stats m-top15">
+                        <form class="form-horizontal form-label-left input_mask">
+                            <div class="col-md-5 col-sm-6 col-xs-12 form-group has-feedback">
+                                <input type="text" class="form-control has-feedback-left" ng-model="attribute.Attribute"
+                                       id="AttributeId" placeholder="Attribute">
+                                <span class="fa fa-user form-control-feedback left" aria-hidden="true"></span>
+                            </div>
+                            <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
+                                <input type="text" class="form-control has-feedback-left" ng-model="attribute.OtherData"
+                                       style="" id="OtherData" placeholder="Other">
+                                <span class="fa fa-envelope form-control-feedback left" aria-hidden="true"></span>
+                            </div>
+                            <div class="col-md-1">
+                                <button type="button" class="btn btn-success btn-sm pull-right attribute-btn  "
+                                        ng-click="saveAttribute(attribute)">
+                                    Add
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="clearfix"></div>
+            </div>
+        </div>
+
+
+        <div class="x_panel ">
+            <div class="x_content">
+                <ul class="list-unstyled timeline">
+                    <li ng-repeat="attrib in attribData | filterBy: ['Attribute']: searchCriteria">
+                        <editattribute attribute="attrib"
+                                       update-attribute="removeDeleted(attrib)">
+                        </editattribute>
+                    </li>
+
+                    <paging ng-show="showPaging"
+                            class="small"
+                            page="currentPage"
+                            page-size="pageSize"
+                            total="pageTotal"
+                            show-prev-next="true"
+                            show-first-last="true"
+                            text-next-class="glyphicon glyphicon-chevron-right"
+                            text-prev-class="glyphicon glyphicon-chevron-left"
+                            text-first-class="glyphicon glyphicon-backward"
+                            text-last-class="glyphicon glyphicon-forward"
+                            paging-action="getPageData('attribute', page, pageSize, total)">
+                    </paging>
+                </ul>
+
+            </div>
+        </div>
+
+    </div>
+
+    <div ng-show="attributes==2" class="col-md-8 col-sm-6 col-xs-12 col-md-offset-2 ">
+        <div class="x_panel bg-light-gray">
+            <div class="x_title border-0">
+                <div class="col-md-6 col-sm-6 col-xs-6">
+                    <h2 class="font-robot font-300 text-uppercase font-15">Group Manager</h2>
+                </div>
+
+                <div class="col-md-6 col-sm-6 col-xs-6 form-group top_search">
+                    <div class="input-group">
+                        <input type="text" ng-model="searchCriteria" class="form-control"
+                               placeholder="Search for...">
+                                <span class="input-group-btn">
+                                  <button class="btn btn-default" type="button">Go!</button>
+                                </span>
+                    </div>
+                </div>
+
+                <div class="col-xs-12">
+                    <div class="tile-stats m-top15">
+                        <form class="form-horizontal form-label-left input_mask">
+                            <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
+                                <input type="text" class="form-control has-feedback-left" ng-model="grp.GroupName"
+                                       placeholder="Group Name">
+                                <span class="fa fa-user form-control-feedback left" aria-hidden="true"></span>
+                            </div>
+
+                            <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
+                                <!--<select class="form-control" id="GroupType"  ng-model="grp.GroupType">
+                                    <option  ng-repeat="c in Tasks" value="{{c.ResTaskInfo.TaskType}}" >{{c.ResTaskInfo.TaskType| uppercase}}
+                                    </option>
+                                </select>-->
+
+                                <select class="form-control" ng-model="grp.GroupType"
+                                        ng-model-options="{trackBy: '$value'}">
+                                    <option ng-repeat="c in Tasks" value="{{c.ResTaskInfo.TaskType}}">
+                                        {{c.ResTaskInfo.TaskType}}
+                                    </option>
+                                </select>
+
+                            </div>
+
+
+                            <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
+                                <input type="number" class="form-control has-feedback-left" ng-model="grp.Percentage"
+                                       placeholder="Weight" min="0">
+                                <span class="fa fa-envelope form-control-feedback left" aria-hidden="true"></span>
+                            </div>
+
+                            <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
+                                <input type="text" class="form-control has-feedback-left" ng-model="grp.OtherData"
+                                       placeholder="Other Data">
+                                <span class="fa fa-envelope form-control-feedback left" aria-hidden="true"></span>
+                            </div>
+
+
+
+
+                            <div class="col-md-2">
+                                <button type="button" class="btn btn-success attribute-btn btn-xs "
+                                        ng-click="saveGroup(grp)">Add
+                                </button>
+                            </div>
+
+
+                        </form>
+                    </div>
+                </div>
+                <div class="clearfix"></div>
+            </div>
+        </div>
+
+        <div class="x_panel ">
+            <div class="x_content">
+                <ul class="list-unstyled timeline-with-tag">
+                    <li ng-repeat="grp in groupsData | filterBy: ['GroupName']: searchCriteria">
+                        <editgroups task-list="Tasks" groupinfo="grp" <!--attribinfo="attribData"-->
+                                    update-groups="relaodPageData(grp)"></editgroups>
+                    </li>
+
+                    <paging ng-show="showPaging"
+                            class="small"
+                            page="currentGrpPage"
+                            page-size="pageSize"
+                            total="pageGrpTotal"
+                            show-prev-next="true"
+                            show-first-last="true"
+                            text-next-class="glyphicon glyphicon-chevron-right"
+                            text-prev-class="glyphicon glyphicon-chevron-left"
+                            text-first-class="glyphicon glyphicon-backward"
+                            text-last-class="glyphicon glyphicon-forward"
+                            paging-action="getPageData('groups', page, pageSize, total)">
+                    </paging>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div ng-show="attributes==3" class="col-md-8 col-sm-6 col-xs-12 col-md-offset-2 ">
+        <div class="x_panel ">
+            <div class="x_content">
+                <editfixedgroups task-list="Tasks" groupinfo="fixedBUGroup" <!--attribinfo="attribData"-->
+                update-groups="relaodPageData()"></editfixedgroups>
+                <editfixedgroups task-list="Tasks" groupinfo="fixedUserGroup" <!--attribinfo="attribData"-->
+                update-groups="relaodPageData()"></editfixedgroups>
+            </div>
+        </div>
+    </div>
+
+</div>

@@ -1,0 +1,135 @@
+<div class="row">
+    <div class="col-md-12 col-sm-6 col-xs-12">
+
+        <!--<div class="col-md-12 col-sm-6 col-xs-12">
+            <div class="x_panel">
+                <div class="x_title">
+                    <h2><i class="fa fa-bars"></i> Media Gallery
+                        <small>List</small>
+                    </h2>
+                    <ul class="nav navbar-right panel_toolbox">
+
+                        <li><a class="close-link"><i class="fa fa-check-square-o" ng-click="showDelete();"></i></a>
+                        </li>
+                        <li><a class="close-link"><i class="fa fa-trash-o" ng-click="deleteMultipleFiles();"></i></a>
+                        </li>
+                    </ul>
+                    <div class="col-md-5 col-sm-5 col-xs-12 form-group pull-right top_search">
+                        <div class="input-group">
+                            <input type="text" ng-model="txtSearch" class="form-control" placeholder="Search for...">
+                            <span class="input-group-btn">
+                      <button class="btn btn-default" type="button">Go!</button>
+                    </span>
+                        </div>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+            </div>
+
+        </div>-->
+
+        <div class="clearfix"></div>
+
+        <div class="col-md-12 col-sm-6 col-xs-12">
+            <div class="x_panel">
+                <div class="x_title">
+                    <h2><i class="fa fa-bars"></i> Zoho User
+                        <small>List</small>
+                    </h2>
+                    <ul class="nav navbar-right panel_toolbox">
+                        <li><a class="collapse-link" ng-click="reloadPage();" title="Reload"><i
+                                class="fa fa-refresh"></i></a>
+                        </li>
+                        <li><a class="collapse-link" ng-click="addAll();" title="Integrate With System."><i
+                                class="fa fa-plus-square"></i></a>
+                        </li>
+                    </ul>
+                    <div class="clearfix"></div>
+                </div>
+
+
+                <div class="x_content">
+
+                    <div ng-show="isLoading">
+                        <div class="row ">
+                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                <div class="data-state-wrap">
+                                    Please Wait...
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div ng-show="noDataToshow">
+                        <div class="row ">
+                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                <div class="data-state-wrap">
+                                    No Data...
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row" ng-hide="isLoading">
+
+                        <div class="col-md-55" ng-repeat="user in userList | filter:txtSearch">
+                            <div class="thumbnail">
+                                <div class="image view view-first">
+
+                                    <img style="width: 100%; display: block;" src="assets/images/noimage.jpg"/>
+
+
+                                    <div class="mask">
+                                        <p>{{user.username| limitTo:20}}</p>
+
+                                        <div class="tools tools-bottom">
+                                            <a ng-hide="user.integrated" href="javascript:void(0);"><i
+                                                    class="fa fa-plus"
+                                                    ng-click="addUser(user)" title="Integrate With System."></i></a>
+                                            <a ng-show="user.integrated" href="javascript:void(0);"><i
+                                                    class="fa fa-times"
+                                                    ng-click="removeUser(user)" title="Remove Integration"></i></a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="caption">
+                                    <p>{{user.email}}</p>
+                                    <!--<p>{{user.FileCategory.Category}}</p>-->
+
+                                    <p ng-hide="showDeleteSelection">{{user.createdAt| date:'yyyy-MM-dd HH:mm'}}</p>
+
+                                    <input ng-hide="user.integrated" type="checkbox" class="flat"
+                                           ng-model="user.add"
+                                    >
+
+                                </div>
+                            </div>
+                        </div>
+
+
+                    </div>
+
+                    <paging ng-show="showPaging"
+                            class="small"
+                            page="currentPage"
+                            page-size="pageSize"
+                            total="pageTotal"
+                            show-prev-next="true"
+                            show-first-last="true"
+                            text-next-class="glyphicon glyphicon-chevron-right"
+                            text-prev-class="glyphicon glyphicon-chevron-left"
+                            text-first-class="glyphicon glyphicon-backward"
+                            text-last-class="glyphicon glyphicon-forward"
+                            paging-action="getPageData('Paging Clicked', page, pageSize, total)">
+                    </paging>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+

@@ -1,0 +1,122 @@
+<div>
+    <div class="row">
+
+        <div class="col-sm-12 col-md-12 col-lg-12">
+            <div class="row">
+                <div class="col-md-9">
+                    <h2 class=" font-300">
+                        <a>Name : {{translation.TransName}}</a>
+
+                    </h2>
+                </div>
+                <div class="col-md-3 ">
+                    <div class="pull-right user-option-wrap">
+                        <h3>
+                            <small ng-disabled="true" ng-click="removeTranslation(translation)" style="cursor: pointer"><i
+                                    class="fa fa-trash-o"></i></small>
+                            <small ng-disabled="true" ng-click="editTranslation()" style="cursor: pointer"><i
+                                    class="fa fa-edit"></i></small>
+                        </h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+            <span>{{resource.createdAt|date:'MM/dd/yyyy @ h:mma'}}</span>
+        </div>
+        <div ng-hide="editMode">
+            <div class="col-md-3 col-sm-3 col-xs-12 form-group ">
+                <label class="form-control-static">Left Add</label>
+                <p>{{translation.LAdd}} </p>
+            </div>
+
+            <div class="col-md-3 col-sm-3 col-xs-12 form-group ">
+                <label class="form-control-static">Left Remove</label>
+                <p>{{translation.LRemove}} </p>
+            </div>
+
+            <div class="col-md-3 col-sm-3 col-xs-12 form-group ">
+                <label class="form-control-static">Right Add</label>
+                <p>{{translation.RAdd}} </p>
+            </div>
+
+            <div class="col-md-3 col-sm-3 col-xs-12 form-group ">
+                <label class="form-control-static">Right Remove</label>
+                <p>{{translation.RRemove}} </p>
+            </div>
+
+            <!--<p class="excerpt col-md-3" ng-if="IsDeveloper"> Developer : {{application.AppDeveloper.Username}} </p>-->
+        </div>
+
+    <div class="clearfix"></div>
+
+        <div ng-show="editMode">
+            <div class="row">
+                <div class="col-md-3 col-sm-3 col-xs-12 form-group has-feedback">
+                    <label>Left Add</label>
+                    <input type="text" class="form-control has-feedback-left"
+                           ng-model="translation.LAdd">
+                    <span class="fa fa-envelope form-control-feedback left" aria-hidden="true"></span>
+                </div>
+
+                <div class="col-md-3 col-sm-6 col-xs-12 form-group has-feedback">
+                    <label>Left Remove</label>
+                    <input type="number" class="form-control has-feedback-left"
+                           ng-model="translation.LRemove">
+                    <span class="fa fa-envelope form-control-feedback left" aria-hidden="true"></span>
+                </div>
+                <div class="col-md-3 col-sm-3 col-xs-12 form-group has-feedback">
+                    <label>Right Add</label>
+                    <input type="text" class="form-control has-feedback-left"
+                           ng-model="translation.RAdd">
+                    <span class="fa fa-envelope form-control-feedback left" aria-hidden="true"></span>
+                </div>
+
+                <div class="col-md-3 col-sm-6 col-xs-12 form-group has-feedback">
+                    <label>Right Remove</label>
+                    <input type="number" class="form-control has-feedback-left"
+                           ng-model="translation.RRemove">
+                    <span class="fa fa-envelope form-control-feedback left" aria-hidden="true"></span>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6 col-sm-3 col-xs-12 form-group has-feedback">
+                    <label>Replace</label>
+                    <input type="text" class="form-control has-feedback-left"
+                           ng-model="translation.Replace">
+                    <span class="fa fa-envelope form-control-feedback left" aria-hidden="true"></span>
+                </div>
+
+                <div class="col-md-6 col-sm-3 col-xs-12 form-group has-feedback">
+
+                    <input type="checkbox"
+                           ng-model="translation.Enabled" class="js-switch"/> Availability
+
+                </div>
+
+
+
+            </div>
+
+            <div>
+
+                <div class="col-md-12 col-sm-12 col-xs-12 form-group">
+                        <label>Ghost Numbers</label>
+                        <tags-input ng-model="translation.GhostNumbers" display-property="PhoneNumber" key-property="PhoneNumber" max-tags="5" add-from-autocomplete-only="true" min-length="1">
+                            <auto-complete source="querySearch($query)" load-on-empty="true" load-on-focus="true" min-length="1" max-results-to-show="10000"></auto-complete>
+                        </tags-input>
+                </div>
+                <div class="col-md-1 col-sm-1 col-xs-12 form-group has-feedback">
+                    <button type="button" class="btn btn-success btn-block  btn- pull-right"
+                            ng-click="updateTranslations()">
+                        Update
+                    </button>
+                </div>
+            </div>
+
+        </div>
+        <div class="clearfix"></div>
+    </div>
+</div>

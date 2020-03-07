@@ -1,0 +1,143 @@
+<div>
+    <div>
+
+        <div class="col-lg-12">
+            <div class="row">
+                <div class="col-md-9">
+                    <h2 class=" font-300">
+                        <a ng-hide="editMode">Extension : {{extension.Extension}}</a>
+
+                    </h2>
+                </div>
+                <div class="col-md-3 ">
+                    <div class="pull-right user-option-wrap" ng-show="!editMode">
+                        <h3>
+                            <small ng-disabled="true" ng-click="removeExtension(extension)" style="cursor: pointer"><i
+                                    class="fa fa-trash-o"></i></small>
+                            <small ng-disabled="true" ng-click="editExtension()" style="cursor: pointer"><i
+                                    class="fa fa-edit"></i></small>
+                        </h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-12 col-sm-12 col-xs-12 edit-main-wrap" ng-show="editMode">
+            <div class="application-edit">
+                <div class="col-sm-12">
+                    <div class="col-sm-6">
+                        <h2 class="font-robot font-300 text-uppercase font-15">Edit {{extension.ExtensionName}}</h2>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="edit-close pull-right">
+                            <i class="fa fa-close" ng-click="editExtension()"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12 col-sm-6 col-xs-12 col-xs-12">
+                    <div class="tile-stats  m-top15">
+                        <form class="form-horizontal form-label-left input_mask">
+                            <div class="col-md-4 col-sm-4 col-xs-12 form-group has-feedback"
+                                 style="margin-bottom: 15px;">
+                                <label>Extension</label>
+                                <input type="text" class="form-control has-feedback-left"
+                                       ng-model="extension.Extension"
+                                       placeholder="Extension" ng-disabled="true">
+                                <span class="fa fa-user form-control-feedback left" aria-hidden="true"></span>
+                            </div>
+
+                            <div class="col-md-4 col-sm-4 col-xs-12 form-group has-feedback"
+                                 style="margin-bottom: 15px;">
+                                <label>Extension Name</label>
+                                <input type="text" class="form-control has-feedback-left"
+                                       ng-model="extension.ExtensionName"
+                                       placeholder="Description">
+                                <span class="fa fa-user form-control-feedback left" aria-hidden="true"></span>
+                            </div>
+
+                            <div class="col-md-4 col-sm-4 col-xs-12 form-group has-feedback"
+                                 style="margin-bottom: 15px;">
+                                <label>DOD Number</label>
+                                <input type="text" class="form-control has-feedback-left "
+                                       ng-model="extension.DodNumber"
+                                       placeholder="Dod Number">
+                                <span class="fa fa-envelope form-control-feedback left" aria-hidden="true"></span>
+                            </div>
+
+                            <div class="col-md-4 col-sm-4 col-xs-12 form-group has-feedback">
+                                <label>Extension Type</label>
+                                <select class="form-control has-feedback-left" placeholder="select application type"
+                                        ng-model="extension.ObjCategory">
+                                    <option>USER</option>
+                                    <option>GROUP</option>
+                                    <option>CONFERENCE</option>
+                                    <option>VOICE_PORTAL</option>
+                                    <option>FAX</option>
+                                    <option>IVR</option>
+                                    <option>CAMPAIGN</option>
+                                    <option>AUTO_ATTENDANT</option>
+                                </select>
+                                <span class="fa fa-envelope form-control-feedback left" aria-hidden="true"></span>
+                            </div>
+
+                            <fieldset class="col-md-4 col-sm-4 col-xs-12 form-group has-feedback">
+                                <label>IVR App</label>
+                                <select class="form-control has-feedback-left" placeholder="select application type"
+                                        ng-model="extension.ExtraData" ng-options="app.id as app.AppName for app in applications">
+                                </select>
+                                <span class="fa fa-envelope form-control-feedback left" aria-hidden="true"></span>
+                            </fieldset>
+
+
+                            <div class="col-md-12 col-sm-9 col-xs-12 m-top15">
+                                <div class="col-md-12 col-sm-12 col-xs-12">
+                                    <button type="button" class="btn btn-success btn-sm pull-right"
+                                            ng-click="updateExtension(extension)">
+                                        Update
+                                    </button>
+                                </div>
+                            </div>
+
+                            <!--<div class="col-md-12 col-sm-6 col-xs-12 form-group has-feedback">
+                                <input type="text" class="form-control has-feedback-left" ng-model="resource.OtherData"
+                                       placeholder="Other Data">
+                                <span class="fa fa-envelope form-control-feedback left" aria-hidden="true"></span>
+                            </div>-->
+
+
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="byline" ng-hide="editMode">
+            <span>{{resource.createdAt|date:'MM/dd/yyyy @ h:mma'}}</span>
+        </div>
+        <div ng-hide="editMode">
+            <div class="col-md-3 col-sm-3 col-xs-12 form-group ">
+                <label class="form-control-static">Extension Name</label>
+                <p>{{extension.ExtensionName}} </p>
+            </div>
+
+            <div class="col-md-3 col-sm-3 col-xs-12 form-group ">
+                <label class="form-control-static">Extension Type</label>
+                <p>{{extension.ObjCategory}} </p>
+            </div>
+
+            <div class="col-md-3 col-sm-3 col-xs-12 form-group ">
+                <label class="form-control-static">Availability</label>
+                <p>{{extension.Enabled}} </p>
+            </div>
+
+            <div class="col-md-3 col-sm-3 col-xs-12 form-group ">
+                <label class="form-control-static">DOD Number</label>
+                <p>{{extension.DodNumber}} </p>
+            </div>
+
+            <!--<p class="excerpt col-md-3" ng-if="IsDeveloper"> Developer : {{application.AppDeveloper.Username}} </p>-->
+        </div>
+        <div class="clearfix"></div>
+    </div>
+</div>

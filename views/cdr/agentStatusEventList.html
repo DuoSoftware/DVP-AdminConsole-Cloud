@@ -1,0 +1,294 @@
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12 animated fadeIn">
+        <div class="x_panel main-title">
+            <div class="x_title">
+                <h2><b>REPORT</b> | AGENT - Status Event Summary</h2>
+                <ul class="nav navbar-right panel_toolbox">
+                    <li ng-show="!showFilter" ng-click="showFilter= !showFilter"><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                    </li>
+                    <li ng-show="showFilter" ng-click="showFilter= !showFilter"><a class="close-link"><i class="fa fa-chevron-down"></i></a>
+                    </li>
+                </ul>
+                <div class="clearfix"></div>
+            </div>
+            <div class="x_content" ng-show="!showFilter">
+                <div class="col-md-2 col-sm-2 col-xs-12">
+                    <label>Start Date</label>
+                    <input type="text" class="form-control" ng-model="obj.startDay" name="startDate" datepicker>
+                </div>
+
+                <fieldset class="col-md-2 col-sm-2 col-xs-12" ng-disabled="!timeEnabledStatus">
+                    <label>Start Time</label>
+                    <div class="bootstrap-timepicker">
+                        <input id="timepickerSt" type="text" class="form-control" ng-model="startTime">
+                        <i class="icon-time"></i>
+                    </div>
+                </fieldset>
+
+                <div class="col-md-2 col-sm-2 col-xs-12">
+                    <label>End Date</label>
+                    <input type="text" class="form-control" ng-model="obj.endDay" name="endDate" datepicker>
+                </div>
+
+                <fieldset class="col-md-2 col-sm-2 col-xs-12" ng-disabled="!timeEnabledStatus">
+                    <label>End Time</label>
+                    <div class="bootstrap-timepicker">
+                        <input id="timepickerEt" type="text" class="form-control" ng-model="endTime">
+                        <i class="icon-time"></i>
+                    </div>
+                </fieldset>
+
+                <div class="col-md-4 col-sm-4 col-xs-12">
+                    <div class="col-md-4 col-sm-4 col-xs-12" style="padding-top: 25px">
+                        <button type="button" class="btn btn-success" ng-click="changeTimeAvailability()">{{timeEnabled}}</button>
+                    </div>
+                    <div class="col-md-4 col-sm-4 col-xs-12" style="padding-top: 25px">
+                        <button type="button" class="btn btn-success" ng-click="getAgentStatusList()"> Search</button>
+                    </div>
+                    <div class="col-md-4 col-sm-4 col-xs-12" style="padding-top: 25px">
+                        <button type="button" class="btn btn-success"
+                            csv-header="['Agent', 'Event', 'From','To']"
+                            csv-column-order="['Agent', 'Event', 'From','To']" ng-csv="getAgentStatusListCSV()"
+                            filename="{{DownloadFileName}}.csv" ng-disabled="isDowloading">
+                            CSV&nbsp;&nbsp;&nbsp;&nbsp;
+                            <i class="fa fa-download"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="col-md-12 col-sm-12 col-xs-12">
+                    <div class="form-group">
+                        <label>Status</label>
+                        <tags-input ng-model="statusFilter" display-property="DisplayName"
+                                    add-from-autocomplete-only="true">
+                            <auto-complete source="querySearchStatus($query)" load-on-empty="true"
+                                           load-on-focus="true" min-length="1"></auto-complete>
+                        </tags-input>
+                    </div>
+
+                </div>
+
+                <div class="col-md-12 col-sm-12 col-xs-12">
+                    <div class="form-group">
+                        <label>Agents</label>
+                        <tags-input ng-model="agentFilter" display-property="ResourceName"
+                                    add-from-autocomplete-only="true">
+                            <auto-complete max-results-to-show="1000" source="querySearch($query)"
+                                           load-on-empty="true" load-on-focus="true"
+                                           min-length="1"></auto-complete>
+                        </tags-input>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <div class="row" ng-if="obj.isTableLoading==0">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="data-state-wrap">
+                    Please Wait...
+                </div>
+
+            </div>
+        </div>
+        <div class="x_panel" style="z-index:0" ng-if="obj.isTableLoading==1">
+
+            <!-- <div ng-repeat="(resourceId, sessions) in agentStatusList">
+
+             </div>-->
+
+            <uib-accordion>
+
+                <div uib-accordion-group class="panel-default"
+                     ng-repeat="(resourceId, sessions) in agentStatusList">
+
+
+                    <uib-accordion-heading>
+                        {{resourceId}}<i class="pull-right glyphicon"
+                                         ng-class="{'glyphicon-chevron-down': true, 'glyphicon-chevron-right': false}"></i>
+                    </uib-accordion-heading>
+                    <statusgantt events="sessions" endtime="endDtTm"></statusgantt>
+
+                    <!--<div class="col-md-12 col-sm-12 col-xs-12">
+                        <div ng-repeat="event in sessions">
+
+                            <div class="col-md-12 col-sm-12 col-xs-12"
+                                 style="border: 1px solid #ccc!important;padding: 15px;border-radius: 2px;
+                                 font-size: 15px;margin-bottom: 10px;">
+                                <div class="col-md-2 col-sm-2 col-xs-2">{{event.Reason}}</div>
+                                <div class="col-md-2 col-sm-2 col-xs-2"></div>
+                                <div class="col-md-3 col-sm-3 col-xs-3">
+                                    {{moment(event.createdAt).local().format("YYYY-MM-DD HH:mm:ss")}}
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>-->
+                </div>
+            </uib-accordion>
+        </div>
+    </div>
+</div>
+
+<!--Old-->
+<!--<div>-->
+    <!--<div class="page-title">-->
+        <!--<div class="title_left">-->
+            <!--<h2>Agent Status Event Summary</h2>-->
+
+        <!--</div>-->
+    <!--</div>-->
+
+
+    <!--<div class="col-md-12 col-sm-12 col-xs-12 animated fadeIn">-->
+        <!--<div class="row">-->
+            <!--<div class="x_panel">-->
+                <!--<div class="x_content">-->
+                    <!--<div class="col-md-2 col-sm-2 col-xs-12">-->
+                        <!--<label>Start Date</label>-->
+                        <!--<input type="text" class="form-control" ng-model="obj.startDay" name="startDate" datepicker>-->
+                    <!--</div>-->
+
+                    <!--<fieldset class="col-md-2 col-sm-2 col-xs-12" ng-disabled="!timeEnabledStatus">-->
+                        <!--<label>Start Time</label>-->
+                        <!--<div class="bootstrap-timepicker">-->
+                            <!--<input id="timepickerSt" type="text" class="form-control" ng-model="startTime">-->
+                            <!--<i class="icon-time"></i>-->
+                        <!--</div>-->
+                    <!--</fieldset>-->
+
+
+                    <!--<div class="col-md-2 col-sm-2 col-xs-12">-->
+                        <!--<label>End Date</label>-->
+                        <!--<input type="text" class="form-control" ng-model="obj.endDay" name="endDate" datepicker>-->
+                    <!--</div>-->
+
+                    <!--<fieldset class="col-md-2 col-sm-2 col-xs-12" ng-disabled="!timeEnabledStatus">-->
+                        <!--<label>End Time</label>-->
+                        <!--<div class="bootstrap-timepicker">-->
+                            <!--<input id="timepickerEt" type="text" class="form-control" ng-model="endTime">-->
+                            <!--<i class="icon-time"></i>-->
+                        <!--</div>-->
+                    <!--</fieldset>-->
+
+                    <!--<div class="col-md-4 col-sm-4 col-xs-12">-->
+                        <!--<div class="x_content btn-wrap-header" style="position: relative; top: 10px">-->
+                            <!--<button type="button" class="btn btn-primary" ng-click="changeTimeAvailability()">-->
+                                <!--{{timeEnabled}}-->
+                            <!--</button>-->
+                            <!--<button type="button" class="btn btn-success" ng-click="getAgentStatusList()">-->
+                                <!--Search-->
+                            <!--</button>-->
+                            <!--<button type="button" class="btn"-->
+                                    <!--style="background-color: #a3d100; color: #000000; font-weight: 500"-->
+                                    <!--csv-header="['Agent', 'Event', 'From','To']"-->
+                                    <!--csv-column-order="['Agent', 'Event', 'From','To']" ng-csv="getAgentStatusListCSV()"-->
+                                    <!--filename="{{DownloadFileName}}.csv" ng-disabled="isDowloading">-->
+                                <!--CSV&nbsp;&nbsp;&nbsp;&nbsp;-->
+                                <!--<i class="fa fa-download"></i>-->
+                            <!--</button>-->
+                        <!--</div>-->
+                    <!--</div>-->
+                    <!--<div class="clearfix"></div>-->
+                    <!--<br>-->
+
+                    <!--<div class="col-md-12 col-sm-12 col-xs-12">-->
+                        <!--<div class="form-group">-->
+                            <!--<label>Status</label>-->
+                            <!--<tags-input ng-model="statusFilter" display-property="DisplayName"-->
+                                        <!--add-from-autocomplete-only="true">-->
+                                <!--<auto-complete source="querySearchStatus($query)" load-on-empty="true"-->
+                                               <!--load-on-focus="true" min-length="1"></auto-complete>-->
+                            <!--</tags-input>-->
+                        <!--</div>-->
+
+                    <!--</div>-->
+
+                    <!--<div class="col-md-12 col-sm-12 col-xs-12">-->
+                        <!--<div class="form-group">-->
+                            <!--<label>Agents</label>-->
+                            <!--<tags-input ng-model="agentFilter" display-property="ResourceName"-->
+                                        <!--add-from-autocomplete-only="true">-->
+                                <!--<auto-complete max-results-to-show="1000" source="querySearch($query)"-->
+                                               <!--load-on-empty="true" load-on-focus="true"-->
+                                               <!--min-length="1"></auto-complete>-->
+                            <!--</tags-input>-->
+                        <!--</div>-->
+
+                    <!--</div>-->
+
+
+
+                    <!--<div class="col-md-12 col-sm-12 col-xs-12" style="z-index:0" ng-if="obj.isTableLoading==1">-->
+
+                        <!--&lt;!&ndash; <div ng-repeat="(resourceId, sessions) in agentStatusList">-->
+ <!---->
+                         <!--</div>&ndash;&gt;-->
+
+                        <!--<uib-accordion>-->
+
+                            <!--<div uib-accordion-group class="panel-default"-->
+                                 <!--ng-repeat="(resourceId, sessions) in agentStatusList">-->
+
+
+                                <!--<uib-accordion-heading>-->
+                                    <!--{{resourceId}}<i class="pull-right glyphicon"-->
+                                                     <!--ng-class="{'glyphicon-chevron-down': true, 'glyphicon-chevron-right': false}"></i>-->
+                                <!--</uib-accordion-heading>-->
+                                <!--<statusgantt events="sessions" endtime="endDtTm"></statusgantt>-->
+
+                                <!--&lt;!&ndash;<div class="col-md-12 col-sm-12 col-xs-12">-->
+                                    <!--<div ng-repeat="event in sessions">-->
+
+                                        <!--<div class="col-md-12 col-sm-12 col-xs-12"-->
+                                             <!--style="border: 1px solid #ccc!important;padding: 15px;border-radius: 2px;-->
+                                             <!--font-size: 15px;margin-bottom: 10px;">-->
+                                            <!--<div class="col-md-2 col-sm-2 col-xs-2">{{event.Reason}}</div>-->
+                                            <!--<div class="col-md-2 col-sm-2 col-xs-2"></div>-->
+                                            <!--<div class="col-md-3 col-sm-3 col-xs-3">-->
+                                                <!--{{moment(event.createdAt).local().format("YYYY-MM-DD HH:mm:ss")}}-->
+                                            <!--</div>-->
+
+                                        <!--</div>-->
+                                    <!--</div>-->
+                                <!--</div>&ndash;&gt;-->
+                            <!--</div>-->
+                        <!--</uib-accordion>-->
+                    <!--</div>-->
+                <!--</div>-->
+
+            <!--</div>-->
+        <!--</div>-->
+    <!--</div>-->
+
+    <!--<div class="search-main-wrap" ng-if="obj.isTableLoading==0">-->
+        <!--<div class="row ">-->
+            <!--<div class="col-md-12 col-sm-12 col-xs-12">-->
+                <!--<div class="data-state-wrap">-->
+                    <!--Please Wait...-->
+                <!--</div>-->
+
+            <!--</div>-->
+        <!--</div>-->
+    <!--</div>-->
+
+
+<!--</div>-->
+<!--Old-->
+<script>
+	window.scrollTo(0, 0);
+</script>
+<script type="text/javascript">
+    $('#timepickerSt').timepicker({
+        template: false,
+        showInputs: false,
+        minuteStep: 5
+    });
+</script>
+
+<script type="text/javascript">
+    $('#timepickerEt').timepicker({
+        template: false,
+        showInputs: false,
+        minuteStep: 5
+    });
+</script>

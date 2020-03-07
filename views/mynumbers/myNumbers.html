@@ -1,0 +1,661 @@
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <uib-tabset active="0">
+            <uib-tab index="0" heading="Trunk Configuration">
+
+                <br>
+
+                <div class="col-md-12 col-sm-12 col-xs-12">
+                    <div class="col-md-11 col-sm-11 col-xs-11">
+                        <h3 ng-show="newDropDownState">New Trunk Configuration</h3>
+                    </div>
+                    <div class="col-md-1 col-sm-1 col-xs-1">
+                        <button class="btn btn-success" ng-click="pressNewButton()">
+                            +
+                        </button>
+                    </div>
+                </div>
+
+                <div class="col-md-12 col-sm-12 col-xs-12" ng-show="newDropDownState">
+                    <div class="x_content">
+                        <div class="col-md-12 col-sm-12 col-xs-12">
+                            <br>
+                            <div class="col-md-12 col-sm-12 col-xs-12">
+
+                                <div class="col-md-4 col-sm-4 col-xs-12 form-group has-feedback">
+                                    <label>Trunk Code</label>
+                                    <input type="text" class="form-control"
+                                           ng-model="currentTrunk.TrunkCode">
+                                </div>
+
+                                <div class="col-md-4 col-sm-4 col-xs-12 form-group has-feedback">
+                                    <label>Trunk Name</label>
+                                    <input type="text" class="form-control"
+                                           ng-model="currentTrunk.TrunkName">
+                                </div>
+
+                                <div class="col-md-4 col-sm-4 col-xs-12 form-group has-feedback">
+                                    <label>Gateway Ip</label>
+                                    <input type="text" class="form-control"
+                                           ng-model="currentTrunk.IpUrl">
+                                </div>
+
+                                <div class="clearfix"></div>
+
+                                <div class="col-md-4 col-sm-4 col-xs-12 form-group has-feedback">
+                                    <label>Username</label>
+                                    <input type="text" class="form-control"
+                                           ng-model="currentTrunk.Username">
+                                </div>
+
+                                <div class="col-md-4 col-sm-4 col-xs-12 form-group has-feedback">
+                                    <label>Password</label>
+                                    <input type="text" class="form-control"
+                                           ng-model="currentTrunk.Password">
+                                </div>
+
+                                <div class="col-md-3 col-sm-3 col-xs-12 form-group has-feedback">
+                                    <label>Trunk Outgoing Number Translation</label>
+                                    <select class="select2_single form-control" tabindex="-1"
+                                            aria-hidden="true"
+                                            id="transTrunk"
+                                            name="transTrunk" ng-model="currentTrunk.TranslationId"
+                                            ng-model-options="{trackBy: '$value'}">
+                                        <option value="">
+                                        </option>
+                                        <option ng-repeat="trans in transList" value="{{trans.id}}">{{trans.TransName}}
+                                        </option>
+                                    </select>
+                                </div>
+
+                                <div class="col-md-1 col-sm-1 col-xs-12 form-group has-feedback">
+                                    <div style="position: relative; top: -20px;">
+                                        <h3><label>Enable</label></h3>
+                                        <checkbox class="btn-success" ng-model="currentTrunk.Enable"
+                                                  ng-init="currentTrunk.Enable=true"></checkbox>
+                                    </div>
+
+
+                                </div>
+
+                                <div class="col-md-12 col-sm-12 col-xs-12 form-group has-feedback">
+                                    <button class="btn btn-success" ng-click="addNewTrunk()" ng-disabled="!currentTrunk.TrunkCode || !currentTrunk.TrunkName">
+                                        Add Trunk
+                                    </button>
+
+                                    <button class="btn btn-success" ng-click="pressCancelButton()">
+                                        Cancel
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-12 col-sm-12 col-xs-12">
+                    <br>
+                    <div class="x_panel">
+                        <div class="x_content col-md-12 col-sm-12 col-xs-12">
+                            <ul>
+                                <div class="mail_list_column sip-user-wrap"
+                                     ng-mouseover="viewScroll()"
+                                     ng-mouseleave="hideScroll()"
+                                     ng-slimscroll
+                                     height="670" width="100%" opacity="0.2" distance="0px"
+                                     enabled="{{ scrollEnabled }}">
+                                    <div class="col-md-6 col-sm-6 col-xs-6">
+
+                                    </div>
+                                    <div class="col-md-6 col-sm-6 col-xs-6 form-group top_search">
+                                        <div class="input-group">
+                                            <input type="text" ng-model="searchCriteria" class="form-control"
+                                                   placeholder="Search for...">
+                                <span class="input-group-btn">
+                                  <button class="btn btn-default" type="button">Go!</button>
+                                </span>
+                                        </div>
+                                    </div>
+                                    <a href="javascript:void(0);" class="user-wrap hover-none"
+                                       ng-repeat="trunk in trunkList | filterBy: ['TrunkName']: searchCriteria">
+                                        <div class="mail_list user-list">
+                                            <div class="right user-option-wrap">
+                                                <h3 class="font-robot sub-header">
+                                                    {{trunk.TrunkCode}}
+                                                    <small class="fa fa-cog" ng-click="trunkEditMode(trunk, 2)"></small>
+                                                    <small class="fa fa-pencil" ng-click="trunkEditMode(trunk, 1)"></small>
+                                                </h3>
+
+                                                <p class="font-robot">
+                                                    Trunk Name : {{trunk.TrunkName}}
+                                                </p>
+
+                                                <p class="font-robot">
+                                                    Availability : {{trunk.Enable}}
+                                                </p>
+                                            </div>
+                                            <div class="left">
+                                            </div>
+                                        </div>
+
+                                        <br>
+
+                                        <div class="col-md-12 col-sm-12 col-xs-12" style="border: 1px solid #ccc!important; border-radius: 5px" ng-if="trunk.OpenStatus === 1">
+
+                                            <br>
+                                            <h4>Edit Trunk Configuration</h4>
+                                            <br>
+                                            <div class="col-md-3 col-sm-3 col-xs-12 form-group has-feedback">
+                                                <label>Trunk Name</label>
+                                                <input type="text" class="form-control"
+                                                       ng-model="trunk.EditData.TrunkName">
+                                            </div>
+
+                                            <div class="col-md-3 col-sm-3 col-xs-12 form-group has-feedback">
+                                                <label>Gateway Ip</label>
+                                                <input type="text" class="form-control"
+                                                       ng-model="trunk.EditData.IpUrl">
+                                            </div>
+
+                                            <div class="col-md-3 col-sm-3 col-xs-12 form-group has-feedback">
+                                                <label>Trunk Outgoing Number Translation</label>
+                                                <select class="select2_single form-control" tabindex="-1" ng-options="trans.id as trans.TransName for trans in transList"
+                                                        aria-hidden="true"
+                                                        name="transTrunk" ng-model="trunk.EditData.TranslationId"
+                                                        ng-model-options="{trackBy: '$value'}">
+                                                    <option value="">
+                                                    </option>
+                                                </select>
+                                            </div>
+
+                                            <div class="clearfix"></div>
+
+                                            <div class="col-md-3 col-sm-3 col-xs-12 form-group has-feedback">
+                                                <label>Username</label>
+                                                <input type="text" class="form-control"
+                                                       ng-model="trunk.EditData.Username">
+                                            </div>
+
+                                            <div class="col-md-3 col-sm-3 col-xs-12 form-group has-feedback">
+                                                <label>Password</label>
+                                                <input type="text" class="form-control"
+                                                       ng-model="trunk.EditData.Password">
+                                            </div>
+
+                                            <div class="col-md-3 col-sm-3 col-xs-12 form-group has-feedback">
+                                                <div style="position: relative; top: -20px;">
+                                                    <h3><label>Enable</label></h3>
+                                                    <checkbox class="btn-success" ng-model="trunk.EditData.Enable"></checkbox>
+                                                </div>
+
+
+                                            </div>
+
+                                            <div class="clearfix"></div>
+
+                                            <div class="col-md-12 col-sm-12 col-xs-12 form-group has-feedback">
+                                                <button class="btn btn-success" ng-click="updateTrunk(trunk)">
+                                                    Update
+                                                </button>
+                                            </div>
+
+                                        </div>
+
+                                        <div class="col-md-12 col-sm-12 col-xs-12" style="border: 1px solid #ccc!important; border-radius: 5px" ng-if="trunk.OpenStatus === 2">
+
+                                            <br>
+                                            <h4>Trunk Allowed Ip Configuration</h4>
+                                            <br>
+                                            <div class="col-md-3 col-sm-3 col-xs-3 form-group has-feedback">
+                                                <label>Ip Range</label>
+                                                <input type="text" class="form-control"
+                                                       ng-model="trunk.IpRangeData.IpAddress">
+                                            </div>
+
+                                            <div class="col-md-2 col-sm-2 col-xs-2 form-group has-feedback">
+                                                <div class="col-md-2 col-sm-2 col-xs-2" style="position: relative; top: 30px;">
+                                                    <h2>/</h2>
+                                                </div>
+                                                <div class="col-md-10 col-sm-10 col-xs-10">
+                                                    <div class="col-md-12 col-sm-12 col-xs-12 form-group has-feedback">
+                                                        <label>Mask</label>
+                                                        <input type="text" class="form-control"
+                                                               ng-model="trunk.IpRangeData.Mask">
+                                                    </div>
+                                                </div>
+
+                                            </div>
+
+
+
+                                            <div class="col-md-3 col-sm-3 col-xs-3 form-group has-feedback">
+                                                <button class="btn btn-success" style="position: relative; top: 24px;" ng-click="addIpAddress(trunk)">
+                                                    Add Ip
+                                                </button>
+                                            </div>
+
+                                            <div class="clearfix"></div>
+
+                                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                                <div class="form-group">
+                                                    <label>Remove Current Ip Addresses</label>
+                                                    <tags-input ng-model="trunk.IpAddressList" placeholder="." display-property="DisplayValue" on-tag-removing="ipAddressDelete(trunk, $tag)" on-tag-adding="tagAdding($tag)">
+                                                    </tags-input>
+                                                </div>
+
+                                            </div>
+
+                                        </div>
+                                    </a>
+                                </div>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+
+            </uib-tab>
+            <uib-tab index="1" heading="My Numbers">
+
+                <br>
+                <div class="col-md-12 col-sm-12 col-xs-12">
+                    <div class="col-md-11 col-sm-11 col-xs-11">
+                        <h3 ng-show="newDropDownStatePhoneNum">New Phone Number Configuration</h3>
+                    </div>
+                    <div class="col-md-1 col-sm-1 col-xs-1">
+                        <button class="btn btn-success" ng-click="pressNewButtonPhoneNum()">
+                            +
+                        </button>
+                    </div>
+                </div>
+
+                <div class="col-md-12 col-sm-12 col-xs-12" ng-show="newDropDownStatePhoneNum">
+                    <div class="x_content">
+                        <div class="col-md-12 col-sm-12 col-xs-12">
+                            <br>
+                            <div class="col-md-12 col-sm-12 col-xs-12">
+
+                                <div class="col-md-4 col-sm-4 col-xs-12 form-group has-feedback">
+                                    <label>Phone Number</label>
+                                    <input type="text" class="form-control has-feedback-left" placeholder="Phone Number"
+                                           ng-model="phnNum.PhoneNumber">
+                                    <span class="fa fa-phone form-control-feedback left" aria-hidden="true"></span>
+                                </div>
+
+                                <div class="col-md-4 col-sm-4 col-xs-12 form-group has-feedback">
+                                    <label>Number Type</label>
+                                    <select class="select2_single form-control" tabindex="-1" aria-hidden="true"
+                                            placeholder="Role" name="role" ng-model="phnNum.ObjCategory">
+                                        <option value="INBOUND">INBOUND</option>
+                                        <option value="OUTBOUND">OUTBOUND</option>
+                                        <option value="BOTH">BOTH</option>
+                                    </select>
+                                </div>
+
+                                <div class="col-md-3 col-sm-3 col-xs-12 form-group has-feedback">
+                                    <label>Trunk</label>
+                                    <select class="select2_single form-control" tabindex="-1" ng-options="trunk.id as trunk.TrunkCode for trunk in trunkList"
+                                            aria-hidden="true"
+                                            name="transTrunk" ng-model="phnNum.TrunkId"
+                                            ng-model-options="{trackBy: '$value'}">
+                                        <option value="">
+                                        </option>
+                                    </select>
+                                </div>
+                                <div class="col-md-1 col-sm-1 col-xs-12 form-group has-feedback">
+                                    <div style="position: relative; top: -20px;">
+                                        <h3><label>Enable</label></h3>
+                                        <checkbox class="btn-success" ng-model="phnNum.Enable"></checkbox>
+                                    </div>
+
+
+                                </div>
+
+                                <div class="clearfix"></div>
+                                <div class="col-md-4 col-sm-4 col-xs-12 form-group has-feedback">
+                                    <label>Inbound Limit</label>
+                                    <select class="select2_single form-control" tabindex="-1"
+                                            aria-hidden="true"
+                                            id="InboundLimit"
+                                            name="InboundLimit" ng-model="phnNum.InboundLimitId"
+                                            ng-model-options="{trackBy: '$value'}">
+                                        <option value=null>
+                                        </option>
+                                        <option ng-repeat="limit in limitList" value="{{limit.LimitId}}">{{limit.LimitDescription}} ({{limit.MaxCount}})
+                                        </option>
+                                    </select>
+                                </div>
+                                <div class="col-md-4 col-sm-4 col-xs-12 form-group has-feedback">
+                                    <label>Outbound Limit</label>
+                                    <select class="select2_single form-control" tabindex="-1"
+                                            aria-hidden="true"
+                                            id="OutboundLimit"
+                                            name="OutboundLimit" ng-model="phnNum.OutboundLimitId"
+                                            ng-model-options="{trackBy: '$value'}">
+                                        <option value="">
+                                        </option>
+                                        <option ng-repeat="limit in limitList" value="{{limit.LimitId}}">{{limit.LimitDescription}} ({{limit.MaxCount}})
+                                        </option>
+                                    </select>
+                                </div>
+
+                                <div class="col-md-4 col-sm-4 col-xs-12 form-group has-feedback">
+                                    <label>Both Limit</label>
+                                    <select class="select2_single form-control" tabindex="-1"
+                                            aria-hidden="true"
+                                            id="BothLimit"
+                                            name="BothLimit" ng-model="phnNum.BothLimitId"
+                                            ng-model-options="{trackBy: '$value'}">
+                                        <option value="">
+                                        </option>
+                                        <option ng-repeat="limit in limitList" value="{{limit.LimitId}}">{{limit.LimitDescription}} ({{limit.MaxCount}})
+                                        </option>
+                                    </select>
+                                </div>
+
+                                <div class="col-md-12 col-sm-12 col-xs-12 form-group has-feedback">
+                                    <button class="btn btn-success" ng-click="addNewNumber()"
+                                            ng-disabled="!(phnNum.PhoneNumber && phnNum.ObjCategory)">
+                                        Add Number
+                                    </button>
+                                    <button class="btn btn-success" ng-click="pressCancelButtonPhoneNum()">
+                                        Cancel
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-12 col-sm-12 col-xs-12">
+                    <br>
+                    <div class="x_panel">
+                        <div class="x_content col-md-12 col-sm-12 col-xs-12">
+                            <ul>
+                                <div class="mail_list_column sip-user-wrap"
+                                     ng-mouseover="viewScroll()"
+                                     ng-mouseleave="hideScroll()"
+                                     ng-slimscroll
+                                     height="670" width="100%" opacity="0.2" distance="0px"
+                                     enabled="{{ scrollEnabled }}">
+                                    <div class="col-md-6 col-sm-6 col-xs-6 ">
+
+                                    </div>
+                                    <div class="col-md-6 col-sm-6 col-xs-6 form-group top_search">
+                                        <div class="input-group">
+                                            <input type="text" ng-model="searchCriteria" class="form-control"
+                                                   placeholder="Search for...">
+                                <span class="input-group-btn">
+                                  <button class="btn btn-default" type="button">Go!</button>
+                                </span>
+                                        </div>
+                                    </div>
+                                    <a href="javascript:void(0);" class="user-wrap hover-none"
+                                       ng-repeat="phn in myNumList | filterBy: ['PhoneNumber']: searchCriteria">
+                                        <div class="col-md-6 col-sm-6 col-xs-6">
+
+                                        </div>
+
+                                        <div class="mail_list user-list">
+                                            <div class="right user-option-wrap">
+                                                <h3 class="font-robot sub-header">
+                                                    {{phn.PhoneNumber}}
+                                                    <small class="fa fa-trash" ng-click="phoneNumberDelete(phn)"></small>
+                                                    <small class="fa fa-pencil" ng-click="phoneEditMode(phn)"></small>
+                                                </h3>
+
+                                                <p class="font-robot">
+                                                    Number Type : {{phn.ObjCategory}}
+                                                </p>
+
+                                                <p class="font-robot">
+                                                    Availability : {{phn.Enable}}
+                                                </p>
+                                            </div>
+                                            <div class="left">
+                                            </div>
+                                        </div>
+
+                                        <br>
+
+                                        <div class="col-md-12 col-sm-12 col-xs-12" style="border: 1px solid #ccc!important; border-radius: 5px" ng-if="phn.OpenStatus === 1">
+
+                                            <br>
+                                            <h4>Edit Phone Number Configuration</h4>
+                                            <br>
+                                            <div class="col-md-4 col-sm-4 col-xs-12 form-group has-feedback">
+                                                <label>Phone Number</label>
+                                                <input type="text" class="form-control has-feedback-left" placeholder="Phone Number"
+                                                       ng-model="phn.EditData.PhoneNumber">
+                                                <span class="fa fa-phone form-control-feedback left" aria-hidden="true"></span>
+                                            </div>
+
+                                            <div class="col-md-4 col-sm-4 col-xs-12 form-group has-feedback">
+                                                <label>Number Type</label>
+                                                <select class="select2_single form-control" tabindex="-1" aria-hidden="true"
+                                                        placeholder="Role" name="role" ng-model="phn.EditData.ObjCategory">
+                                                    <option value="INBOUND">INBOUND</option>
+                                                    <option value="OUTBOUND">OUTBOUND</option>
+                                                    <option value="BOTH">BOTH</option>
+                                                </select>
+                                            </div>
+
+                                            <div class="col-md-3 col-sm-3 col-xs-12 form-group has-feedback">
+                                                <label>Trunk</label>
+                                                <select class="select2_single form-control" tabindex="-1" ng-options="trunk.id as trunk.TrunkCode for trunk in trunkList"
+                                                        aria-hidden="true"
+                                                        name="transTrunk" ng-model="phn.EditData.TrunkId"
+                                                        ng-model-options="{trackBy: '$value'}">
+                                                    <option value="">
+                                                    </option>
+                                                </select>
+                                            </div>
+
+                                            <div class="col-md-1 col-sm-1 col-xs-12 form-group has-feedback">
+                                                <div style="position: relative; top: -20px;">
+                                                    <h3><label>Enable</label></h3>
+                                                    <checkbox class="btn-success" ng-model="phn.EditData.Enable"></checkbox>
+                                                </div>
+
+
+                                            </div>
+
+                                            <div class="clearfix"></div>
+                                            <div class="col-md-4 col-sm-4 col-xs-12 form-group has-feedback">
+                                                <label>Inbound Limit</label>
+                                                <select class="select2_single form-control" tabindex="-1"
+                                                        aria-hidden="true"
+                                                        name="InboundLimit" ng-model="phn.EditData.InboundLimitId"
+                                                        ng-model-options="{trackBy: '$value'}">
+                                                    <option value="">
+                                                    </option>
+                                                    <option ng-repeat="limit in limitList" value="{{limit.LimitId}}">{{limit.LimitDescription}} ({{limit.MaxCount}})
+                                                    </option>
+                                                </select>
+                                            </div>
+                                            <div class="col-md-4 col-sm-4 col-xs-12 form-group has-feedback">
+                                                <label>Outbound Limit</label>
+                                                <select class="select2_single form-control" tabindex="-1"
+                                                        aria-hidden="true"
+                                                        name="OutboundLimit" ng-model="phn.EditData.OutboundLimitId"
+                                                        ng-model-options="{trackBy: '$value'}">
+                                                    <option value="">
+                                                    </option>
+                                                    <option ng-repeat="limit in limitList" value="{{limit.LimitId}}">{{limit.LimitDescription}} ({{limit.MaxCount}})
+                                                    </option>
+                                                </select>
+                                            </div>
+
+                                            <div class="col-md-4 col-sm-4 col-xs-12 form-group has-feedback">
+                                                <label>Both Limit</label>
+                                                <select class="select2_single form-control" tabindex="-1"
+                                                        aria-hidden="true"
+                                                        name="BothLimit" ng-model="phn.EditData.BothLimitId"
+                                                        ng-model-options="{trackBy: '$value'}">
+                                                    <option value="">
+                                                    </option>
+                                                    <option ng-repeat="limit in limitList" value="{{limit.LimitId}}">{{limit.LimitDescription}} ({{limit.MaxCount}})
+                                                    </option>
+                                                </select>
+                                            </div>
+
+                                            <div class="clearfix"></div>
+
+                                            <div class="col-md-12 col-sm-12 col-xs-12 form-group has-feedback">
+                                                <button class="btn btn-success" ng-click="updateNumber(phn)">
+                                                    Update
+                                                </button>
+                                            </div>
+
+                                        </div>
+
+                                    </a>
+                                </div>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+
+
+                <!--</br>
+                <div class="col-md-12 col-sm-12 col-xs-12">
+                    <div class="x_panel bg-light-gray">
+                        <div class="x_title col-md-12 col-sm-12 col-xs-12">
+                            <div class="col-md-5 col-sm-5 col-xs-5">
+                                <h2 class="font-robot font-300 text-uppercase font-15">My Numbers</h2>
+                            </div>
+                            <div class="col-md-6 col-sm-6 col-xs-6 form-group top_search">
+                                <div class="input-group">
+                                    <input type="text" ng-model="searchCriteria" class="form-control"
+                                           placeholder="Search for...">
+                                <span class="input-group-btn">
+                                  <button class="btn btn-default" type="button">Go!</button>
+                                </span>
+                                </div>
+                            </div>
+                            <div class="clearfix"></div>
+                        </div>
+                        <div class="x_content">
+                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                <br>
+                                <div class="col-md-12 col-sm-12 col-xs-12">
+
+                                    <div class="col-md-4 col-sm-4 col-xs-12 form-group has-feedback">
+                                        <label>Phone Number</label>
+                                        <input type="text" class="form-control has-feedback-left" placeholder="Phone Number"
+                                               ng-model="phnNum.PhoneNumber">
+                                        <span class="fa fa-phone form-control-feedback left" aria-hidden="true"></span>
+                                    </div>
+
+                                    <div class="col-md-4 col-sm-4 col-xs-12 form-group has-feedback">
+                                        <label>Number Type</label>
+                                        <select class="select2_single form-control" tabindex="-1" aria-hidden="true"
+                                                placeholder="Role" name="role" ng-model="phnNum.ObjCategory">
+                                            <option value="INBOUND">INBOUND</option>
+                                            <option value="OUTBOUND">OUTBOUND</option>
+                                            <option value="BOTH">BOTH</option>
+                                        </select>
+                                    </div>
+
+                                    <div class="clearfix"></div>
+                                    <div class="col-md-4 col-sm-4 col-xs-12 form-group has-feedback">
+                                        <label>Inbound Limit</label>
+                                        <select class="select2_single form-control" tabindex="-1"
+                                                aria-hidden="true"
+                                                id="InboundLimit"
+                                                name="InboundLimit" ng-model="phnNum.InboundLimitId"
+                                                ng-model-options="{trackBy: '$value'}">
+                                            <option ng-repeat="limit in limitList" value="{{limit.LimitId}}">{{limit.LimitDescription}} ({{limit.MaxCount}})
+                                            </option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-4 col-sm-4 col-xs-12 form-group has-feedback">
+                                        <label>Outbound Limit</label>
+                                        <select class="select2_single form-control" tabindex="-1"
+                                                aria-hidden="true"
+                                                id="OutboundLimit"
+                                                name="OutboundLimit" ng-model="phnNum.OutboundLimitId"
+                                                ng-model-options="{trackBy: '$value'}">
+                                            <option ng-repeat="limit in limitList" value="{{limit.LimitId}}">{{limit.LimitDescription}} ({{limit.MaxCount}})
+                                            </option>
+                                        </select>
+                                    </div>
+
+                                    <div class="col-md-4 col-sm-4 col-xs-12 form-group has-feedback">
+                                        <label>Both Limit</label>
+                                        <select class="select2_single form-control" tabindex="-1"
+                                                aria-hidden="true"
+                                                id="BothLimit"
+                                                name="BothLimit" ng-model="phnNum.BothLimitId"
+                                                ng-model-options="{trackBy: '$value'}">
+                                            <option ng-repeat="limit in limitList" value="{{limit.LimitId}}">{{limit.LimitDescription}} ({{limit.MaxCount}})
+                                            </option>
+                                        </select>
+                                    </div>
+
+                                    <div class="col-md-12 col-sm-12 col-xs-12 form-group has-feedback">
+                                        <button class="btn btn-success" ng-click="addNewNumber()"
+                                                ng-disabled="!(phnNum.PhoneNumber && phnNum.ObjCategory)">
+                                            Add Number
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    &lt;!&ndash; end &ndash;&gt;
+
+                    &lt;!&ndash; view user details &ndash;&gt;
+                    <div class="x_panel">
+                        <div class="x_content col-md-12 col-sm-12 col-xs-12">
+                            <ul class="list-unstyled msg_list">
+                                <div class="mail_list_column sip-user-wrap"
+                                     ng-mouseover="viewScroll()"
+                                     ng-mouseleave="hideScroll()"
+                                     ng-slimscroll
+                                     height="670" width="100%" opacity="0.2" distance="0px"
+                                     enabled="{{ scrollEnabled }}">
+                                    <a href="javascript:void(0);" class="user-wrap hover-none"
+                                       ng-repeat="phn in myNumList | filterBy: ['PhoneNumber']: searchCriteria">
+                                        <div class="mail_list user-list">
+                                            <div class="right user-option-wrap">
+                                                <h3 class="font-robot sub-header">
+                                                    {{phn.PhoneNumber}}
+                                                    <small class="fa fa-trash" ng-click="removeUser(item.username)"></small>
+                                                    <small class="fa fa-cog" ng-click="viewPermissions(item)"></small>
+                                                </h3>
+
+                                                <p class="font-robot">
+                                                    Number Type : {{phn.ObjCategory}}
+                                                </p>
+
+                                                <p class="font-robot">
+                                                    Availability : {{phn.Enable}}
+                                                </p>
+                                            </div>
+                                            <div class="left">
+                                            </div>
+                                        </div>
+                                    </a>
+                                </div>
+                            </ul>
+                        </div>
+                    </div>
+                    &lt;!&ndash; end &ndash;&gt;
+                </div>-->
+
+
+
+            </uib-tab>
+            <uib-tab index="2" heading="Voxbone">
+                <div ng-include="'views/mynumbers/voxboneBuyNumber.html'">
+                </div>
+            </uib-tab>
+            <uib-tab index="3" heading="Twilio">
+                <div ng-include="'views/mynumbers/twilioBuyNumber.html'">
+                </div>
+            </uib-tab>
+        </uib-tabset>
+    </div>
+
+</div>

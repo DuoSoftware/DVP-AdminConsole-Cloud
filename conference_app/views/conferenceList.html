@@ -1,0 +1,338 @@
+<div class="row">
+    <div class="col-md-12 col-sm-6 col-xs-12">
+        <div class="x_panel">
+            <div class="x_title">
+                <h2><i class="fa fa-group"> Conference </i>
+                    <small>
+                        <div class="btn-group" data-toggle="buttons">
+                            <button type="button" class="btn btn-success btn-xs" style="margin-right: 2px" ng-click="switchApps('app');">App</button>
+                            <button type="button" class="btn btn-info btn-xs" ng-click="switchApps('monitor');">Monitor</button>
+                        </div>
+                    </small>
+                </h2>
+
+
+                <ul class="nav navbar-right panel_toolbox">
+                    <li><a class="close-link"><i class="fa fa-refresh" ng-click="reloadPage()"></i></a></li>
+                    <li><a ng-click="showNewConference()" class="close-link"><i class="fa fa-plus-circle"></i></a>
+                    </li>
+                </ul>
+
+
+                <div class="clearfix"></div>
+            </div>
+            <div class="row">
+                <div class="col-md-6 col-sm-6 col-xs-6 ">
+
+                </div>
+                <div class="col-md-6 col-sm-6 col-xs-6 form-group top_search" >
+                    <div class="input-group">
+                        <input type="text" ng-model="searchCriteria" class="form-control"
+                               placeholder="Search for...">
+                                <span class="input-group-btn">
+                                  <button class="btn btn-default" type="button">Go!</button>
+                                </span>
+                    </div>
+                </div>
+            </div>
+
+
+
+            <div ng-show="isProgress">
+                <div class="row ">
+                    <div class="col-md-12 col-sm-12 col-xs-12">
+                        <div class="data-state-wrap">
+                            Progress...
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="x_content" ng-hide="isProgress">
+                <div class="col-md-12 col-sm-12 col-xs-12" ng-show="addNewConference">
+
+                    <form class="form-horizontal form-label-left" name="userForm" novalidate>
+
+                        <div class="col-md-4 col-sm-4 col-xs-4 form-group"
+                             ng-class="{ 'has-error' : userForm.ConferenceName.$invalid && !userForm.ConferenceName.$pristine }">
+                            <label>Conference Name</label>
+                            <input type="text" name="ConferenceName" class="form-control"
+                                   ng-model="conference.ConferenceName" required>
+
+                            <p ng-show="userForm.ConferenceName.$invalid && !userForm.ConferenceName.$pristine"
+                               class="help-block">You name is required.</p>
+                        </div>
+
+                        <div class="col-md-8 col-sm-8 col-xs-8 form-group"
+                             ng-class="{ 'has-error' : userForm.Description.$invalid && !userForm.Description.$pristine }">
+                            <label>Description</label>
+                            <input type="text" name="Description" class="form-control"
+                                   ng-model="conference.Description">
+
+                            <p ng-show="userForm.Description.$invalid && !userForm.Description.$pristine"
+                               class="help-block">You name is required.</p>
+                        </div>
+
+                        <div class="col-md-3 col-sm-3 col-xs-3 form-group"
+                             ng-class="{ 'has-error' : userForm.Pin.$invalid && !userForm.Pin.$pristine }">
+                            <label>Pin</label>
+                            <input type="number" min="0" name="Pin" ng-minlength="4" class="form-control"
+                                   ng-model="conference.Pin"
+                                   required>
+
+                            <p ng-show="userForm.Pin.$invalid && !userForm.Pin.$pristine" class="help-block">Pin is
+                                required and minimum length is 4.</p>
+                        </div>
+
+                        <div class="col-md-3 col-sm-3 col-xs-3 form-group"
+                             ng-class="{ 'has-error' : userForm.MaxUser.$invalid && !userForm.MaxUser.$pristine }">
+                            <label>Max User Count</label>
+                            <input type="number" min="0" max="64" name="MaxUser" class="form-control"
+                                   ng-model="conference.MaxUser"
+                                   required>
+
+                            <!--<div role="alert">
+                                <span class="error" ng-show="userForm.MaxUser.$error.required">
+                                  Required!</span>
+                                <span class="error" ng-show="userForm.MaxUser.$error.max">
+                                  Not valid number!</span>
+                            </div>-->
+                            <p ng-show="userForm.MaxUser.$error.required && !userForm.MaxUser.$pristine"
+                               class="help-block">
+                                User Count is required.</p>
+
+                            <p ng-show="userForm.MaxUser.$error.max && !userForm.MaxUser.$pristine" class="help-block">
+                                Not valid number.</p>
+                        </div>
+
+                        <div class="col-md-3 col-sm-3 col-xs-3 form-group"
+                             ng-class="{ 'has-error' : userForm.Domain.$invalid && !userForm.Domain.$pristine }">
+                            <label>Domain</label>
+
+                            <select  class="form-control" id="Domain" ng-model="conference.CloudEndUserId"
+                                     ng-options="opt.id as opt.Domain for opt in endUserList" required>
+                            </select>
+
+                            <p ng-show="userForm.Domain.$invalid && !userForm.Domain.$pristine" class="help-block">
+                                Domain is required.</p>
+                        </div>
+
+                        <div class="col-md-3 col-sm-3 col-xs-3 form-group"
+                             ng-class="{ 'has-error' : userForm.Extension.$invalid && !userForm.Extension.$pristine }">
+                            <label>Extension</label>
+                            <!--<input type="text" name="Extension" class="form-control" ng-model="conference.Extension"
+                                   required>-->
+
+                            <p ng-show="userForm.Extension.$invalid && !userForm.Extension.$pristine"
+                               class="help-block">Extension is required.</p>
+
+                            <div class="row">
+                                <div class="col-md-11">
+                                    <select class="form-control" id="Extension" ng-model="conference.Extension"
+                                            ng-options="opt.Extension as opt.Extension for opt in extensions" required>
+                                    </select>
+                                </div>
+                                <div class="col-md-1 fa fa-plus" style="cursor: pointer;" ng-click="showNewExt()"></div>
+                            </div>
+
+                        </div>
+
+                        <div ng-show="addNewExt">
+                            <div class="col-md-6 col-sm-6 col-xs-6 form-group">
+                                <label>Extension</label>
+                                <input type="text" name="Extensionno" class="form-control"
+                                       ng-model="ext.Extension">
+                            </div>
+
+                            <div class="col-md-6 col-sm-6 col-xs-6 form-group">
+                                <label>Extension Name</label>
+
+                                <div class="row">
+                                    <div class="col-md-11">
+                                        <input type="text" name="ExtensionName" class="form-control"
+                                               ng-model="ext.ExtensionName">
+                                    </div>
+                                    <div class="col-md-1">
+                                        <button class="btn btn-success" ng-click="addNewExtension(ext)">
+                                            Add
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+
+                        <div class="col-md-6 col-sm-6 col-xs-6 form-group"
+                             ng-class="{ 'has-error' : userForm.StartTime.$invalid && !userForm.StartTime.$pristine }">
+                            <label>Start Time</label>
+
+                            <div>
+                                <p class="input-group">
+                                    <input required name="StartTime" type="text" class="form-control"
+                                           datetime-picker="MM/dd/yyyy HH:mm"
+                                           ng-model="conference.StartTime" is-open="StartTime.open"
+                                           ng-class="{ 'has-error' : userForm.StartTime.$invalid && !userForm.StartTime.$pristine }"/>
+                                  <span class="input-group-btn">
+                                      <button type="button" class="btn btn-default"
+                                              ng-click="openCalendar('StartTime')"><i
+                                              class="fa fa-calendar"></i></button>
+                                  </span>
+                                <p ng-show="userForm.StartTime.$error.required && !userForm.StartTime.$pristine"
+                                   class="help-block">
+                                    StartTime is required.</p>
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6 col-sm-6 col-xs-6 form-group"
+                             ng-class="{ 'has-error' : userForm.EndTime.$invalid && !userForm.EndTime.$pristine }">
+                            <label>End Time</label>
+
+                            <div>
+                                <p class="input-group">
+                                    <input name="EndTime" type="text" class="form-control"
+                                           datetime-picker="MM/dd/yyyy HH:mm"
+                                           ng-model="conference.EndTime" is-open="EndTime.open" required/>
+                                  <span class="input-group-btn">
+                                      <button type="button" class="btn btn-default" ng-click="openCalendar('EndTime')">
+                                          <i
+                                                  class="fa fa-calendar"></i></button>
+                                  </span>
+
+                                <p ng-show="userForm.EndTime.$error.required && !userForm.EndTime.$pristine"
+                                   class="help-block">
+                                    EndTime is required.</p>
+
+                                <p ng-show="userForm.EndTime.$error.min && !userForm.EndTime.$pristine"
+                                   class="help-block">
+                                    End time should be greater than start time.</p>
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="col-md-4 col-sm-4 col-xs-4 form-group"
+                             ng-class="{ 'has-error' : userForm.TemplateName.$invalid && !userForm.TemplateName.$pristine }">
+                            <label>Template</label>
+
+                            <p ng-show="userForm.TemplateName.$invalid && !userForm.TemplateName.$pristine"
+                               class="help-block">Template is required.</p>
+
+                            <div class="row">
+                                <div class="col-md-11">
+                                    <select required class="form-control" id="TemplateName"
+                                            ng-model="conference.Template"
+                                            ng-options="opt as opt.TemplateName for opt in Templates"
+                                            ng-change="previewTemplate(conference.Template)">
+                                    </select>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="col-md-4 col-sm-4 col-xs-4 form-group"
+                             ng-class="{ 'has-error' : userForm.Domain.$invalid && !userForm.Domain.$pristine }">
+                            <label>Anonymous Users</label>
+                            <checkbox class="btn-success" ng-model="conference.AllowAnonymousUser"
+                                      ng-init="false"></checkbox>
+                        </div>
+
+                        <div class="col-md-4 col-sm-4 col-xs-4 form-group">
+                            <label>Locked </label>
+                            <checkbox class="btn-success" ng-model="conference.IsLocked" ng-init="false"></checkbox>
+
+                        </div>
+
+                        <div class="clearfix"></div>
+                        <div class="ln_solid"></div>
+
+                        <div class="form-group">
+                            <button class="btn btn-success" ng-click="createConference(conference)"
+                                    ng-disabled="userForm.$invalid">
+                                Save
+                            </button>
+                        </div>
+
+                    </form>
+
+                </div>
+            </div>
+
+
+        </div>
+
+    </div>
+
+
+    <div class="col-md-12 col-sm-6 col-xs-12" >
+        <div class="x_panel">
+            <div ng-show="isLoading">
+                <div class="row ">
+                    <div class="col-md-12 col-sm-12 col-xs-12">
+                        <div class="data-state-wrap">
+                            Please Wait...
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="x_content" ng-hide="isMonitorApp">
+                <div class="x_content" ng-hide="isLoading">
+                    <ul class="list-unstyled timeline">
+                        <li ng-repeat="con in conferences | orderBy:'-createdAt' | filterBy: ['ConferenceName'] : searchCriteria">
+                            <conferenceitem end-users="endUserList"
+                                            sip-usrs ="sipUsers"
+                                            templates-list="Templates" conference-data="con"
+                                            reload-page-after-delete="reloadPage()"></conferenceitem>
+                        </li>
+
+
+                        <paging ng-show="showPaging"
+                                class="small"
+                                page="currentPage"
+                                page-size="pageSize"
+                                total="pageTotal"
+                                show-prev-next="true"
+                                show-first-last="true"
+                                text-next-class="glyphicon glyphicon-chevron-right"
+                                text-prev-class="glyphicon glyphicon-chevron-left"
+                                text-first-class="glyphicon glyphicon-backward"
+                                text-last-class="glyphicon glyphicon-forward"
+                                paging-action="getPageData('attribute', page, pageSize, total)">
+                        </paging>
+                    </ul>
+                </div>
+            </div>
+
+            <!--active Conference-->
+            <div class="x_content" ng-show="isMonitorApp">
+                <div class="x_content" ng-hide="isLoading">
+                    <ul class="list-unstyled timeline">
+                        <li ng-repeat="activeCon in activeConferenceList">
+                            <conferencemonitor  conference-data="activeCon" ></conferencemonitor>
+                        </li>
+
+
+                        <paging ng-show="showPaging"
+                                class="small"
+                                page="currentPage"
+                                page-size="pageSize"
+                                total="pageTotal"
+                                show-prev-next="true"
+                                show-first-last="true"
+                                text-next-class="glyphicon glyphicon-chevron-right"
+                                text-prev-class="glyphicon glyphicon-chevron-left"
+                                text-first-class="glyphicon glyphicon-backward"
+                                text-last-class="glyphicon glyphicon-forward"
+                                paging-action="getPageData('attribute', page, pageSize, total)">
+                        </paging>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>

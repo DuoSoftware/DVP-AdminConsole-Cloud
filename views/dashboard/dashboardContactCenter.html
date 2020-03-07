@@ -1,0 +1,783 @@
+<div role="main">
+    <div class="">
+        <div class="clearfix"></div>
+
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" id="dashbooad_info">
+                <div class="">
+                    <div class="x_content" >
+
+                        <div id="dashbooad_info_error" class="display-none">
+                            <div class="row ">
+                                <div class="col-md-12 col-sm-12 col-xs-12">
+                                    <div class="data-state-wrap">
+                                        Connection interrupted! Please wait...
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row" style="background: #383b3b;">
+                            <!-- TOTAL CALL -->
+                            <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
+                                <div class="d1-header-widget ">
+                                    <div class="d1-h-w-count d1-h-lg" style="font-size: 24px">{{total.callsInb}} | {{total.callsOutb}}</div>
+                                    <!--<div class="d1-h-w-count d1-h-lg">-->
+                                        <!--<span class="dash-number-block">-->
+                                            <!--<label class="in">In</label>-->
+                                            <!--{{total.callsInb}}-->
+                                        <!--</span>-->
+                                        <!--<span class="dash-number-block">-->
+                                            <!--<label class="out">Out</label>-->
+                                            <!--{{total.callsOutb}}-->
+                                        <!--</span>-->
+                                    <!--</div>-->
+                                    <div class="d1-h-w-header d1-h-tile">
+                                        TOTAL CALLS
+                                    </div>
+                                    <div class="d1-h-w-sub-title d1-sub-tile-sm color-light-blue-200">
+                                        Inbound <span style="color: #fff">|</span> <span style="color: #FFC107">Outbound</span>
+                                    </div>
+                                    <div class="d-top-icon">
+                                        <i class="fa fa-phone color-blue-300"></i>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- QUEUED -->
+                            <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
+                                <div class="d1-header-widget ">
+                                    <div class="d1-h-w-count d1-h-lg">
+                                        {{total.queued}}
+                                    </div>
+                                    <div class="d1-h-w-header d1-h-tile">
+                                        QUEUED
+                                    </div>
+                                    <div class="d1-h-w-sub-title d1-sub-tile-sm color-blue-900">
+                                        Total queued
+                                    </div>
+                                    <div class="d-top-icon">
+                                        <i class="fa fa-coffee color-blue-900"></i>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Q ANSWERED -->
+                            <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
+                                <div class="d1-header-widget ">
+                                    <div class="d1-h-w-count d1-h-lg">
+                                        {{total.queueAnswered}}
+                                    </div>
+                                    <div class="d1-h-w-header d1-h-tile">
+                                        Q ANSWERED
+                                    </div>
+                                    <div class="d1-h-w-sub-title d1-sub-tile-sm color-green-300">
+                                        Total queued answered
+                                    </div>
+                                    <div class="d-top-icon">
+                                        <i class="fa fa-smile-o color-green-300"></i>
+                                    </div>
+
+
+                                </div>
+                            </div>
+                            <!--  Q DROPPED -->
+                            <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
+                                <div class="d1-header-widget ">
+                                    <div class="d1-h-w-count d1-h-lg">
+                                        {{total.queueDropped}}
+                                    </div>
+                                    <div class="d1-h-w-header d1-h-tile">
+                                        Q DROPPED
+                                    </div>
+                                    <div class="d1-h-w-sub-title d1-sub-tile-sm color-red-500">
+                                        Total queued dropped
+                                    </div>
+                                    <div class="d-top-icon">
+                                        <i class="fa fa fa-frown-o color-red-500"></i>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--  WAITING -->
+                            <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12" style="border-left: solid 1px #eee">
+                                <div class="d1-header-widget  ">
+                                    <div class="d1-h-w-count d1-h-lg">
+                                        {{total.waiting}}
+                                    </div>
+                                    <div class="d1-h-w-header d1-h-tile">
+                                        WAITING
+                                    </div>
+                                    <div class="d1-h-w-sub-title d1-sub-tile-sm color-blue-900">
+                                        Current waiting
+                                    </div>
+                                    <div class="d-top-icon">
+                                        <i class="fa fa-clock-o color-blue-900"></i>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--  Ongoing -->
+                            <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
+                                <div class="d1-header-widget">
+                                    <div class="d1-h-w-count d1-h-lg" style="font-size: 24px">{{total.onGoingInb}} | {{total.onGoingOutb}}</div>
+                                    <!--<div class="d1-h-w-count d1-h-lg">-->
+                                        <!--<span class="dash-number-block">-->
+                                            <!--<label class="in">In</label>-->
+                                            <!--{{total.onGoingInb}}-->
+                                        <!--</span>-->
+                                        <!--<span class="dash-number-block">-->
+                                            <!--<label class="out">Out</label>-->
+                                            <!--{{total.onGoingOutb}}-->
+                                        <!--</span>-->
+                                    <!--</div>-->
+                                    <div class="d1-h-w-header d1-h-tile">
+                                        ONGOING
+                                    </div>
+                                    <div class="d1-h-w-sub-title d1-sub-tile-sm color-light-blue-200">
+                                        Inbound <span style="color: #fff">|</span> <span style="color: #FFC107">Outbound</span>
+                                    </div>
+                                    <div class="d-top-icon">
+                                        <i class="fa fa-lightbulb-o color-light-blue-200"></i>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                        </div>
+                        <br />
+                        <div class="row">
+                            <!--CENTER STATUS AND QUEUED-->
+                            <div class="col-md-8 col-sm-8 col-xs-12">
+                                <div class="row">
+                                    <div class="col-md-12 col-sm-12 col-xs-12 ">
+                                        <div class="x_panel">
+                                            <div class="x_title">
+                                                <h2>CENTER STATUS <small class="d1-c-sub-header">Total calls received for last 5 min</small></h2>
+                                                <div class="clearfix"></div>
+                                            </div>
+                                            <div class="x_content">
+                                                <div class="d1-call-s-wrp" style="height:250px">
+                                                    <flot id="callHit" dataset="dataSetAll"
+                                                          options="myChartOptions"></flot>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12 col-sm-12 col-xs-12 ">
+                                        <div class="x_panel">
+                                            <div class="x_title">
+                                                <h2>QUEUED <small>{{queues.length}}</small></h2>
+                                                <div class="clearfix"></div>
+                                            </div>
+                                            <div class="x_content">
+
+                                                <div class="col-md-12 col-sm-12 col-xs-12" ng-hide="queuesLength">
+                                                    <div class="data-state-wrap">
+                                                        Queue Details Not Found
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-md-12 col-sm-12 col-xs-12" ng-show="queuesLength">
+
+                                                    <div class="row">
+                                                        <queue-details ng-repeat="queue in queues " name="{{queue.id}}"
+                                                                       que="queue"
+                                                                       mque="queue"
+                                                                       viewmode="cardViewMode"
+                                                                       queueoption="queueoption"
+                                                                       pieoption="pieoption"></queue-details>
+                                                    </div>
+                                                </div>
+
+
+                                                <!--<div class="d1-queued-body">
+
+
+                                                    &lt;!&ndash;<ul class="newsticker">&ndash;&gt;
+                                                    &lt;!&ndash;<li>&ndash;&gt;
+                                                    <div class="col-lg-6 col-xs-12 col-md-6"
+                                                         ng-repeat="queue in queues">
+                                                        &lt;!&ndash; <div class="q-widget-wrp" ng-class="{'blink':queue.isExceeded}">&ndash;&gt;
+                                                        <div class="q-widget-wrp" >
+                                                            <queue-details name="{{queue.id}}"
+                                                                           que="queue"
+                                                                           mque="queue"
+                                                                           viewmode="cardViewMode"
+                                                                           queueoption="queueoption"
+                                                                           pieoption="pieoption"></queue-details>
+                                                        </div>
+                                                    </div>
+                                                    &lt;!&ndash;</li>&ndash;&gt;
+                                                    &lt;!&ndash;</ul>&ndash;&gt;
+                                                </div>-->
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!--top profiles -->
+                            <div class="col-md-4 col-sm-4 col-xs-12 ">
+                                <div class="agent-summary">
+                                    <div class="col-lg-3 col-md-6 col-xs-12 " style="cursor: pointer"  ng-click="carouselAutoplay(0);">
+                                        <div class="row">
+                                            <div  class="d1-sumry-count-wrp "
+                                                  ng-class={'available-bg':agentCurrentState=='inbound'}>
+                                                <div class="fa fa-check 2x set-marked" ng-show="stoppedState && agentCurrentState=='inbound'">
+
+                                                </div>
+                                                <div class="d1-summary-body">
+                                                    <div class="d1-header available-text">
+                                                        {{StatusList.AvailableProfile.length}}
+                                                    </div>
+                                                    <div class="d1-a-status available-text">
+                                                        InBound
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3 col-md-6 col-xs-12" style="cursor: pointer"  ng-click="carouselAutoplay(1);">
+                                        <div class="row">
+                                            <div class="d1-sumry-count-wrp  "
+                                                 ng-class={'reserved-bg':agentCurrentState=='reserved'}>
+                                                <div class="fa fa-check 2x set-marked" ng-show="stoppedState && agentCurrentState=='reserved'">
+
+                                                </div>
+                                                <div class="d1-summary-body ">
+
+                                                    <div class="d1-header reserved-text">
+                                                        {{StatusList.ReservedProfile.length}}
+                                                    </div>
+                                                    <div class="d1-a-status reserved-text">
+                                                        Reserved
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3 col-md-6 col-xs-12" style="cursor: pointer"  ng-click="carouselAutoplay(2);">
+                                        <div class="row">
+                                            <div class="d1-sumry-count-wrp "
+                                                 ng-class={'connected-bg':agentCurrentState=='connected'}>
+                                                <div class="fa fa-check 2x set-marked" ng-show="stoppedState && agentCurrentState=='connected'">
+
+                                                </div>
+                                                <div class="d1-summary-body">
+                                                    <div class="d1-header connected-text">
+                                                        {{StatusList.ConnectedProfile.length}}
+                                                    </div>
+                                                    <div class="d1-a-status connected-text">
+                                                        Connected
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3 col-md-6 col-xs-12" style="cursor: pointer"  ng-click="carouselAutoplay(3);">
+                                        <div class="row">
+                                            <div class="d1-sumry-count-wrp "
+                                                 ng-class={'after-work-bg':agentCurrentState=='afterwork'}>
+                                                <div class="fa fa-check 2x set-marked" ng-show="stoppedState && agentCurrentState=='afterwork'">
+
+                                                </div>
+                                                <div class="d1-summary-body">
+                                                    <div class="d1-header after-work-text">
+                                                        {{StatusList.AfterWorkProfile.length}}
+                                                    </div>
+                                                    <div class="d1-a-status after-work-text">
+                                                        After Work
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-lg-3 col-md-6 col-xs-12" style="cursor: pointer"  ng-click="carouselAutoplay(4);">
+                                        <div class="row">
+                                            <div class="d1-sumry-count-wrp "
+                                                 ng-class={'break-bg':agentCurrentState=='break'}>
+                                                <div class="fa fa-check 2x set-marked" ng-show="stoppedState && agentCurrentState=='break'">
+
+                                                </div>
+                                                <div class="d1-summary-body">
+
+                                                    <div class="d1-header break-text">
+                                                        {{StatusList.BreakProfile.length}}
+                                                    </div>
+                                                    <div class="d1-a-status break-text">
+                                                        Break
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3 col-md-6 col-xs-12" style="cursor: pointer"  ng-click="carouselAutoplay(5);">
+                                        <div class="row">
+                                            <div class="d1-sumry-count-wrp "
+                                                 ng-class={'outbound-bg':agentCurrentState=='outbound'}>
+                                                <div class="fa fa-check 2x set-marked" ng-show="stoppedState && agentCurrentState=='outbound'">
+
+                                                </div>
+                                                <div class="d1-summary-body">
+
+                                                    <div class="d1-header outbound-text">
+                                                        {{StatusList.OutboundProfile.length}}
+                                                    </div>
+                                                    <div class="d1-a-status outbound-text">
+                                                        OutBound
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3 col-md-6 col-xs-12" style="cursor: pointer"  ng-click="carouselAutoplay(6);">
+                                        <div class="row">
+                                            <div class="d1-sumry-count-wrp "
+                                                 ng-class={'suspended-bg':agentCurrentState=='suspended'}>
+                                                <div class="fa fa-check 2x set-marked" ng-show="stoppedState && agentCurrentState=='suspended'">
+
+                                                </div>
+                                                <div class="d1-summary-body">
+
+                                                    <div class="d1-header suspended-text">
+                                                        {{StatusList.SuspendedProfile.length}}
+                                                    </div>
+                                                    <div class="d1-a-status suspended-text">
+                                                        Suspended
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3 col-md-6 col-xs-12" style="cursor: pointer"  ng-click="carouselAutoplay(7);">
+                                        <div class="row">
+                                            <div class="d1-sumry-count-wrp "
+                                                 ng-class={'other-bg':agentCurrentState=='other'}>
+                                                <div class="fa fa-check 2x set-marked" ng-show="stoppedState && agentCurrentState=='other'">
+
+                                                </div>
+                                                <div class="d1-summary-body">
+
+                                                    <div class="d1-header other-text">
+                                                        {{StatusList.profile.length}}
+                                                    </div>
+                                                    <div class="d1-a-status other-text">
+                                                        Other
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="d1-grading-header" >
+                                    {{agentCurrentState}}
+                                </div>
+
+                                <div class="col-md-12 col-sm-12 col-xs-12" style="background:white">
+                                    <div class="col-md-12 col-sm-12 col-xs-12 data-state-wrap" ng-if="owlCarouselAgent.length==0">
+                                        No Agent Found
+                                    </div>
+                                    <div ng-repeat="resource in owlCarouselAgent track by $index" class="col-md-12 col-sm-12 col-xs-12 d1-summary-card">
+
+                                        <div class="row">
+                                            <div class="col-md-2 col-sm-2 col-xs-2">
+                                                <img src="assets/images/defaultProfile.png" ng-src="{{resource.avatar}}" class="img-circle owl-profile-img">
+                                            </div>
+                                            <div class="col-md-10 col-sm-10 col-xs-10 ">
+                                                <div class="row">
+                                                    <div class="col-md-12 col-sm-12 col-xs-12 ">
+                                                        <p class="owl-profile-headtext">{{resource.resourceName | limitTo: 30 }}{{resource.resourceName.length > 30 ? '...' : ''}}</p>
+                                                    </div>
+                                                    <div class="col-md-12 col-sm-12 col-xs-12 ">
+                                                        <div class="col-md-8 col-sm-8 col-xs-12 ">
+                                                            <time-ago from-time='{{resource.LastReservedTimeT }}' format='MM/dd/yyyy' class="time"></time-ago>
+                                                        </div>
+                                                        <div class="col-md-4 col-sm-4 col-xs-12 connected-text">
+                                                            {{resource.slotMode}}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                                <div class="owl-carousel owl-theme">
+                                    <div> </div>
+                                    <div> </div>
+                                    <div> </div>
+                                    <div> </div>
+                                    <div> </div>
+                                    <div> </div>
+                                    <div> </div>
+                                    <div> </div>
+                                </div>
+
+                                <!--<div class="d1-right-body">
+                                    <div class="owl-carousel owl-theme">
+                                        &lt;!&ndash; available profile &ndash;&gt;
+                                        <div class="item" data-status="Available"
+                                             data-merge="1">
+
+                                            <div class="d1-sumary-not-f" ng-if="StatusList.AvailableProfile.length==0">
+                                                Profile not found
+                                            </div>
+                                            <div ng-repeat="resource in StatusList.AvailableProfile track by $index" class="d1-summary-card">
+
+                                                <div class="row">
+                                                    <div class="col-md-2 col-sm-2 col-xs-2">
+                                                        <img src="assets/images/defaultProfile.png" ng-src="{{resource.avatar}}" class="img-circle owl-profile-img">
+                                                    </div>
+                                                    <div class="col-md-10 col-sm-10 col-xs-10 ">
+                                                        <div class="row">
+                                                            <div class="col-md-12 col-sm-12 col-xs-12 ">
+                                                                <p class="owl-profile-headtext">{{resource.resourceName | limitTo: 30 }}{{resource.resourceName.length > 30 ? '...' : ''}}</p>
+                                                            </div>
+                                                            <div class="col-md-12 col-sm-12 col-xs-12 ">
+                                                                <div class="col-md-8 col-sm-8 col-xs-12 ">
+                                                                    <time-ago from-time='{{resource.LastReservedTimeT }}' format='MM/dd/yyyy' class="time"></time-ago>
+                                                                </div>
+                                                                <div class="col-md-4 col-sm-4 col-xs-12 connected-text">
+                                                                    {{resource.slotMode}}
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+
+                                        </div>
+                                        &lt;!&ndash; connected profile &ndash;&gt;
+                                        <div class="item" data-status="Connected"
+                                             data-merge="1">
+                                            <div class="d1-sumary-not-f" ng-if="StatusList.ConnectedProfile.length==0">
+                                                Profile not found
+                                            </div>
+                                            <div ng-repeat="resource in StatusList.ConnectedProfile track by $index"
+                                                 class="d1-summary-card">
+                                                <div class="d1-summary-c-img">
+                                                    <img src="assets/images/defaultProfile.png"
+                                                         ng-src="{{resource.avatar}}" width="50"/>
+                                                </div>
+                                                <div class="d1-summary-c-left-t">
+                                                    <div class="header">{{resource.resourceName | limitTo: 15 }}
+                                                        {{resource.resourceName.length > 15 ? '...' : ''}}
+                                                    </div>
+                                                    <div class="time">
+                                                        <time-ago from-time='{{resource.LastReservedTimeT }}'
+                                                                  format='MM/dd/yyyy'></time-ago>
+                                                    </div>
+
+                                                </div>
+                                                <div class="summary-status">
+                                                    <div class="color-wrp">
+                                                        <div class="dot-wrp connected-border">
+                                                            <div class="color-status-dot connected-dot"></div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="text-wrp">
+                                                        <div class="status connected-text">Connected</div>
+                                                        <div class="call-status"> {{resource.slotMode}}</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        &lt;!&ndash; AfterWork Profile &ndash;&gt;
+                                        <div class="item" data-status="AfterWork"
+                                             data-merge="1">
+                                            <div class="d1-sumary-not-f" ng-if="StatusList.AfterWorkProfile.length==0">
+                                                Profile not found
+                                            </div>
+                                            <div ng-repeat="resource in StatusList.AfterWorkProfile track by $index"
+                                                 class="d1-summary-card">
+                                                <div class="d1-summary-c-img">
+                                                    <img src="assets/images/defaultProfile.png"
+                                                         ng-src="{{resource.avatar}}" width="50"/>
+                                                </div>
+                                                <div class="d1-summary-c-left-t">
+                                                    <div class="header">{{resource.resourceName | limitTo: 15 }}
+                                                        {{resource.resourceName.length
+                                                        > 15 ? '...' : ''}}
+                                                    </div>
+                                                    <div class="time">
+                                                        <li ng-show="resource.freezeExceeded"> Freeze Exceeded</li>
+                                                        <time-ago from-time='{{resource.LastReservedTimeT }}'
+                                                                  format='MM/dd/yyyy'></time-ago>
+                                                    </div>
+
+                                                </div>
+                                                <div class="summary-status">
+                                                    <div class="color-wrp">
+                                                        <div class="dot-wrp after-work-border">
+                                                            <div class="color-status-dot after-work-dot"></div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="text-wrp">
+                                                        <div class="status after-work-text">After work</div>
+                                                        <div class="call-status"> {{resource.slotMode}}</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        &lt;!&ndash; Reserved Profile &ndash;&gt;
+                                        <div class="item" data-status="Reserved"    data-merge="1">
+                                            <div class="d1-sumary-not-f" ng-if="StatusList.ReservedProfile.length==0">
+                                                Profile not found
+                                            </div>
+                                            <div ng-repeat="resource in StatusList.ReservedProfile track by $index"
+                                                 class="d1-summary-card">
+                                                <div class="d1-summary-c-img">
+                                                    <img src="assets/images/defaultProfile.png"
+                                                         ng-src="{{resource.avatar}}" width="50"/>
+                                                </div>
+                                                <div class="d1-summary-c-left-t">
+                                                    <div class="header">{{resource.resourceName | limitTo: 15 }}
+                                                        {{resource.resourceName.length
+                                                        > 15 ? '...' : ''}}
+                                                    </div>
+                                                    <div class="time">
+                                                        <time-ago from-time='{{resource.LastReservedTimeT }}'
+                                                                  format='MM/dd/yyyy'></time-ago>
+                                                    </div>
+
+                                                </div>
+                                                <div class="summary-status">
+                                                    <div class="color-wrp">
+                                                        <div class="dot-wrp reserved-border">
+                                                            <div class="color-status-dot reserved-dot"></div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="text-wrp">
+                                                        <div class="status reserved-text">Reserved</div>
+                                                        <div class="call-status"> {{resource.slotMode}}</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        &lt;!&ndash; break profile &ndash;&gt;
+                                        <div class="item" data-status="Break"
+                                             data-merge="1">
+                                            <div class="d1-sumary-not-f" ng-if="StatusList.BreakProfile.length==0">
+                                                Profile not found
+                                            </div>
+
+                                            <div ng-repeat="resource in StatusList.BreakProfile track by $index"
+                                                 class="d1-summary-card">
+                                                <div class="col-lg-12 col-xs-12">
+                                                    <div class="d1-summary-c-img">
+                                                        <img src="assets/images/defaultProfile.png"
+                                                             ng-src="{{resource.avatar}}" width="50"/>
+                                                    </div>
+                                                    <div class="d1-summary-c-left-t">
+                                                        <div class="header">{{resource.resourceName | limitTo: 15 }}
+                                                            {{resource.resourceName.length
+                                                            > 15 ? '...' : ''}}
+                                                        </div>
+                                                        <div class="time">
+                                                            <li class="error-txt"
+                                                                ng-show="resource.breakExceeded"> Break Exceeded
+                                                            </li>
+                                                            <time-ago from-time='{{resource.LastReservedTimeT }}'
+                                                                      format='MM/dd/yyyy'></time-ago>
+                                                        </div>
+
+                                                    </div>
+                                                    <div class="summary-status">
+                                                        <div class="color-wrp">
+                                                            <div class="dot-wrp break-border">
+                                                                <div class="color-status-dot break-dot">
+
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="text-wrp">
+                                                            <div class="status break-text">Break</div>
+                                                            <div class="call-status"> {{resource.slotMode}}</div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        &lt;!&ndash; Outbound Profile &ndash;&gt;
+                                        <div class="item" data-status="Outbound"
+                                             data-merge="1">
+                                            <div class="d1-sumary-not-f" ng-if="StatusList.OutboundProfile.length==0">
+                                                Profile not found
+                                            </div>
+                                            <div ng-repeat="resource in StatusList.OutboundProfile track by $index"
+                                                 class="d1-summary-card">
+                                                <div class="d1-summary-c-img">
+                                                    <img src="assets/images/defaultProfile.png"
+                                                         ng-src="{{resource.avatar}}" width="50"/>
+                                                </div>
+                                                <div class="d1-summary-c-left-t">
+                                                    <div class="header">{{resource.resourceName | limitTo: 15 }}
+                                                        {{resource.resourceName.length
+                                                        > 15 ? '...' : ''}}
+                                                    </div>
+                                                    <div class="time">
+                                                        <time-ago from-time='{{resource.LastReservedTimeT }}'
+                                                                  format='MM/dd/yyyy'></time-ago>
+                                                    </div>
+
+                                                </div>
+                                                <div class="summary-status">
+                                                    <div class="color-wrp">
+                                                        <div class="dot-wrp outbound-border">
+                                                            <div class="color-status-dot outbound-dot"></div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="text-wrp">
+                                                        <div class="status outbound-text">Outbound</div>
+                                                        <div class="call-status"> {{resource.slotMode}}</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        &lt;!&ndash; Suspended Profile &ndash;&gt;
+                                        <div class="item" data-status="Suspended"
+                                             data-merge="1">
+                                            <div class="d1-sumary-not-f" ng-if="StatusList.SuspendedProfile.length==0">
+                                                Profile not found
+                                            </div>
+                                            <div ng-repeat="resource in StatusList.SuspendedProfile track by $index"
+                                                 class="d1-summary-card">
+                                                <div class="d1-summary-c-img">
+                                                    <img src="assets/images/defaultProfile.png"
+                                                         ng-src="{{resource.avatar}}" width="50"/>
+                                                </div>
+                                                <div class="d1-summary-c-left-t">
+                                                    <div class="header">{{resource.resourceName | limitTo: 15 }}
+                                                        {{resource.resourceName.length
+                                                        > 15 ? '...' : ''}}
+                                                    </div>
+                                                    <div class="time">
+                                                        <time-ago from-time='{{resource.LastReservedTimeT }}'
+                                                                  format='MM/dd/yyyy'></time-ago>
+                                                    </div>
+
+                                                </div>
+                                                <div class="summary-status">
+                                                    <div class="color-wrp">
+                                                        <div class="dot-wrp suspended-border">
+                                                            <div class="color-status-dot suspended-dot"></div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="text-wrp">
+                                                        <div class="status suspended-text">Suspended</div>
+                                                        <div class="call-status"> {{resource.slotMode}}</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        &lt;!&ndash; other profile &ndash;&gt;
+                                        <div class="item" data-status="Other"
+                                             data-merge="1">
+                                            <div class="d1-sumary-not-f" ng-if="StatusList.profile.length==0">
+                                                Profile not found
+                                            </div>
+                                            <div ng-repeat="resource in StatusList.profile track by $index"
+                                                 class="d1-summary-card">
+                                                <div class="d1-summary-c-img">
+                                                    <img src="assets/images/defaultProfile.png"
+                                                         ng-src="{{resource.avatar}}" width="50"/>
+                                                </div>
+                                                <div class="d1-summary-c-left-t">
+                                                    <div class="header">{{resource.resourceName | limitTo: 15 }}
+                                                        {{resource.resourceName.length
+                                                        > 15 ? '...' : ''}}
+                                                    </div>
+                                                    <div class="time">
+                                                        <time-ago from-time='{{resource.LastReservedTimeT }}'
+                                                                  format='MM/dd/yyyy'></time-ago>
+                                                    </div>
+
+                                                </div>
+                                                <div class="summary-status">
+                                                    <div class="color-wrp">
+                                                        <div class="dot-wrp other-border">
+                                                            <div class="color-status-dot other-dot"></div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="text-wrp">
+                                                        <div class="status other-text">OTHER</div>
+                                                        <div class="call-status"> {{resource.slotMode}}</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>-->
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        var owl = $('.owl-carousel');
+        owl.owlCarousel({
+            items: 1,
+            loop: true,
+            margin: 2,
+            merge: true,
+            nav: true,
+            autoplay: true,
+            autoplayHoverPause: true,
+            autoplaySpeed: 5000,
+            autoplayTimeout: 5000,
+            animateOut: 'slideOutLeft',
+            animateIn: 'slideInRight'
+        });
+
+
+//        $('#play').on('click', function () {
+//            owl.trigger('play.owl.autoplay', [5000]);
+//            $('#stop').removeClass('display-none').addClass('display-block');
+//            $('#play').addClass('display-none').removeClass('display-block');
+//        });
+//
+//        $('#stop').on('click', function () {
+//            owl.trigger('stop.owl.autoplay');
+//            $('#stop').addClass('display-none').removeClass('display-block');
+//            $('#play').removeClass('display-none').addClass('display-block');
+//        });
+
+//        $('#next').on('click', function () {
+//            owl.trigger('next.owl.carousel');
+//        });
+//        $('#previous').on('click', function () {
+//            owl.trigger('prev.owl.carousel');
+//        });
+
+
+        //jquery easy ticket
+        $('.newsticker').newsTicker({
+            row_height: 70,
+            max_rows: 1,
+            speed: 1000,
+            direction: 'up',
+            duration: 5000,
+            autostart: 1,
+            pauseOnHover: 0
+        });
+    });
+
+</script>

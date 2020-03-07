@@ -1,0 +1,166 @@
+<div>
+    <div>
+
+        <div class="col-lg-12">
+            <div class="row">
+                <div class="col-md-9">
+                    <h2 class=" font-300">
+                        <a ng-hide="editMode">Name : {{caseInfo.caseName}}</a>
+
+                    </h2>
+                </div>
+                <div class="col-md-3 ">
+                    <div class="pull-right user-option-wrap" ng-show="!editMode">
+                        <h3>
+                            <small ng-disabled="true"  ng-hide="!statusMode" ng-click="removeCase()" style="cursor: pointer"><i
+                                    class="fa fa-trash-o"></i></small>
+                            <!--<small ng-disabled="true" ng-click="editApplication()" style="cursor: pointer"><i
+                                    class="fa fa-edit"></i></small>-->
+                            <small ng-disabled="true" ng-click="viewConfigurations()" style="cursor: pointer"><i
+                                    class="fa fa-cog"></i></small>
+                        </h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-12 col-sm-12 col-xs-12 edit-main-wrap" ng-show="editMode">
+            <div class="application-edit">
+                <div class="col-sm-12">
+                    <div class="col-sm-6">
+                        <h2 class="font-robot font-300 text-uppercase font-15">Edit {{caseInfo.caseName}}</h2>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="edit-close pull-right">
+                            <i class="fa fa-close" ng-click="editApplication()"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12 col-sm-6 col-xs-12 col-xs-12">
+                    <div class="tile-stats  m-top15">
+                        <form name="editCaseForm" class="form-horizontal form-label-left input_mask" novalidate>
+                            <div class="col-md-3 col-sm-3 col-xs-12 form-group has-feedback">
+                                <label>Configuration Name</label>
+                                <input name="caseName" type="text" class="form-control has-feedback-left"
+                                       ng-model="caseInfo.caseName"
+                                       placeholder="Case Name" ng-disabled="true" required>
+                                <span class="fa fa-user form-control-feedback left" aria-hidden="true"></span>
+                                <span class="inline-block validation-on"
+                                      ng-show="editCaseForm.caseName.$invalid">required*
+                                        </span>
+                            </div>
+
+                            <div class="col-md-3 col-sm-3 col-xs-12 form-group has-feedback">
+                                <label>Description</label>
+                                <input name="description" type="text" class="form-control has-feedback-left"
+                                       ng-model="caseInfo.description"
+                                       placeholder="Description" required>
+                                <span class="fa fa-user form-control-feedback left" aria-hidden="true"></span>
+                                <span class="inline-block validation-on"
+                                      ng-show="editCaseForm.description.$invalid">required*
+                                        </span>
+                            </div>
+
+                            <div class="col-md-3 col-sm-3 col-xs-12 form-group has-feedback">
+                                <label>Case Configuration</label>
+                                <input name="config" type="text" class="form-control has-feedback-left"
+                                       ng-model="caseInfo.caseConfiguration[0].configurationName"
+                                       placeholder="Configuration Rule" ng-disabled="true" required>
+                                <span class="fa fa-user form-control-feedback left" aria-hidden="true"></span>
+                                <span class="inline-block validation-on"
+                                      ng-show="editCaseForm.config.$invalid">required*
+                                        </span>
+                            </div>
+
+
+
+                            <div class="col-md-12 col-sm-9 col-xs-12 m-top15">
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                    <button type="button" class="btn btn-success btn-sm pull-right"
+                                            ng-click="editSla()" ng-disabled="editCaseForm.$invalid">
+                                        Update
+                                    </button>
+                                </div>
+                            </div>
+
+                            <!--<div class="col-md-12 col-sm-6 col-xs-12 form-group has-feedback">
+                                <input type="text" class="form-control has-feedback-left" ng-model="resource.OtherData"
+                                       placeholder="Other Data">
+                                <span class="fa fa-envelope form-control-feedback left" aria-hidden="true"></span>
+                            </div>-->
+
+
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <!--<div class="byline" ng-hide="editMode">
+            <span>{{resource.createdAt|date:'MM/dd/yyyy @ h:mma'}}</span>
+        </div>-->
+        <div ng-hide="editMode">
+            <div class="row">
+                <div class="col-md-2 col-sm-2 col-xs-12 form-group ">
+                    <label class="form-control-static">Case Name</label>
+                    <p>{{caseInfo.caseName}} </p>
+                </div>
+
+                <div class="col-md-2 col-sm-2 col-xs-12 form-group ">
+                    <label class="form-control-static">Description</label>
+                    <p>{{caseInfo.description}} </p>
+                </div>
+
+                <div class="col-md-3 col-sm-3 col-xs-12 form-group ">
+                    <label class="form-control-static">Case Configuration</label>
+                    <p>{{caseInfo.caseConfiguration.configurationName}} </p>
+                </div>
+
+                <div class="col-md-2 col-sm-2 col-xs-12 form-group ">
+                    <label>Active Types</label>
+                    <ul class="customer-type-wrapper">
+                        <li ng-repeat="cusTypes in caseInfo.caseConfiguration.activeTicketTypes">
+                            {{cusTypes}}
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="col-md-2 col-sm-2 col-xs-12 form-group ">
+                    <label class="form-control-static">Status</label>
+                    <p>{{caseInfo.status}} </p>
+                </div>
+            </div>
+
+            <div ng-if="ongoingOperations.length > 0" class="row">
+                <h4>Ongoing Operations</h4>
+                <div class="col-md-10">
+                    <div ng-repeat="ongoingOpr in ongoingOperations">
+                        <div class="col-md-2">
+                            <center>Operation - {{ongoingOpr.JobType}}</center>
+                        </div>
+                        <div class="col-md-8">
+                            <div class="col-md-5">
+                                <uib-progressbar animate="false" value="ongoingOpr.Percentage"
+                                                 type="success"><b>{{ongoingOpr.Percentage}}%</b>
+                                </uib-progressbar>
+                            </div>
+                            <div class="col-md-1 ">
+                                <center>{{ongoingOpr.JobStatus}}</center>
+                            </div>
+                            <div class="col-md-2 ">
+                                <div class="user-option-wrap">
+                                        <i ng-if="ongoingOpr.JobStatus === 'done'" ng-click="removeBulkOperation(ongoingOpr.JobId)" style="cursor: pointer"><i
+                                                class="fa fa-trash-o"></i></i>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div class="clearfix"></div>
+    </div>
+</div>

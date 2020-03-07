@@ -1,0 +1,293 @@
+<div class="page-title" >
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <!-- application list -->
+        <div class="x_panel bg-light-gray animated fadeIn" style="overflow: hidden;">
+            <div class="x_title border-0" style="height: 255px;">
+                <h2 class="font-robot font-300 text-uppercase font-15">New PABX User</h2>
+                <div class="col-xs-12">
+                    <div class="tile-stats m-top15">
+                        <form class="form-horizontal form-label-left input_mask ng-pristine ng-valid">
+
+                            <div class="col-md-12 col-md-offset-2">
+
+                                <div class="col-md-6 form-group has-feedback">
+                                    <select class="form-control has-feedback-left ng-pristine ng-untouched ng-valid ng-empty"
+                                            ng-model="currentUserUuid"
+                                            ng-model-options="{trackBy: '$value'}"
+                                            ng-change="onUserSelect()">
+                                        <option value="" disabled="" selected="">Select a user
+                                        </option>
+                                        <option ng-repeat="user in sipUserList"
+                                                value="{{user.SipUserUuid}}">
+                                            {{user.SipUsername}}
+                                        </option>
+                                    </select>
+                                        <span class="fa fa-user form-control-feedback left"
+                                              aria-hidden="true"></span>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="inline-block">
+                                        <button class="btn btn-default"
+                                                ng-click="onClickLoadPBXconfig()">
+                                            Proceed
+                                        </button>
+                                    </div>
+                                </div>
+
+                            </div>
+
+
+                        </form>
+                    </div>
+                </div>
+                <div class="clearfix"></div>
+            </div>
+
+            <!-- user config -->
+            <div class="pbx-config-wrapper" id="pbxConfig">
+                <div ng-include="'views/pbxuser/pabxNewUserView.html'"></div>
+            </div> <!-- end -->
+
+        </div>
+        <!-- end -->
+
+
+    </div>
+</div>
+
+<div class="clearfix"></div>
+
+<div >
+
+    <div class="pbx-view-wrapper">
+        <div class="col-md-12 col-sm-12 col-xs-12">
+            <div class="x_title">
+                <div class=" col-md-12 col-sm-12 col-xs-12">
+                    <div class="col-md-6 col-sm-612 col-xs-12">
+                        <h2 class="font-robot font-300 text-uppercase font-15">PABX User</h2>
+                    </div>
+                    <div class="input-group col-md-6 col-sm-612 col-xs-12">
+                        <input type="text" ng-model="searchCriteria"
+                               class="form-control ng-pristine ng-valid ng-empty ng-touched"
+                               placeholder="Search for...">
+                                    <span class="input-group-btn">
+                                      <button class="btn btn-default" type="button">Go!</button>
+                                    </span>
+                    </div>
+
+                </div>
+                <div class="clearfix"></div>
+            </div>
+            <div class="search-main-wrap" ng-if="!dataReady">
+                <div class="row ">
+                    <div class="col-md-12 col-sm-12 col-xs-12">
+                        <div class="data-state-wrap">
+                            Please Wait...
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <ul class="list-unstyled timeline" style="overflow-y: auto; min-height: 877px">
+
+                <div class="mail_list_column sip-user-wrap">
+                    <a href="javascript:void(0);" class="user-wrap hover-none"
+                       ng-repeat="item in pabxUsrList | filterBy: ['UserName']: searchCriteria">
+                        <div class="mail_list user-list">
+                            <div class="right user-option-wrap">
+                                <h3 class="font-robot sub-header" style="color:#383b3b">
+                                    {{item.UserName}}
+                                    <small class="fa fa-trash" ng-click="deleteUser(item.UserUuid)"></small>
+                                    <small class="fa fa-cog" ng-click="loadBasicConfig(item)"></small>
+                                </h3>
+                                <p>
+                                    <label ng-if="item.UserStatus == 'DND'" class="pabxStatus dnd"
+                                           ng-click="openStatusEdit(item)">DND</label>
+                                    <label ng-if="item.UserStatus == 'CALL_DIVERT'" class="pabxStatus divert"
+                                           ng-click="openStatusEdit(item)">Call Divert</label>
+                                    <label ng-if="item.UserStatus == 'AVAILABLE' && item.AdvancedRouteMethod == 'NONE'"
+                                           class="pabxStatus available"
+                                           ng-click="openStatusEdit(item)">Available</label>
+                                    <label ng-if="item.UserStatus == 'AVAILABLE' && item.AdvancedRouteMethod == 'FOLLOW_ME'"
+                                           class="pabxStatus followme"
+                                           ng-click="openStatusEdit(item)">FollowMe</label>
+                                    <label ng-if="item.UserStatus == 'AVAILABLE' && item.AdvancedRouteMethod == 'FORWARD'"
+                                           class="pabxStatus forward"
+                                           ng-click="openStatusEdit(item)">Forwarding</label>
+                                </p>
+                                <p>
+                                <div ng-if="item.StatusEditMode" class="col-md-12 col-sm-12 col-xs-12"
+                                     style="border: 1px solid rgb(230, 229, 229); border-radius: 8px; padding: 5px;">
+
+                                    <div class="col-md-12 col-sm-12 col-xs-12">
+                                        <label>Change Status</label>
+                                    </div>
+
+
+                                    <div class="col-md-4 col-sm-4 col-xs-4">
+                                        <button class="pabxStatus dnd" ng-click="updateStatus('DND', item)">DND
+                                        </button>
+                                    </div>
+                                    <div class="col-md-4 col-sm-4 col-xs-4">
+                                        <button class="pabxStatus divert"
+                                                ng-click="updateStatus('CALL_DIVERT', item)">Call Divert
+                                        </button>
+                                    </div>
+                                    <div class="col-md-4 col-sm-4 col-xs-4">
+                                        <button class="pabxStatus available"
+                                                ng-click="updateStatus('AVAILABLE', item)">Available
+                                        </button>
+                                    </div>
+                                    <div class="col-md-4 col-sm-4 col-xs-4">
+                                        <button class="pabxStatus followme"
+                                                ng-click="updateStatus('FOLLOW_ME', item)">FollowMe
+                                        </button>
+                                    </div>
+                                    <div class="col-md-4 col-sm-4 col-xs-4">
+                                        <button class="pabxStatus forward"
+                                                ng-click="updateStatus('FORWARD', item)">
+                                            Forwarding
+                                        </button>
+                                    </div>
+                                    <div class="col-md-4 col-sm-4 col-xs-4">
+
+                                    </div>
+                                </div>
+                                </p>
+                            </div>
+                            <div class="left">
+                            </div>
+                        </div>
+                    </a>
+                </div>
+
+            </ul>
+
+
+        </div>
+
+
+        <div class="pbx-edit-wrapper" id="pbxEditWrapper">
+            <!--ng-disabled="!PABX_OnEditMode"-->
+            <div class="col-sm-6">
+                <h2 class="font-robot font-300 text-uppercase font-15 ng-binding">User Configuration :
+                    {{pabxUserSelected.UserName}} </h2>
+            </div>
+            <div class="col-sm-6">
+                <div class="edit-close pull-right">
+                    <i class="fa fa-close" ng-click="onClickPBXEditUserClose()"></i>
+                </div>
+            </div>
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="x_panel" style="min-height: 987px;">
+                    <uib-tabset active="0">
+                        <uib-tab index="0" heading="Basic" disable="!PABX_OnEditMode">
+                            <div ng-include="'views/pbxuser/pabxBasicView.html'">
+                            </div>
+                        </uib-tab>
+                        <uib-tab index="1" heading="Template" disable="!PABX_OnEditMode">
+                            <div class="col-md-12" ng-include="'views/pbxuser/pabxTemplateView.html'">
+                            </div>
+                        </uib-tab>
+                        <uib-tab index="2" heading="Follow-Me" disable="!PABX_OnEditMode">
+                            <div ng-include="'views/pbxuser/pabxFollowMeView.html'">
+                            </div>
+                        </uib-tab>
+                        <uib-tab index="3" heading="Forwarding" disable="!PABX_OnEditMode">
+                            <div ng-include="'views/pbxuser/pabxForwardingView.html'">
+                            </div>
+                        </uib-tab>
+                    </uib-tabset>
+                </div>
+
+
+                <div class="front">
+                    <div ng-show="showFrontPage2" ng-include="'views/pbxuser/pabxBasicView.html'">
+                    </div>
+
+                    <div class="x_panel" ng-if="showFrontPage3">
+                        <div class="x_title col-md-9 col-sm-9 col-xs-9">
+                            <h2>Page 3</h2>
+                        </div>
+                        <div class="col-md-1 col-sm-1 col-xs-1">
+                            <button type="button" class="btn btn-round btn-primary" ng-click="flipCard(2)">2
+                            </button>
+                        </div>
+                        <div class="col-md-1 col-sm-1 col-xs-1">
+                            <button type="button" class="btn btn-round btn-primary" ng-click="flipCard(3)">3
+                            </button>
+                        </div>
+                        <div class="col-md-1 col-sm-1 col-xs-1">
+                            <button type="button" class="btn btn-round btn-primary" ng-click="flipCard(4)">4
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="x_panel" ng-if="showFrontPage4">
+                        <div class="x_title col-md-9 col-sm-9 col-xs-9">
+                            <h2>Page 4</h2>
+
+                        </div>
+                        <div class="col-md-1 col-sm-1 col-xs-1">
+                            <button type="button" class="btn btn-round btn-primary" ng-click="flipCard(2)">2
+                            </button>
+                        </div>
+                        <div class="col-md-1 col-sm-1 col-xs-1">
+                            <button type="button" class="btn btn-round btn-primary" ng-click="flipCard(3)">3
+                            </button>
+                        </div>
+                        <div class="col-md-1 col-sm-1 col-xs-1">
+                            <button type="button" class="btn btn-round btn-primary" ng-click="flipCard(4)">4
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="back">
+                    <div ng-show="showBackPage2" ng-include="'views/pbxuser/pabxBasicView.html'">
+
+                    </div>
+
+                    <div class="x_panel" ng-if="showBackPage3">
+                        <div class="x_title col-md-9 col-sm-9 col-xs-9">
+                            <h2>Page 3</h2>
+                        </div>
+                        <div class="col-md-1 col-sm-1 col-xs-1">
+                            <button type="button" class="btn btn-round btn-primary" ng-click="flipCard(2)">2
+                            </button>
+                        </div>
+                        <div class="col-md-1 col-sm-1 col-xs-1">
+                            <button type="button" class="btn btn-round btn-primary" ng-click="flipCard(3)">3
+                            </button>
+                        </div>
+                        <div class="col-md-1 col-sm-1 col-xs-1">
+                            <button type="button" class="btn btn-round btn-primary" ng-click="flipCard(4)">4
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="x_panel" ng-if="showBackPage4">
+                        <div class="x_title col-md-9 col-sm-9 col-xs-9">
+                            <h2>Page 4</h2>
+                        </div>
+                        <div class="col-md-1 col-sm-1 col-xs-1">
+                            <button type="button" class="btn btn-round btn-primary" ng-click="flipCard(2)">2
+                            </button>
+                        </div>
+                        <div class="col-md-1 col-sm-1 col-xs-1">
+                            <button type="button" class="btn btn-round btn-primary" ng-click="flipCard(3)">3
+                            </button>
+                        </div>
+                        <div class="col-md-1 col-sm-1 col-xs-1">
+                            <button type="button" class="btn btn-round btn-primary" ng-click="flipCard(4)">4
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+

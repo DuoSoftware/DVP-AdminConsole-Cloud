@@ -1,0 +1,51 @@
+<div class="row" ng-show="showModal">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <div class="x_panel">
+            <div class="x_content col-md-12 col-sm-12 col-xs-12">
+                <div class="x_panel bg-light-gray ">
+                    <div class="x_title border-0">
+                        <h2 class="font-robot font-300 text-uppercase font-15">Select Operation</h2>
+
+                        <div class="col-md-12 col-sm-12 col-xs-12 form-group has-feedback">
+                            <select class="form-control has-feedback-left "
+                                    placeholder="Select Operation"
+                                    ng-model="operation.name" ng-change="OnChangeTriggerOperation()">
+                                <option value="" disabled selected>Select Operation</option>
+                                <option value="AddInteraction"> Add Interaction </option>
+                                <option value="SendMessage"> Send Message</option>
+                                <option value="PickAgent"> Assign To ARDS User</option>
+                                <option value="SendEmail"> Send Email</option>
+                                <option value="SendNotification"> Send Notification</option>
+                                <option value="InvokeService"> Invoke Service</option>
+                            </select>
+                                            <span class="glyphicon glyphicon-list form-control-feedback left"
+                                                  aria-hidden="true"></span>
+                        </div>
+
+                        <div class="col-md-12 col-sm-12 col-xs-12 form-group has-feedback">
+                            <div class="row">
+                                <dynamic-operation operation-name="operation.name"
+                                                   render-templates="templates"
+                                                   ards-attributes="attributes"
+                                                   ng-model="operation"></dynamic-operation>
+                            </div>
+                        </div>
+
+                        <div class="clearfix"></div>
+                    </div>
+                </div>
+
+
+                <div class="form-group">
+                    <div class="col-md-9 col-sm-9 col-xs-12 col-md-offset-3">
+                        <button type="submit" class="btn btn-primary" ng-click="closeModal()">Cancel</button>
+                        <button type="submit" class="btn btn-success" ng-click="addOperation()">Add</button>
+                    </div>
+                </div>
+
+
+            </div>
+
+        </div>
+    </div>
+</div>

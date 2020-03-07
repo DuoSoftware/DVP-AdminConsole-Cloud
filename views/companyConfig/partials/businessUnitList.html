@@ -1,0 +1,126 @@
+<div>
+    <div style="border-bottom: 1px solid rgba(0, 0, 0, 0.3);">
+
+        <div class="col-lg-12" style="padding-top: 2px">
+            <div class="row" ng-hide="editBUnit">
+                <div class="col-md-9">
+                    <h2 class=" font-300">
+                        <a>Unit Name : {{unit.unitName}}</a>
+
+                    </h2>
+                </div>
+                <div class="col-md-3 ">
+                    <div class="pull-right user-option-wrap" ng-show="!editBUnit">
+                        <h3>
+                            <small ng-disabled="true" ng-click="changeEditMode()" style="cursor: pointer"><i
+                                    class="fa fa-edit" ></i></small>
+                        </h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div ng-hide="editBUnit">
+
+            <div class="col-md-3 col-sm-3 col-xs-12 form-group "  >
+                <label class="form-control-static">Description</label>
+                <p>{{unit.description}} </p>
+            </div>
+
+        </div>
+        <div class="col-md-12 col-sm-12 col-xs-12 edit-main-wrap" ng-show="editBUnit">
+            <div class="application-edit">
+                <div class="col-sm-12">
+                    <div class="col-sm-6">
+                        <h2 class="font-robot font-300 text-uppercase font-15">Edit : {{unit.unitName}}</h2>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="edit-close pull-right">
+                            <i class="fa fa-close" ng-click="closeEdit()"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12 col-sm-6 col-xs-12 col-xs-12">
+                    <div class="tile-stats  m-top15">
+                        <form class="form-horizontal form-label-left input_mask">
+
+                            <div class="col-md-12 col-sm-12 col-xs-12 form-group"
+                                 style="margin-bottom: 15px;">
+                                <label>Description</label>
+                                <input type="text" class="form-control "
+                                       ng-model="unit.description"
+                                >
+                            </div>
+
+                            <div class="col-md-12 col-sm-12 col-xs-12 form-group "
+                                 style="margin-bottom: 15px;">
+
+                                <label >Head Users</label>
+                                <tags-input ng-model="unit.heads" display-property="username"
+                                            add-from-autocomplete-only="true"  ng-disabled="" min-length="1"
+                                            placeholder="Add a Head User" on-tag-added="onHUserChipAdd($tag)"
+                                            on-tag-removed="onHUserChipDelete($tag)" >
+                                    <auto-complete source="querySearch($query)"
+                                                   load-on-empty="true"
+                                                   load-on-focus="true"
+                                                   min-length="1"></auto-complete>
+                                </tags-input>
+                            </div>
+                            <div class="col-md-12 col-sm-12 col-xs-12 form-group "
+                                 style="margin-bottom: 15px;" ng-if="!isHide">
+
+                                <label >User Groups</label>
+                                <tags-input ng-model="unit.groups" display-property="name"
+                                            add-from-autocomplete-only="true"  ng-disabled="" min-length="1"
+                                            placeholder="Add a Group" on-tag-added="onChipAdd($tag)"
+                                            on-tag-removed="onChipDelete($tag)" >
+
+                                    <auto-complete source="querySearchGroups($query)"
+                                                   load-on-empty="true"
+                                                   load-on-focus="true"
+                                                   min-length="1"></auto-complete>
+                                </tags-input>
+                            </div>
+
+
+                            <div class="col-md-12 col-sm-12 col-xs-12 form-group" style="margin-bottom: 15px;" ng-if="!isHide">
+                                <label>Skills</label>
+                                <tags-input ng-model="buSkills" display-property="Attribute"
+                                            add-from-autocomplete-only="true"  ng-disabled="" min-length="1"
+                                            placeholder="Add Skills" on-tag-adding="onChipAddBSkill($tag)"
+                                            on-tag-removing="onChipDeleteBSkill($tag)" >
+
+                                    <auto-complete source="querySearchSkills($query)"
+                                                   load-on-empty="true"
+                                                   load-on-focus="true"
+                                                   min-length="1"></auto-complete>
+                                </tags-input>
+                            </div>
+
+
+                            <div class="col-md-12 col-sm-9 col-xs-12 m-top15">
+                                <div class="col-md-12 col-sm-6 col-xs-12">
+                                    <button type="button" class="btn btn-success btn-sm pull-right"
+                                            ng-click="updateBusinessUnit()">
+                                        Done
+                                    </button>
+                                </div>
+                            </div>
+
+                            <!--<div class="col-md-12 col-sm-6 col-xs-12 form-group has-feedback">
+                                <input type="text" class="form-control has-feedback-left" ng-model="resource.OtherData"
+                                       placeholder="Other Data">
+                                <span class="fa fa-envelope form-control-feedback left" aria-hidden="true"></span>
+                            </div>-->
+
+
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="clearfix"></div>
+    </div>
+</div>

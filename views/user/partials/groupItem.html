@@ -1,0 +1,94 @@
+<div ng-disabled="editing" title="">
+    <div class="row" style="display: flex;justify-content: space-between">
+        <div class="group-img">
+            <img src="assets/images/group.png">
+            <!--<i class="fa fa-users"></i>-->
+        </div>
+        <div class="group-inline-des">
+            <div class="group-desc">
+                <h5>{{group.name}}</h5>
+                <h6 title="Business Unit">{{group.businessUnit}}</h6>
+            </div>
+            <!--<li class="pull-right">
+                <div class="group-config">
+                    <i class="fa fa-cog fa-lg" ng-click="showBUnits()"></i>
+                </div>
+            </li>-->
+            <!--<li class="pull-right"-->
+            <!--ng-show="group.name == selectedGroup.name">-->
+            <!--<div class="selected-group">-->
+            <!--<i class="ti-check"></i>-->
+            <!--</div>-->
+            <!--</li>-->
+            <!--<li class="pull-right">-->
+            <!--<span class="iconed-status-pill-header">-->
+            <!--<b>-->
+            <!--<i class="fa fa-user"></i>-->
+            <!--{{group.users.length}}-->
+            <!--</b>-->
+            <!--</span>-->
+            <!--<span class="iconed-status-pill-header">-->
+            <!--<b>-->
+            <!--<i class="fa fa-user-secret"></i>-->
+            <!--{{group.supervisors.length}}-->
+            <!--</b>-->
+            <!--</span>-->
+            <!--</li>-->
+        </div>
+        <div class="group-status">
+            <span class="iconed-status-pill-header">
+                <b>
+                    <i class="fa fa-user"></i>
+                    {{group.users.length}}
+                </b>
+            </span>
+            <span class="iconed-status-pill-header">
+                <b>
+                    <i class="fa fa-user-secret"></i>
+                    {{group.supervisors.length}}
+                </b>
+            </span>
+        </div>
+    </div>
+
+    <!-- <div class="row bisunit-item" ng-show="showUnits" >
+
+         <div class="row" style="margin-left: 10px">
+             <h5>Business Unit</h5>
+             <div class="col-md-8 col-sm-8 col-xs-12 form-group">
+
+                 <select class="select2_single form-control" tabindex="-1"
+                         aria-hidden="true"
+                         id="unit"
+                         name="unit" ng-model="group.businessUnit"
+                         ng-model-options="{trackBy: '$value'}">
+                     <option ng-repeat="unit in units" value="{{unit.unitName}}">{{unit.unitName}}
+                     </option>
+                 </select>
+
+             </div>
+             <div class="col-md-1 col-sm-1 col-xs-12 form-group">
+                 <i class="fa fa-close fa-lg" ng-click="makeBusinessUnitEmpty()" title="Click here to remove Business Unit"></i>
+             </div>
+         </div>
+
+
+
+
+
+         <div class="row create-new pull-right" style="margin-right: 10px">
+             <button class="btn btn-default "
+                     ng-click="updateGroupBUnit()">
+                 Update
+             </button>
+             &lt;!&ndash;<button class="btn btn-default fa fa-times fa-lg"
+                     ng-click="emptyBUnit()">
+
+             </button>&ndash;&gt;
+         </div>
+
+
+
+     </div>--><!---->
+</div>
+

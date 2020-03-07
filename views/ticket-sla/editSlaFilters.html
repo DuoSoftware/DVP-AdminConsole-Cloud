@@ -1,0 +1,48 @@
+<div class="block">
+    <div class="tags">
+        <a class="tag">
+            <span>{{filterIndex + 1}}</span>
+        </a>
+    </div>
+    <div class="block_content">
+        <div class="row invoice-info">
+            <div class="col-sm-6 invoice-col ">
+                <h2 class="font-300 ">
+                    <a ng-hide="editMode" class="ng-binding" style="">Field : {{filter.field}}</a>
+                </h2>
+                <h2 class="font-300 ">
+                    <a ng-hide="editMode" class="ng-binding" style="">Operator : {{filter.operator}}</a>
+                </h2>
+                <h2 class="font-300 ">
+                    <a ng-hide="editMode" class="ng-binding" style="">Value : {{filter.value}}</a>
+                </h2>
+            </div>
+            <!-- /.col -->
+            <div class="col-sm-6 invoice-col">
+                <div class="pull-left attribute-edit-wrap">
+                    <a ng-disabled="true" class="inline-block" ng-click="deleteFilter()"
+                       style="cursor: pointer"><i
+                            class="fa fa-trash-o"></i></a>
+                    <br>
+                    <!--<a ng-disabled="true" class="inline-block" ng-click="editAction()" style="cursor: pointer"><i
+                            class="fa fa-edit"></i></a>-->
+                </div>
+            </div>
+            <!-- /.col -->
+            <div class="col-xs-12 edit-main-wrap" style="margin-top: -93px;margin-left: -15px;" ng-show="editMode">
+                <div class="col-sm-12">
+                    <div class="col-sm-6">
+                        <h2 class="font-robot font-300 text-uppercase font-15">Edit {{filter.field}}</h2>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="edit-close pull-right">
+                            <i class="fa fa-close" ng-click="editFilter()"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+</div>

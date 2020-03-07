@@ -1,0 +1,141 @@
+<div class="col-sm-12 " ng-controller="pbxNewUserCtrl">
+    <div class="col-sm-6">
+        <h2 class="font-robot font-300 text-uppercase font-15 ng-binding">Basic Configuration </h2>
+    </div>
+    <div class="col-sm-6">
+        <div class="edit-close pull-right">
+            <i class="fa fa-close" ng-click="onClickPBXclose()"></i>
+        </div>
+    </div>
+    <div class="pbx-edit-wrap" style="overflow: visible !important;">
+        <form name="pabxBasicConfForm"
+              class="form-horizontal form-label-left input_mask ng-pristine ng-valid">
+            <!-- 1 row -->
+            <div class="col-md-12">
+                <div class="col-md-5 col-sm-5 col-xs-12 form-group has-feedback ">
+                    <input type="text" class="form-control" name="userName" ng-disabled="IsEdit"
+                           placeholder="user name"
+                           ng-model="basicConfig.UserName">
+                </div>
+                <div class="col-md-7 col-sm-6 col-xs-12 ">
+                    <div class="col-md-4 col-sm-4 col-xs-12">
+                        <div class="checkbox">
+                            <label>
+                                <input type="checkbox" class="js-switch"
+                                       ng-model="basicConfig.BypassMedia"
+                                       ng-init="basicConfig.BypassMedia=false">
+                                Bypass Media
+                            </label>
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-sm-4 col-xs-12">
+                        <div class="checkbox">
+                            <label>
+                                <input type="checkbox" class="js-switch "
+                                       ng-model="basicConfig.IgnoreEarlyMedia"
+                                       ng-init="basicConfig.IgnoreEarlyMedia=false">
+                                Ignore Early Media
+                            </label>
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-sm-4 col-xs-12">
+                        <div class="checkbox">
+                            <label>
+                                <input type="checkbox" class="js-switch "
+                                       ng-model="basicConfig.VoicemailEnabled"
+                                       ng-init="basicConfig.VoicemailEnabled=false"></checkbox>
+                                Voicemail
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- 2 row -->
+            <div class="col-md-12">
+                <div class="col-md-4 col-sm-4 col-xs-12 form-group has-feedback">
+                    <!--<input class="form-control" name="pinNumber" ng-model="basicConfig.Pin" placeholder="PIN">-->
+                    <label>PIN  <span class="inline-block validation-on text-validaion  "
+                                      ng-show="pabxBasicConfForm.pinNumber.$invalid && !pabxBasicConfForm.pinNumber.$pristine">
+                            pin number should be numeric
+                  </span></label>
+                    <input class="form-control" name="pinNumber" ng-model="basicConfig.Pin" ng-pattern="/^[0-9]*$/"
+                           required>
+                </div>
+                <div class="col-md-4 col-sm-4 col-xs-12" style="position: relative; top: 5px; z-index: 100">
+                    <label>Time Zone</label>
+                    <timezone-selector ng-model="basicConfig.TimeZone"></timezone-selector>
+                </div>
+
+                <div class="col-md-4 col-sm-4 col-xs-12">
+                    <!--<input class="form-control" name="ringTimeout"
+                           ng-model="basicConfig.RingTimeout"
+                           placeholder="Ring Timeout">-->
+
+                    <label>Ring Timeout <span class="inline-block validation-on text-validaion"
+                                              ng-show="pabxBasicConfForm.ringTimeout.$invalid &&
+                                           !pabxBasicConfForm.ringTimeout.$pristine">
+                            Invalid ring timeout
+                  </span> </label>
+                    <input class="form-control" name="ringTimeout" ng-model="basicConfig.RingTimeout"
+                           ng-pattern="/^[0-9]*$/">
+                </div>
+            </div>
+
+            <!-- 3 row -->
+            <div class="col-sm-12 pbx-user-state">
+                <div class="col-md-12 col-sm-12 col-xs-12">
+                    <div class="radio inline-block">
+                        <label style="padding-right: 10px;">
+                            <input type="radio" class="flat" ng-model="basicConfig.Status"
+                                   name="pbxUserStatus"
+                                   id="genderM" value="DND"/> DND
+                        </label>
+                    </div>
+
+                    <div class="radio inline-block">
+                        <label style="padding-right: 10px;">
+
+                            <input type="radio" class="flat" ng-model="basicConfig.Status"
+                                   name="pbxUserStatus"
+                                   id="genderF" value="CALL_DIVERT"/>Divert
+                        </label>
+                    </div>
+                    <div class="radio inline-block">
+                        <label style="padding-right: 10px;">
+                            <input type="radio" class="flat" ng-model="basicConfig.Status"
+                                   name="pbxUserStatus"
+                                   value="AVAILABLE"/> Available
+                        </label>
+                    </div>
+                    <div class="radio inline-block">
+                        <label style="padding-right: 10px;">
+                            <input type="radio" class="flat" ng-model="basicConfig.Status"
+                                   name="pbxUserStatus"
+                                   value="FOLLOW_ME"/> FollowMe
+                        </label>
+                    </div>
+                    <div class="radio inline-block">
+                        <label>
+                            <input type="radio" class="flat" ng-model="basicConfig.Status"
+                                   name="pbxUserStatus"
+                                   value="FORWARD"/> Forwarding
+                        </label>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="col-lg-12">
+                <div class="col-md-6 m-top20">
+                    <button class="btn btn-primary" ng-click="SaveBasicConfig()"
+                            ng-disabled="!basicConfig.UserName || !basicConfig.RingTimeout || !basicConfig.Pin">Save
+                    </button>
+                </div>
+            </div>
+            <div class="clearfix"></div>
+
+        </form>
+    </div>
+
+
+</div>

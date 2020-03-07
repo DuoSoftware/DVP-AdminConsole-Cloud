@@ -1,0 +1,41 @@
+<div class="col-md-12 col-sm-12 col-xs-12">
+    <br>
+    <div class="x_panel">
+        <div class="x_content col-md-12 col-sm-12 col-xs-12">
+            <ul>
+                <div class="mail_list_column sip-user-wrap"
+                     ng-mouseover="viewScroll()"
+                     ng-mouseleave="hideScroll()"
+                     ng-slimscroll
+                     height="670" width="100%" opacity="0.2" distance="0px"
+                     enabled="{{ scrollEnabled }}">
+                    <a href="javascript:void(0);" class="user-wrap hover-none"
+                       ng-repeat="voxDid in voxDidGroupList.didGroups">
+                        <div class="mail_list user-list">
+                            <div class="right user-option-wrap">
+                                <h3 class="font-robot sub-header">
+                                    {{voxDid.didGroupId}}
+                                    <small class="fa fa-trash" ng-click="phoneNumberDelete(phn)"></small>
+                                    <small class="fa fa-pencil" ng-click="phoneEditMode(phn)"></small>
+                                </h3>
+
+                                <p class="font-robot">
+                                    CountryCodeA3 : {{voxDid.countryCodeA3}}
+                                </p>
+
+                                <p class="font-robot">
+                                    StateId : {{voxDid.stateId}}
+                                </p>
+                            </div>
+                            <div class="left">
+                            </div>
+                        </div>
+
+                        <br>
+
+                    </a>
+                </div>
+            </ul>
+        </div>
+    </div>
+</div>

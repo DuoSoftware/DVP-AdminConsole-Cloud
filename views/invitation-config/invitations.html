@@ -1,0 +1,118 @@
+
+<div class="row">
+
+    <div class="col-md-12 col-sm-6 col-xs-12">
+
+        <!-- application list -->
+        <div class="x_panel bg-light-gray animated fadeIn">
+            <div class="x_title border-0">
+                <div class="col-md-6 col-sm-6 col-xs-6">
+                    <h2 class="font-robot font-300 text-uppercase font-15">New Invitation</h2>
+                </div>
+
+                <div class="col-md-6 col-sm-6 col-xs-6 form-group top_search">
+                    <div class="input-group">
+                        <input type="text" ng-model="searchCriteria" class="form-control"
+                               placeholder="Search for...">
+                        <span class="input-group-btn">
+                                  <button class="btn btn-default" type="button">Go!</button>
+                                </span>
+                    </div>
+                </div>
+                <div class="col-xs-12">
+                    <div class="tile-stats m-top15">
+                        <form class="form-horizontal form-label-left input_mask" name="inviteFrm">
+                            <div class="row">
+                                <!--<label class="control-label col-md-2 col-sm-6 col-xs-12">Server Type</label>-->
+                                <div class="col-md-4 col-sm-4 col-xs-12 form-group">
+                                    <label for="">User</label>
+                                    <tags-input ng-model="tempUsrList" display-property="tag"
+                                                add-on-paste="true"
+                                                add-from-autocomplete-only="false" on-tag-added="onUserChipAdd($tag)"
+                                                on-tag-removed="onUserChipDelete($tag)" ng-disabled="" min-length="1"
+                                                placeholder="Add Users">
+
+                                    </tags-input>
+
+                                </div>
+                                <div class="col-md-4 col-sm-4 col-xs-12 form-group">
+                                    <label for="inv_usr">Role</label>
+                                    <select class="form-control has-feedback-left" ng-model="newInvite.role">
+                                        <option value="supervisor">Supervisor</option>
+                                        <option value="agent" selected>Agent</option>
+
+                                    </select>
+
+                                </div>
+
+
+
+
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12 col-sm-12 col-xs-12 form-group ">
+                                    <label for="inv_msg">Message</label>
+                                    <textarea class="form-control"
+                                              placeholder=""
+                                              ng-model="newInvite.message" required
+                                              id="inv_msg" name="inv_msh_inpt">
+
+                                    </textarea>
+
+
+                                </div>
+
+
+                            </div>
+
+
+                            <div class="row">
+
+
+                                <div class="col-md-12 col-sm-12 col-xs-12  ">
+                                    <button type="button" class="btn btn-success  btn- pull-right"
+                                            ng-click="sendInvitation()" ng-disabled="inviteFrm.inv_msh_inpt.$invalid ||  userList.length==0 || isRequested">
+                                        Check and Send
+                                    </button>
+                                </div>
+                            </div>
+
+                        </form>
+                    </div>
+                </div>
+                <div class="clearfix"></div>
+            </div>
+        </div>
+        <!-- end -->
+
+        <!-- view application users -->
+
+
+        <div class="x_panel ">
+            <div class="x_content">
+                <ul class="list-unstyled ">
+                    <li ng-repeat="invite in invites | filterBy: ['to']: searchCriteria">
+                        <editinviteconfig invite="invite" reloadpage="reloadPage()"></editinviteconfig>
+                    </li>
+
+                    <paging ng-show="showPaging"
+                            class="small"
+                            page="currentPage"
+                            page-size="pageSize"
+                            total="pageTotal"
+                            show-prev-next="true"
+                            show-first-last="true"
+                            text-next-class="glyphicon glyphicon-chevron-right"
+                            text-prev-class="glyphicon glyphicon-chevron-left"
+                            text-first-class="glyphicon glyphicon-backward"
+                            text-last-class="glyphicon glyphicon-forward"
+                            paging-action="getPageData('attribute', page, pageSize, total)">
+                    </paging>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+</div>

@@ -1,0 +1,335 @@
+<div class="row">
+
+    <div class="col-md-12 col-sm-6 col-xs-12">
+
+        <!-- Bot list -->
+        <div class="x_panel animated fadeIn bot-card">
+            <div class="x_title card-title">
+                <div class="col-md-6 col-sm-6 col-xs-6">
+                    <h2 class="font-robot">AI</h2>
+                </div>
+
+                <div class="col-md-4 col-sm-12 col-xs-12 form-group top_search card-search">
+                    <helpbutton class="helpbutton" displayhelp="'ai'"></helpbutton>
+                    <div class="card-search--form">
+                        <i class="fa fa-search"></i>
+                        <div class="input-group">
+                            <input type="text" ng-model="searchCriteria" class="form-control" placeholder="Search for...">
+                        </div>
+                    </div>
+                </div>
+
+                <div id="card-add-group" class="card-add">
+                    <button class="btn card-title--btn-add card-btn" ng-click="showNewCardForm=true" data-toggle="collapse" data-target="#addNewSetUp"
+                        data-parent="#card-add-group">New Rule</button>
+                    <button class="btn card-title--btn-add card-btn" ng-click="showNewCardTest=true" data-toggle="collapse" data-target="#test"
+                        data-parent="#card-add-group">Train</button>
+
+                    <div class="accordion-group">
+                        <div class="collapse indent" ng-show="showNewCardForm" id="addNewSetUp">
+                            <div class="subcard">
+                                <div class="col-sm-12 subcard-title ">
+                                    <h2 class="font-robot font-300 font-15">Create New AI Rule</h2>
+                                    <div data-toggle="collapse" data-target="#addNewSetUp" ng-click="showNewCardForm=false" class="btn-circle pull-right">
+                                        <i class="fa fa-times"></i>
+                                    </div>
+                                </div>
+                                <form name="createSetupai" ng-submit="createSetupAI(setupAI)" class="form-horizontal form-label-left input_mask card-create-bot">
+                                    <div class="row no-gutters">
+
+                                        <div class="col-12 col-sm-6 col-md-6 form-group">
+                                            <input type="text" class="form-control" ng-model="setupAI.ruleName" placeholder="Rule Name">
+
+                                        </div>
+
+                                        <div class="col-12 col-sm-6 col-md-6 form-group">
+                                            <input type="text" class="form-control" ng-model="setupAI.description" placeholder="Rule Description">
+
+                                        </div>
+                                        <div class="col-12 col-sm-12 col-md-12 form-group">
+                                            <label>If User Says Somthing Similar To:*</label>
+                                            <tags-input class="form-control" style="height:100% !important;" name="createSetupai.events" ng-model="setupAI.events" required></tags-input>
+                                        </div>
+
+                                        <div class="col-12 col-sm-6 col-md-6 form-group">
+                                            <label>Work Flow Name*</label>
+                                            <select class="form-control" name="createSetupai.workFlowName" placeholder="Work Flow Name*" ng-model="setupAI.workFlowName"
+                                                ng-options="x.Name as x.DisplayName for x in workFlowNames" required>
+                                            </select>
+                                        </div>
+
+                                        <div class="col-12 col-sm-6 col-md-6 form-group">
+                                            <label>Bot ID*</label>
+                                            <select class="form-control" name="createSetupai.botAppId" placeholder="Bot ID*" ng-model="setupAI.botAppId" ng-options="x._id as x.screen_name for x in allbots "
+                                                required>
+                                            </select>
+                                        </div>
+                                        <div class="col-12 col-sm-12 col-md-12 form-group">
+                                            <button type="submit" ng-disabled="createSetupai.$invalid" class="btn btn-success btn-block card-btn btn-add-bot pull-right">
+                                                Add Rule
+                                            </button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                        <div class="collapse indent" id="test">
+                            <div class="subcard">
+                                <div class="col-sm-12 subcard-title ">
+                                    <h2 class="font-robot font-300 font-15">Analyse Text</h2>
+                                    <div data-toggle="collapse" data-target="#test" ng-click="showNewCardTest=false" class="btn-circle pull-right">
+                                        <i class="fa fa-times"></i>
+                                    </div>
+                                </div>
+
+                                <form name="setTestWorkFlowForText" class="form-horizontal form-label-left input_mask card-create-bot">
+                                    <div class="row no-gutters">
+                                        <div class="col-12 col-sm-6 col-md-12 form-group">
+
+                                            <label>Text</label>
+                                            <button style="background-color:#fff; border:none;" ng-if="checkWorkFlowMatching == true">
+                                                <i class="fa fa-circle-o-notch fa-spin" style="font-size:24px"></i>
+                                            </button>
+
+                                            <textarea required name="setTestWorkFlowForText.message" type="text" class="form-control" ng-model="testWorkFlowForText.message"
+                                                placeholder="Check your sample sentences through our AI..." ng-keypress="checkTextForEnter($event)"></textarea>
+                                        </div>
+
+                                        <div style="padding-left: 10px;padding-bottom: 10px;">
+                                            <span>
+                                                <span style="color:red">Note:- </span>Entity Analysis inspects the given text for known entities
+                                                (proper nouns such as public figures, landmarks, etc.), and returns information
+                                                about those entities</span>
+                                        </div>
+
+                                        <!-- ng-disabled="setTestWorkFlowForText.$invalid" -->
+                                        <button ng-click="getworkflowfortextAPIUrl(testWorkFlowForText)" class="btn btn-success btn-block card-btn btn-add-bot pull-right">
+                                            Analyze
+                                        </button>
+
+
+                                        <div class="col-12 col-sm-6 col-md-12" ng-show="checkData || notMatchingKeyWord" style="padding-top:10px; padding-bottom: 10px;">
+                                            <div layout="row">
+                                                <span style="color:green">GREEN:</span>
+                                                <span>Already trained key word</span>
+                                            </div>
+                                            <div layout="row">
+                                                <span style="color:red">RED:</span>
+                                                <span>Untrained key word</span>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-12 col-sm-6 col-md-12" ng-if="checkWorkFlowMatching == false">
+                                            <!-- <div ng-show="notFound" style="padding-left: 6px;">
+                                                <span style="color:red">{{testWorkForText.CustomMessage}}</span>
+                                            </div> -->
+
+                                            <table class="table" ng-show="checkData">
+                                                <thead>
+                                                    <tr>
+                                                        <th scope="col">Work Flow Name</th>
+                                                        <th scope="col">Key Words</th>
+                                                        <th scope="col">Type</th>
+                                                        <th scope="col">Salience(%)</th>
+                                                        <th>Train</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr>
+                                                        <td>{{testWorkForText.Result.flowName}}</td>
+                                                        <td>
+                                                            <div ng-repeat="test in testWorkForText.Result.aiResolution.entities">
+                                                                <span ng-class="{'taggedclassA': test.tagged == true , 'taggedclassB': test.tagged == false}">{{test.name}}</span>
+                                                            </div>
+                                                        </td>
+                                                        <td>
+                                                            <div ng-repeat="test in testWorkForText.Result.aiResolution.entities">
+                                                                <span>{{test.type}}</span>
+                                                            </div>
+                                                        </td>
+                                                        <td>
+                                                            <div ng-repeat="test in testWorkForText.Result.aiResolution.entities">
+                                                                <span>{{test.salience * 100}}</span>
+                                                            </div>
+                                                        </td>
+                                                        <td>
+                                                            <div ng-repeat="test in testWorkForText.Result.aiResolution.entities">
+                                                                <button ng-show="test.tagged == false" style="margin-top:-4px !important;float:none !important;" class="btn-small" ng-click="train(test)"
+                                                                    href="#myModal">train</button>
+                                                                <div style="margin:4px 0 10px;" ng-show="test.tagged == true">already trained</div>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+
+                                            <table class="table" ng-show="notMatchingKeyWord">
+                                                <thead>
+                                                    <tr>
+                                                        <th scope="col">Work Flow Name</th>
+                                                        <th scope="col">Key Words</th>
+                                                        <th scope="col">Type</th>
+                                                        <th scope="col">Salience(%)</th>
+                                                        <th>Train</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr>
+                                                        <td>
+                                                            <span>{{testWorkForText.CustomMessage}}</span>
+                                                        </td>
+                                                        <td>
+                                                            <div ng-repeat="test in testWorkForText.Result.aiResolution.entities">
+                                                                <span class="taggedclassB">{{test.name}}</span>
+                                                            </div>
+                                                        </td>
+
+                                                        <td>
+                                                            <div ng-repeat="test in testWorkForText.Result.aiResolution.entities">
+                                                                <span>{{test.type}}</span>
+                                                            </div>
+                                                        </td>
+                                                        <td>
+                                                            <div ng-repeat="test in testWorkForText.Result.aiResolution.entities">
+                                                                <span>{{test.salience * 100}} </span>
+                                                            </div>
+                                                        </td>
+                                                        <td>
+                                                            <div ng-repeat="test in testWorkForText.Result.aiResolution.entities">
+                                                                <button style="margin-top:-4px !important; float:none !important;" class="btn-small" href="#myModal" ng-click="train(test)">train</button>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+
+                                        <!-- Modal -->
+
+                                        <div style="top: -95px; width:100% !important;" class="modal-dialog" ng-show="editMode">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true" ng-click="closeModal()">&times;</button>
+                                                    <h4 class="modal-title">{{modalName}}</h4>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <form class="form-horizontal form-label-left input_mask">
+                                                        <div class="row no-gutters">
+
+                                                            <div class="col-12 col-sm-6 col-md-6 form-group" ng-show="showCreateModel">
+                                                                <input type="text" class="form-control has-feedback-left" ng-model="createAiModel.ruleName" placeholder="Rule Name">
+                                                                <span class="fa fa-user form-control-feedback left" aria-hidden="true"></span>
+                                                            </div>
+                                                            <div class="col-12 col-sm-6 col-md-6 form-group" ng-show="showCreateModel">
+                                                                <input type="text" class="form-control has-feedback-left" ng-model="createAiModel.description" placeholder="Rule Description">
+                                                                <span class="fa fa-user form-control-feedback left" aria-hidden="true"></span>
+                                                            </div>
+                                                            <div class="col-6 col-md-6 form-group has-feedback">
+                                                                <label>If User Says Somthing Similar To:*</label>
+                                                                <tags-input class="form-control width-100" ng-model="createAiModel.events">
+                                                                </tags-input>
+                                                            </div>
+
+                                                            <div class="col-3 col-md-3 form-group has-feedback">
+                                                                <label>Work Flow Name*</label>
+                                                                <select class="form-control has-feedback-left" placeholder="Work Flow Name*" ng-model="createAiModel.workFlowName" ng-options="x.Name as x.DisplayName for x in workFlowNames"></select>
+                                                            </div>
+                                                            <div class="col-3 col-md-3 form-group has-feedback" ng-show="showCreateModel">
+                                                                <label>Bot ID*</label>
+                                                                <select class="form-control" name="createAiModel.botAppId" placeholder="Bot ID*" ng-model="createAiModel.botAppId" ng-options="x._id as x.screen_name for x in allbots">
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button ng-show="showCreateModel" type="button" class="btn btn-primary" ng-click="createSetupAI(createAiModel)">Train</button>
+                                                    <button ng-show="!showCreateModel" type="button" class="btn btn-primary" ng-click="updateTrainModelData(createAiModel)">Update</button>
+                                                </div>
+                                            </div>
+                                            <!-- /.modal-content -->
+                                        </div>
+                                        <!-- /.modal-dialog -->
+                                        <!-- /.modal -->
+
+                                        <!-- <div class="col-md-12 col-sm-12 col-xs-12 edit-main-wrap" ng-show="editMode">
+                                            <div class="application-edit">
+                                                <div class="col-sm-12">
+                                                    <div class="col-sm-6">
+                                                        <h2 class="font-robot font-300 text-uppercase font-15">Edit {{setupai.ruleName}}</h2>
+                                                    </div>
+                                                    <div class="col-sm-6">
+                                                        <div class="edit-close pull-right">
+                                                            <i class="fa fa-close" ng-click="closeTemplate()"></i>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-12 col-sm-6 col-xs-12 col-xs-12">
+                                                    <div class="tile-stats  m-top15">
+                                                        <form class="form-horizontal form-label-left input_mask">
+                                                            <div class="row no-gutters">
+                                                                <div class="col-6 col-md-6 form-group has-feedback">
+                                                                    <label>If User Says Somthing Similar To:*</label>
+                                                                    <tags-input class="form-control width-100" ng-model="setupai.events">
+                                                                    </tags-input>
+                                                                </div>
+                                                                <div class="col-3 col-md-3 form-group has-feedback">
+                                                                    <label>Work Flow Name*</label>
+                                                                    <select class="form-control has-feedback-left" placeholder="Work Flow Name*" ng-model="setupai.workFlowName" ng-options="x.Name as x.DisplayName for x in workFlowNames"></select>
+                                                                </div>
+                                                                <div class="col-3 col-md-3 form-group has-feedback">
+                                                                    <label>Bot ID*</label>
+                                                                    <select class="form-control" name="setupai.botAppId" placeholder="Bot ID*" ng-model="setupai.botAppId" ng-options="x._id as x.screen_name for x in botlist">
+                                                                    </select>
+                                                                </div>
+
+                                                            </div>
+                                                            <div class="col-md-12 col-sm-9 col-xs-12 m-top15">
+                                                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                                                    <button type="button" class="btn btn-success btn-sm pull-right" ng-click="updaterule(setupai)">
+                                                                        Update
+                                                                    </button>
+                                                                </div>
+                                                            </div>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div> -->
+
+
+
+
+
+                                    </div>
+                                </form>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <script type="text/javascript">
+                    var $myGroup = $('#card-add-group');
+                    $myGroup.on('show.bs.collapse', '.collapse', function () {
+                        $myGroup.find('.collapse.in').collapse('hide');
+                    });
+                </script>
+
+                <div class="clearfix"></div>
+            </div>
+
+            <div class="x_content">
+                <ul class="list-unstyled">
+                    <li ng-repeat="setupai in allsetupai | filterBy: ['workFlowName']: searchCriteria | orderBy:'-created_at'" style="border-bottom: 1px solid #efefef;">
+                        <editsetupai setupai="setupai" botlist="allbots" setupai-type="TemplateCategory" updaterule="updateSetupai(setupai)" delete-setupai="deleteSetupai(setupai)"
+                            setupai-Types="TemplateTypes">
+                        </editsetupai>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <!-- end -->
+    </div>
+
+</div>

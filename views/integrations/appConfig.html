@@ -1,0 +1,187 @@
+<div class="col-md-12 col-sm-12 col-xs-12" id="appConfig" ng-class="{ 'ui-disabled' : isProcessing }">
+    <div class="x_panel">
+        <div class="x_title">
+            <h2>{{ currentApp.name }}
+                <small>Configuration</small>
+            </h2>
+            <ul class="nav navbar-right panel_toolbox">
+                <li>
+                    <button class="btn btn-success pull-right" ng-click="clickDirective.goAppIntegration()" title="Back">Back</button>
+                </li>
+            </ul>
+            <div class="clearfix"></div>
+        </div>
+
+
+        <div class="x_panel" ng-show="isProcessing">
+            <div class="x_content">
+                <div class="col-md-12 col-sm-12 col-xs-12">
+                    <div class="data-state-wrap">
+                        Processing...
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="_x_panel">            
+            <h4>
+                Default URL
+            </h4>
+            <url-config integration-obj="currentApp.default_integration" reference-objects='["User", "Custom"]' css-class="well"></url-config>
+        </div>
+        <div class="form-group">
+            <div class="col-md-9 col-sm-9 col-xs-12 col-md-offset-3">                
+                <button ng-disabled="!currentApp.default_integration.url||!currentApp.default_integration.method"
+                        class="btn btn-success pull-right" ng-click="updateDefaultIntegration(currentApp._id, currentApp.default_integration)" title="Save App">Save
+                </button>
+            </div>
+        </div>
+        <div class="clearfix"></div>
+        <div class="ln_solid"></div>
+        <br/>
+        <div class="_x_panel" id="action_panel">
+            <h4>
+                Actions
+                <ul class="nav navbar-right panel_toolbox">
+                    <li ng-if="currentApp.actions.length < 5">
+                        <a title="Add Action" ng-click="showConfigurations()" class="close-link"><i class="fa fa-plus"></i> Add Action</a>
+                    </li>
+                </ul>
+            </h4>
+
+            <div class="ln_solid"></div>
+
+            <div ng-show="showConfiguration" class="well" id="appEditWindow" tabindex="0">
+                <div class="closebtn" ng-click="showConfigurations()"><span class="glyphicon glyphicon-remove"></span></div>
+                <ng-form class="" name="fOuter" novalidate>
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-md-4 col-sm-4 col-xs-12 form-group" ng-class="{ 'has-error' : fOuter.name.$invalid && !fOuter.name.$pristine }">
+                                <span>Name<span class="req">*</span></span>
+                                <input type="text" class="form-control" name="name" ng-model="actionData.name" required>
+                                <p ng-show="fOuter.name.$invalid && !fOuter.name.$pristine" class="help-block">Name is required.</p>
+                            </div>
+                            <div class="col-md-4 col-sm-4 col-xs-12 form-group" ng-class="{ 'has-error' : fOuter.icon.$invalid && !fOuter.icon.$pristine }">
+                                <span>Icon</span>
+                                <input type="url" class="form-control" name="icon" ng-model="actionData.icon">
+                                <p ng-show="fOuter.icon.$invalid && !fOuter.icon.$pristine" class="help-block">Icon URL is invalid.</p>
+                            </div>
+                            <div class="col-md-4 col-sm-4 col-xs-12 form-group" ng-class="{ 'has-error' : fOuter.dynamic_form_id.$invalid && !fOuter.dynamic_form_id.$pristine }">
+                                <span>Form</span>
+                                <select class="form-control" name="dynamic_form_id" ng-options="form._id as form.name for form in formList" ng-model="actionData.dynamic_form_id">
+                                    <option value=""></option>
+                                </select>
+                                <p ng-show="fOuter.dynamic_form_id.$invalid && !fOuter.dynamic_form_id.$pristine" class="help-block">Form is invalid.</p>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <div class="ln_solid"></div>
+
+                    <url-config integration-obj="actionData.integration" reference-objects='["User", "Form", "Grid", "Custom"]' css-class=""></url-config>
+                    
+                    <div class="ln_solid"></div>
+
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-md-4 col-sm-4 col-xs-12 form-group" ng-class="{ 'has-error' : fOuter.accepted_codes.$invalid && !fOuter.accepted_codes.$pristine }">
+                                <span>Accepted Status Codes<span class="req">*</span></span>
+                                <tags-input class="input" ng-model="actionData.integration.response_map.accepted_codes" display-property="code" key-property="code" name="accepted_codes" use-strings="true" placeholder="Comma seperated" allowed-tags-pattern="^[0-9]{3}$" required></tags-input>
+                                <p ng-show="fOuter.accepted_codes.$invalid && !fOuter.accepted_codes.$pristine" class="help-block">Accepted code(s) is required.</p>
+                            </div>
+                            <div class="col-md-4 col-sm-4 col-xs-12 form-group" ng-class="{ 'has-error' : fOuter.success_msg.$invalid && !fOuter.success_msg.$pristine }">
+                                <span>Success Message<span class="req">*</span></span>
+                                <input type="text" class="form-control" name="success_msg" ng-model="actionData.integration.response_map.success_msg" required>
+                                <p ng-show="fOuter.success_msg.$invalid && !fOuter.success_msg.$pristine" class="help-block">Success Message is required.</p>
+                            </div>
+                            <div class="col-md-4 col-sm-4 col-xs-12 form-group" ng-class="{ 'has-error' : fOuter.error_msg.$invalid && !fOuter.error_msg.$pristine }">
+                                <span>Error Message<span class="req">*</span></span>
+                                <input type="text" class="form-control" name="error_msg" ng-model="actionData.integration.response_map.error_msg" required>
+                                <p ng-show="fOuter.error_msg.$invalid && !fOuter.error_msg.$pristine" class="help-block">Error Message is required.</p>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <div class="ln_solid"></div>
+                    <div class="form-group">
+                        <div class="col-md-9 col-sm-9 col-xs-12 col-md-offset-3">                            
+                            <button ng-if="!isUpdate" ng-disabled="!actionData.name||!actionData.integration.method||!actionData.integration.url||!actionData.integration.response_map.accepted_codes||
+                                actionData.integration.response_map.accepted_codes.length == 0||!actionData.integration.response_map.success_msg||!actionData.integration.response_map.error_msg"
+                                    class="btn btn-success pull-right" ng-click="addActionToApp(actionData)" title="Add Action">Add
+                            </button>
+
+                            <button ng-if="isUpdate" ng-disabled="!actionData.name||!actionData.integration.method||!actionData.integration.url||!actionData.integration.response_map.accepted_codes||
+                            actionData.integration.response_map.accepted_codes.length == 0||!actionData.integration.response_map.success_msg||!actionData.integration.response_map.error_msg"
+                                    class="btn btn-success pull-right" ng-click="updateAction()" title="Apply Changes and Close">Update
+                            </button>
+                        </div>
+                    </div>    
+                </ng-form>
+            </div>
+
+            <div ng-hide="currentApp.actions.length">
+                <div class="x_content">
+                    <div class="col-md-12 col-sm-12 col-xs-12">
+                        <div class="data-state-wrap">
+                            No Actions Configured.
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="_x_panel" ng-show="currentApp.actions.length">
+                <div class="x_content">
+                    <ul class="list-unstyled timeline">
+                        <li ng-attr-id="{{ action.name }} " ng-class="{ 'newapp' : action.new }" x-id="appAction" ng-repeat="action in currentApp.actions">
+                            <div class="block">
+                                <div class="tags">
+                                    <a href="" class="tag">
+                                        <span>{{action.integration.method}}</span>
+                                    </a>
+                                </div>
+                                <div class="block_content">
+                                    <h2 class="title font-300">
+                                        <a>{{action.name}}</a>
+                                        <i class="fa fa-trash-o pull-right cursor-pointer" ng-click="deleteAction(action)" title="Delete Action"></i>
+                                        <i class="fa fa-pencil-square-o pull-right cursor-pointer" ng-click="editAction(action)" title="Edit Action"></i>
+                                    </h2>
+                                    <div class="byline">
+                                        <span>{{action.integration.method}} </span> : <a>{{action.integration.url}}</a>
+                                    </div>
+                                    <br>
+                                    <div class="tile-stats" ng-if="action.integration.parameters.length">
+                                        <h3>Parameters</h3>
+                                        <div class="panel-body">
+                                            <table class="table table-bordered">
+                                                <thead>
+                                                <tr>
+                                                    <th>Parameter Name</th>
+                                                    <th>Reference Object</th>
+                                                    <th>Parameter Property</th>
+                                                    <th>Parameter Location</th>
+                                                </tr>
+                                                </thead>
+                                                <tbody>
+                                                <tr ng-repeat="para in action.integration.parameters">
+                                                    <th>{{para.name}}</th>
+                                                    <td>{{para.referenceObject}}</td>
+                                                    <td>{{para.referenceProperty}}</td>
+                                                    <td>{{para.parameterLocation}}</td>
+                                                </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+        
+    </div>
+</div>

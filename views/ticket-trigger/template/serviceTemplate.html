@@ -1,0 +1,21 @@
+<div class="col-md-12 col-sm-12 col-xs-12 form-group has-feedback">
+    <select class="form-control has-feedback-left" placeholder="Select Potion"
+            ng-model="ngModel.value.method">
+        <option value="" disabled selected>Select Potion</option>
+        <option> POST </option>
+        <option> PUT </option>
+        <option> GET </option>
+        <option> DELETE </option>
+    </select>
+    <span class="fa fa-envelope form-control-feedback left" aria-hidden="true"></span>
+</div>
+<div class="col-md-12 col-sm-12 col-xs-12 form-group has-feedback">
+    <input type="text" class="form-control has-feedback-left"
+           ng-model="ngModel.field"
+           placeholder="URL">
+    <span class="fa fa-user form-control-feedback left" aria-hidden="true"></span>
+</div>
+<div class="col-md-12 col-sm-12 col-xs-12 form-group has-feedback">
+    <textarea class="form-control  has-feedback-left" ng-model="ngModel.value.data"  placeholder="Enter Request body"></textarea>
+    <span class="fa fa-user form-control-feedback left" aria-hidden="true"></span>
+</div>

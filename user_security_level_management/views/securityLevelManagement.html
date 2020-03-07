@@ -1,0 +1,243 @@
+<div class="col-md-12 col-sm-12 col-xs-12">
+    <div class="x_panel" id="id">
+        <div class="x_title">
+            <h2 class="font-robot font-300 text-uppercase font-15">User Security Level Manager
+            </h2>
+
+            <div class="clearfix"></div>
+        </div>
+        <div class="x_content">
+            <br>
+            <form id="demo-form2" data-parsley-validate="" class="form-horizontal form-label-left" novalidate="">
+                <div class="row">
+                    <div class="col-md-6 col-sm-6 col-xs-12">
+                        <div class="drop-header">
+                            <i class="fa fa-lock"></i>
+                            <h2 class="text-center">Security Levels</h2>
+                        </div>
+
+                        <h4>Level 1</h4>
+                        <div class="thumbnaildrag drop-area-wrap" data-drop="true" ng-model='assignedLevel1'
+                             data-jqyoui-options="{accept:'.btn-draggable:not([ng-model=assignedLevel1])'}"
+                             jqyoui-droppable="{multiple:false,onDrop: 'assignNavigation({level:1})'}">
+                            <div class="caption">
+                                <div ng-mousedown = "setCurrentDragItem(item)" ng-click="setCurrentDragItem(item)" class="btn btn-round btn-warning btn-draggable  draggable-item"
+                                     ng-repeat="item in assignedLevel1" ng-show="item.username"
+                                     data-drag="true" data-jqyoui-options="{revert: 'invalid'}"
+                                     ng-model="assignedLevel1"
+                                     jqyoui-draggable="{index: {{$index}},animate:true}">
+                                    {{item.username}}
+                                </div>
+                                <div class="drop-area-text" ng-if="assignedLevel1.length==0">
+                                    drop area
+                                </div>
+                            </div>
+                        </div>
+                        <h4>Level 2</h4>
+                        <div class="thumbnaildrag drop-area-wrap" data-drop="true" ng-model='assignedLevel2'
+                             data-jqyoui-options="{accept:'.btn-draggable:not([ng-model=assignedLevel2])'}"
+                             jqyoui-droppable="{multiple:false,onDrop: 'assignNavigation({level:2})'}">
+                            <div class="caption">
+                                <div ng-mousedown ="setCurrentDragItem(item)" ng-click="setCurrentDragItem(item)"
+                                     class="btn btn-round
+                                 btn-warning btn-draggable  draggable-item"
+                                     ng-repeat="item in assignedLevel2" ng-show="item.username"
+                                     data-drag="true" data-jqyoui-options="{revert: 'invalid'}"
+                                     ng-model="assignedLevel2"
+                                     jqyoui-draggable="{index: {{$index}},animate:true}">
+                                    {{item.username}}
+                                </div>
+                                <div class="drop-area-text" ng-if="assignedLevel2.length==0">
+                                    drop area
+                                </div>
+                            </div>
+                        </div>
+                        <h4>Level 3</h4>
+                        <div class="thumbnaildrag drop-area-wrap" data-drop="true" ng-model='assignedLevel3'
+                             data-jqyoui-options="{accept:'.btn-draggable:not([ng-model=assignedLevel3])'}"
+                             jqyoui-droppable="{multiple:false,onDrop: 'assignNavigation({level:3})'}">
+                            <div class="caption">
+                                <div  ng-mousedown = "setCurrentDragItem(item)" ng-click="setCurrentDragItem(item)"
+                                      class="btn btn-round
+                                 btn-warning btn-draggable  draggable-item"
+                                      ng-repeat="item in assignedLevel3" ng-show="item.username"
+                                      data-drag="true" data-jqyoui-options="{revert: 'invalid'}"
+                                      ng-model="assignedLevel3"
+                                      jqyoui-draggable="{index: {{$index}},animate:true}">
+                                    {{item.username}}
+                                </div>
+                                <div class="drop-area-text" ng-if="assignedLevel3.length==0">
+                                    drop area
+                                </div>
+                            </div>
+                        </div>
+                        <h4>Level 4</h4>
+                        <div class="thumbnaildrag drop-area-wrap" data-drop="true" ng-model='assignedLevel4'
+                             data-jqyoui-options="{accept:'.btn-draggable:not([ng-model=assignedLevel4])'}"
+                             jqyoui-droppable="{multiple:false,onDrop: 'assignNavigation({level:4})'}">
+                            <div class="caption">
+                                <div  ng-mousedown = "setCurrentDragItem(item)" ng-click="setCurrentDragItem(item)"
+                                      class="btn btn-round
+                                 btn-warning btn-draggable  draggable-item"
+                                      ng-repeat="item in assignedLevel4" ng-show="item.username"
+                                      data-drag="true" data-jqyoui-options="{revert: 'invalid'}"
+                                      ng-model="assignedLevel4"
+                                      jqyoui-draggable="{index: {{$index}},animate:true}">
+                                    {{item.username}}
+                                </div>
+                                <div class="drop-area-text" ng-if="assignedLevel4.length==0">
+                                    drop area
+                                </div>
+                            </div>
+                        </div>
+                        <h4>Level 5</h4>
+                        <div class="thumbnaildrag drop-area-wrap" data-drop="true" ng-model='assignedLevel5'
+                             data-jqyoui-options="{accept:'.btn-draggable:not([ng-model=assignedLevel5])'}"
+                             jqyoui-droppable="{multiple:false,onDrop: 'assignNavigation({level:5})'}">
+                            <div class="caption">
+                                <div  ng-mousedown = "setCurrentDragItem(item)" ng-click="setCurrentDragItem(item)"
+                                      class="btn btn-round
+                                 btn-warning btn-draggable  draggable-item"
+                                      ng-repeat="item in assignedLevel5" ng-show="item.username"
+                                      data-drag="true" data-jqyoui-options="{revert: 'invalid'}"
+                                      ng-model="assignedLevel5"
+                                      jqyoui-draggable="{index: {{$index}},animate:true}">
+                                    {{item.username}}
+                                </div>
+                                <div class="drop-area-text" ng-if="assignedLevel5.length==0">
+                                    drop area
+                                </div>
+                            </div>
+                        </div>
+                        <h4>Level 6</h4>
+                        <div class="thumbnaildrag drop-area-wrap" data-drop="true" ng-model='assignedLevel6'
+                             data-jqyoui-options="{accept:'.btn-draggable:not([ng-model=assignedLevel6])'}"
+                             jqyoui-droppable="{multiple:false,onDrop: 'assignNavigation({level:6})'}">
+                            <div class="caption">
+                                <div  ng-mousedown = "setCurrentDragItem(item)" ng-click="setCurrentDragItem(item)"
+                                      class="btn btn-round
+                                 btn-warning btn-draggable  draggable-item"
+                                      ng-repeat="item in assignedLevel6" ng-show="item.username"
+                                      data-drag="true" data-jqyoui-options="{revert: 'invalid'}"
+                                      ng-model="assignedLevel6"
+                                      jqyoui-draggable="{index: {{$index}},animate:true}">
+                                    {{item.username}}
+                                </div>
+                                <div class="drop-area-text" ng-if="assignedLevel6.length==0">
+                                    drop area
+                                </div>
+                            </div>
+                        </div>
+                        <h4>Level 7</h4>
+                        <div class="thumbnaildrag drop-area-wrap" data-drop="true" ng-model='assignedLevel7'
+                             data-jqyoui-options="{accept:'.btn-draggable:not([ng-model=assignedLevel7])'}"
+                             jqyoui-droppable="{multiple:false,onDrop: 'assignNavigation({level:7})'}">
+                            <div class="caption">
+                                <div ng-mousedown = "setCurrentDragItem(item)" ng-click="setCurrentDragItem(item)"
+                                     class="btn btn-round
+                                 btn-warning btn-draggable  draggable-item"
+                                     ng-repeat="item in assignedLevel7" ng-show="item.username"
+                                     data-drag="true" data-jqyoui-options="{revert: 'invalid'}"
+                                     ng-model="assignedLevel7"
+                                     jqyoui-draggable="{index: {{$index}},animate:true}">
+                                    {{item.username}}
+                                </div>
+                                <div class="drop-area-text" ng-if="assignedLevel7.length==0">
+                                    drop area
+                                </div>
+                            </div>
+                        </div>
+                        <h4>Level 8</h4>
+                        <div class="thumbnaildrag drop-area-wrap" data-drop="true" ng-model='assignedLevel8'
+                             data-jqyoui-options="{accept:'.btn-draggable:not([ng-model=assignedLevel8])'}"
+                             jqyoui-droppable="{multiple:false,onDrop: 'assignNavigation({level:8})'}">
+                            <div class="caption">
+                                <div ng-mousedown = "setCurrentDragItem(item)" ng-click="setCurrentDragItem(item)"
+                                     class="btn btn-round
+                                 btn-warning btn-draggable  draggable-item"
+                                     ng-repeat="item in assignedLevel8" ng-show="item.username"
+                                     data-drag="true" data-jqyoui-options="{revert: 'invalid'}"
+                                     ng-model="assignedLevel8"
+                                     jqyoui-draggable="{index: {{$index}},animate:true}">
+                                    {{item.username}}
+                                </div>
+                                <div class="drop-area-text" ng-if="assignedLevel8.length==0">
+                                    drop area
+                                </div>
+                            </div>
+                        </div>
+                        <h4>Level 9</h4>
+                        <div class="thumbnaildrag drop-area-wrap" data-drop="true" ng-model='assignedLevel9'
+                             data-jqyoui-options="{accept:'.btn-draggable:not([ng-model=assignedLevel9])'}"
+                             jqyoui-droppable="{multiple:false,onDrop: 'assignNavigation({level:9})'}">
+                            <div class="caption">
+                                <div  ng-mousedown = "setCurrentDragItem(item)" ng-click="setCurrentDragItem(item)"
+                                      class="btn btn-round
+                                 btn-warning btn-draggable  draggable-item"
+                                      ng-repeat="item in assignedLevel9" ng-show="item.username"
+                                      data-drag="true" data-jqyoui-options="{revert: 'invalid'}"
+                                      ng-model="assignedLevel9"
+                                      jqyoui-draggable="{index: {{$index}},animate:true}">
+                                    {{item.username}}
+                                </div>
+                                <div class="drop-area-text" ng-if="assignedLevel9.length==0">
+                                    drop area
+                                </div>
+                            </div>
+                        </div>
+                        <h4>Level 10</h4>
+                        <div class="thumbnaildrag drop-area-wrap" data-drop="true" ng-model='assignedLevel10'
+                             data-jqyoui-options="{accept:'.btn-draggable:not([ng-model=assignedLevel10])'}"
+                             jqyoui-droppable="{multiple:false,onDrop: 'assignNavigation({level:10})'}">
+                            <div class="caption">
+                                <div ng-mousedown = "setCurrentDragItem(item)" ng-click="setCurrentDragItem(item)"
+                                     class="btn btn-round
+                                 btn-warning btn-draggable  draggable-item"
+                                     ng-repeat="item in assignedLevel10" ng-show="item.username"
+                                     data-drag="true" data-jqyoui-options="{revert: 'invalid'}"
+                                     ng-model="assignedLevel10"
+                                     jqyoui-draggable="{index: {{$index}},animate:true}">
+                                    {{item.username}}
+                                </div>
+                                <div class="drop-area-text" ng-if="assignedLevel10.length==0">
+                                    drop area
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <!-- end -->
+                    <div class="col-md-6 col-sm-6 col-xs-12">
+                        <!-- delete permission -->
+                        <div class="drop-header">
+                            <i class="fa fa-unlock"></i>
+                            <h2 class="text-center">Unallocated Users </h2>
+                        </div>
+                        <div class="thumbnaildrag drop-area-wrap" data-drop="true" ng-model='availableUsers'
+                             data-jqyoui-options="{accept:'.btn-draggable:not([ng-model=availableUsers])'}"
+                             jqyoui-droppable="{multiple:false,onDrop: 'removeNavigation'}">
+                            <div class="caption">
+                                <div ng-mousedown = "setCurrentDragItem(item)" ng-click="setCurrentDrag(item)" class="btn btn-round btn-primary
+                                 btn-draggable  draggable-item"
+                                     ng-repeat="item in availableUsers" ng-show="item.username"
+                                     data-drag="true" data-jqyoui-options="{revert: 'invalid'}"
+                                     ng-model="availableUsers"
+                                     jqyoui-draggable="{index: {{$index}},animate:true}">
+                                    {{item.username}}
+                                </div>
+                                <div class="drop-area-text" ng-if="availableUsers.length==0">
+                                    drop area
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- end -->
+
+                <!--<div ng-disabled="active" class="form-group has-feedback">-->
+                <!--<br>-->
+                <!--</div>-->
+            </form>
+        </div>
+    </div>
+</div>

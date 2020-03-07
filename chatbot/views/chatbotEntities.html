@@ -1,0 +1,86 @@
+<div class="row">
+
+        <div class="col-md-12 col-sm-6 col-xs-12">
+    
+            <!-- Bot list -->
+            <div class="x_panel animated fadeIn bot-card">
+                <div class="x_title card-title">
+                    <div class="col-md-6 col-sm-6 col-xs-6">
+                        <h2 class="font-robot">Entities</h2>
+                    </div>
+    
+                    <div class="col-md-4 col-sm-12 col-xs-12 form-group top_search card-search">
+                        <helpbutton class="helpbutton" displayhelp="'entity'"></helpbutton>
+                        <div class="card-search--form">
+                            <i class="fa fa-search"></i>
+                            <div class="input-group">
+                                <input type="text" ng-model="searchCriteria" class="form-control" placeholder="Search for...">
+                            </div>
+                        </div>
+                    </div>
+    
+                    <div id="card-add-group" class="card-add">
+                        <button class="btn card-title--btn-add card-btn" data-toggle="collapse" data-target="#addNewSetUp"
+                            data-parent="#card-add-group">New Entity</button>
+        
+                        <div class="accordion-group">
+                            <div class="collapse indent" id="addNewSetUp">
+                                <div class="subcard">
+                                    <div class="col-sm-12 subcard-title ">
+                                        <h2 class="font-robot font-300 font-15">Create New Entity</h2>
+                                        <div data-toggle="collapse" data-target="#addNewSetUp" ng-click="closeCreateModel();" class="btn-circle pull-right">
+                                            <i class="fa fa-times"></i>
+                                        </div>
+                                    </div>
+                                    <form name="createEntity" ng-submit="createNewEntity(entities)" class="form-horizontal form-label-left input_mask card-create-bot">
+                                        <div class="row no-gutters">
+    
+                                            <div class="col-12 col-sm-6 col-md-6 form-group">
+                                                <input type="text" class="form-control" name="createEntity" ng-model="entities.entityName" placeholder="Entity Name">
+                                            </div>
+    
+                                            <div class="col-12 col-sm-6 col-md-6 form-group">
+                                                <input type="text" class="form-control" name="createEntity" ng-model="entities.description" placeholder="Entity Description">
+                                            </div>
+                                            
+                                            <div class="col-12 col-sm-12 col-md-12 form-group">
+                                                <label>Enter Values</label>
+                                                <tags-input class="form-control" style="height:100% !important;" name="createEntity" ng-model="entities.values" required></tags-input>
+                                            </div>
+    
+                                            <div class="col-12 col-sm-12 col-md-12 form-group">
+                                                <button type="submit" ng-disabled="createEntity.$invalid" data-toggle="collapse" data-target="#addNewSetUp" class="btn btn-success btn-block card-btn btn-add-bot pull-right">
+                                                    Add Entity
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+    
+                    <script type="text/javascript">
+                        var $myGroup = $('#card-add-group');
+                        $myGroup.on('show.bs.collapse', '.collapse', function () {
+                            $myGroup.find('.collapse.in').collapse('hide');
+                        });
+                    </script>
+    
+                    <div class="clearfix"></div>
+                </div>
+                
+                <div class="x_content">
+                    <ul class="list-unstyled">
+                        <li ng-repeat="entity in allEntities | filterBy: ['entityName']: searchCriteria | orderBy:'-created_at'" style="border-bottom: 1px solid #efefef;">
+                            <editentity entity="entity" botlist="allbots" entity-type="EntityCategory" update-entity="updateEntity(entity)" delete-entity="deleteEntity(entity)"
+                            entity-Types="EntityTypes">
+                            </editentity>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <!-- end -->
+        </div>
+    
+    </div>

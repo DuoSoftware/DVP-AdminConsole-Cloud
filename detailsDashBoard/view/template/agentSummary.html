@@ -1,0 +1,57 @@
+<!--<div class="x_panel fixed_height_210" ng-mouseenter="stopTimerFn(true)" ng-mouseleave="stopTimerFn(false);">-->
+<div class="x_panel">
+    <!--<div class="x_title">
+        <h2><i class="fa fa-align-left"></i> Agents
+            <small>Summary</small>
+        </h2>
+        <ul class="nav navbar-right panel_toolbox">
+
+        </ul>
+        <div class="clearfix"></div>
+    </div>-->
+
+    <!--<h2 class="x_title_inner" ng-click="GetProductivity();">Agents <small>Summary</small></h2>-->
+    <div class="x_title">
+        <h2>Agents Summery</h2>
+        <ul class="nav navbar-right panel_toolbox">
+            <li ng-show="!showFilter" ng-click="showFilter= !showFilter; updateOVPanel()"><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+            </li>
+            <li ng-show="showFilter" ng-click="showFilter= !showFilter; updateOVPanel()"><a class="close-link"><i class="fa fa-chevron-down"></i></a>
+            </li>
+        </ul>
+        <div class="clearfix"></div>
+    </div>
+    <div class="form-group" ng-show="!showFilter" style="padding: 10px; background: rgb(221, 221, 221);margin: 0 10px 10px 10px">
+        <h2 style="margin:0 0 10px"><small>Skill filter</small></h2>
+        <div class="input-group col-md-12">
+            <tags-input  ng-model="selectedSkills"
+                         display-property="Attribute" min-length="1"
+                         add-from-autocomplete-only="true" placeholder="Select queues">
+                <auto-complete max-results-to-show="1000" source="querySearch($query)"
+                               load-on-empty="true" load-on-focus="true"
+                               min-length="1"></auto-complete>
+            </tags-input>
+        </div>
+    </div>
+
+    <div class="x_content agentSummery" style="padding: 0" ng-style="selectedAgent ? {'z-index':'0'} : {'z-index':'1'}">
+
+
+        <div ng-hide="agentSummaryGridOptions.data.length>0">
+            <div class="row ">
+                <div class="col-md-12 col-sm-12 col-xs-12">
+                    <div class="data-state-wrap">
+                        <i class="fa fa-exclamation-circle"></i>
+                        <span>No Data</span>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <div ng-show="agentSummaryGridOptions.data.length>0" ui-grid="agentSummaryGridOptions" class="agentSummarygrid"
+             ui-grid-move-columns ui-grid-resize-columns  ui-grid-auto-resize ui-grid-selection ui-grid-pinning ></div>
+
+    </div>
+    <div ng-if="selectedAgent" ng-include="'detailsDashBoard/view/template/agentInfo.html'"></div>
+</div>

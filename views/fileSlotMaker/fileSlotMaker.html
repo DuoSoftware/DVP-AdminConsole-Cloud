@@ -1,0 +1,116 @@
+<div class="row">
+
+    <div class="col-md-12 col-sm-6 col-xs-12">
+
+        <!-- application list -->
+        <div class="x_panel bg-light-gray animated fadeIn">
+            <div class="x_title border-0">
+                <div class="col-md-6 col-sm-6 col-xs-6">
+                    <h2 class="font-robot font-300 text-uppercase font-15">New File Slot</h2>
+                </div>
+
+                <div class="col-md-6 col-sm-6 col-xs-6 form-group top_search">
+                    <div class="input-group">
+                        <input type="text" ng-model="searchCriteria" class="form-control"
+                               placeholder="Search for...">
+                                <span class="input-group-btn">
+                                  <button class="btn btn-default" type="button">Go!</button>
+                                </span>
+                    </div>
+                </div>
+                <div class="col-xs-12">
+                    <div class="tile-stats m-top15">
+                        <form class="form-horizontal form-label-left input_mask">
+                            <div class="row">
+                                <div class="col-md-3 col-sm-3 col-xs-12 form-group has-feedback">
+                                    <label > Slot Array Name</label>
+                                    <input type="text" class="form-control has-feedback-left"
+                                           ng-model="newSlot.name"
+                                           placeholder="SlotArray Name">
+                                    <span class="fa fa-user form-control-feedback left" aria-hidden="true"></span>
+                                </div>
+
+                                <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
+                                    <label > Tags</label>
+                                    <tags-input ng-model="newAddTags" placeholder="choose Tags"
+                                                replace-spaces-with-dashes="false"
+                                                display-property="name"
+                                                add-from-autocomplete-only="true"
+                                                ng-disabled="" min-length="1" style="margin-bottom: 10px">
+
+                                        <auto-complete source="queryTagSearch($query)"
+                                                       load-on-empty="true"
+                                                       load-on-focus="true"
+                                                       min-length="1"></auto-complete>
+                                    </tags-input>
+                                </div>
+                                <!--<div class="col-md-5 col-sm-5 col-xs-12 form-group has-feedback">
+                                    <select class="form-control has-feedback-left" placeholder="select application type"
+                                            ng-model="newSlot.fileType">
+                                        <option value="" disabled selected>Select file type</option>
+                                        <option selected>image</option>
+                                        <option>video</option>
+                                        <option>audio</option>
+                                        <option>document</option>
+                                    </select>
+                                    <span class="fa fa-envelope form-control-feedback left" aria-hidden="true"></span>
+                                </div>
+-->
+                            </div>
+
+
+                            <div class="row">
+
+                            </div>
+
+
+
+                           <!-- <tags-input ng-model="postTags" add-on-paste="true">
+                                <auto-complete source="tagList"></auto-complete>
+                            </tags-input>-->
+
+                            <div class="col-md-2 col-sm-2 col-xs-12  pull-right ">
+                                <button type="button" class="btn btn-success btn-block "
+                                        ng-click="saveFileSlotArray()" >
+                                    Add
+                                </button>
+                            </div>
+
+                        </form>
+                    </div>
+                </div>
+                <div class="clearfix"></div>
+            </div>
+        </div>
+        <!-- end -->
+
+        <!-- view application users -->
+        <div class="x_panel">
+            <div class="x_content">
+                <ul class="list-unstyled">
+                    <li ng-repeat="fileSlotArray in fileSlotArrays | filterBy: ['name']: searchCriteria">
+                        <filearraylist slotarray="fileSlotArray" reload-array-list="loadFileSlotArrays()" ></filearraylist>
+                    </li>
+
+                    <paging ng-show="showPaging"
+                            class="small"
+                            page="currentPage"
+                            page-size="pageSize"
+                            total="pageTotal"
+                            show-prev-next="true"
+                            show-first-last="true"
+                            text-next-class="glyphicon glyphicon-chevron-right"
+                            text-prev-class="glyphicon glyphicon-chevron-left"
+                            text-first-class="glyphicon glyphicon-backward"
+                            text-last-class="glyphicon glyphicon-forward"
+                            paging-action="getPageData('attribute', page, pageSize, total)">
+                    </paging>
+                </ul>
+            </div>
+        </div>
+        <!-- end -->
+    </div>
+
+</div>
+
+</div>

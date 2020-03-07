@@ -1,0 +1,151 @@
+<div class="row">
+
+    <div class="col-md-12 col-sm-6 col-xs-12">
+
+        <!-- application list -->
+        <div class="x_panel bg-light-gray animated fadeIn">
+            <div class="x_content">
+                <div class="x_title border-0">
+                    <div class="col-md-6 col-sm-6 col-xs-6">
+                        <h2 class="font-robot font-300 text-uppercase font-15">New Case Configuration</h2>
+                    </div>
+
+                    <div class="col-md-6 col-sm-6 col-xs-6 form-group top_search">
+                        <div class="input-group">
+                            <input type="text" ng-model="searchCriteria" class="form-control"
+                                   placeholder="Search for...">
+                                <span class="input-group-btn">
+                                  <button class="btn btn-default" type="button">Go!</button>
+                                </span>
+                        </div>
+                    </div>
+                    <div class="col-xs-12">
+                        <div class="tile-stats m-top15">
+                            <form name="caseConfigForm" class="form-horizontal form-label-left input_mask" novalidate>
+                                <div class="row">
+                                    <div class="col-md-3 col-sm-3 col-xs-12 form-group has-feedback">
+                                        <input name="ConfigurationName" type="text" class="form-control has-feedback-left"
+                                               ng-model="caseConfig.configurationName"
+                                               placeholder="Configuration Name" required>
+                                        <span class="fa fa-user form-control-feedback left" aria-hidden="true"></span>
+                                        <span class="inline-block validation-on"
+                                              ng-show="caseConfigForm.ConfigurationName.$invalid">required*
+                                        </span>
+                                    </div>
+
+                                    <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
+                                        <input name="description" type="text" class="form-control has-feedback-left"
+                                               ng-model="caseConfig.description"
+                                               placeholder="Description" required>
+                                        <span class="fa fa-user form-control-feedback left" aria-hidden="true"></span>
+                                        <span class="inline-block validation-on"
+                                              ng-show="caseConfigForm.description.$invalid">required*
+                                        </span>
+                                    </div>
+
+                                    <div class="col-md-3 col-sm-3 col-xs-12 form-group has-feedback">
+                                        <input name="threshold" type="number" class="form-control has-feedback-left"
+                                               ng-model="caseConfig.threshold"
+                                               placeholder="Threshold" min="0" required>
+                                        <span class="fa fa-envelope form-control-feedback left"
+                                              aria-hidden="true"></span>
+                                        <span class="inline-block validation-on"
+                                              ng-show="caseConfigForm.threshold.$invalid">required*
+                                        </span>
+                                    </div>
+
+                                    <div class="col-md-12 col-sm-12 col-xs-12  has-feedback">
+                                        <div class="form-group">
+                                            <tags-input ng-model="ticketType"
+
+                                                        add-from-autocomplete-only="true"
+                                                        on-tag-added="onFlowChipAdd($tag)"
+                                                        on-tag-removed="onFlowChipDelete($tag)" ng-disabled=""
+                                                        min-length="1"
+                                                        placeholder="Active Types">
+                                                <auto-complete source="queryFlowSearch($query)" load-on-empty="true"
+                                                               load-on-focus="true" min-length="1"></auto-complete>
+                                            </tags-input>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-12 col-sm-12 col-xs-12 ">
+                                        <div class="form-group">
+                                            <tags-input ng-model="postTags" display-property="name"
+                                                        placeholder="Configuration Rule" ng-disabled="postTags.length === 0">
+                                                <auto-complete source="loadPostTags($query)"></auto-complete>
+                                            </tags-input>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="col-md-12 col-sm-12 col-xs-12 ">
+                                        <div class="form-group">
+                                            <tags-input ng-if="postTags < 1"
+                                                        ng-model="newAddTags"
+                                                        placeholder="Choose Tags"
+                                                        replace-spaces-with-dashes="false"
+                                                        display-property="name"
+                                                        add-from-autocomplete-only="true"
+                                                        on-tag-added="onChipAddTag($tag)"
+                                                        on-tag-removed="onChipDeleteTag($tag)"
+                                                        ng-disabled="" min-length="1">
+                                                <auto-complete source="queryTagSearch($query)"
+                                                               load-on-empty="true"
+                                                               load-on-focus="true"
+                                                               min-length="1"></auto-complete>
+                                            </tags-input>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                                <div class="row">
+                                    <div class="col-md-2 col-sm-2 col-xs-12  ">
+                                        <button type="button" class="btn btn-success btn-block  btn- pull-right"
+                                                ng-click="saveCaseConfig()" ng-disabled="caseConfigForm.$invalid">
+                                            Add
+                                        </button>
+                                    </div>
+                                </div>
+
+                            </form>
+                        </div>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+            </div>
+        </div>
+        <!-- end -->
+
+        <!-- view application users -->
+        <div class="x_panel">
+            <div class="x_content">
+                <ul class="list-unstyled timeline">
+                    <li ng-repeat="caseConfig in caseConfigs | filterBy: ['configurationName']: searchCriteria">
+                        <case-config-directive case-config="caseConfig" update-case-config="removeDeleted(caseConfig)"
+                                               reload-page="reloadPage()"></case-config-directive>
+                    </li>
+
+                    <paging ng-show="showPaging"
+                            class="small"
+                            page="currentPage"
+                            page-size="pageSize"
+                            total="pageTotal"
+                            show-prev-next="true"
+                            show-first-last="true"
+                            text-next-class="glyphicon glyphicon-chevron-right"
+                            text-prev-class="glyphicon glyphicon-chevron-left"
+                            text-first-class="glyphicon glyphicon-backward"
+                            text-last-class="glyphicon glyphicon-forward"
+                            paging-action="getPageData('attribute', page, pageSize, total)">
+                    </paging>
+                </ul>
+            </div>
+        </div>
+        <!-- end -->
+    </div>
+
+</div>
+
+</div>

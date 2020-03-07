@@ -1,0 +1,108 @@
+<div>
+    <div>
+        <div class="col-lg-12">
+            <div class="row">
+                <div class="col-md-2">
+                    <div>
+                        <img ng-src="{{media.url}}" style="height:100px;width:155px;" err-src="http://www.santacruzmentor.org/wp-content/uploads/2012/12/Placeholder.png">
+                    </div>
+                </div>
+                <div class="col-md-3 col-sm-9 col-xs-12 form-group">
+                    <label class="form-control-static">Name</label>
+                    <p style="max-width:m">{{media.name}} </p>
+                </div>
+                <div class="col-md-3 col-sm-9 col-xs-12 form-group">
+                    <label class="form-control-static">Created Date</label>
+                    <p style="max-width:m">{{media.created_at}} </p>
+                </div>
+                <div class="col-md-3 col-sm-9 col-xs-12 form-group">
+                    <div>
+                        <p>Total Size: {{(media.size/1024).toFixed(2)}} KB</p>
+                    </div>
+        
+                    <div>
+                        <p>Type: {{media.type}} </p>
+                    </div>
+                </div>
+                <div class="col-md-1 ">
+                    <div class="pull-right user-option-wrap" ng-show="!editMode">
+                        <div ng-disabled="true" ng-click="editMedia(media)" class="btn-circle">
+                            <i class="fa fa-pencil"></i>
+                        </div>
+
+                        <!-- <div ng-disabled="true" ng-click="removeTemplate(template)" class="btn-circle">
+                                <i class="fa fa-trash-o"></i>
+                        </div> -->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+         <div class="col-md-12 col-sm-12 col-xs-12 edit-main-wrap" ng-show="editMode">
+            <div class="application-edit">
+                <div class="col-sm-12">
+                    <div class="col-sm-6">
+                        <!-- <h2 class="font-robot font-300 text-uppercase font-15">Details</h2> -->
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="edit-close pull-right">
+                            <i class="fa fa-close" ng-click="closeMedia()"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12 col-sm-6 col-xs-12 col-xs-12">
+                    <div class="tile-stats  m-top15">
+                        <form name="updatentegrationname" class="form-horizontal form-label-left input_mask">
+                            <div class="table-responsive">          
+                                <table class="table">
+                                    <thead>
+                                    </thead>
+                                    <tbody>
+                                    <tr>
+                                        <td>Url</td>
+                                        <td>{{media.url}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Total Size</td>
+                                        <td>{{(media.size/1024).toFixed(2)}} KB</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Dimension</td>
+                                        <td>{{media.width}}*{{media.height}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Height</td>
+                                        <td>{{media.height}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Width</td>
+                                        <td>{{media.width}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Type</td>
+                                        <td>{{media.type}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Modified Date</td>
+                                        <td>{{media.updated_at}}</td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div> 
+
+        <div ng-hide="editMode">
+
+          
+
+
+
+        </div>
+        <div class="clearfix"></div>
+    </div>
+</div>

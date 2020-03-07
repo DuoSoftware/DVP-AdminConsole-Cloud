@@ -1,0 +1,72 @@
+
+
+<div>
+    <div>
+
+        <div class="col-md-12 col-sm-12 col-xs-12 edit-main-wrap" >
+            <div class="application-edit">
+                <div class="col-sm-12">
+                    <div class="col-sm-6">
+                        <h2 class="" style="color: #004276"> {{submissiondata.paper.name}}</h2>
+                    </div>
+
+                </div>
+                <div class="col-md-12 col-sm-6 col-xs-12 col-xs-12">
+                    <div class="tile-stats  m-top15">
+                        <form class="form-horizontal form-label-left input_mask">
+                            <div class="col-md-12 col-sm-12 col-xs-12 form-group has-feedback"
+                                 style="margin-bottom: 15px;">
+
+                                <ul>
+
+                                    <div class="mail_list_column sip-user-wrap"
+                                         ng-mouseover="viewScroll()"
+                                         ng-mouseleave="hideScroll()"
+                                         ng-slimscroll
+                                         height="400" width="100%" opacity="0.2" distance="0px"
+                                         enabled="{{ scrollEnabled }}">
+                                        <li class="listalign" ng-repeat="sectionObj in submissiondata.sectionData">
+                                            <h3 style="color: #f8b01d">{{sectionObj.section.name}}</h3>
+
+                                            <ul>
+                                                <li ng-repeat="questionObj in sectionObj.questionDetails">
+                                                    <h4 style="color: #004276 " >{{questionObj.question.question}}</h4>
+
+                                                    <div>
+                                                        <label style="padding-left: 3px ; color: #84acb3" ng-if="questionObj.question.type!= 'remark'">
+                                                            Answer
+                                                        </label>
+                                                        <label  style="padding-left: 3px ; color: #84acb3" ng-if="questionObj.question.type== 'remark'">
+                                                            Remark
+                                                        </label>
+                                                    </div>
+
+
+                                                    <div style="padding-bottom: 3px">
+                                                        <span  class="qaremarks" questionObj.question.type=='remark'" ng-disabled>{{questionObj.remarks}} </span>
+                                                        <span class="qaanswers" ng-if="questionObj.question.type== 'binary' && questionObj.answer !=0">YES </span>
+                                                        <span class="qaanswers" ng-if="questionObj.question.type== 'binary' && questionObj.answer ==0">NO</span>
+                                                        <span class="qaanswers" ng-if="questionObj.question.type== 'rating'">{{questionObj.answer}} out of 10 </span>
+
+                                                    </div>
+
+                                                </li>
+
+                                            </ul>
+
+                                        </li>
+                                    </div>
+                                </ul>
+
+                            </div>
+
+
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="clearfix"></div>
+    </div>
+</div>

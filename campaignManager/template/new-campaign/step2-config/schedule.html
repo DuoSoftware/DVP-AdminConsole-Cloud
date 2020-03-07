@@ -1,0 +1,95 @@
+<div class="cam-create-form">
+    <div class="col-lg-9">
+        <div id="frmcampaignSchedule" class="form-group cam-form-grp">
+            <label for="exampleInputEmail1" class="cam-label">Select Schedule *</label>
+            <select class="form-control cam-textbox"
+                    id="addScheduleScheduleList"
+                    ng-model="campaignSchedule.ScheduleId"
+                    ng-options="opt.id as opt.ScheduleName for opt in availableSchedule"
+                    required>
+                <option value=''>Select Schedule</option>
+            </select>
+        </div>
+    </div>
+    <!--<div class="col-lg-5">-->
+        <!--<div class="form-group cam-form-grp">-->
+            <!--<label for="exampleInputEmail1" class="cam-label">Schedule Type </label>-->
+
+            <!--<input type="text"-->
+                   <!--class="form-control cam-textbox"-->
+                   <!--ng-model="campaignSchedule.ScheduleType"-->
+                   <!--placeholder="Schedule Type">-->
+        <!--</div>-->
+    <!--</div>-->
+
+    <div class="col-lg-3">
+        <button ng-show="!addScheduleToCampaign"
+                class="btn btn-wizard btn-inside-form"
+                ng-click="crateScheduleToCampaign(campaignSchedule)"
+                style=" margin-top: 22px;">
+            Add
+            <i class="ti-plus"></i>
+        </button>
+
+        <button ng-show="addScheduleToCampaign"
+                disabled
+                class="btn btn-wizard btn-inside-form"
+                style=" margin-top: 22px;">
+            <i class="fa fa-circle-o-notch fa-spin fa-3x fa-fw"></i>
+        </button>
+
+    </div>
+</div>
+
+<div class="campaign-list-wrapper">
+    <div class="row">
+        <div class="camp-sub-header">
+            Schedule List
+        </div>
+    </div>
+    <div class="camp-config-tbl-wrapper">
+        <div class="camp-tbl-header">
+            <div class="col-lg-3">
+                <div class="tbl-header">ScheduleName</div>
+            </div>
+            <div class="col-lg-3">
+                <div class="tbl-header">Action</div>
+            </div>
+            <div class="col-lg-3">
+                <div class="tbl-header">ExtraData</div>
+            </div>
+            <div class="col-lg-3">
+                <div class="tbl-header">Action</div>
+            </div>
+        </div>
+
+        <div class="camp-tbl-body">
+            <div ng-if="addedSchedule.length==0"
+                 class="default-message-camp-wrapper">
+                <i class="ti-announcement"></i>
+            </div>
+            <div class="camp-tbl-row"
+                 ng-show="addedSchedule.length!=0"
+                 ng-repeat="schedule in addedSchedule">
+                <div class="col-lg-3">
+                    <div class="tbl-body-text">{{schedule.ScheduleName}}</div>
+                </div>
+                <div class="col-lg-3">
+                    <div class="tbl-body-text">{{schedule.Action}}</div>
+                </div>
+                <div class="col-lg-3">
+                    <div class="tbl-body-text">{{schedule.ExtraData}}</div>
+                </div>
+                <div class="col-lg-3">
+                    <div class="tbl-body-text">
+                        <div class="camp-delete-btn"
+                             ng-click="deleteSchedule(schedule)">
+                            <i class="ti-trash"></i>
+                            Delete
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

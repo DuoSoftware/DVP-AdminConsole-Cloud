@@ -1,0 +1,136 @@
+<div class="x_panel" ng-controller="pbxForwardingCtrl">
+    <div class="x_content col-md-12 col-sm-12 col-xs-12">
+
+        <div class="col-md-12 col-sm-12 col-xs-12">
+            <label><b>Current Forwarding List</b></label>
+        </div>
+
+        <br>
+        <br>
+
+        <div class="col-md-12 col-sm-12 col-xs-12">
+            <div id="datatable-responsive_wrapper"
+                 class="dataTables_wrapper form-inline dt-bootstrap no-footer">
+                <div class="row">
+                    <div class="col-md-12 col-sm-12 col-xs-12">
+
+                        <div class="table-wrapper"
+                             ng-slimscroll horizontal-scroll="true"
+                             height="100%"
+                             horizontal-scroll-position="bottom"
+                             size="5px" opacity="0.4">
+                            <table id="datatable-responsive"
+                                   class="table table-striped table-bordered dt-responsive nowrap dataTable no-footer dtr-inline"
+                                   cellspacing="0" width="100%" role="grid"
+                                   aria-describedby="datatable-responsive_info">
+                                <thead>
+                                <tr role="row">
+                                    <th class="sorting" tabindex="0" aria-controls="datatable-responsive"
+                                        rowspan="1"
+                                        colspan="1" aria-label="Destination Number">Destination Number
+                                    </th>
+                                    <th class="sorting" tabindex="0" aria-controls="datatable-responsive"
+                                        rowspan="1"
+                                        colspan="1" aria-label="Destination Type">Destination Type
+                                    </th>
+                                    <th class="sorting" tabindex="0" aria-controls="datatable-responsive"
+                                        rowspan="1"
+                                        colspan="1" aria-label="Disconnect Reason">Disconnect Reason
+                                    </th>
+                                    <th class="sorting" tabindex="0" aria-controls="datatable-responsive"
+                                        rowspan="1"
+                                        colspan="1" aria-label="Ring Timeout">Ring Timeout
+                                    </th>
+
+                                </thead>
+                                <tbody>
+                                <tr role="row" class="odd"
+                                    ng-repeat="item in fwdList">
+                                    <td>{{item.DestinationNumber}}</td>
+                                    <td>{{item.ObjCategory}}</td>
+                                    <td>{{item.DisconnectReason}}</td>
+                                    <td>{{item.RingTimeout}}</td>
+                                    <td>
+                                        <button ng-click="deleteFWD(item.id)"><i class="fa fa-trash"></i></button>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="clearfix"></div>
+
+        <br>
+        <br>
+
+
+        <form name="newForwardingForm">
+
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                <label><b>Add New Forwarding Configuration</b></label>
+            </div>
+
+            <br>
+            <br>
+
+            <div class="col-md-6 col-sm-6 col-xs-12">
+                <label>Destination Type  <span class="inline-block validation-on text-validaion  "
+                                               ng-show="newForwardingForm.destType.$invalid && !newForwardingForm.destType.$pristine">
+                           Required field
+                  </span></label>
+                <select class="select2_single form-control" name="destType" tabindex="-1" aria-hidden="true"
+                        placeholder="Destination Type" ng-model="numberType" ng-model-options="{trackBy: '$value'}"
+                        required>
+                    <option value="USER">User</option>
+                    <option value="GATEWAY">Gateway</option>
+                </select>
+            </div>
+
+            <div class="col-md-6 col-sm-6 col-xs-12">
+                <label>Destination Number <span class="inline-block validation-on text-validaion  "
+                                                ng-show="newForwardingForm.destinationNum.$invalid &&
+                                                !newForwardingForm.destinationNum.$pristine">
+                          Valid number required
+                  </span></label>
+                <input class="form-control" name="destinationNum" ng-model="destinationNumber" required
+                       ng-pattern="/^[0-9]*$/">
+            </div>
+
+            <div class="col-md-6 col-sm-6 col-xs-12">
+                <label>Disconnect Reason  <span class="inline-block validation-on text-validaion  "
+                                                ng-show="newForwardingForm.disconReason.$invalid &&
+                                                !newForwardingForm.disconReason.$pristine">
+                         Required field
+                  </span></label>
+                <select class="select2_single form-control" name="disconReason" tabindex="-1" aria-hidden="true"
+                        placeholder="Disconnect Reason" ng-model="disconReason" ng-model-options="{trackBy: '$value'}"
+                        required>
+                    <option value="BUSY">Busy</option>
+                    <option value="NO_ANSWER">No Answer</option>
+                </select>
+            </div>
+
+            <div class="col-md-6 col-sm-6 col-xs-12">
+                <label>Ring Timeout <span class="inline-block validation-on text-validaion  "
+                                          ng-show="newForwardingForm.ringTimeout.$invalid &&
+                                                !newForwardingForm.ringTimeout.$pristine">
+                      Valid number required
+                  </span></label>
+                <input class="form-control" name="ringTimeout" ng-model="ringTimeout" required ng-pattern="/^[0-9]*$/">
+            </div>
+
+
+            <div class="clearfix"></div>
+
+            <br>
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                <button class="btn btn-primary" ng-click="saveFWD()" ng-disabled="newForwardingForm.$invalid">Add
+                </button>
+            </div>
+        </form>
+    </div>
+</div>

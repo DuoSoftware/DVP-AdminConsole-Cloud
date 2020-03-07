@@ -1,0 +1,152 @@
+<section id="campMWrapper"
+         main-scroll-campaign
+         class="camp-m-wrapper">
+    <!-- campaign header -->
+    <header class="camp-m-header"
+            style="border-bottom: 1px solid #f7f7f7;">
+        <!-- UI hedaer -->
+        <div class="col-lg-4">
+            <div class="camp-header-left" style="width: 250px;">
+                <div class="camp-hleft-text hleft-lg">
+                    CM
+                </div>
+                <div class="camp-hleft-text h-left-sm">
+                    Campaign Manager - LookUp
+                </div>
+            </div>
+            <span class="left-line"></span>
+        </div>
+
+
+    </header>
+
+    <!-- campaign lookup wrapper -->
+    <div class="camp-lookup-wrapper">
+        <div class="col-lg-4">
+            <div class="row">
+
+                <div class="camp-lookup-opt-wrapper">
+
+
+                    <uib-tabset class="camp-tab"
+                                active="active">
+
+                        <uib-tab index="1"
+                                 heading="Search by Category ">
+                            <!-- search -->
+                            <div class="col-lg-12">
+                                <div class="  form-group ">
+                                    <label class="cam-label">Select Category *</label>
+                                    <select class="form-control cam-textbox"
+                                            ng-model="searchObj.CategoryID"
+                                            ng-model-options="{trackBy: '$value'}"
+                                            ng-disabled="searchObj.CampaignId">
+                                        <option value="" disabled selected>
+                                        </option>
+                                        <option ng-repeat="camCategory in campaignCategories"
+                                                value="{{camCategory.CategoryID}}">
+                                            {{camCategory.CategoryName.toUpperCase()}}
+                                        </option>
+                                    </select>
+                                </div>
+                            </div>
+                        </uib-tab>
+                        <uib-tab index="2"
+                                 heading=" Search by Campaign">
+                            <!-- create new campaign  -->
+                            <div class="col-lg-12">
+                                <div class=" form-group ">
+                                    <label class="cam-label">Select Campaign Name *</label>
+                                    <select class="form-control cam-textbox"
+                                            ng-model="searchObj.CampaignId"
+                                            ng-change="loadCampaignSchedules(searchObj.CampaignId)"
+                                            ng-model-options="{trackBy: '$value'}">
+                                        <option value="" disabled selected></option>
+                                        <option ng-repeat="newCampaign in newlyCreatedCampaigns"
+                                                value="{{newCampaign.CampaignId}}">
+                                            {{newCampaign.CampaignName.toUpperCase()}}
+                                        </option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-lg-12">
+                                <div class=" form-group ">
+                                    <label class="cam-label">Select Campaign Schedule </label>
+                                    <select class="form-control cam-textbox"
+                                            ng-model="searchObj.CamScheduleId"
+                                            ng-model-options="{trackBy: '$value'}"
+                                            ng-disabled="!searchObj.CampaignId">
+                                        <option value="" disabled selected>
+                                        </option>
+                                        <option ng-repeat="cSchedule in campaignSchedules"
+                                                value="{{cSchedule.CamScheduleId}}">
+                                            {{cSchedule.ScheduleName}}
+                                        </option>
+                                    </select>
+                                </div>
+                            </div>
+                        </uib-tab>
+                    </uib-tabset>
+
+
+                    <div class="col-lg-12">
+                        <ul>
+                            <li>
+                                <div class="create-btn-wrap">
+                                    <div ng-show="!isLoadingLookUp"
+                                         class="rectangle-create-new-c camp-search-btn"
+                                         ng-click="searchNumbers();">
+                                        <i class="ti-search"></i>
+                                        Search
+                                    </div>
+                                    <div ng-show="isLoadingLookUp"
+                                         class="rectangle-create-new-c camp-search-btn"
+                                         disabled>
+                                        <i class="fa fa-circle-o-notch fa-spin "></i>
+                                    </div>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="create-btn-wrap">
+                                    <div class="rectangle-create-new-c camp-search-btn wizard-green-btn-save"
+                                         ng-click="clearSearch();">
+                                        <i class="ti-trash"></i>
+                                        Clear
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="col-lg-8">
+
+            <!-- table header -->
+
+            <div class="camp-tbl-body" style="
+    height: 700px;
+    overflow-y: auto;">
+
+                <!-- loader -->
+                <div class="loading-camp " ng-if="isLoadingLookUp">
+                    <svg class="spinner-container" width="65px" height="65px" viewBox="0 0 52 52">
+                        <circle class="path" cx="26px" cy="26px" r="20px" fill="none" stroke-width="4px"/>
+                    </svg>
+                </div>
+
+                <div class="camp-contact-info-error" ng-if="gridOptions3.data.length==0 && !isLoadingLookUp">
+                    <div class="contact-error-text">
+                        Record is empty.
+                    </div>
+                </div>
+
+
+                <div ui-grid="gridOptions3" class="grid"></div>
+
+            </div>
+        </div>
+    </div>
+</section>

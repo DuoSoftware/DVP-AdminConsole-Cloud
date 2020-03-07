@@ -1,0 +1,29 @@
+<div>
+    <div>
+        <div class="col-lg-12">
+            <div class="row">
+                <div class="col-md-9">
+                    <h2 class=" font-300">
+                        <a ng-hide="editMode">Automation : {{wfdata.DisplayName}}</a>
+                    </h2>
+                    <span>{{wfdata.Name}}</span>
+                    <br>
+                    <span>{{wfdata.Description}}</span>
+                    <br>
+                    <span>Created date at {{wfdata.DateTime}}</span>
+                </div>
+                <div class="col-md-3 ">
+                    <div class="pull-right user-option-wrap" ng-show="!editMode">
+                        <div ng-disabled="true" ng-click="editWorkflow(wfdata)" class="btn-circle">
+                            <i class="fa fa-pencil"></i>
+                        </div>
+                        <div ng-disabled="true" ng-click="deleteWorkflow(wfdata)" class="btn-circle">
+                                <i class="fa fa-trash-o"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="clearfix"></div>
+    </div>
+</div>

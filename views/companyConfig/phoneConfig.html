@@ -1,0 +1,91 @@
+<div class="row">
+    <div class="col-md-12 col-lg-12  col-sm-12">
+        <div class="x_panel">
+            <div class="x_title">
+
+                <h2><i class="fa fa-bars"></i> Agent Phone
+                    <small>Configurations</small>
+                </h2>
+                <ul class="nav navbar-right panel_toolbox">
+
+                    <li><a class="close-link"><i class="fa fa-trash-o" ng-click="deletePhoneConfig(phoneConfig);"></i></a>
+                    </li>
+                </ul>
+                <div class="clearfix"></div>
+            </div>
+            </br>
+
+            <div class="x_content">
+                <div id="fb-root"></div>
+                <br/>
+                <div class="row">
+
+                    <div class="col-md-12 col-sm-12 col-xs-12" >
+
+                        <form class="form-horizontal form-label-left" name="userForm" novalidate>
+
+
+                            <div class="col-md-3 col-sm-3 col-xs-3 form-group"
+                                 ng-class="{ 'has-error' : userForm.autoAnswer.$invalid && !userForm.autoAnswer.$pristine }">
+                                <label>Auto Answer</label>
+                                <checkbox  name="autoAnswer" class="btn-success" ng-model="phoneConfig.autoAnswer"
+                                          ng-init="true"></checkbox>
+                            </div>
+
+                            <div class="col-md-3 col-sm-3 col-xs-3 form-group"
+                                 ng-class="{ 'has-error' : userForm.allowAgentToChange.$invalid && !userForm.allowAgentToChange.$pristine }">
+                                <label>Allow Agent To Change </label>
+                                <checkbox  name="allowAgentToChange"  class="btn-success" ng-model="phoneConfig.allowAgentToChange" ng-init="false"></checkbox>
+
+                            </div>
+
+                            <div class="col-md-3 col-sm-3 col-xs-3 form-group"
+                                 ng-class="{ 'has-error' : userForm.autoAnswerDelay.$invalid && !userForm.autoAnswerDelay.$pristine }">
+                                <label>Auto Answer Delay[s]</label>
+                                <input type="number" min="0" max="30" name="autoAnswerDelay" class="form-control"
+                                       ng-model="phoneConfig.autoAnswerDelay"
+                                       required>
+
+                                <p ng-show="userForm.autoAnswerDelay.$error.required && !userForm.autoAnswerDelay.$pristine"
+                                   class="help-block">
+                                    Auto Answer Delay Time is required.</p>
+
+                                <p ng-show="userForm.autoAnswerDelay.$error.max && !userForm.autoAnswerDelay.$pristine" class="help-block">
+                                    Not valid number.</p>
+                            </div>
+
+                            <div class="col-md-3 col-sm-3 col-xs-3 form-group">
+                                <label>Phone Type</label>
+                                <select name="filterType" ng-model="phoneConfig.phoneType" ng-change="onSelectionChanged()"
+                                        aria-controls="datatable-responsive" class="form-control select-limit">
+                                    <option  value="veery_web_rtc_phone">Web RTC Phone</option>
+                                    <option value="veery_sip_phone">SIP Phone</option>
+                                    <option value="veery_rest_phone">Rest Phone</option>
+                                </select>
+                            </div>
+                            <div class="clearfix"></div>
+                            <div class="ln_solid"></div>
+
+                            <div class="form-group">
+                                <button ng-hide="isPhoneConfiged" class="btn btn-success" ng-click="createPhoneConfig(phoneConfig)"
+                                        ng-disabled="userForm.$invalid">
+                                    Save
+                                </button>
+
+                                <button ng-show="isPhoneConfiged" class="btn btn-success" ng-click="updatePhoneConfig(phoneConfig)"
+                                        ng-disabled="userForm.$invalid">
+                                    Update
+                                </button>
+                            </div>
+
+                        </form>
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+
+</div>

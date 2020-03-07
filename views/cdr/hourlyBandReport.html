@@ -1,0 +1,152 @@
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12 animated fadeIn">
+        <div class="x_panel main-title">
+            <div class="x_title">
+            <h2><b>REPORT</b> | Hourly Band Report</h2>
+            </div>
+            <ul class="nav navbar-right panel_toolbox">
+                <li ng-show="!showFilter" ng-click="showFilter= !showFilter"><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                </li>
+                <li ng-show="showFilter" ng-click="showFilter= !showFilter"><a class="close-link"><i class="fa fa-chevron-down"></i></a>
+                </li>
+            </ul>
+            <div class="clearfix"></div>
+
+            <div class="x_content" ng-show="!showFilter">
+
+                <div class="row">
+                    <div class="col-md-3 col-sm-3 col-xs-12">
+                        <label>From Date</label>
+                        <input type="text" class="form-control" ng-model="obj.fromdate" ng-change="onDateChange()" name="fromdate" datepicker>
+
+                    </div>
+                    <div class="col-md-3 col-sm-3 col-xs-12">
+                        <label>To Date</label>
+                        <input type="text" class="form-control" ng-model="obj.todate" ng-change="onDateChange()" name="todate" datepicker>
+                    </div>
+                    <div class="col-md-1 col-sm-1 col-xs-1" style="padding-top: 25px">
+                        <button ng-disabled="obj.isTableLoadingHr===0 || !dateValid" type="button" class="btn btn-success" ng-click="getCallSummaryByHr()">
+                            Search
+                        </button>
+                    </div>
+                    <div class="col-md-4 col-sm-4 col-xs-12 text-right" style="padding-top: 25px">
+                        <div>
+                            <a ng-if="fileDownloadState === 'READY'" class="btn btn-success" role="button" target="_self" href="{{DownloadCSVFileUrl}}" download="{{currentCSVFilename}}" ng-click="downloadPress()">CSV&nbsp;&nbsp;&nbsp;&nbsp;
+                                <i class="fa fa-download"></i></a>
+                            <button ng-if="fileDownloadState === 'RESET'" class="btn btn-success" ng-if="fileDownloadState === 'RESET'" type="button" ng-disabled="!dateValid || !cancelDownload" ng-click="getCallSummaryDownload()">
+                                CSV&nbsp;&nbsp;&nbsp;&nbsp;
+                                <i ng-class="buttonClass"></i>
+                            </button>
+                            <!--<a ng-if="fileDownloadState === 'READY'" style="width:60px; height:30px; background-size: 100% 100%;" target="_self" href="{{DownloadCSVFileUrl}}" download="{{currentCSVFilename}}" ng-click="downloadPress()">Download</a>
+                            <button ng-if="fileDownloadState === 'RESET'" type="button" style="width:60px; height:30px; background-size: 100% 100%;" ng-click="getCallSummaryDownload()">{{DownloadButtonName}}</button>-->
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="row">
+                    <div class="col-md-3 col-sm-3 col-xs-12">
+                        <label>From Hour</label>
+                        <input type="number" class="form-control" ng-model="obj.fromhour" name="fromhour" min="0" max="23">
+
+                    </div>
+                    <div class="col-md-3 col-sm-3 col-xs-12">
+                        <label>To Hour</label>
+                        <input type="number" class="form-control" ng-model="obj.tohour" name="tohour"  min="0" max="23">
+                    </div>
+
+                    <!--<div class="col-md-6 col-sm-6 col-xs-12" style="padding-top: 25px">-->
+                        <!--<div>-->
+                            <!--<a ng-if="fileDownloadState === 'READY'" class="btn btn-success" role="button" target="_self" href="{{DownloadCSVFileUrl}}" download="{{currentCSVFilename}}" ng-click="downloadPress()">CSV&nbsp;&nbsp;&nbsp;&nbsp;-->
+                                <!--<i class="fa fa-download"></i></a>-->
+                            <!--<button ng-if="fileDownloadState === 'RESET'" class="btn btn-success" ng-if="fileDownloadState === 'RESET'" type="button" ng-disabled="!cancelDownload" ng-click="getCallSummaryDownload()">-->
+                                <!--CSV&nbsp;&nbsp;&nbsp;&nbsp;-->
+                                <!--<i ng-class="buttonClass"></i>-->
+                            <!--</button>-->
+                            <!--&lt;!&ndash;<a ng-if="fileDownloadState === 'READY'" style="width:60px; height:30px; background-size: 100% 100%;" target="_self" href="{{DownloadCSVFileUrl}}" download="{{currentCSVFilename}}" ng-click="downloadPress()">Download</a>-->
+                            <!--<button ng-if="fileDownloadState === 'RESET'" type="button" style="width:60px; height:30px; background-size: 100% 100%;" ng-click="getCallSummaryDownload()">{{DownloadButtonName}}</button>&ndash;&gt;-->
+                        <!--</div>-->
+                    <!--</div>-->
+                </div>
+
+
+                <div>
+
+                    <div class="col-md-9 col-sm-9 col-xs-12">
+
+                    </div>
+                </div>
+                <div class="col-md-6 col-sm-6 col-xs-6">
+                    <div class="form-group">
+                        <label>Queues</label>
+                        <tags-input ng-model="skillFilter" display-property="QueueName" key-property="RecordID" add-from-autocomplete-only="true" replace-spaces-with-dashes="false" min-length="1">
+                            <auto-complete source="querySearch($query)" load-on-empty="true" load-on-focus="true" min-length="1" max-results-to-show="10000"></auto-complete>
+                        </tags-input>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        </div>
+        <div class="col-md-12 col-sm-12 col-xs-12" style="z-index:0" ng-if="obj.isTableLoadingHr==1">
+            <!--<div class="x_panel fixed_height_210" ng-mouseenter="stopTimerFn(true)" ng-mouseleave="stopTimerFn(false);">-->
+            <div class="x_panel">
+
+
+
+                <div class="x_content agentSummery" style="padding: 0" ng-style="selectedAgent ? {'z-index':'0'} : {'z-index':'1'}">
+
+
+                    <div ng-hide="hourlyBandGridOptions.data.length>0">
+                        <div class="row ">
+                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                <div class="data-state-wrap">
+                                    <i class="fa fa-exclamation-circle"></i>
+                                    <span>No Data</span>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div ng-show="hourlyBandGridOptions.data.length>0" ui-grid="hourlyBandGridOptions" class="agentSummarygrid"
+                         ui-grid-move-columns ui-grid-resize-columns ui-grid-grouping ui-grid-auto-resize ui-grid-pinning data-ng-attr-style="{{ getTableHeight() }}"  ></div>
+                    <!--ui-grid-move-columns ui-grid-resize-columns ui-grid-grouping ui-grid-auto-resize ui-grid-pinning style="height:800px !important;" ></div>-->
+
+                </div>
+            </div>
+
+
+
+        </div>
+        <div class="clearfix" ng-if="obj.isTableLoadingHr==0">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="data-state-wrap">
+                    Please Wait...
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script>
+    window.scrollTo(0, 0);
+</script>
+
+<script type="text/javascript">
+    $('#timepickerSt').timepicker({
+        template: false,
+        showInputs: false,
+        minuteStep: 5
+    });
+</script>
+
+<script type="text/javascript">
+    $('#timepickerEt').timepicker({
+        template: false,
+        showInputs: false,
+        minuteStep: 5
+    });
+</script>

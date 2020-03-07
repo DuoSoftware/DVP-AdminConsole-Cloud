@@ -1,0 +1,38 @@
+<!--<div ng-show="isDeleted">
+
+
+    <div class="col-md-2 col-sm-12 col-xs-12 form-group has-feedback"><h3>
+
+        <small ng-disabled="true" ng-click="addMe()" style="cursor: pointer" ><i
+                class="fa fa-plus"></i></small>
+        <small ng-disabled="true" ng-click="delMe()" style="cursor: pointer" ng-show="!styleitem.isFirst"><i
+                class="fa fa-trash-o"></i></small>
+
+    </h3></div>
+
+
+
+
+</div>-->
+<div ng-show="isDeleted">
+    <div class="col-md-9 col-sm-12 col-xs-12 form-group">
+        <!--<textarea class="resizable_textarea form-control" ng-model="styleContent" placeholder="Enter content here"> </textarea>-->
+        <textarea class="resizable_textarea form-control" ng-model="styleitem.value" placeholder="Enter content here"> </textarea>
+    </div>
+
+    <div class="col-md-3 col-sm-12 col-xs-12 form-group">
+        <h3>
+
+            <!--<small ng-disabled="true" ng-click="addStyle()" style="cursor: pointer" ng-show="!isAddstatus"><i
+                    class="fa fa-plus"></i></small>
+            <small ng-disabled="true" ng-click="deleteStyle()" style="cursor: pointer" ng-show="isAddstatus"><i
+                    class="fa fa-trash-o"></i></small>-->
+            <!--<small ng-disabled="true" ng-click="addStyle()" style="cursor: pointer"><i
+                    class="fa fa-plus"></i></small>-->
+            <small ng-disabled="true" ng-click="deleteStyle()" style="cursor: pointer"><i
+                    class="fa fa-trash-o"></i></small>
+
+        </h3>
+    </div>
+</div>
+

@@ -1,0 +1,924 @@
+<div class="col-md-12 col-sm-12 col-xs-12">
+    <div class="x_panel main-title main-title-tabbed">
+        <div class="x_title">
+            <h2><b>REPORT</b> | CALL - Summary</h2>
+            <ul class="nav navbar-right panel_toolbox offset">
+                <li ng-show="!showFilter" ng-click="showFilter= !showFilter"><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                </li>
+                <li ng-show="showFilter" ng-click="showFilter= !showFilter"><a class="close-link"><i class="fa fa-chevron-down"></i></a>
+                </li>
+            </ul>
+            <div class="clearfix"></div>
+        </div>
+    </div>
+    <uib-tabset active="0">
+        <uib-tab index="0" heading="Hourly Summary (By Day)">
+
+            <div class="tabbed-filters clearfix" ng-show="!showFilter">
+                <div class="col-md-2 col-sm-2 col-xs-12">
+                    <label>Day</label>
+                    <input type="text" class="form-control" ng-model="obj.dateofmonth" ng-change="onDateChange()" name="dayofmonth" datepicker>
+                </div>
+                <div class="col-md-8 col-sm-8 col-xs-12" style="padding-top: 25px">
+                    <button type="button" class="btn btn-success" ng-disabled="obj.isTableLoadingHr==0" ng-click="getCallSummary()">
+                        Search
+                    </button>
+                </div>
+                <div class="col-md-2 col-sm-2 col-xs-12" style="padding-top: 25px">
+                    <div>
+                        <a ng-if="fileDownloadState === 'READY'" class="btn btn-success" role="button" target="_self" href="{{DownloadCSVFileUrl}}" download="{{currentCSVFilename}}" ng-click="downloadPress()">CSV&nbsp;&nbsp;&nbsp;&nbsp;
+                            <i class="fa fa-download"></i></a>
+                        <button ng-if="fileDownloadState === 'RESET'" ng-disabled="!cancelDownload" class="btn btn-success" type="button" ng-click="getHourlySummaryCSVDownload()">
+                            CSV&nbsp;&nbsp;&nbsp;&nbsp;
+                            <i ng-class="buttonClass"></i>
+                        </button>
+                        <!--<a ng-if="fileDownloadState === 'READY'" style="width:60px; height:30px; background-size: 100% 100%;" target="_self" href="{{DownloadCSVFileUrl}}" download="{{currentCSVFilename}}" ng-click="downloadPress()">Download</a>
+                        <button ng-if="fileDownloadState === 'RESET'" type="button" style="width:60px; height:30px; background-size: 100% 100%;" ng-click="getHourlySummaryCSVDownload()">{{DownloadButtonName}}</button>-->
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12 col-sm-12 col-xs-12" ng-if="obj.isTableLoadingHr==0">
+                <div class="row ">
+                    <div class="col-md-12 col-sm-12 col-xs-12">
+                        <div class="data-state-wrap">
+                            Please Wait...
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="x_panel" ng-if="obj.isTableLoadingHr==1" style="margin-top: 20px">
+                <div class="x_content">
+                    <div id="datatable-responsive_wrapper"
+                         class="dataTables_wrapper form-inline dt-bootstrap no-footer">
+                        <div class="row">
+                            <div class="col-md-12 col-sm-12 col-xs-12">
+
+                                <div class="table-wrapper"
+                                     ng-slimscroll horizontal-scroll="true"
+                                     height="100%"
+                                     horizontal-scroll-position="bottom"
+                                     size="5px" opacity="0.4">
+                                    <table id="datatable-responsive" dt-options="dtOptions" datatable="ng"
+                                           class="table table-striped table-bordered dt-responsive nowrap dataTable no-footer dtr-inline"
+                                           cellspacing="0" width="100%" role="grid"
+                                           aria-describedby="datatable-responsive_info">
+                                        <thead>
+                                        <tr role="row">
+                                            <th class="sorting" tabindex="0" aria-controls="datatable-responsive"
+                                                rowspan="1"
+                                                colspan="1" aria-label="Hour">Hour
+                                            </th>
+                                            <th class="sorting" tabindex="0" aria-controls="datatable-responsive"
+                                                rowspan="1"
+                                                colspan="1" aria-label="IVRCalls">IVR Calls (Count)
+                                            </th>
+                                            <th class="sorting" tabindex="0" aria-controls="datatable-responsive"
+                                                rowspan="1"
+                                                colspan="1" aria-label="Queued">Queued Calls (Count)
+                                            </th>
+                                            <th class="sorting" tabindex="0" aria-controls="datatable-responsive"
+                                                rowspan="1"
+                                                colspan="1" aria-label="AbandonCount">Abandon Calls (Count)
+                                            </th>
+                                            <th class="sorting" tabindex="0" aria-controls="datatable-responsive"
+                                                rowspan="1"
+                                                colspan="1" aria-label="Abandon">Abandon Calls (%)
+                                            </th>
+                                            <th class="sorting" tabindex="0" aria-controls="datatable-responsive"
+                                                rowspan="1"
+                                                colspan="1" aria-label="DropCount">Dropped Calls (Count)
+                                            </th>
+                                            <th class="sorting" tabindex="0" aria-controls="datatable-responsive"
+                                                rowspan="1"
+                                                colspan="1" aria-label="Drop">Dropped Calls (%)
+                                            </th>
+                                            <th class="sorting" tabindex="0" aria-controls="datatable-responsive"
+                                                rowspan="1"
+                                                colspan="1" aria-label="AvgHold">Avg Hold Time (sec)
+                                            </th>
+                                            <th class="sorting" tabindex="0" aria-controls="datatable-responsive"
+                                                rowspan="1"
+                                                colspan="1" aria-label="AvgIVR">Avg IVR Time (sec)
+                                            </th>
+                                            <th class="sorting" tabindex="0" aria-controls="datatable-responsive"
+                                                rowspan="1"
+                                                colspan="1" aria-label="AvgAnswerSpeed">Avg Answer Speed (sec)
+                                            </th>
+                                            <th class="sorting" tabindex="0" aria-controls="datatable-responsive"
+                                                rowspan="1"
+                                                colspan="1" aria-label="AvgTalk">Avg Talk Time (sec)
+                                            </th>
+                                            <th class="sorting" tabindex="0" aria-controls="datatable-responsive"
+                                                rowspan="1"
+                                                colspan="1" aria-label="AnswerCount">Answererd Calls (Count)
+                                            </th>
+                                            <th class="sorting" tabindex="0" aria-controls="datatable-responsive"
+                                                rowspan="1"
+                                                colspan="1" aria-label="AnswerPercentage">Answer Percentage (%)
+                                            </th>
+                                        </thead>
+                                        <tbody>
+                                        <tr role="row" class="odd"
+                                            ng-repeat="sumHr in callSummaryHrList">
+                                            <td>{{sumHr.Caption}}</td>
+                                            <td>{{sumHr.IVRCallsCount}}</td>
+                                            <td>{{sumHr.QueuedCallsCount}}</td>
+                                            <td>{{sumHr.AbandonCallsCount}}</td>
+                                            <td>{{sumHr.AbandonPercentage}}</td>
+                                            <td>{{sumHr.DropCallsCount}}</td>
+                                            <td>{{sumHr.DropPercentage}}</td>
+                                            <td>{{sumHr.HoldAverage}}</td>
+                                            <td>{{sumHr.IvrAverage}}</td>
+                                            <td>{{sumHr.RingAverage}}</td>
+                                            <td>{{sumHr.TalkAverage}}</td>
+                                            <td>{{sumHr.AnswerCount}}</td>
+                                            <td>{{sumHr.AnswerPercentage}}</td>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </uib-tab>
+        <uib-tab index="1" heading="Daily Summary (By Month)">
+            <div class="tabbed-filters clearfix" ng-show="!showFilter">
+                <div class="col-md-3 col-sm-3 col-xs-12">
+                    <label>Start Day</label>
+                    <input type="text" class="form-control" ng-model="obj2.startDay" name="startDay" datepicker>
+                </div>
+                <div class="col-md-3 col-sm-3 col-xs-12">
+                    <label>End Day</label>
+                    <input type="text" class="form-control" ng-model="obj2.endDay" name="endDay" datepicker>
+                </div>
+                <div class="col-md-4 col-sm-4 col-xs-12" style="padding-top: 25px">
+                    <button type="button" class="btn btn-success" ng-disabled="obj.isTableLoadingDay==0" ng-click="getCallSummaryDaily()">
+                        Search
+                    </button>
+                </div>
+                <div class="col-md-2 col-sm-2 col-xs-12" style="padding-top: 25px">
+                    <div>
+                        <a ng-if="fileDownloadStateDaily === 'READY'" class="btn btn-success" role="button" target="_self" href="{{DownloadCSVFileUrl}}" download="{{currentCSVFilename}}" ng-click="downloadPressDaily()">CSV&nbsp;&nbsp;&nbsp;&nbsp;
+                            <i class="fa fa-download"></i></a>
+                        <button ng-if="fileDownloadStateDaily === 'RESET'" ng-disabled="!cancelDownloadDaily" class="btn btn-success" type="button" ng-click="getDailySummaryCSVDownload()">
+                            CSV&nbsp;&nbsp;&nbsp;&nbsp;
+                            <i ng-class="buttonClassDaily"></i>
+                        </button>
+
+                        <!--<a ng-if="fileDownloadStateDaily === 'READY'" style="width:60px; height:30px; background-size: 100% 100%;" target="_self" href="{{DownloadCSVFileUrl}}" download="{{currentCSVFilenameDaily}}" ng-click="downloadPressDaily()">Download</a>
+                        <button ng-if="fileDownloadStateDaily === 'RESET'" type="button" style="width:60px; height:30px; background-size: 100% 100%;" ng-click="getDailySummaryCSVDownload()">{{DownloadButtonNameDaily}}</button>-->
+                    </div>
+                </div>
+            </div>
+
+            <div class="search-main-wrap col-md-12 col-sm-12 col-xs-12" ng-if="obj.isTableLoadingDay==0">
+                <div class="row ">
+                    <div class="col-md-12 col-sm-12 col-xs-12">
+                        <div class="data-state-wrap">
+                            Please Wait...
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="x_panel" ng-if="obj.isTableLoadingDay==1" style="margin-top: 20px">
+                        <div class="x_content">
+                            <div id="datatable-responsive_wrapper_1"
+                            >
+                                <div class="row">
+                                    <div class="col-md-12 col-sm-12 col-xs-12">
+
+                                        <div class="table-wrapper"
+                                             ng-slimscroll horizontal-scroll="true"
+                                             height="100%"
+                                             horizontal-scroll-position="bottom"
+                                             size="5px" opacity="0.4">
+                                            <table id="datatable-responsive_1" dt-options="dtOptions" datatable="ng"
+                                                   class="table table-striped table-bordered dt-responsive nowrap dataTable no-footer dtr-inline"
+                                                   cellspacing="0" width="100%" role="grid"
+                                                   aria-describedby="datatable-responsive_info">
+                                                <thead>
+                                                <tr role="row">
+                                                    <th class="sorting" tabindex="0" aria-controls="datatable-responsive"
+                                                        rowspan="1"
+                                                        colspan="1" aria-label="Day">Day
+                                                    </th>
+                                                    <th class="sorting" tabindex="0" aria-controls="datatable-responsive"
+                                                        rowspan="1"
+                                                        colspan="1" aria-label="IVRCalls">IVR Calls (Count)
+                                                    </th>
+                                                    <th class="sorting" tabindex="0" aria-controls="datatable-responsive"
+                                                        rowspan="1"
+                                                        colspan="1" aria-label="Queued">Queued Calls (Count)
+                                                    </th>
+                                                    <th class="sorting" tabindex="0" aria-controls="datatable-responsive"
+                                                        rowspan="1"
+                                                        colspan="1" aria-label="AbandonCount">Abandon Calls (Count)
+                                                    </th>
+                                                    <th class="sorting" tabindex="0" aria-controls="datatable-responsive"
+                                                        rowspan="1"
+                                                        colspan="1" aria-label="Abandon">Abandon Calls (%)
+                                                    </th>
+                                                    <th class="sorting" tabindex="0" aria-controls="datatable-responsive"
+                                                        rowspan="1"
+                                                        colspan="1" aria-label="DropCount">Dropped Calls (Count)
+                                                    </th>
+                                                    <th class="sorting" tabindex="0" aria-controls="datatable-responsive"
+                                                        rowspan="1"
+                                                        colspan="1" aria-label="Drop">Dropped Calls (%)
+                                                    </th>
+                                                    <th class="sorting" tabindex="0" aria-controls="datatable-responsive"
+                                                        rowspan="1"
+                                                        colspan="1" aria-label="AvgHold">Avg Hold Time (sec)
+                                                    </th>
+                                                    <th class="sorting" tabindex="0" aria-controls="datatable-responsive"
+                                                        rowspan="1"
+                                                        colspan="1" aria-label="AvgIVR">Avg IVR Time (sec)
+                                                    </th>
+                                                    <th class="sorting" tabindex="0" aria-controls="datatable-responsive"
+                                                        rowspan="1"
+                                                        colspan="1" aria-label="AvgAnswerSpeed">Avg Answer Speed (sec)
+                                                    </th>
+                                                    <th class="sorting" tabindex="0" aria-controls="datatable-responsive"
+                                                        rowspan="1"
+                                                        colspan="1" aria-label="AvgTalk">Avg Talk Time (sec)
+                                                    </th>
+                                                    <th class="sorting" tabindex="0" aria-controls="datatable-responsive"
+                                                        rowspan="1"
+                                                        colspan="1" aria-label="AnswerCount">Answererd Calls (Count)
+                                                    </th>
+                                                    <th class="sorting" tabindex="0" aria-controls="datatable-responsive"
+                                                        rowspan="1"
+                                                        colspan="1" aria-label="AnswerPercentage">Answer Percentage (%)
+                                                    </th>
+                                                </thead>
+                                                <tbody>
+                                                <tr role="row" class="odd"
+                                                    ng-repeat="sumDay in callSummaryDayList">
+                                                    <td>{{sumDay.Caption}}</td>
+                                                    <td>{{sumDay.IVRCallsCount}}</td>
+                                                    <td>{{sumDay.QueuedCallsCount}}</td>
+                                                    <td>{{sumDay.AbandonCallsCount}}</td>
+                                                    <td>{{sumDay.AbandonPercentage}}</td>
+                                                    <td>{{sumDay.DropCallsCount}}</td>
+                                                    <td>{{sumDay.DropPercentage}}</td>
+                                                    <td>{{sumDay.HoldAverage}}</td>
+                                                    <td>{{sumDay.IvrAverage}}</td>
+                                                    <td>{{sumDay.RingAverage}}</td>
+                                                    <td>{{sumDay.TalkAverage}}</td>
+                                                    <td>{{sumDay.AnswerCount}}</td>
+                                                    <td>{{sumDay.AnswerPercentage}}</td>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                        </div>
+                    </div>
+        </uib-tab>
+        <uib-tab index="2" heading="Customer Call Summary (By Day)">
+
+            <div ng-controller="callSummaryCustCtrl">
+                <div class="tabbed-filters clearfix" ng-show="!showFilter">
+                    <div class="col-md-2 col-sm-2 col-xs-12">
+                        <label>Day</label>
+                        <input type="text" class="form-control" ng-model="obj.dayCust" name="dayCust" datepicker>
+                    </div>
+                    <div class="col-md-2 col-sm- col-xs-12">
+                        <label>Hour</label>
+                        <select name="datatable-responsive_length" ng-model="obj.hour"
+                                aria-controls="datatable-responsive" class="form-control">
+                            <option value="00:00:00.000-00:59:59.999">12 AM - 1 AM</option>
+                            <option value="01:00:00.000-01:59:59.999">1 AM - 2 AM</option>
+                            <option value="02:00:00.000-02:59:59.999">2 AM - 3 AM</option>
+                            <option value="03:00:00.000-03:59:59.999">3 AM - 4 AM</option>
+                            <option value="04:00:00.000-04:59:59.999">4 AM - 5 AM</option>
+                            <option value="05:00:00.000-05:59:59.999">5 AM - 6 AM</option>
+                            <option value="06:00:00.000-06:59:59.999">6 AM - 7 AM</option>
+                            <option value="07:00:00.000-07:59:59.999">7 AM - 8 AM</option>
+                            <option value="08:00:00.000-08:59:59.999">8 AM - 9 AM</option>
+                            <option value="09:00:00.000-09:59:59.999">9 AM - 10 AM</option>
+                            <option value="10:00:00.000-10:59:59.999">10 AM - 11 AM</option>
+                            <option value="11:00:00.000-11:59:59.999">11 AM - 12 PM</option>
+                            <option value="12:00:00.000-12:59:59.999">12 PM - 1 PM</option>
+                            <option value="13:00:00.000-13:59:59.999">1 PM - 2 PM</option>
+                            <option value="14:00:00.000-14:59:59.999">2 PM - 3 PM</option>
+                            <option value="15:00:00.000-15:59:59.999">3 PM - 4 PM</option>
+                            <option value="16:00:00.000-16:59:59.999">4 PM - 5 PM</option>
+                            <option value="17:00:00.000-17:59:59.999">5 PM - 6 PM</option>
+                            <option value="18:00:00.000-18:59:59.999">6 PM - 7 PM</option>
+                            <option value="19:00:00.000-19:59:59.999">7 PM - 8 PM</option>
+                            <option value="20:00:00.000-20:59:59.999">8 PM - 9 PM</option>
+                            <option value="21:00:00.000-21:59:59.999">9 PM - 10 PM</option>
+                            <option value="22:00:00.000-22:59:59.999">10 PM - 11 PM</option>
+                            <option value="23:00:00.000-23:59:59.999">11 PM - 12 AM</option>
+                        </select>
+                    </div>
+                    <div class="col-md-6 col-sm-6 col-xs-12" style="padding-top: 25px">
+                        <button type="button" class="btn btn-success" ng-disabled="isTableLoading==0" ng-click="getCallSummary()">
+                            Search
+                        </button>
+                    </div>
+                    <div class="col-md-2 col-sm-2 col-xs-2">
+                        <div class="col-md-6 col-sm-6 col-xs-6" style="padding-top: 25px">
+                            <a ng-if="fileDownloadState === 'READY'" class="btn btn-success" role="button" target="_self" href="{{DownloadCSVFileUrl}}" download="{{currentCSVFilename}}" ng-click="downloadPress()">CSV&nbsp;&nbsp;&nbsp;&nbsp;
+                                <i class="fa fa-download"></i></a>
+                            <button ng-if="fileDownloadState === 'RESET'" ng-disabled="!cancelDownload" class="btn btn-success" type="button" ng-click="getCallSummaryCustCSVDownload()">
+                                CSV&nbsp;&nbsp;&nbsp;&nbsp;
+                                <i ng-class="buttonClass"></i>
+                            </button>
+                            <!--<a ng-if="fileDownloadState === 'READY'" style="width:60px; height:30px; background-size: 100% 100%;" target="_self" href="{{DownloadCSVFileUrl}}" download="{{currentCSVFilename}}" ng-click="downloadPress()">Download</a>
+                            <button ng-if="fileDownloadState === 'RESET'" type="button" style="width:60px; height:30px; background-size: 100% 100%;" ng-click="getHourlySummaryCSVDownload()">{{DownloadButtonName}}</button>-->
+                        </div>
+
+                    </div>
+                    <div class="clearfix"></div>
+                    <div style="color: indianred;text-align: center">
+                        * Please note that downloaded csv report will contain summary for the whole day selected.
+                    </div>
+                </div>
+
+                <div class="search-main-wrap col-md-12 col-sm-12 col-xs-12" ng-if="isTableLoading==0">
+                    <div class="row ">
+                        <div class="col-md-12 col-sm-12 col-xs-12">
+                            <div class="data-state-wrap">
+                                Please Wait...
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+                <div class="x_panel" ng-if="isTableLoading==1" style="margin-top: 20px">
+                            <div class="x_content">
+                                <div class="dataTables_wrapper form-inline dt-bootstrap no-footer">
+                                    <div class="row">
+                                        <div class="col-md-12 col-sm-12 col-xs-12">
+
+                                            <div class="table-wrapper"
+                                                 ng-slimscroll horizontal-scroll="true"
+                                                 height="100%"
+                                                 horizontal-scroll-position="bottom"
+                                                 size="5px" opacity="0.4">
+                                                <table dt-options="dtOptions" datatable="ng"
+                                                       class="table table-striped table-bordered dt-responsive nowrap dataTable no-footer dtr-inline"
+                                                       cellspacing="0" width="100%" role="grid"
+                                                       aria-describedby="datatable-responsive_info">
+                                                    <thead>
+                                                    <tr role="row">
+                                                        <th class="sorting" tabindex="0" aria-controls="datatable-responsive"
+                                                            rowspan="1"
+                                                            colspan="1" aria-label="Phone Number">Phone Number
+                                                        </th>
+                                                        <th class="sorting" tabindex="0" aria-controls="datatable-responsive"
+                                                            rowspan="1"
+                                                            colspan="1" aria-label="Inbound Calls">Inbound Calls
+                                                        </th>
+                                                        <th class="sorting" tabindex="0" aria-controls="datatable-responsive"
+                                                            rowspan="1"
+                                                            colspan="1" aria-label="Outbound Calls">Outbound Calls
+                                                        </th>
+                                                        <th class="sorting" tabindex="0" aria-controls="datatable-responsive"
+                                                            rowspan="1"
+                                                            colspan="1" aria-label="Inbound Answered">Inbound Answered
+                                                        </th>
+                                                        <th class="sorting" tabindex="0" aria-controls="datatable-responsive"
+                                                            rowspan="1"
+                                                            colspan="1" aria-label="Outbound Answered">Outbound Answered
+                                                        </th>
+                                                        <th class="sorting" tabindex="0" aria-controls="datatable-responsive"
+                                                            rowspan="1"
+                                                            colspan="1" aria-label="Last Call Direction">Last Call Direction
+                                                        </th>
+                                                        <th class="sorting" tabindex="0" aria-controls="datatable-responsive"
+                                                            rowspan="1"
+                                                            colspan="1" aria-label="Last Call Answered">Last Call Answered
+                                                        </th>
+                                                        <th class="sorting" tabindex="0" aria-controls="datatable-responsive"
+                                                            rowspan="1"
+                                                            colspan="1" aria-label="Last Call Time">Last Call Time
+                                                        </th>
+
+                                                    </thead>
+                                                    <tbody>
+                                                    <tr role="row" class="odd"
+                                                        ng-repeat="sum in callSummaryList">
+                                                        <td>{{sum.PhoneNumber}}</td>
+                                                        <td>{{sum.InboundCalls}}</td>
+                                                        <td>{{sum.OutboundCalls}}</td>
+                                                        <td>{{sum.InboundAnswered}}</td>
+                                                        <td>{{sum.OutboundAnswered}}</td>
+                                                        <td>{{sum.LastCallDirection}}</td>
+                                                        <td>{{sum.LastCallAnswered}}</td>
+                                                        <td>{{sum.LastCallTime}}</td>
+                                                    </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                            </div>
+                        </div>
+            </div>
+
+
+        </uib-tab>
+    </uib-tabset>
+</div>
+
+<!--Old-->
+<!--<div>-->
+<!--<div class="page-title">-->
+<!--<div class="title_left">-->
+<!--<h3 class="font-robot font-600 ">Call Summary Report</h3>-->
+<!--</div>-->
+<!--</div>-->
+
+<!--<div class="col-md-12 col-sm-12 col-xs-12">-->
+<!--<div class="x_panel">-->
+<!--<div class="row">-->
+<!--<uib-tabset active="0">-->
+<!--<uib-tab index="0" heading="Hourly Summary (By Day)">-->
+
+<!--<div class="col-md-12 col-sm-12 col-xs-12">-->
+<!--<br>-->
+<!--<div class="col-md-2 col-sm-2 col-xs-2">-->
+<!--<label>Day</label>-->
+<!--<input type="text" class="form-control" ng-model="obj.dateofmonth" ng-change="onDateChange()" name="dayofmonth" datepicker>-->
+<!--</div>-->
+<!--<div class="col-md-2 col-sm-2 col-xs-2" style="line-height: 7.3em;">-->
+<!--<button type="button" class="btn btn-success" ng-disabled="obj.isTableLoadingHr==0" ng-click="getCallSummary()">-->
+<!--Search-->
+<!--</button>-->
+<!--</div>-->
+<!--<div class="col-md-2 col-sm-2 col-xs-2">-->
+<!--<div class="col-md-6 col-sm-6 col-xs-6" style="position: relative; top: 28px;">-->
+<!--<label><h5>Download</h5></label>-->
+<!--</div>-->
+<!--<div class="col-md-6 col-sm-6 col-xs-6" style="position: relative; top: 28px;">-->
+
+<!--<a ng-if="fileDownloadState === 'READY'" class="btn btn-default" style="background-color: #a3d100; color: #000000; font-weight: 500" role="button" target="_self" href="{{DownloadCSVFileUrl}}" download="{{currentCSVFilename}}" ng-click="downloadPress()">CSV&nbsp;&nbsp;&nbsp;&nbsp;-->
+<!--<i class="fa fa-download"></i></a>-->
+<!--<button ng-if="fileDownloadState === 'RESET'" ng-disabled="!cancelDownload" class="btn" style="background-color: #a3d100; color: #000000; font-weight: 500" type="button" ng-click="getHourlySummaryCSVDownload()">-->
+<!--CSV&nbsp;&nbsp;&nbsp;&nbsp;-->
+<!--<i ng-class="buttonClass"></i>-->
+<!--</button>-->
+<!--&lt;!&ndash;<a ng-if="fileDownloadState === 'READY'" style="width:60px; height:30px; background-size: 100% 100%;" target="_self" href="{{DownloadCSVFileUrl}}" download="{{currentCSVFilename}}" ng-click="downloadPress()">Download</a>-->
+<!--<button ng-if="fileDownloadState === 'RESET'" type="button" style="width:60px; height:30px; background-size: 100% 100%;" ng-click="getHourlySummaryCSVDownload()">{{DownloadButtonName}}</button>&ndash;&gt;-->
+<!--</div>-->
+
+<!--</div>-->
+<!--<div class="col-md-6 col-sm-6 col-xs-6"></div>-->
+<!--</div>-->
+
+<!--<div class="search-main-wrap col-md-12 col-sm-12 col-xs-12" ng-if="obj.isTableLoadingHr==0">-->
+<!--<div class="row ">-->
+<!--<div class="col-md-12 col-sm-12 col-xs-12">-->
+<!--<div class="data-state-wrap">-->
+<!--Please Wait...-->
+<!--</div>-->
+
+<!--</div>-->
+<!--</div>-->
+<!--</div>-->
+
+<!--<div class="row" ng-if="obj.isTableLoadingHr==1">-->
+<!--<div class="col-md-12 col-sm-12 col-xs-12">-->
+<!--<div class="x_panel">-->
+<!--<div class="x_content">-->
+<!--<div id="datatable-responsive_wrapper"-->
+<!--class="dataTables_wrapper form-inline dt-bootstrap no-footer">-->
+<!--<div class="row">-->
+<!--<div class="col-md-12 col-sm-12 col-xs-12">-->
+
+<!--<div class="table-wrapper"-->
+<!--ng-slimscroll horizontal-scroll="true"-->
+<!--height="100%"-->
+<!--horizontal-scroll-position="bottom"-->
+<!--size="5px" opacity="0.4">-->
+<!--<table id="datatable-responsive" dt-options="dtOptions" datatable="ng"-->
+<!--class="table table-striped table-bordered dt-responsive nowrap dataTable no-footer dtr-inline"-->
+<!--cellspacing="0" width="100%" role="grid"-->
+<!--aria-describedby="datatable-responsive_info">-->
+<!--<thead>-->
+<!--<tr role="row">-->
+<!--<th class="sorting" tabindex="0" aria-controls="datatable-responsive"-->
+<!--rowspan="1"-->
+<!--colspan="1" aria-label="Hour">Hour-->
+<!--</th>-->
+<!--<th class="sorting" tabindex="0" aria-controls="datatable-responsive"-->
+<!--rowspan="1"-->
+<!--colspan="1" aria-label="IVRCalls">IVR Calls (Count)-->
+<!--</th>-->
+<!--<th class="sorting" tabindex="0" aria-controls="datatable-responsive"-->
+<!--rowspan="1"-->
+<!--colspan="1" aria-label="Queued">Queued Calls (Count)-->
+<!--</th>-->
+<!--<th class="sorting" tabindex="0" aria-controls="datatable-responsive"-->
+<!--rowspan="1"-->
+<!--colspan="1" aria-label="AbandonCount">Abandon Calls (Count)-->
+<!--</th>-->
+<!--<th class="sorting" tabindex="0" aria-controls="datatable-responsive"-->
+<!--rowspan="1"-->
+<!--colspan="1" aria-label="Abandon">Abandon Calls (%)-->
+<!--</th>-->
+<!--<th class="sorting" tabindex="0" aria-controls="datatable-responsive"-->
+<!--rowspan="1"-->
+<!--colspan="1" aria-label="DropCount">Dropped Calls (Count)-->
+<!--</th>-->
+<!--<th class="sorting" tabindex="0" aria-controls="datatable-responsive"-->
+<!--rowspan="1"-->
+<!--colspan="1" aria-label="Drop">Dropped Calls (%)-->
+<!--</th>-->
+<!--<th class="sorting" tabindex="0" aria-controls="datatable-responsive"-->
+<!--rowspan="1"-->
+<!--colspan="1" aria-label="AvgHold">Avg Hold Time (sec)-->
+<!--</th>-->
+<!--<th class="sorting" tabindex="0" aria-controls="datatable-responsive"-->
+<!--rowspan="1"-->
+<!--colspan="1" aria-label="AvgIVR">Avg IVR Time (sec)-->
+<!--</th>-->
+<!--<th class="sorting" tabindex="0" aria-controls="datatable-responsive"-->
+<!--rowspan="1"-->
+<!--colspan="1" aria-label="AvgAnswerSpeed">Avg Answer Speed (sec)-->
+<!--</th>-->
+<!--<th class="sorting" tabindex="0" aria-controls="datatable-responsive"-->
+<!--rowspan="1"-->
+<!--colspan="1" aria-label="AvgTalk">Avg Talk Time (sec)-->
+<!--</th>-->
+<!--<th class="sorting" tabindex="0" aria-controls="datatable-responsive"-->
+<!--rowspan="1"-->
+<!--colspan="1" aria-label="AnswerCount">Answererd Calls (Count)-->
+<!--</th>-->
+<!--<th class="sorting" tabindex="0" aria-controls="datatable-responsive"-->
+<!--rowspan="1"-->
+<!--colspan="1" aria-label="AnswerPercentage">Answer Percentage (%)-->
+<!--</th>-->
+<!--</thead>-->
+<!--<tbody>-->
+<!--<tr role="row" class="odd"-->
+<!--ng-repeat="sumHr in callSummaryHrList">-->
+<!--<td>{{sumHr.Caption}}</td>-->
+<!--<td>{{sumHr.IVRCallsCount}}</td>-->
+<!--<td>{{sumHr.QueuedCallsCount}}</td>-->
+<!--<td>{{sumHr.AbandonCallsCount}}</td>-->
+<!--<td>{{sumHr.AbandonPercentage}}</td>-->
+<!--<td>{{sumHr.DropCallsCount}}</td>-->
+<!--<td>{{sumHr.DropPercentage}}</td>-->
+<!--<td>{{sumHr.HoldAverage}}</td>-->
+<!--<td>{{sumHr.IvrAverage}}</td>-->
+<!--<td>{{sumHr.RingAverage}}</td>-->
+<!--<td>{{sumHr.TalkAverage}}</td>-->
+<!--<td>{{sumHr.AnswerCount}}</td>-->
+<!--<td>{{sumHr.AnswerPercentage}}</td>-->
+<!--</tbody>-->
+<!--</table>-->
+<!--</div>-->
+<!--</div>-->
+<!--</div>-->
+<!--</div>-->
+<!--</div>-->
+<!--</div>-->
+<!--</div>-->
+<!--</div>-->
+<!--</uib-tab>-->
+<!--<uib-tab index="1" heading="Daily Summary (By Month)">-->
+<!--</br>-->
+<!--<div class="col-md-12 col-sm-12 col-xs-12">-->
+<!--<div class="col-md-3 col-sm-3 col-xs-3">-->
+<!--<label>Start Day</label>-->
+<!--<input type="text" class="form-control" ng-model="obj2.startDay" name="startDay" datepicker>-->
+<!--</div>-->
+<!--<div class="col-md-3 col-sm-3 col-xs-3">-->
+<!--<label>End Day</label>-->
+<!--<input type="text" class="form-control" ng-model="obj2.endDay" name="endDay" datepicker>-->
+<!--</div>-->
+<!--<div class="col-md-2 col-sm-2 col-xs-2" style="line-height: 7.3em;">-->
+<!--<button type="button" class="btn btn-success" ng-disabled="obj.isTableLoadingDay==0" ng-click="getCallSummaryDaily()">-->
+<!--Search-->
+<!--</button>-->
+<!--</div>-->
+<!--<div class="col-md-2 col-sm-2 col-xs-2">-->
+<!--<div class="col-md-6 col-sm-6 col-xs-6" style="position: relative; top: 28px;">-->
+<!--<label><h5>Download</h5></label>-->
+<!--</div>-->
+<!--<div class="col-md-6 col-sm-6 col-xs-6" style="position: relative; top: 28px;">-->
+
+<!--<a ng-if="fileDownloadStateDaily === 'READY'" class="btn btn-default" style="background-color: #a3d100; color: #000000; font-weight: 500" role="button" target="_self" href="{{DownloadCSVFileUrl}}" download="{{currentCSVFilename}}" ng-click="downloadPressDaily()">CSV&nbsp;&nbsp;&nbsp;&nbsp;-->
+<!--<i class="fa fa-download"></i></a>-->
+<!--<button ng-if="fileDownloadStateDaily === 'RESET'" ng-disabled="!cancelDownloadDaily" class="btn" style="background-color: #a3d100; color: #000000; font-weight: 500" type="button" ng-click="getDailySummaryCSVDownload()">-->
+<!--CSV&nbsp;&nbsp;&nbsp;&nbsp;-->
+<!--<i ng-class="buttonClassDaily"></i>-->
+<!--</button>-->
+
+<!--&lt;!&ndash;<a ng-if="fileDownloadStateDaily === 'READY'" style="width:60px; height:30px; background-size: 100% 100%;" target="_self" href="{{DownloadCSVFileUrl}}" download="{{currentCSVFilenameDaily}}" ng-click="downloadPressDaily()">Download</a>-->
+<!--<button ng-if="fileDownloadStateDaily === 'RESET'" type="button" style="width:60px; height:30px; background-size: 100% 100%;" ng-click="getDailySummaryCSVDownload()">{{DownloadButtonNameDaily}}</button>&ndash;&gt;-->
+<!--</div>-->
+
+<!--</div>-->
+<!--<div class="col-md-2 col-sm-2 col-xs-2"></div>-->
+<!--</div>-->
+
+<!--<div class="search-main-wrap col-md-12 col-sm-12 col-xs-12" ng-if="obj.isTableLoadingDay==0">-->
+<!--<div class="row ">-->
+<!--<div class="col-md-12 col-sm-12 col-xs-12">-->
+<!--<div class="data-state-wrap">-->
+<!--Please Wait...-->
+<!--</div>-->
+
+<!--</div>-->
+<!--</div>-->
+<!--</div>-->
+
+
+
+<!--<div class="row" ng-if="obj.isTableLoadingDay==1">-->
+<!--<div class="col-md-12 col-sm-12 col-xs-12">-->
+<!--<div class="x_panel">-->
+<!--<div class="x_content">-->
+<!--<div id="datatable-responsive_wrapper_1"-->
+<!--&gt;-->
+<!--<div class="row">-->
+<!--<div class="col-md-12 col-sm-12 col-xs-12">-->
+
+<!--<div class="table-wrapper"-->
+<!--ng-slimscroll horizontal-scroll="true"-->
+<!--height="100%"-->
+<!--horizontal-scroll-position="bottom"-->
+<!--size="5px" opacity="0.4">-->
+<!--<table id="datatable-responsive_1" dt-options="dtOptions" datatable="ng"-->
+<!--class="table table-striped table-bordered dt-responsive nowrap dataTable no-footer dtr-inline"-->
+<!--cellspacing="0" width="100%" role="grid"-->
+<!--aria-describedby="datatable-responsive_info">-->
+<!--<thead>-->
+<!--<tr role="row">-->
+<!--<th class="sorting" tabindex="0" aria-controls="datatable-responsive"-->
+<!--rowspan="1"-->
+<!--colspan="1" aria-label="Day">Day-->
+<!--</th>-->
+<!--<th class="sorting" tabindex="0" aria-controls="datatable-responsive"-->
+<!--rowspan="1"-->
+<!--colspan="1" aria-label="IVRCalls">IVR Calls (Count)-->
+<!--</th>-->
+<!--<th class="sorting" tabindex="0" aria-controls="datatable-responsive"-->
+<!--rowspan="1"-->
+<!--colspan="1" aria-label="Queued">Queued Calls (Count)-->
+<!--</th>-->
+<!--<th class="sorting" tabindex="0" aria-controls="datatable-responsive"-->
+<!--rowspan="1"-->
+<!--colspan="1" aria-label="AbandonCount">Abandon Calls (Count)-->
+<!--</th>-->
+<!--<th class="sorting" tabindex="0" aria-controls="datatable-responsive"-->
+<!--rowspan="1"-->
+<!--colspan="1" aria-label="Abandon">Abandon Calls (%)-->
+<!--</th>-->
+<!--<th class="sorting" tabindex="0" aria-controls="datatable-responsive"-->
+<!--rowspan="1"-->
+<!--colspan="1" aria-label="DropCount">Dropped Calls (Count)-->
+<!--</th>-->
+<!--<th class="sorting" tabindex="0" aria-controls="datatable-responsive"-->
+<!--rowspan="1"-->
+<!--colspan="1" aria-label="Drop">Dropped Calls (%)-->
+<!--</th>-->
+<!--<th class="sorting" tabindex="0" aria-controls="datatable-responsive"-->
+<!--rowspan="1"-->
+<!--colspan="1" aria-label="AvgHold">Avg Hold Time (sec)-->
+<!--</th>-->
+<!--<th class="sorting" tabindex="0" aria-controls="datatable-responsive"-->
+<!--rowspan="1"-->
+<!--colspan="1" aria-label="AvgIVR">Avg IVR Time (sec)-->
+<!--</th>-->
+<!--<th class="sorting" tabindex="0" aria-controls="datatable-responsive"-->
+<!--rowspan="1"-->
+<!--colspan="1" aria-label="AvgAnswerSpeed">Avg Answer Speed (sec)-->
+<!--</th>-->
+<!--<th class="sorting" tabindex="0" aria-controls="datatable-responsive"-->
+<!--rowspan="1"-->
+<!--colspan="1" aria-label="AvgTalk">Avg Talk Time (sec)-->
+<!--</th>-->
+<!--<th class="sorting" tabindex="0" aria-controls="datatable-responsive"-->
+<!--rowspan="1"-->
+<!--colspan="1" aria-label="AnswerCount">Answererd Calls (Count)-->
+<!--</th>-->
+<!--<th class="sorting" tabindex="0" aria-controls="datatable-responsive"-->
+<!--rowspan="1"-->
+<!--colspan="1" aria-label="AnswerPercentage">Answer Percentage (%)-->
+<!--</th>-->
+<!--</thead>-->
+<!--<tbody>-->
+<!--<tr role="row" class="odd"-->
+<!--ng-repeat="sumDay in callSummaryDayList">-->
+<!--<td>{{sumDay.Caption}}</td>-->
+<!--<td>{{sumDay.IVRCallsCount}}</td>-->
+<!--<td>{{sumDay.QueuedCallsCount}}</td>-->
+<!--<td>{{sumDay.AbandonCallsCount}}</td>-->
+<!--<td>{{sumDay.AbandonPercentage}}</td>-->
+<!--<td>{{sumDay.DropCallsCount}}</td>-->
+<!--<td>{{sumDay.DropPercentage}}</td>-->
+<!--<td>{{sumDay.HoldAverage}}</td>-->
+<!--<td>{{sumDay.IvrAverage}}</td>-->
+<!--<td>{{sumDay.RingAverage}}</td>-->
+<!--<td>{{sumDay.TalkAverage}}</td>-->
+<!--<td>{{sumDay.AnswerCount}}</td>-->
+<!--<td>{{sumDay.AnswerPercentage}}</td>-->
+<!--</tbody>-->
+<!--</table>-->
+<!--</div>-->
+<!--</div>-->
+<!--</div>-->
+<!--</div>-->
+
+
+<!--</div>-->
+<!--</div>-->
+<!--</div>-->
+<!--</div>-->
+
+<!--</uib-tab>-->
+<!--<uib-tab index="2" heading="Customer Call Summary (By Day)">-->
+
+<!--<div ng-controller="callSummaryCustCtrl">-->
+
+<!--<div class="col-md-12 col-sm-12 col-xs-12">-->
+<!--<br>-->
+<!--<div class="col-md-2 col-sm-2 col-xs-2">-->
+<!--<label>Day</label>-->
+<!--<input type="text" class="form-control" ng-model="obj.dayCust" name="dayCust" datepicker>-->
+<!--</div>-->
+<!--<div class="col-md-2 col-sm-2 col-xs-2">-->
+<!--<label>Hour</label>-->
+<!--<select name="datatable-responsive_length" ng-model="obj.hour"-->
+<!--aria-controls="datatable-responsive" class="form-control">-->
+<!--<option value="00:00:00.000-00:59:59.999">12 AM - 1 AM</option>-->
+<!--<option value="01:00:00.000-01:59:59.999">1 AM - 2 AM</option>-->
+<!--<option value="02:00:00.000-02:59:59.999">2 AM - 3 AM</option>-->
+<!--<option value="03:00:00.000-03:59:59.999">3 AM - 4 AM</option>-->
+<!--<option value="04:00:00.000-04:59:59.999">4 AM - 5 AM</option>-->
+<!--<option value="05:00:00.000-05:59:59.999">5 AM - 6 AM</option>-->
+<!--<option value="06:00:00.000-06:59:59.999">6 AM - 7 AM</option>-->
+<!--<option value="07:00:00.000-07:59:59.999">7 AM - 8 AM</option>-->
+<!--<option value="08:00:00.000-08:59:59.999">8 AM - 9 AM</option>-->
+<!--<option value="09:00:00.000-09:59:59.999">9 AM - 10 AM</option>-->
+<!--<option value="10:00:00.000-10:59:59.999">10 AM - 11 AM</option>-->
+<!--<option value="11:00:00.000-11:59:59.999">11 AM - 12 PM</option>-->
+<!--<option value="12:00:00.000-12:59:59.999">12 PM - 1 PM</option>-->
+<!--<option value="13:00:00.000-13:59:59.999">1 PM - 2 PM</option>-->
+<!--<option value="14:00:00.000-14:59:59.999">2 PM - 3 PM</option>-->
+<!--<option value="15:00:00.000-15:59:59.999">3 PM - 4 PM</option>-->
+<!--<option value="16:00:00.000-16:59:59.999">4 PM - 5 PM</option>-->
+<!--<option value="17:00:00.000-17:59:59.999">5 PM - 6 PM</option>-->
+<!--<option value="18:00:00.000-18:59:59.999">6 PM - 7 PM</option>-->
+<!--<option value="19:00:00.000-19:59:59.999">7 PM - 8 PM</option>-->
+<!--<option value="20:00:00.000-20:59:59.999">8 PM - 9 PM</option>-->
+<!--<option value="21:00:00.000-21:59:59.999">9 PM - 10 PM</option>-->
+<!--<option value="22:00:00.000-22:59:59.999">10 PM - 11 PM</option>-->
+<!--<option value="23:00:00.000-23:59:59.999">11 PM - 12 AM</option>-->
+
+<!--</select>-->
+<!--</div>-->
+<!--<div class="col-md-2 col-sm-2 col-xs-2" style="line-height: 7.3em;">-->
+<!--<button type="button" class="btn btn-success" ng-disabled="isTableLoading==0" ng-click="getCallSummary()">-->
+<!--Search-->
+<!--</button>-->
+<!--</div>-->
+<!--<div class="col-md-2 col-sm-2 col-xs-2">-->
+<!--<div class="col-md-6 col-sm-6 col-xs-6" style="position: relative; top: 28px;">-->
+<!--<label><h5>Download</h5></label>-->
+<!--</div>-->
+<!--<div class="col-md-6 col-sm-6 col-xs-6" style="position: relative; top: 28px;">-->
+
+<!--<a ng-if="fileDownloadState === 'READY'" class="btn btn-default" style="background-color: #a3d100; color: #000000; font-weight: 500" role="button" target="_self" href="{{DownloadCSVFileUrl}}" download="{{currentCSVFilename}}" ng-click="downloadPress()">CSV&nbsp;&nbsp;&nbsp;&nbsp;-->
+<!--<i class="fa fa-download"></i></a>-->
+<!--<button ng-if="fileDownloadState === 'RESET'" ng-disabled="!cancelDownload" class="btn" style="background-color: #a3d100; color: #000000; font-weight: 500" type="button" ng-click="getCallSummaryCustCSVDownload()">-->
+<!--CSV&nbsp;&nbsp;&nbsp;&nbsp;-->
+<!--<i ng-class="buttonClass"></i>-->
+<!--</button>-->
+<!--&lt;!&ndash;<a ng-if="fileDownloadState === 'READY'" style="width:60px; height:30px; background-size: 100% 100%;" target="_self" href="{{DownloadCSVFileUrl}}" download="{{currentCSVFilename}}" ng-click="downloadPress()">Download</a>-->
+<!--<button ng-if="fileDownloadState === 'RESET'" type="button" style="width:60px; height:30px; background-size: 100% 100%;" ng-click="getHourlySummaryCSVDownload()">{{DownloadButtonName}}</button>&ndash;&gt;-->
+<!--</div>-->
+
+<!--</div>-->
+<!--<div class="col-md-4 col-sm-4 col-xs-4"></div>-->
+
+<!--<div class="clearfix"></div>-->
+
+<!--<div class="clearfix" style="color: orangered">-->
+<!--* Please note that downloaded csv report will contain summary for the whole day selected.-->
+<!--</div>-->
+<!--</div>-->
+
+<!--<div class="search-main-wrap col-md-12 col-sm-12 col-xs-12" ng-if="isTableLoading==0">-->
+<!--<div class="row ">-->
+<!--<div class="col-md-12 col-sm-12 col-xs-12">-->
+<!--<div class="data-state-wrap">-->
+<!--Please Wait...-->
+<!--</div>-->
+
+<!--</div>-->
+<!--</div>-->
+<!--</div>-->
+
+<!--<div class="row" ng-if="isTableLoading==1">-->
+<!--<div class="col-md-12 col-sm-12 col-xs-12">-->
+<!--<div class="x_panel">-->
+<!--<div class="x_content">-->
+
+
+<!--<div class="dataTables_wrapper form-inline dt-bootstrap no-footer">-->
+<!--<div class="row">-->
+<!--<div class="col-md-12 col-sm-12 col-xs-12">-->
+
+<!--<div class="table-wrapper"-->
+<!--ng-slimscroll horizontal-scroll="true"-->
+<!--height="100%"-->
+<!--horizontal-scroll-position="bottom"-->
+<!--size="5px" opacity="0.4">-->
+<!--<table dt-options="dtOptions" datatable="ng"-->
+<!--class="table table-striped table-bordered dt-responsive nowrap dataTable no-footer dtr-inline"-->
+<!--cellspacing="0" width="100%" role="grid"-->
+<!--aria-describedby="datatable-responsive_info">-->
+<!--<thead>-->
+<!--<tr role="row">-->
+<!--<th class="sorting" tabindex="0" aria-controls="datatable-responsive"-->
+<!--rowspan="1"-->
+<!--colspan="1" aria-label="Phone Number">Phone Number-->
+<!--</th>-->
+<!--<th class="sorting" tabindex="0" aria-controls="datatable-responsive"-->
+<!--rowspan="1"-->
+<!--colspan="1" aria-label="Inbound Calls">Inbound Calls-->
+<!--</th>-->
+<!--<th class="sorting" tabindex="0" aria-controls="datatable-responsive"-->
+<!--rowspan="1"-->
+<!--colspan="1" aria-label="Outbound Calls">Outbound Calls-->
+<!--</th>-->
+<!--<th class="sorting" tabindex="0" aria-controls="datatable-responsive"-->
+<!--rowspan="1"-->
+<!--colspan="1" aria-label="Inbound Answered">Inbound Answered-->
+<!--</th>-->
+<!--<th class="sorting" tabindex="0" aria-controls="datatable-responsive"-->
+<!--rowspan="1"-->
+<!--colspan="1" aria-label="Outbound Answered">Outbound Answered-->
+<!--</th>-->
+<!--<th class="sorting" tabindex="0" aria-controls="datatable-responsive"-->
+<!--rowspan="1"-->
+<!--colspan="1" aria-label="Last Call Direction">Last Call Direction-->
+<!--</th>-->
+<!--<th class="sorting" tabindex="0" aria-controls="datatable-responsive"-->
+<!--rowspan="1"-->
+<!--colspan="1" aria-label="Last Call Answered">Last Call Answered-->
+<!--</th>-->
+<!--<th class="sorting" tabindex="0" aria-controls="datatable-responsive"-->
+<!--rowspan="1"-->
+<!--colspan="1" aria-label="Last Call Time">Last Call Time-->
+<!--</th>-->
+
+<!--</thead>-->
+<!--<tbody>-->
+<!--<tr role="row" class="odd"-->
+<!--ng-repeat="sum in callSummaryList">-->
+<!--<td>{{sum.PhoneNumber}}</td>-->
+<!--<td>{{sum.InboundCalls}}</td>-->
+<!--<td>{{sum.OutboundCalls}}</td>-->
+<!--<td>{{sum.InboundAnswered}}</td>-->
+<!--<td>{{sum.OutboundAnswered}}</td>-->
+<!--<td>{{sum.LastCallDirection}}</td>-->
+<!--<td>{{sum.LastCallAnswered}}</td>-->
+<!--<td>{{sum.LastCallTime}}</td>-->
+<!--</tr>-->
+<!--</tbody>-->
+<!--</table>-->
+<!--</div>-->
+<!--</div>-->
+<!--</div>-->
+<!--</div>-->
+
+
+<!--</div>-->
+<!--</div>-->
+<!--</div>-->
+<!--</div>-->
+
+<!--</div>-->
+
+
+<!--</uib-tab>-->
+<!--</uib-tabset>-->
+<!--</div>-->
+<!--</div>-->
+<!--</div>-->
+<!--</div>-->
+<!--Old-->
+
+<script>
+	window.scrollTo(0, 0);
+</script>

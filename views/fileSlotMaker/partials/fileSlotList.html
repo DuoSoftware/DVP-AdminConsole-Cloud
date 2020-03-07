@@ -1,0 +1,18 @@
+<div class="col-lg-12">
+    <div class="row">
+        <div class="col-md-9">
+            <h2 class=" font-300">
+                <a ng-hide="editMode">Slot Name : {{slot.name}}</a>
+
+            </h2>
+        </div>
+        <div class="col-md-3 ">
+            <div class="pull-right user-option-wrap" ng-show="!editMode">
+                <h3>
+                    <small ng-disabled="true" ng-click="RemoveSlotFromArray()" style="cursor: pointer"><i
+                            class="fa fa-trash-o"></i></small>
+                </h3>
+            </div>
+        </div>
+    </div>
+</div>

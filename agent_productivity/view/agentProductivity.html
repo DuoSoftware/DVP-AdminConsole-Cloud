@@ -1,0 +1,172 @@
+<div class="row" ng-controller="resourceProductivityController">
+    <div class="col-md-12 col-sm-6 col-xs-12">
+        <div class="x_panel main-title">
+            <div class="x_title">
+                <h2>Agent Productivity</h2>
+                <ul class="nav navbar-right panel_toolbox">
+                    <li class="dropdown">
+                        <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button"
+                           aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                        <ul class="dropdown-menu" role="menu">
+                            <li><a href="javascript:void(0);" ng-class="{'active-btn':showDetails==true,
+                        '':showDetails==false}"
+                                   class="btn btn-sm pull-right attribute-btn"
+                                   ng-click="showTable= false">
+                                Card</a>
+                            </li>
+
+                            <li><a href="javascript:void(0);" ng-class="{'active-btn':summary==true,
+                        '':summary==false}"
+                                   class="btn btn-sm pull-right attribute-btn"
+                                   ng-click="showTable= true">
+                                Table</a>
+                            </li>
+                        </ul>
+                    </li>
+
+                    <li ng-show="!showFilter" ng-click="showFilter= !showFilter"><a class="collapse-link"><i
+                            class="fa fa-chevron-up"></i></a>
+                    </li>
+                    <li ng-show="showFilter" ng-click="showFilter= !showFilter"><a class="close-link"><i
+                            class="fa fa-chevron-down"></i></a>
+                    </li>
+                </ul>
+                <div class="clearfix"></div>
+            </div>
+            <div class="x_content" ng-show="!showFilter">
+                <form id="csatForm" name="csatForm" novalidate>
+
+                    <div class="col-md-12 col-sm-12 col-xs-12">
+                        <div class="form-group" style="margin-bottom: 0">
+                            <label>Agents</label>
+                            <div class="row">
+                                <div class="col-md-3 col-sm-3 col-xs-12">
+                                    <select name="filterType" ng-model="agentSelectingType"
+                                            ng-change="onSelectionChanged()"
+                                            aria-controls="datatable-responsive" class="form-control select-limit">
+                                        <option value="ALL">All Users</option>
+                                        <option value="USER">By User</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-3 col-sm-3 col-xs-12">
+                                    <button ng-disabled="csatForm.$invalid" type="button"
+                                            ng-if="!isLoading"
+                                            class="btn btn-success btn-block "
+                                            ng-click="getProductivity();">
+                                        Load
+                                    </button>
+                                    <button disabled type="button"
+                                            ng-if="isLoading"
+                                            class="btn btn-success btn-block"
+                                    >
+                                        Please Wait...
+                                    </button>
+                                </div>
+                            </div>
+
+
+                            <div class="input-group col-md-12" ng-if="agentSelectingType==='USER'"
+                                 style="margin-bottom: 0">
+                                <tags-input ng-model="OnlineAgents" display-property="ResourceName"
+                                            key-property="ResourceName"
+                                            placeholder="Select Agent"
+                                            add-from-autocomplete-only="true" min-length="0"
+                                            on-tag-removed="AgentAdded()" on-tag-added="AgentAdded()">
+                                    <auto-complete source="querySearch($query)" load-on-empty="true"
+                                                   max-results-to-show="10000" min-length="1"
+                                                   load-on-focus="true"></auto-complete>
+                                </tags-input>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!--<div class="col-md-11 col-sm-11 col-xs-12  form-group">
+                        <div class="form-group">
+                            <label>Agent</label>
+                            <div class="input-group col-md-12">
+                                <tags-input  ng-model="OnlineAgents" display-property="ResourceName" key-property="ResourceName"
+                                            placeholder="Select Agent"
+                                            add-from-autocomplete-only="true" min-length="0" on-tag-removed="AgentAdded()" on-tag-added="AgentAdded()">
+                                    <auto-complete source="querySearch($query)" load-on-empty="true"
+                                                   max-results-to-show="10000" min-length="1"
+                                                   load-on-focus="true"></auto-complete>
+                                </tags-input>
+                            </div>
+                        </div>
+                    </div>-->
+
+
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="clearfix"></div>
+
+    <div class="col-md-12 col-sm-6 col-xs-12">
+        <div ng-show="OnlineAgents.length==0">
+            <div class="row ">
+                <div class="col-md-12 col-sm-12 col-xs-12">
+                    <div class="data-state-wrap">
+                        No Data....
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <div ng-show="isLoading">
+            <div class="row ">
+                <div class="col-md-12 col-sm-12 col-xs-12">
+                    <div class="data-state-wrap">
+                        Please Wait...
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div ng-hide="showTable"  class="col-md-3 col-sm-3 col-xs-12" ng-repeat="p in OnlineAgents | orderBy:'onlineStatus'">
+                <!--ng-if='p.onlinestatus == true'-->
+                <div class="x_panel x-panel-overflow ">
+                    <div class="x_content productivity-panel">
+                        <!--<div class="x_title ">-->
+                        <!--&lt;!&ndash;<h4 ng-if="p.ResourceName.length < 21"-->
+                        <!--class="font-robot font-300 text-uppercase ">-->
+                        <!--{{p.ResourceName}}-->
+                        <!--</h4>&ndash;&gt;-->
+
+                        <!--&lt;!&ndash;<h4 class="font-robot font-300 text-uppercase "-->
+                        <!--ng-if="p.ResourceName.length > 19"-->
+                        <!--tooltip-placement="top"-->
+                        <!--uib-tooltip="{{p.ResourceName}}">-->
+                        <!--{{ p.ResourceName | limitTo: 19 }}{{p.ResourceName.length > 19 ?-->
+                        <!--'...':''}}-->
+                        <!--</h4>&ndash;&gt;-->
+                        <!--<div class="clearfix"></div>-->
+                        <!--</div>-->
+                        <div id="{{p.ResourceId}}" style="height:350px;"></div>
+                    </div>
+                </div>
+
+
+            </div>
+            <div ng-show="showTable">
+                <div id="grid1"
+                     ui-grid="gridOptions"
+                     ui-grid-resize-columns
+                     ui-grid-pinning
+                     ui-grid-move-columns
+                     ui-grid-auto-resize
+                     class="grid grid-width-full"
+                     ng-style="getTableHeight()"></div>
+            </div>
+        </div>
+    </div>
+
+
+</div>
+
+
+
+

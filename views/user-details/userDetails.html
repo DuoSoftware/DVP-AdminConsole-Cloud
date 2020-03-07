@@ -1,0 +1,68 @@
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12 animated fadeIn">
+        <div class="x_panel main-title">
+            <div class="x_title">
+                <h2><b>REPORT</b> | User Details</h2>
+            </div>
+            <ul class="nav navbar-right panel_toolbox">
+                <li ng-show="!showFilter" ng-click="showFilter= !showFilter"><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                </li>
+                <li ng-show="showFilter" ng-click="showFilter= !showFilter"><a class="close-link"><i class="fa fa-chevron-down"></i></a>
+                </li>
+            </ul>
+            <div class="clearfix"></div>
+
+            <div class="x_content" ng-show="!showFilter">
+
+                <div class="row">
+
+                    <div class="col-md-3 col-sm-3 col-xs-12">
+                    <label>Roles</label>
+                    <tags-input ng-model="roleFilter" display-property="role"  add-from-autocomplete-only="true" replace-spaces-with-dashes="false" min-length="1">
+                    <auto-complete source="querySearchRoles($query)" load-on-empty="true" load-on-focus="true" min-length="1" max-results-to-show="10000"></auto-complete>
+                    </tags-input>
+                    </div>
+                    <div class="col-md-1 col-sm-1 col-xs-1" style="padding-top: 25px">
+                        <button ng-disabled="isTableLoading===0" type="button" class="btn btn-success" ng-click="getUserDetails(true)">
+                            Search
+                        </button>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+        <!--<div class="x_panel fixed_height_210" ng-mouseenter="stopTimerFn(true)" ng-mouseleave="stopTimerFn(false);">-->
+        <div class="x_panel">
+            <div class="x_content userDetail" style="padding: 0" ng-style="{'z-index':'1'}">
+                <div ng-hide="gridQOptions.data.length>0">
+                    <div class="row ">
+                        <div class="col-md-12 col-sm-12 col-xs-12">
+                            <div class="data-state-wrap">
+                                <i class="fa fa-exclamation-circle"></i>
+                                <span>No Data</span>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+
+                <div ui-if="gridQOptions.data.length>0" id="grid1" ui-grid="gridQOptions" class="grid"
+                     ui-grid-move-columns ui-grid-resize-columns ui-grid-pinning
+                     data-ng-attr-style="{{ getTableHeight() }}"></div>
+
+            </div>
+        </div>
+
+    <div class="clearfix" ng-if="isTableLoading==0">
+        <div class="col-md-12 col-sm-12 col-xs-12">
+            <div class="data-state-wrap">
+                Please Wait...
+            </div>
+
+        </div>
+    </div>
+</div>
+

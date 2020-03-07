@@ -1,0 +1,21 @@
+<div>
+    <div class="col-md-12 col-sm-12 col-xs-12 x_content x_panel">
+        <br><br>
+        <div class="col-md-11 col-sm-11 col-xs-11">
+            <h3>Select Question Paper</h3>
+        </div>
+        <div class="clearfix"></div>
+        <div class="col-md-12 col-sm-12 col-xs-12 x_content">
+            <label>Question Paper</label>
+            <select name="questionPaperSelect" class="select2_single form-control" aria-hidden="true" ng-options="paper as paper.name for paper in papers track by paper._id"
+                    ng-model="paperSelected">
+            </select>
+        </div>
+
+        <div class="col-md-12 col-sm-12 col-xs-12 x_content">
+            <button class="btn btn-success" ng-click="proceedToQuestionPaper()">
+                Proceed
+            </button>
+        </div>
+    </div>
+</div>

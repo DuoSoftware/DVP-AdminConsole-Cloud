@@ -1,0 +1,32 @@
+<div class="row" ng-show="showModal">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+
+        <div class="x_content">
+            <br />
+            <form class="form-horizontal form-label-left input_mask" name="catFrm">
+
+                <div class="form-group col-md-12 col-sm-12 col-xs-12">
+
+                    <div class="form-group col-md-12 col-sm-12 col-xs-12" >
+                        Type new Tag category Name here (Enter a Catgegor Name without    ' . '  )
+                        <input type="text" class="form-control" placeholder=""  ng-model="tagCatNameData" pattern="[^'.\x22]+" required>
+
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-md-12 col-sm-12 col-xs-12 col-md-offset-8">
+                            <button type="submit" class="btn btn-success" ng-disabled="catFrm.$invalid" ng-click="saveNewTagCategory()">Save</button>
+                            <button type="submit" class="btn btn-primary" ng-click="closeModal()">Cancel</button>
+
+                        </div>
+                    </div>
+                </div>
+
+            </form>
+        </div>
+    </div>
+
+
+</div>
+</div>
+</div>
