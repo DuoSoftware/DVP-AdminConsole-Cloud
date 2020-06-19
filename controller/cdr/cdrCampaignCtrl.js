@@ -7,7 +7,7 @@
 
 
     var cdrCampaignCtrl = function ($scope, $filter, $q, $sce, $timeout, $http, cdrApiHandler, campaignService, resourceService, sipUserApiHandler, ngAudio,
-                            loginService, baseUrls,$anchorScroll,$auth,fileService, filterDateRangeValidation) {
+                            loginService, baseUrls,$anchorScroll,authService,fileService, filterDateRangeValidation) {
 
         $anchorScroll();
         $scope.dtOptions = {paging: false, searching: false, info: false, order: [6, 'desc']};

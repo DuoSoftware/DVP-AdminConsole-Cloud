@@ -1,7 +1,7 @@
 (function () {
     var app = angular.module("veeryConsoleApp");
 
-    var callSummaryCustCtrl = function ($scope, $filter, $timeout, loginService, cdrApiHandler, ShareData, baseUrls,$anchorScroll) {
+    var callSummaryCustCtrl = function ($scope, $filter, $timeout, loginService,authService, cdrApiHandler, ShareData, baseUrls,$anchorScroll) {
 
         $anchorScroll();
         $scope.showAlert = function (tittle, type, content) {

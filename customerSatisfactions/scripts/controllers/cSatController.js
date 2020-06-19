@@ -1,4 +1,4 @@
-mainApp.controller('cSatController', function ($scope, $filter, $anchorScroll, $q, $timeout, cSatService, ticketReportsService, cdrApiHandler, loginService, filterDateRangeValidation) {
+mainApp.controller('cSatController', function ($scope, $filter, $anchorScroll, $q, $timeout, cSatService, ticketReportsService, authService,cdrApiHandler, loginService, filterDateRangeValidation) {
     $anchorScroll();
 
 
