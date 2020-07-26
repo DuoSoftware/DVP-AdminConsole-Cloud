@@ -102,6 +102,24 @@ mainApp.service("authService", function(
       });
   };
 
+  // forced logoff
+  this.ForcedLogoff = function(parm, callback) {
+    var username = parm.username;
+    var console = parm.console;
+    var tenant = parm.tenant;
+    var orgId = parm.orgId;
+    $http
+        .delete(
+            baseUrls.authServiceBaseUrl + "oauth/token/forcedLogoff/" + username + '?console=' + console + '&tenant=' + tenant + '&orgId=' + orgId
+        )
+        .success(function(data, status, headers, config) {
+          callback(true);
+        })
+        .error(function(data, status, headers, config) {
+          callback(false);
+        });
+  };
+
   // user login
   this.Login = function(parm, callback) {
     $http
