@@ -397,7 +397,7 @@
         params: postData
       }).then(function(response) {
         if (response.data && response.data.IsSuccess) {
-          return response.data;
+          return response.data.Result;
         } else {
           return undefined;
         }

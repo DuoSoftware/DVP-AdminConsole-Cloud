@@ -94,54 +94,54 @@ mainApp.config(function (scrollableTabsetConfigProvider) {
 });
 //resourceservice.app.veery.cloud
 var baseUrls = {
-    'UserServiceBaseUrl': 'http://localhost:3638/DVP/API/1.0.0.0/',//'http:////resourceservice.app.veery.cloud/DVP/API/1.0.0.0/',
-    'packagingServiceBaseUrl': 'http://localhost:9005/DVP/API/1.0.0.0/',//http://packagingservice.facetone.space/DVP/API/1.0.0.0/
-    'organizationServiceBaseUrl': 'http://localhost:9004/DVP/API/1.0.0.0/', //http://organizationservice.facetone.space/DVP/API/1.0.0.0/
-    'userGroupServiceBaseUrl': 'http://usergroupservice.facetone.space/DVP/API/1.0.0.0/',
-    'externalUserServiceBaseUrl': 'http://externaluserservice.facetone.space/DVP/API/1.0.0.0/',
-    'authServiceBaseUrl': 'http://localhost:9001/', //http://authservice.facetone.space/oauth/
+    'UserServiceBaseUrl': 'https://app.facetone.com:1443/DVP/API/1.0.0.0/',//'http:////resourceservice.app.veery.cloud/DVP/API/1.0.0.0/',
+    'packagingServiceBaseUrl': 'https://app.facetone.com:1443/DVP/API/1.0.0.0/',//http://packagingservice.facetone.space/DVP/API/1.0.0.0/
+    'organizationServiceBaseUrl': 'https://app.facetone.com:1443/DVP/API/1.0.0.0/', //http://organizationservice.facetone.space/DVP/API/1.0.0.0/
+    'userGroupServiceBaseUrl': 'https://app.facetone.com:1443/DVP/API/1.0.0.0/',
+    'externalUserServiceBaseUrl': 'https://app.facetone.com:1443/DVP/API/1.0.0.0/',
+    'authServiceBaseUrl': 'https://app.facetone.com:1443/', //http://authservice.facetone.space/oauth/
     //'authProviderUrl': 'http://authservice.facetone.space/',
 
-    'monitorrestapi': 'http://monitorrestapi.app1.veery.cloud/DVP/API/1.0.0.0/MonitorRestAPI/',//http://monitorrestapi.app1.veery.cloud/DVP
-    'resourceServiceBaseUrl': 'http://resourceservice.app1.veery.cloud/DVP/API/1.0.0.0/ResourceManager/',//resourceservice.app1.veery.cloud
-    'productivityServiceBaseUrl': 'http://productivityservice.app1.veery.cloud/DVP/API/1.0.0.0/ResourceManager/',
-    'ardsmonitoringBaseUrl': 'http://ardsmonitoring.app1.veery.cloud/DVP/API/1.0.0.0/ARDS/',//ardsmonitoring.app1.veery.cloud
-    'fileServiceUrl': 'http://fileservice.app1.veery.cloud/DVP/API/1.0.0.0/FileService/',
-    'fileServiceInternalUrl': 'http://fileservice.app1.veery.cloud/DVP/API/1.0.0.0/InternalFileService/',
-    'clusterconfigUrl': 'http://clusterconfig.app1.veery.cloud/DVP/API/1.0.0.0/CloudConfiguration/',//clusterconfig.app1.veery.cloud
-    'conferenceUrl': 'http://conference.app1.veery.cloud/DVP/API/1.0.0.0/',
-    'sipUserendpoint': 'http://sipuserendpointservice.app1.veery.cloud/DVP/API/1.0.0.0/', //sipuserendpointservice.app1.veery.cloud
-    'pbxUrl': 'http://pbxservice.app1.veery.cloud/DVP/API/1.0.0.0/PBXService/',
-    'ticketUrl': 'http://liteticket.app1.veery.cloud/DVP/API/1.0.0.0/',//http://liteticket.app1.veery.cloud/DVP/API/1.0.0.0/',
-    'dashBordUrl': 'http://dashboardservice.app1.veery.cloud/',
-    'autoattendantUrl': 'http://autoattendant.app1.veery.cloud/DVP/API/1.0.0.0/',
-    'TrunkServiceURL': 'http://phonenumbertrunkservice.app1.veery.cloud/DVP/API/1.0.0.0/',
-    'socialConnectorUrl': 'http://socialconnector.app.veery.cloud/DVP/API/1.0.0.0/Social/', //104.236.197.119
-    'mailSenderUrl': 'http://mailsender.app.veery.cloud/DVP/API/1.0.0.0/Social/', //104.236.197.119
-    'notification': 'http://notificationservice.app1.veery.cloud/',//notificationservice.app1.veery.cloud
-    'cdrProcessor': 'http://cdrprocessor.app1.veery.cloud/DVP/API/1.0.0.0/CallCDR/', //cdrprocessor.app1.veery.cloud
-    'scheduleWorker': 'http://scheduleworker.app1.veery.cloud/DVP/API/1.0.0.0/',
-    'qaModule': 'http://qamodule.app1.veery.cloud/DVP/API/1.0.0.0/QAModule/',
-    'limitHandlerUrl': 'http://limithandler.app1.veery.cloud/DVP/API/1.0.0.0/',
-    'templatesUrl': 'http://templates.app1.veery.cloud/DVP/API/1.0.0.0/',
-    'ardsLiteServiceUrl': 'http://ardsliteservice.app1.veery.cloud/DVP/API/1.0.0.0/',
-    'ruleServiceUrl': 'http://ruleservice.app1.veery.cloud/DVP/API/1.0.0.0/',
-    'appregistryServiceUrl': 'http://appregistry.app1.veery.cloud/DVP/API/1.0.0.0/',
-    'queuemusicServiceUrl': 'http://queuemusic.app1.veery.cloud/DVP/API/1.0.0.0/',
-    'voxboneApiUrl': 'http://voxboneapi.app1.veery.cloud/DVP/API/1.0.0.0/voxbone/',//voxboneapi.app1.veery.cloud
-    'twilioApiUrl': 'http://twilioapi.app1.veery.cloud/DVP/API/1.0.0.0/twilio/',
-    'eventserviceUrl': 'http://eventservice.app1.veery.cloud/DVP/API/1.0.0.0/',//eventservice.app1.veery.cloud
-    'walletUrl': 'http://104.236.197.119:3333/DVP/API/1.0.0.0/PaymentManager/',//104.236.197.119
-    'cSatUrl': 'http://csatservice.app1.veery.cloud/DVP/API/1.0/',  //csatservice.app1.veery.cloud
-    'campaignmanagerUrl': 'http://campaignmanager.app1.veery.cloud/DVP/API/1.0.0.0/CampaignManager/', //campaignmanager.app1.veery.cloud
-    'softPhoneContactUrl': 'http://contacts.app1.veery.cloud/DVP/API/1.0.0.0/ContactManager/',
-    'dialerAPIUrl': 'http://dialerapi.app1.veery.cloud/DVP/DialerAPI/',
-    'zohoAPIUrl': 'http://crmintegrations.app1.veery.cloud/DVP/API/1.0.0.0/',//crmintegrations.app1.veery.cloud,
-    'ipMessageURL': 'http://ipmessagingservice.app.veery.cloud/',
-    'agentDialerURL': 'http://agentdialerservice.app1.veery.cloud/DVP/API/1.0.0.0/AgentDialer/', //agentdialerservice.app1.veery.cloud
-    'integrationapi': 'http://integrationapi.app1.veery.cloud/DVP/API/1.0.0.0/IntegrationAPI/', //integrationapi.app1.veery.cloud
-    'reportQueryFilterUrl': 'http://reportqueryfilters.app1.veery.cloud/DVP/API/1.0.0.0/ReportQueryFilter/',//reportqueryfilters.app.veery.cloud
-    'contactUrl': 'http://contacts.app1.veery.cloud/DVP/API/1.0.0.0/ContactManager/', //contacts.app1.veery.cloud
+    'monitorrestapi': 'https://app.facetone.com:1443/DVP/API/1.0.0.0/MonitorRestAPI/',//http://monitorrestapi.app1.veery.cloud/DVP
+    'resourceServiceBaseUrl': 'https://app.facetone.com:1443/DVP/API/1.0.0.0/ResourceManager/',//resourceservice.app1.veery.cloud
+    'productivityServiceBaseUrl': 'https://app.facetone.com:1443/DVP/API/1.0.0.0/ResourceManager/',
+    'ardsmonitoringBaseUrl': 'https://app.facetone.com:1443/DVP/API/1.0.0.0/ARDS/',//ardsmonitoring.app1.veery.cloud
+    'fileServiceUrl': 'https://app.facetone.com:1443/DVP/API/1.0.0.0/FileService/',
+    'fileServiceInternalUrl': 'https://app.facetone.com:1443/DVP/API/1.0.0.0/InternalFileService/',
+    'clusterconfigUrl': 'https://app.facetone.com:1443/DVP/API/1.0.0.0/CloudConfiguration/',//clusterconfig.app1.veery.cloud
+    'conferenceUrl': 'https://app.facetone.com:1443/DVP/API/1.0.0.0/',
+    'sipUserendpoint': 'https://app.facetone.com:1443/DVP/API/1.0.0.0/', //sipuserendpointservice.app1.veery.cloud
+    'pbxUrl': 'https://app.facetone.com:1443/DVP/API/1.0.0.0/PBXService/',
+    'ticketUrl': 'https://app.facetone.com:1443/DVP/API/1.0.0.0/',//http://liteticket.app1.veery.cloud/DVP/API/1.0.0.0/',
+    'dashBordUrl': 'https://app.facetone.com:1443/',
+    'autoattendantUrl': 'https://app.facetone.com:1443/DVP/API/1.0.0.0/',
+    'TrunkServiceURL': 'https://app.facetone.com:1443/DVP/API/1.0.0.0/',
+    'socialConnectorUrl': 'https://app.facetone.com:1443/DVP/API/1.0.0.0/Social/', //104.236.197.119
+    'mailSenderUrl': 'https://app.facetone.com:1443/DVP/API/1.0.0.0/Social/', //104.236.197.119
+    'notification': 'https://app.facetone.com:1443/',//notificationservice.app1.veery.cloud
+    'cdrProcessor': 'https://app.facetone.com:1443/DVP/API/1.0.0.0/CallCDR/', //cdrprocessor.app1.veery.cloud
+    'scheduleWorker': 'https://app.facetone.com:1443/DVP/API/1.0.0.0/',
+    'qaModule': 'https://app.facetone.com:1443/DVP/API/1.0.0.0/QAModule/',
+    'limitHandlerUrl': 'https://app.facetone.com:1443/DVP/API/1.0.0.0/',
+    'templatesUrl': 'https://app.facetone.com:1443/DVP/API/1.0.0.0/',
+    'ardsLiteServiceUrl': 'https://app.facetone.com:1443/DVP/API/1.0.0.0/',
+    'ruleServiceUrl': 'https://app.facetone.com:1443/DVP/API/1.0.0.0/',
+    'appregistryServiceUrl': 'https://app.facetone.com:1443/DVP/API/1.0.0.0/',
+    'queuemusicServiceUrl': 'https://app.facetone.com:1443/DVP/API/1.0.0.0/',
+    'voxboneApiUrl': 'https://app.facetone.com:1443/DVP/API/1.0.0.0/voxbone/',//voxboneapi.app1.veery.cloud
+    'twilioApiUrl': 'https://app.facetone.com:1443/DVP/API/1.0.0.0/twilio/',
+    'eventserviceUrl': 'https://app.facetone.com:1443/DVP/API/1.0.0.0/',//eventservice.app1.veery.cloud
+    'walletUrl': 'https://app.facetone.com:1443/DVP/API/1.0.0.0/PaymentManager/',//104.236.197.119
+    'cSatUrl': 'https://app.facetone.com:1443/DVP/API/1.0/',  //csatservice.app1.veery.cloud
+    'campaignmanagerUrl': 'https://app.facetone.com:1443/DVP/API/1.0.0.0/CampaignManager/', //campaignmanager.app1.veery.cloud
+    'softPhoneContactUrl': 'https://app.facetone.com:1443/DVP/API/1.0.0.0/ContactManager/',
+    'dialerAPIUrl': 'https://app.facetone.com:1443/DVP/DialerAPI/',
+    'zohoAPIUrl': 'https://app.facetone.com:1443/DVP/API/1.0.0.0/',//crmintegrations.app1.veery.cloud,
+    'ipMessageURL': 'https://app.facetone.com:90/',
+    'agentDialerURL': 'https://app.facetone.com:1443/DVP/API/1.0.0.0/AgentDialer/', //agentdialerservice.app1.veery.cloud
+    'integrationapi': 'https://app.facetone.com:1443/DVP/API/1.0.0.0/IntegrationAPI/', //integrationapi.app1.veery.cloud
+    'reportQueryFilterUrl': 'https://app.facetone.com:1443/DVP/API/1.0.0.0/ReportQueryFilter/',//reportqueryfilters.app.veery.cloud
+    'contactUrl': 'https://app.facetone.com:1443/DVP/API/1.0.0.0/ContactManager/', //contacts.app1.veery.cloud
     'botAPIUrl': 'https://smoothbotservices.plus.smoothflow.io/DBF/API/1.0.0.0/BotService/',//Bot API URL
     'botplatformUrl': 'https://smoothbot.plus.smoothflow.io/fb/DBF/API/v1/platform/',//Bot Platform URL
     'templateAPIUrl': 'https://smoothbotservices.plus.smoothflow.io/DBF/API/1.0.0.0/ViewService/',//View service API URL
@@ -155,9 +155,9 @@ var baseUrls = {
     'botentitiesAPIUrl': "https://smoothbotservices.plus.smoothflow.io/DBF/API/1.0.0.0/EntityMap",
     'chatbotupdateentitityAPIUrl': "https://smoothbotservices.plus.smoothflow.io/DBF/API/1.0.0.0/BotEntity",
     'chatbotContextAPIUrl': "https://smoothbotservices.plus.smoothflow.io/DBF/API/1.0.0.0/ContextMap",
-    'articleServiceUrl': 'http://articleservice.app1.veery.cloud/DVP/API/1.0.0.0/',
-    'contactbasednumberUrl': 'http://contactbasednumberdialingservice.app.veery.cloud/DVP/API/1.0.0.0/Campaign/', //contactbasednumberdialingservice.app.veery.cloud
-    'interactionServiceURL': 'http://interactions.app1.veery.cloud/DVP/API/1.0.0.0/'
+    'articleServiceUrl': 'https://app.facetone.com:1443/DVP/API/1.0.0.0/',
+    'contactbasednumberUrl': 'https://app.facetone.com:1443/DVP/API/1.0.0.0/Campaign/', //contactbasednumberdialingservice.app.veery.cloud
+    'interactionServiceURL': 'https://app.facetone.com:1443/DVP/API/1.0.0.0/'
 };
 
 mainApp.constant('baseUrls', baseUrls);
@@ -176,7 +176,7 @@ mainApp.constant('applicationConfig', applicationConfig);
 mainApp.config(["$httpProvider", "$stateProvider", "$urlRouterProvider", "$authProvider", "vcRecaptchaServiceProvider",
     function ($httpProvider, $stateProvider, $urlRouterProvider, $authProvider, vcRecaptchaServiceProvider) {
 
-        var authProviderUrl = 'http://localhost:9001/auth/';
+        var authProviderUrl = 'https://app.facetone.com:1443/auth/';
         //var authProviderUrl = 'http://192.168.0.132:3637/auth/';
         vcRecaptchaServiceProvider.setSiteKey('6LezaAsUAAAAAMbVGpjJPNm86i__8a38YO1rtXEI');
 
