@@ -21,6 +21,8 @@ mainApp.controller("detailsDashBoardController", function (
   ShareData,
   notifiSenderService,
   dashboardService,
+  authService,
+  jwtHelper,
   $state
 ) {
   $anchorScroll();
@@ -1745,6 +1747,29 @@ mainApp.controller("detailsDashBoardController", function (
         }
       );
   };
+
+  $scope.forcedLogff = function (selectedAgent) {
+    var authToken = authService.GetToken();
+    var decodeData = jwtHelper.decodeToken(authToken);
+    // console.log("selectedAgent : " + JSON.stringify(selectedAgent) + ' :: ' + JSON.stringify(decodeData));
+    var tenant = decodeData.tenant;
+    var company = decodeData.company;
+
+    authService.ForcedLogoff({
+      username: selectedAgent.profileName,
+      console: 'AGENT_CONSOLE',
+      tenant: tenant,
+      orgId: company
+    }, function (issuccess) {
+      if (issuccess) {
+        $scope.showAlert("Forced Logoff", "success", 'Forced Logoff of ' + selectedAgent.profileName + ' Success');
+        $scope.closeAgentInfo();
+      } else {
+        $scope.showAlert("Forced Logoff", "error", 'Forced Logoff of ' + selectedAgent.profileName + ' Failed');
+      }
+    });
+  };
+
 
   var GetUserByBusinessUnit = function () {
     ShareData.getUserCountByBusinessUnit().then(
