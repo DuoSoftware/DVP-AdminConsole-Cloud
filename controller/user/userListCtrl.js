@@ -257,8 +257,8 @@
                 $q.all(method_list).then(function (resolveData) {
                     if (resolveData) {
                         resolveData.map(function (data) {
-                            var Result= data.Result;
-                            Result.map(function (item) {
+                            //var Result= data.Result;
+                            data.map(function (item) {
 
                                 $scope.userList.push(item);
                                 $scope.agents.push(item);
@@ -380,8 +380,8 @@
             var index=i;
             userProfileApiAccess.LoadUsersByPage('all',20, index).then(function(items)
             {
-
-                items.map(function (item) {
+	      if(items.IsSuccess === true){
+                items.Result.map(function (item) {
                     $scope.adminUserList.push(item);
                 });
 
@@ -390,6 +390,7 @@
                 {
                     $scope.loadUserRec(index,pageCount);
                 }
+              }
 
             },function (err) {
                 index++;
