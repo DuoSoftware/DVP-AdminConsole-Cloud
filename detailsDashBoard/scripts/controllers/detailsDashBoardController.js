@@ -1770,6 +1770,64 @@ mainApp.controller("detailsDashBoardController", function (
     });
   };
 
+    $scope.selecctedActiveLoginType = 'SUPERVISOR_CONSOLE';
+    $scope.activeLogins = [];
+    $scope.onClickLoadActiveLogins = function (consoleType) {
+        $scope.selecctedActiveLoginType = consoleType;
+        var authToken = authService.GetToken();
+        var decodeData = jwtHelper.decodeToken(authToken);
+        var tenant = decodeData.tenant;
+        var company = decodeData.company;
+        authService.ListActiveLogins({
+            console: $scope.selecctedActiveLoginType,
+            tenant: tenant,
+            orgId: company
+        }, function (res) {
+            if (res.IsSuccess) {
+                console.log("ListActiveLogins data : " + JSON.stringify(res));
+                $scope.activeLogins = [];
+                var data = JSON.parse(res.CustomMessage);
+                for (var property in data) {
+                    var userData = JSON.parse(data[property]);
+                    var timestamp = userData["time"];
+                    var newDate = new Date();
+                    newDate.setTime(timestamp);
+                    $scope.activeLogins.push({
+                        'id': property,
+                        'username': userData["username"],
+                        'time': newDate.toLocaleString()
+                    });
+                }
+                console.log("ListActiveLogins data : " + JSON.stringify($scope.activeLogins));
+            }
+        });
+    };
+    $scope.activeLogins = $scope.onClickLoadActiveLogins($scope.selecctedActiveLoginType);
+
+    // Force logoff for users of all console type
+    $scope.forcedLogffForAllConsoles = function (userId, userName, console) {
+        var authToken = authService.GetToken();
+        var decodeData = jwtHelper.decodeToken(authToken);
+        // console.log("selectedAgent : " + JSON.stringify(selectedAgent) + ' :: ' + JSON.stringify(decodeData));
+        var tenant = decodeData.tenant;
+        var company = decodeData.company;
+
+        authService.ForcedLogoffById({
+            userId: userId,
+            username: userName,
+            console: console,
+            tenant: tenant,
+            orgId: company
+        }, function (issuccess) {
+            if (issuccess) {
+                $scope.showAlert("Forced Logoff", "success", 'Forced Logoff of ' + userName + ' Success');
+                $scope.onClickLoadActiveLogins($scope.selecctedActiveLoginType);  // Reload data list
+            } else {
+                $scope.showAlert("Forced Logoff", "error", 'Forced Logoff of ' + userName + ' Failed');
+            }
+        });
+    };
+
 
   var GetUserByBusinessUnit = function () {
     ShareData.getUserCountByBusinessUnit().then(

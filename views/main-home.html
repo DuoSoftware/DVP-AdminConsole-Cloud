@@ -279,6 +279,10 @@
                                             <a href="javascript:void(0)" ng-click="clickDirective.goCallMonitor()">Call Monitor
                                             </a>
                                         </li>
+                                        <li ng-show="accessNavigation.ACTIVE_LOGINS">
+                                            <a href="javascript:void(0)" ng-click="clickDirective.goActiveLogins()">Active Logins
+                                            </a>
+                                        </li>
                                         <li ng-show="accessNavigation.QUEUE_SUMMARY">
                                             <a ng-click="clickDirective.goRealTimeQueued()">Queued</a>
                                         </li>
