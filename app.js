@@ -654,6 +654,14 @@ mainApp.config(["$httpProvider", "$stateProvider", "$urlRouterProvider", "$authP
                 requireLogin: true,
                 navigation: "CALL_MONITOR"
             }
+        }).state('console.activelogins', {
+            url: "/active-logins",
+            templateUrl: "detailsDashBoard/view/template/activeLogins.html",
+
+            data: {
+                requireLogin: true,
+                navigation: "ACTIVE_LOGINS"
+            }
         }).state('console.abandonCdr', {
             url: "/abandonCallReport",
             templateUrl: "views/cdr/abandonCallReport.html",

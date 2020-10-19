@@ -582,6 +582,9 @@ mainApp.controller('mainCtrl', function ($window, $scope, $rootScope, $state, $t
         goCallMonitor: function () {
             $state.go('console.callmonitor');
         },
+        goActiveLogins: function () {
+            $state.go('console.activelogins');
+        },
         goSipUser: function () {
             $state.go('console.sipuser');
         },
