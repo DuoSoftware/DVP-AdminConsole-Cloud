@@ -4,7 +4,7 @@
 (function () {
     var app = angular.module("veeryConsoleApp");
 
-    var userListCtrl = function ($scope, $timeout, $http, $stateParams, $state, userProfileApiAccess, loginService, $anchorScroll, appAccessManageService, attributeService, companyConfigBackendService, resourceService, $rootScope, $q,ShareData) {
+    var userListCtrl = function ($scope, $q,$timeout, $http, $stateParams, $state, userProfileApiAccess, loginService, $anchorScroll,appAccessManageService, attributeService, companyConfigBackendService, resourceService, $rootScope,ShareData) {
 
 		/** Kasun_Wijeratne_21_MARCH_2018
 		 * --------------------------------------------------------------*/
@@ -257,8 +257,8 @@
                 $q.all(method_list).then(function (resolveData) {
                     if (resolveData) {
                         resolveData.map(function (data) {
-                            //var Result= data.Result;
-                            data.map(function (item) {
+                            var Result= data.Result;
+                            Result.map(function (item) {
 
                                 $scope.userList.push(item);
                                 $scope.agents.push(item);
@@ -380,8 +380,8 @@
             var index=i;
             userProfileApiAccess.LoadUsersByPage('all',20, index).then(function(items)
             {
-	      if(items.IsSuccess === true){
-                items.Result.map(function (item) {
+
+                items.map(function (item) {
                     $scope.adminUserList.push(item);
                 });
 
@@ -390,7 +390,6 @@
                 {
                     $scope.loadUserRec(index,pageCount);
                 }
-              }
 
             },function (err) {
                 index++;
@@ -455,11 +454,9 @@
 			};
 			userProfileApiAccess.addUser($scope.newUser).then(function (data) {
                 if (data.IsSuccess) {
-
-                    /** --------------------------------------------------------------
-		              * Rushaid_Rilaf_December_2020 Scopes automation*/
-                    
-                    //add scopes To User
+				
+				
+					 //add scopes To User
                     if($scope.newUser.addScopes && data.Result && data.Result.username ){
 
                         var username = data.Result.username;
@@ -535,6 +532,7 @@
                         });
 
                     }
+
 
                     //Map Resource To User
                     if ($scope.newUser.mapToResource && data.Result && data.Result.username) {
