@@ -4,7 +4,7 @@
 (function () {
     var app = angular.module("veeryConsoleApp");
 
-    var userListCtrl = function ($scope, $stateParams, $state, userProfileApiAccess, loginService, $anchorScroll, attributeService, companyConfigBackendService, resourceService, $rootScope, $q,ShareData) {
+    var userListCtrl = function ($scope, $timeout, $http, $stateParams, $state, userProfileApiAccess, loginService, $anchorScroll, appAccessManageService, attributeService, companyConfigBackendService, resourceService, $rootScope, $q,ShareData) {
 
 		/** Kasun_Wijeratne_21_MARCH_2018
 		 * --------------------------------------------------------------*/
@@ -455,6 +455,86 @@
 			};
 			userProfileApiAccess.addUser($scope.newUser).then(function (data) {
                 if (data.IsSuccess) {
+
+                    /** --------------------------------------------------------------
+		              * Rushaid_Rilaf_December_2020 Scopes automation*/
+                    
+                    //add scopes To User
+                    if($scope.newUser.addScopes && data.Result && data.Result.username ){
+
+                        var username = data.Result.username;
+
+                        //assign navigation
+                        appAccessManageService.AddConsoleToUser(username, "AGENT_CONSOLE").then(function (response) {
+                            if (response) {
+
+                                $scope.agentscopes = [];
+
+                                $http.get('agentscopes.json')
+                                    .success(function(data){
+                                        $scope.agentscopes = data;
+                                        console.log(data);
+
+                                        // Creating an empty initial promise that always resolves itself
+                                        var promise = $q.all([]);
+
+                                        // Iterating list of items.
+                                        angular.forEach($scope.agentscopes, function (item) {
+                                            promise = promise.then(function () {
+                                                return $timeout(function () {
+                                                    var editedMenus = item;
+                                                    console.log(editedMenus);
+
+                                                    console.log('calling userservice');
+
+                                                    appAccessManageService.AddSelectedNavigationToUser(username, "AGENT_CONSOLE", editedMenus).then(function (response) {
+
+                                                        if (response.IsSuccess) {
+
+                                                            $scope.showAlert("Info", "Info", "navigationData "+ item.menuItem +" Successfully Updated now.", "Updated now.");
+
+                                                        }
+                                                        else {
+                                                            if (response.CustomMessage) {
+                                                                $scope.showAlert('Error', 'error', errMsg);
+                                                            }
+                                                            else {
+                                                                $scope.showAlert('Error', 'error', errMsg);
+                                                            }
+
+                                                        }
+
+                                                    }, function (error) {
+                                                        $rootScope.$emit('application_access_manager', false);
+                                                        $scope.showAlert('Error', 'error', errMsg);
+                                                    });
+
+
+                                                }, 3000);
+                                            });
+                                        });
+
+                                        promise.finally(function () {
+                                            console.log('Adding scopes finished!');
+                                        });
+
+
+
+                                    })
+                                    .error(function(data){
+                                        console.log("Error getting data from agentscopes.json");
+                                    });
+
+                                    console.log($scope.agentscopes);
+
+                            }else{
+                                $scope.showAlert('Error', 'error', errMsg);
+                            }
+                        }, function (error) {
+                            $scope.showAlert('Error', 'error', errMsg);
+                        });
+
+                    }
 
                     //Map Resource To User
                     if ($scope.newUser.mapToResource && data.Result && data.Result.username) {
