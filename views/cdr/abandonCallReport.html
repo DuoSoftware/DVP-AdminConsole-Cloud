@@ -160,6 +160,10 @@
                                         </th>
                                         <th class="sorting" tabindex="0" aria-controls="datatable-responsive"
                                             rowspan="1"
+                                            colspan="1" aria-label="Hangup Cause">Hangup Cause
+                                        </th>
+                                        <th class="sorting" tabindex="0" aria-controls="datatable-responsive"
+                                            rowspan="1"
                                             colspan="1" aria-label="Call Type">Call Type
                                         </th>
                                         <th class="sorting" tabindex="0" aria-controls="datatable-responsive"
@@ -184,6 +188,7 @@
                                         <td>{{convertToMMSS(cdr.AnswerSec)}}</td>
                                         <td>{{convertToMMSS(cdr.QueueSec)}}</td>
                                         <td>{{cdr.HangupParty}}</td>
+                                        <td>{{cdr.HangupCause}}</td>
                                         <td>{{cdr.ObjType}}</td>
                                         <td>{{cdr.ObjCategory}}</td>
                                         <td>{{cdr.BusinessUnit}}</td>
