@@ -488,7 +488,7 @@
 
                                                         if (response.IsSuccess) {
 
-                                                            $scope.showAlert("Info", "Info", "navigationData "+ item.menuItem +" Successfully Updated now.", "Updated now.");
+                                                            $scope.showAlert('Success', 'info', item.menuItem + 'successfully updated');
 
                                                         }
                                                         else {
