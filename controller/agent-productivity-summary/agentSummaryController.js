@@ -8,8 +8,8 @@
 mainApp.controller("agentSummaryController", function ($scope, $filter, $state, $q, agentSummaryBackendService, loginService, $anchorScroll,uiGridConstants, filterDateRangeValidation,ShareData ) {
 
     $anchorScroll();
-    $scope.startDate = moment().format("YYYY-MM-DD");
-    $scope.endDate = moment().format("YYYY-MM-DD");
+    $scope.startDate = moment().subtract(1, 'days').format("YYYY-MM-DD");
+    $scope.endDate = moment().subtract(1, 'days').format("YYYY-MM-DD");
     $scope.dateValid = true;
     $scope.agentSummaryList = [];
     $scope.Agents = [];
@@ -24,13 +24,13 @@ mainApp.controller("agentSummaryController", function ($scope, $filter, $state, 
 		}
 	};
 
-    // $(function () {
-    //     $("#startDate").datepicker({maxDate: "-1D" });
-    // });
-	//
-    // $(function () {
-    //     $("#endDate").datepicker({maxDate: "-1D" });
-    // });
+     $(function () {
+         $("#startDate").datepicker({maxDate: "-1D", dateFormat:"yy-mm-dd" });
+     });
+
+     $(function () {
+         $("#endDate").datepicker({maxDate: "-1D", dateFormat:"yy-mm-dd"  });
+     });
 
     var resetTotals = function() {
 
@@ -56,6 +56,7 @@ mainApp.controller("agentSummaryController", function ($scope, $filter, $state, 
             InboundCalls: 0,
             OutboundCalls: 0,
             OutboundAnswered: 0,
+            InboundAnswered: 0,
             InboundHold: 0,
             OutboundHold: 0,
             InboundAverageHoldTime: '00:00:00',
@@ -131,38 +132,35 @@ mainApp.controller("agentSummaryController", function ($scope, $filter, $state, 
         noUnselect: false,
         columnDefs: [
             {
-                width: '150',name: 'AgentName', field: 'AgentName', headerTooltip: 'Agent Name',  sort: {
+                width: '150',name: 'Agent ID', field: 'AgentName', headerTooltip: 'Agent Name',  sort: {
                 direction: uiGridConstants.ASC
             }
             },
             {width: '80',name: 'Date', field: 'Date', headerTooltip: 'Date',cellFilter: 'date:\'yyyy-MM-dd\'', cellClass: 'table-time'},
-            {width: '150',name: 'LoginTime', field: 'LoginTime', headerTooltip: 'LoginTime', cellClass: 'table-time'},
-            {width: '60',name: 'TotalCallsInbound', field: 'TotalCallsInbound', headerTooltip: 'TotalCallsInbound', cellClass: 'table-number'},
-            {width: '60',name : 'TotalCallsOutbound', field: 'TotalCallsOutbound', headerTooltip: 'TotalCallsOutbound', cellClass: 'table-number'},
-            {width: '60',name: 'TotalAnswered', field: 'TotalAnswered', headerTooltip: 'TotalAnswered', cellClass: 'table-number'},
-            {width: '60',name: 'TotalAnsweredOutbound', field: 'TotalAnsweredOutbound', headerTooltip: 'TotalAnsweredOutbound', cellClass: 'table-number'},
-            {width: '60',name : 'TotalHoldInbound', field: 'TotalHoldInbound', headerTooltip: 'TotalHoldInbound', cellClass: 'table-number'},
-            {width: '60',name : 'TotalHoldOutbound', field: 'TotalHoldOutbound', headerTooltip: 'TotalHoldOutbound', cellClass: 'table-number'},
+            {width: '150',name: 'LoginTime', field: 'LoginTime', headerTooltip: 'Login Time', cellClass: 'table-time'},
+            {width: '80',name : 'StaffTime', field: 'StaffTime', headerTooltip: 'Staff Time', cellClass: 'table-time'},
+            {width: '60',name: 'TotalAnswered', field: 'TotalAnswered', headerTooltip: 'Total Answered(Inbound & Outbound)', cellClass: 'table-number'},
+            {width: '60',name: 'TotalAnsweredInbound', field: 'TotalAnsweredInbound', headerTooltip: 'Total Inbound Answered', cellClass: 'table-number'},
+            {width: '60',name: 'TotalAnsweredOutbound', field: 'TotalAnsweredOutbound', headerTooltip: 'Total Outbound Answered', cellClass: 'table-number'},
+            {width: '80',name : 'InboundTime', field: 'InboundTime', headerTooltip: 'Inbound Time', cellClass: 'table-time'},
+            {width: '80',name : 'OutboundTime', field: 'OutboundTime', headerTooltip: 'Outbound Time', cellClass: 'table-time'},
+            {width: '80',name : 'IdleTimeInbound', field: 'IdleTimeInbound', headerTooltip: 'Idle Time(inbound)', cellClass: 'table-time'},
+            {width: '80',name : 'IdleTimeOutbound', field: 'IdleTimeOutbound', headerTooltip: 'Idle Time(outbound)', cellClass: 'table-time'},
+            {width: '80',name : 'IdleTimeOffline', field: 'IdleTimeOffline', headerTooltip: 'Idle Time(offline)', cellClass: 'table-time'},
+            {width: '80',name : 'TalkTimeInbound', field: 'TalkTimeInbound', headerTooltip: 'Talk Time(inbound)', cellClass: 'table-time'},
+            {width: '80',name : 'TalkTimeOutbound', field: 'TalkTimeOutbound', headerTooltip: 'Talk Time(outbound)', cellClass: 'table-time'},
             //{width: '60',name : 'MissedCallCount', field: 'MissCallCount', headerTooltip: 'MissedCallCount', cellClass: 'table-number'},
-            {width: '80',name : 'StaffTime', field: 'StaffTime', headerTooltip: 'StaffTime', cellClass: 'table-time'},
-            {width: '80',name : 'InboundTime', field: 'InboundTime', headerTooltip: 'InboundTime', cellClass: 'table-time'},
-            {width: '80',name : 'OutboundTime', field: 'OutboundTime', headerTooltip: 'OutboundTime', cellClass: 'table-time'},
-            {width: '80',name : 'IdleTimeInbound', field: 'IdleTimeInbound', headerTooltip: 'IdleTimeInbound', cellClass: 'table-time'},
-            {width: '80',name : 'IdleTimeOutbound', field: 'IdleTimeOutbound', headerTooltip: 'IdleTimeOutbound', cellClass: 'table-time'},
-            {width: '80',name : 'IdleTimeOffline', field: 'IdleTimeOffline', headerTooltip: 'IdleTimeOffline', cellClass: 'table-time'},
-            {width: '80',name : 'TalkTimeInbound', field: 'TalkTimeInbound', headerTooltip: 'TalkTimeInbound', cellClass: 'table-time'},
-            {width: '80',name : 'TalkTimeOutbound', field: 'TalkTimeOutbound', headerTooltip: 'TalkTimeOutbound', cellClass: 'table-time'},
-            {width: '80',name : 'TotalHoldTimeInbound', field: 'TotalHoldTimeInbound', headerTooltip: 'TotalHoldTimeInbound', cellClass: 'table-time'},
-            {width: '80',name : 'TotalHoldTimeOutbound', field: 'TotalHoldTimeOutbound', headerTooltip: 'TotalHoldTimeOutbound', cellClass: 'table-time'},
-            {width: '80',name : 'AfterWorkTimeInbound', field: 'AfterWorkTimeInbound', headerTooltip: 'AfterWorkTimeInbound', cellClass: 'table-time'},
-            {width: '80',name : 'AfterWorkTimeOutbound', field: 'AfterWorkTimeOutbound', headerTooltip: 'AfterWorkTimeOutbound', cellClass: 'table-time'},
-            {width: '80',name : 'BreakTime', field: 'BreakTime', headerTooltip: 'BreakTime', cellClass: 'table-time'},
-            {width: '80',name : 'AverageHandlingTimeInbound', field: 'AverageHandlingTimeInbound', headerTooltip: 'AverageHandlingTimeInbound', cellClass: 'table-time'},
-            {width: '80',name : 'AverageHandlingTimeOutbound', field: 'AverageHandlingTimeOutbound', headerTooltip: 'AverageHandlingTimeOutbound', cellClass: 'table-time'},
-            {width: '80',name : 'AvgTalkTimeInbound', field: 'AvgTalkTimeInbound', headerTooltip: 'AvgTalkTimeInbound', cellClass: 'table-time'},
-            {width: '80',name : 'AvgTalkTimeOutbound', field: 'AvgTalkTimeOutbound', headerTooltip: 'AvgTalkTimeOutbound', cellClass: 'table-time'},
-            {width: '80',name : 'AvgHoldTimeInbound', field: 'AvgHoldTimeInbound', headerTooltip: 'AvgHoldTimeInbound', cellClass: 'table-time'},
-            {width: '80',name : 'AvgHoldTimeOutbound', field: 'AvgHoldTimeOutbound', headerTooltip: 'AvgHoldTimeOutbound', cellClass: 'table-time'}
+            {width: '80',name : 'TotalHoldTimeInbound', field: 'TotalHoldTimeInbound', headerTooltip: 'Hold Time(inbound)', cellClass: 'table-time'},
+            {width: '80',name : 'TotalHoldTimeOutbound', field: 'TotalHoldTimeOutbound', headerTooltip: 'Hold Time(outbound)', cellClass: 'table-time'},
+            {width: '80',name : 'AfterWorkTimeInbound', field: 'AfterWorkTimeInbound', headerTooltip: 'After Work Time(inbound)', cellClass: 'table-time'},
+            {width: '80',name : 'AfterWorkTimeOutbound', field: 'AfterWorkTimeOutbound', headerTooltip: 'After Work Time(outbound)', cellClass: 'table-time'},
+            {width: '80',name : 'BreakTime', field: 'BreakTime', headerTooltip: 'Break Time', cellClass: 'table-time'},
+            {width: '80',name : 'AverageHandlingTimeInbound', field: 'AverageHandlingTimeInbound', headerTooltip: 'Average Handling Time(inbound)', cellClass: 'table-time'},
+            {width: '80',name : 'AverageHandlingTimeOutbound', field: 'AverageHandlingTimeOutbound', headerTooltip: 'Average Handling Time(outbound)', cellClass: 'table-time'},
+            {width: '80',name : 'AvgTalkTimeInbound', field: 'AvgTalkTimeInbound', headerTooltip: 'Average Talk Time(inbound)', cellClass: 'table-time'},
+            {width: '80',name : 'AvgTalkTimeOutbound', field: 'AvgTalkTimeOutbound', headerTooltip: 'Average Talk Time(outbound)', cellClass: 'table-time'},
+            {width: '80',name : 'AvgHoldTimeInbound', field: 'AvgHoldTimeInbound', headerTooltip: 'Average Hold Time(inbound)', cellClass: 'table-time'},
+            {width: '80',name : 'AvgHoldTimeOutbound', field: 'AvgHoldTimeOutbound', headerTooltip: 'Average Hold Time(outbound)', cellClass: 'table-time'}
         ],
         data: $scope.agentSummaryList,
         onRegisterApi: function (gridApi) {
@@ -179,8 +177,8 @@ mainApp.controller("agentSummaryController", function ($scope, $filter, $state, 
         $scope.gridQOptions.data = [];
         var resId = null;
         var duration = moment($scope.endDate, 'YYYY-MM-DD').diff(moment($scope.startDate, 'YYYY-MM-DD'), 'days');
-
-        if (duration <= applicationConfig.repMaxDateRangeAgentProd) {
+        console.log("duration : "+ duration);
+        if (duration <= applicationConfig.repMaxDateRangeAgentProd && duration >= 0) {
 
             // if ($scope.agentFilter) {
                 if ($scope.agentFilter) {
@@ -197,55 +195,50 @@ mainApp.controller("agentSummaryController", function ($scope, $filter, $state, 
 
 
                     if (!response.data.IsSuccess) {
-                        console.log("Queue Summary loading failed ", response.data.Exception);
+                        console.log("Agent Summary loading failed ", response.data.Exception);
                         $scope.isTableLoading = 1;
                     } else {
                         resetTotals();
                         var summaryData = response.data.Result;
 
-                        if (summaryData && summaryData.length !== 0) {
-                            $scope.total.StaffTime = summaryData[0].totalStaffTime;
-                            $scope.total.InboundIdleTime = summaryData[0].totalInboundIdleTime;
-                            $scope.total.OutboundIdleTime = summaryData[0].totalOutboundIdleTime;
-                            $scope.total.OfflineIdleTime = summaryData[0].totalOfflineIdleTime;
-                            $scope.total.InboundAfterWorkTime = summaryData[0].totalInboundAfterWorkTime;
-                            $scope.total.OutboundAfterWorkTime = summaryData[0].totalOutboundAfterWorkTime;
-                            $scope.total.InboundAverageHandlingTime = summaryData[0].avgInboundHandlingTime;
-                            $scope.total.OutboundAverageHandlingTime = summaryData[0].avgOutboundHandlingTime;
-                            $scope.total.InboundTalkTime = summaryData[0].totalInboundTalkTime;
-                            $scope.total.OutboundTalkTime = summaryData[0].totalOutboundTalkTime;
-                            $scope.total.InboundHoldTime = summaryData[0].totalInboundHoldTime;
-                            $scope.total.OutboundHoldTime = summaryData[0].totalOutboundHoldTime;
-                            $scope.total.BreakTime = summaryData[0].totalBreakTime;
-                            $scope.total.Answered = summaryData[0].totalInboundAnswered;
-                            $scope.total.InboundCalls = summaryData[0].totalCallsInb;
-                            $scope.total.OutboundCalls = summaryData[0].totalCallsOut;
-                            // $scope.total.MissCallCount = MissCallCount;
-                            $scope.total.OutboundAnswered = summaryData[0].totalOutboundAnswered;
-                            $scope.agentSummaryList = summaryData;
+                        $scope.total.StaffTime = summaryData[0].totalStaffTime;
+                        $scope.total.InboundIdleTime = summaryData[0].totalInboundIdleTime;
+                        $scope.total.OutboundIdleTime = summaryData[0].totalOutboundIdleTime;
+                        $scope.total.OfflineIdleTime = summaryData[0].totalOfflineIdleTime;
+                        $scope.total.InboundAfterWorkTime = summaryData[0].totalInboundAfterWorkTime;
+                        $scope.total.OutboundAfterWorkTime = summaryData[0].totalOutboundAfterWorkTime;
+                        $scope.total.InboundAverageHandlingTime = summaryData[0].avgInboundHandlingTime;
+                        $scope.total.OutboundAverageHandlingTime = summaryData[0].avgOutboundHandlingTime;
+                        $scope.total.InboundTalkTime = summaryData[0].totalInboundTalkTime;
+                        $scope.total.OutboundTalkTime = summaryData[0].totalOutboundTalkTime;
+                        $scope.total.InboundHoldTime = summaryData[0].totalInboundHoldTime;
+                        $scope.total.OutboundHoldTime = summaryData[0].totalOutboundHoldTime;
+                        $scope.total.BreakTime = summaryData[0].totalBreakTime;
+                        $scope.total.Answered = summaryData[0].totalInboundAnswered + summaryData[0].totalOutboundAnswered;
+                        $scope.total.InboundCalls = summaryData[0].totalCallsInb;
+                        $scope.total.OutboundCalls = summaryData[0].totalCallsOut;
+                        // $scope.total.MissCallCount = MissCallCount;
+                        $scope.total.OutboundAnswered = summaryData[0].totalOutboundAnswered;
+                        $scope.total.InboundAnswered = summaryData[0].totalInboundAnswered;
+                        $scope.agentSummaryList = summaryData;
 
-                            for (var k = 0; k < $scope.agentSummaryList.length; k++) {
-                                for (var l = 0; l < $scope.Agents.length; l++) {
-                                    if ($scope.Agents[l].ResourceId == $scope.agentSummaryList[k].Agent) {
-                                        $scope.agentSummaryList[k].AgentName = $scope.Agents[l].ResourceName;
+                        for (var k = 0; k < $scope.agentSummaryList.length; k++) {
+                            for (var l = 0; l < $scope.Agents.length; l++) {
+                                if ($scope.Agents[l].ResourceId == $scope.agentSummaryList[k].Agent) {
+                                    $scope.agentSummaryList[k].AgentName = $scope.Agents[l].ResourceName;
 
-                                    }
                                 }
                             }
-                            $scope.AgentDetailsAssignToSummery();
-
-                            $scope.isTableLoading = 1;
-                        } else {
-                            console.log("No data ");
-                            resetTotals();
-                            $scope.showAlert("Agent Productivity Summary", 'info', "No data available for the selected filters");
-                            $scope.isTableLoading = 1;
                         }
+
+                        $scope.gridQOptions.data = $scope.agentSummaryList;
+                        $scope.isTableLoading = 1;
+
                     }
 
                 }, function (error) {
                     loginService.isCheckResponse(error);
-                    console.log("Error in Queue Summary loading ", error);
+                    console.log("Error in Agent Summary loading ", error);
                     $scope.isTableLoading = 1;
                 });
             // } else {
@@ -253,9 +246,9 @@ mainApp.controller("agentSummaryController", function ($scope, $filter, $state, 
             //     $scope.showAlert("Agent Productivity Summary", 'info', "Please select one or more agent");
             //     $scope.isTableLoading = 1;
             // }
-      }
+        }
         else{
-            $scope.showAlert('Agent Productivity Summary', 'error', 'Maximum date range of ' + applicationConfig.repMaxDateRangeAgentProd + ' days exceeded');
+            $scope.showAlert('Agent Productivity Summary', 'error', 'Date range should be between 0 and ' + applicationConfig.repMaxDateRangeAgentProd );
             $scope.isTableLoading = 1;
         }
     };
@@ -269,6 +262,8 @@ mainApp.controller("agentSummaryController", function ($scope, $filter, $state, 
 			$scope.showAlert("Invalid End Date", 'error', "End Date should not exceed 31 days from Start Date");
 			return -1;
 		}
+        var duration = moment($scope.endDate, 'YYYY-MM-DD').diff(moment($scope.startDate, 'YYYY-MM-DD'), 'days');
+        console.log("duration : "+ duration);
 		/** ----------------------------------------
 		 * Kasun_Wijeratne_5_MARCH_2018*/
         $scope.disableDownload = true;
@@ -300,48 +295,54 @@ mainApp.controller("agentSummaryController", function ($scope, $filter, $state, 
                 agentSummaryList = summaryData;
 
                 for (var k = 0; k < agentSummaryList.length; k++) {
+                    var d = new Date(agentSummaryList[k].LoginTime);
+                    var datestring = d.getDate()  + "-" + (d.getMonth()+1) + "-" + d.getFullYear() + " " +
+                        d.getHours() + ":" + d.getMinutes();
+                    agentSummaryList[k].LoginTime = datestring;
+                    console.log("Login Time : " + agentSummaryList[k].LoginTime);
                     for (var l = 0; l < $scope.Agents.length; l++) {
                         if ($scope.Agents[l].ResourceId == agentSummaryList[k].Agent) {
                             agentSummaryList[k].AgentName = $scope.Agents[l].ResourceName;
-
                         }
                     }
                 }
-                var total =
-                    {
-                        AgentName: 'Total',
-                        Date: 'N/A',
-                        LoginTime: 'N/A',
-                        StaffTime: summaryData[0].totalStaffTime,
-                        InboundTime: summaryData[0].totalInboundTime,
-                        OutboundTime: summaryData[0].totalOutboundTime,
-                        IdleTimeInbound: summaryData[0].totalInboundIdleTime,
-                        IdleTimeOutbound: summaryData[0].totalOutboundIdleTime,
-                        IdleTimeOffline: summaryData[0].totalOfflineIdleTime,
-                        AfterWorkTimeInbound: summaryData[0].totalInboundAfterWorkTime,
-                        AfterWorkTimeOutbound: summaryData[0].totalOutboundAfterWorkTime,
-                        AverageHandlingTimeInbound: summaryData[0].avgInboundHandlingTime,
-                        AverageHandlingTimeOutbound: summaryData[0].avgOutboundHandlingTime,
-                        AvgTalkTimeInbound: summaryData[0].avgInboundTalkTime,
-                        AvgTalkTimeOutbound: summaryData[0].avgOutboundTalkTime,
-                        TalkTimeInbound: summaryData[0].totalInboundTalkTime,
-                        TalkTimeOutbound: summaryData[0].totalOutboundTalkTime,
-                        TotalHoldTimeInbound: summaryData[0].totalInboundHoldTime,
-                        TotalHoldTimeOutbound: summaryData[0].totalOutboundHoldTime,
-                        BreakTime: summaryData[0].totalBreakTime,
-                        TotalAnswered: summaryData[0].totalInboundAnswered + summaryData[0].totalOutboundAnswered,
-                        TotalCallsInbound: summaryData[0].totalCallsInb,
-                        TotalCallsOutbound: summaryData[0].totalCallsOut,
-                        //MissCallCount: MissCallCount,
-                        TotalAnsweredOutbound: summaryData[0].totalOutboundAnswered,
-                        TotalHoldInbound: summaryData[0].totalInboundHoldCount,
-                        TotalHoldOutbound: summaryData[0].totalOutboundHoldCount,
-                        AvgHoldTimeInbound: summaryData[0].avgInboundHoldTime,
-                        AvgHoldTimeOutbound: summaryData[0].avgOutboundHoldTime
-                    };
+                console.log("ResID : "+ resId);
+                if(resId == null && duration === 0){
+                    var total =
+                        {
+                            AgentName: 'Total',
+                            Date: 'N/A',
+                            LoginTime: 'N/A',
+                            StaffTime: summaryData[0].totalStaffTime,
+                            InboundTime: summaryData[0].totalInboundTime,
+                            OutboundTime: summaryData[0].totalOutboundTime,
+                            IdleTimeInbound: summaryData[0].totalInboundIdleTime,
+                            IdleTimeOutbound: summaryData[0].totalOutboundIdleTime,
+                            IdleTimeOffline: summaryData[0].totalOfflineIdleTime,
+                            AfterWorkTimeInbound: summaryData[0].totalInboundAfterWorkTime,
+                            AfterWorkTimeOutbound: summaryData[0].totalOutboundAfterWorkTime,
+                            AverageHandlingTimeInbound: summaryData[0].avgInboundHandlingTime,
+                            AverageHandlingTimeOutbound: summaryData[0].avgOutboundHandlingTime,
+                            AvgTalkTimeInbound: summaryData[0].avgInboundTalkTime,
+                            AvgTalkTimeOutbound: summaryData[0].avgOutboundTalkTime,
+                            TalkTimeInbound: summaryData[0].totalInboundTalkTime,
+                            TalkTimeOutbound: summaryData[0].totalOutboundTalkTime,
+                            TotalHoldTimeInbound: summaryData[0].totalInboundHoldTime,
+                            TotalHoldTimeOutbound: summaryData[0].totalOutboundHoldTime,
+                            BreakTime: summaryData[0].totalBreakTime,
+                            TotalAnswered: summaryData[0].totalInboundAnswered + summaryData[0].totalOutboundAnswered,
+                            TotalCallsInbound: summaryData[0].totalCallsInb,
+                            TotalCallsOutbound: summaryData[0].totalCallsOut,
+                            //MissCallCount: MissCallCount,
+                            TotalAnsweredOutbound: summaryData[0].totalOutboundAnswered,
+                            TotalHoldInbound: summaryData[0].totalInboundHoldCount,
+                            TotalHoldOutbound: summaryData[0].totalOutboundHoldCount,
+                            AvgHoldTimeInbound: summaryData[0].avgInboundHoldTime,
+                            AvgHoldTimeOutbound: summaryData[0].avgOutboundHoldTime
+                        };
 
-                agentSummaryList.push(total);
-
+                    agentSummaryList.push(total);
+                }
                 deferred.resolve(agentSummaryList);
 
 
@@ -417,22 +418,6 @@ mainApp.controller("agentSummaryController", function ($scope, $filter, $state, 
             loginService.isCheckResponse(error);
             console.log("Error in Agent details picking " + error);
         });*/
-    };
-
-    $scope.AgentDetailsAssignToSummery = function () {
-
-
-        for (var i = 0; i < $scope.agentSummaryList.length; i++) {
-            //$scope.agentSummaryList[i].AverageHandlingTime=Math.round($scope.agentSummaryList[i].AverageHandlingTime * 100) / 100;
-            for (var j = 0; j < $scope.Agents.length; j++) {
-                if ($scope.Agents[j].ResourceId == $scope.agentSummaryList[i].Agent) {
-                    $scope.agentSummaryList[i].AgentName = $scope.Agents[j].ResourceName;
-
-                }
-            }
-        }
-
-        $scope.gridQOptions.data = $scope.agentSummaryList;
     };
 
     $scope.getAgents();
