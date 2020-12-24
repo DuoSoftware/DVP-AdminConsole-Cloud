@@ -300,6 +300,28 @@ mainApp.controller("agentSummaryController", function ($scope, $filter, $state, 
                         d.getHours() + ":" + d.getMinutes();
                     agentSummaryList[k].LoginTime = datestring;
                     console.log("Login Time : " + agentSummaryList[k].LoginTime);
+
+                    //Format string according to DFCC requirement
+                    agentSummaryList[k].totalStaffTime = formatTimeString(agentSummaryList[k].totalStaffTime);
+                    agentSummaryList[k].totalInboundTime = formatTimeString(agentSummaryList[k].totalInboundTime);
+                    agentSummaryList[k].totalOutboundTime = formatTimeString(agentSummaryList[k].totalOutboundTime);
+                    agentSummaryList[k].totalInboundIdleTime = formatTimeString(agentSummaryList[k].totalInboundIdleTime);
+                    agentSummaryList[k].totalOutboundIdleTime = formatTimeString(agentSummaryList[k].totalOutboundIdleTime);
+                    agentSummaryList[k].totalOfflineIdleTime = formatTimeString(agentSummaryList[k].totalOfflineIdleTime);
+                    agentSummaryList[k].totalInboundTalkTime = formatTimeString(agentSummaryList[k].totalInboundTalkTime);
+                    agentSummaryList[k].totalOutboundTalkTime = formatTimeString(agentSummaryList[k].totalOutboundTalkTime);
+                    agentSummaryList[k].totalInboundHoldTime = formatTimeString(agentSummaryList[k].totalInboundHoldTime);
+                    agentSummaryList[k].totalOutboundHoldTime = formatTimeString(agentSummaryList[k].totalOutboundHoldTime);
+                    agentSummaryList[k].totalInboundAfterWorkTime = formatTimeString(agentSummaryList[k].totalInboundAfterWorkTime);
+                    agentSummaryList[k].totalOutboundAfterWorkTime = formatTimeString(agentSummaryList[k].totalOutboundAfterWorkTime);
+                    agentSummaryList[k].totalBreakTime = formatTimeString(agentSummaryList[k].totalBreakTime);
+                    agentSummaryList[k].avgInboundHandlingTime = formatTimeString(agentSummaryList[k].avgInboundHandlingTime);
+                    agentSummaryList[k].avgOutboundHandlingTime = formatTimeString(agentSummaryList[k].avgOutboundHandlingTime);
+                    agentSummaryList[k].avgInboundTalkTime = formatTimeString(agentSummaryList[k].avgInboundTalkTime);
+                    agentSummaryList[k].avgOutboundTalkTime = formatTimeString(agentSummaryList[k].avgOutboundTalkTime);
+                    agentSummaryList[k].avgInboundHoldTime = formatTimeString(agentSummaryList[k].avgInboundHoldTime);
+                    agentSummaryList[k].avgOutboundHoldTime = formatTimeString(agentSummaryList[k].avgOutboundHoldTime);
+
                     for (var l = 0; l < $scope.Agents.length; l++) {
                         if ($scope.Agents[l].ResourceId == agentSummaryList[k].Agent) {
                             agentSummaryList[k].AgentName = $scope.Agents[l].ResourceName;
@@ -356,6 +378,19 @@ mainApp.controller("agentSummaryController", function ($scope, $filter, $state, 
         });
 
         return deferred.promise;
+    };
+
+    //Format string according to DFCC requirement
+    formatTimeString = function(string){
+        if(string[1]==='0'){
+            return string.slice(2,9);
+        }
+        else if(string[1]==='0'&& string[2]==='0'){
+            return string.slice(1,9);
+        }
+        else {
+            return string.slice(1,9);
+        }
     };
 
     $scope.getAgents = function () {
