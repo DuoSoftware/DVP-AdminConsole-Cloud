@@ -4,44 +4,15 @@
 (function () {
     var app = angular.module("veeryConsoleApp");
 
-    var userListCtrl = function ($scope, $q, $timeout, extensionBackendService, sipUserApiHandler, $http, $stateParams, $state, userProfileApiAccess, loginService, $anchorScroll, appAccessManageService, attributeService, companyConfigBackendService, resourceService, $rootScope, ShareData) {
+    var userListCtrl = function ($scope, $stateParams, $state, userProfileApiAccess, loginService, $anchorScroll, attributeService, companyConfigBackendService, resourceService, $rootScope, $q,ShareData) {
 
-		/** Kasun_Wijeratne_21_MARCH_2018
-		 * --------------------------------------------------------------*/
-        $scope.adminUserList = [];
+        /** Kasun_Wijeratne_21_MARCH_2018
+         * --------------------------------------------------------------*/
+        $scope.adminUserList=[];
         $scope.newUserView = false;
         $scope.grpSkills = [];
-
-        $scope.Extensions = [];
-
-        /** Rushaid_Rilaf_16_NOVEMBER_2020
-         * --------------------------------------------------------------*/
-        extensionBackendService.getExtensions().then(function (result) {
-
-            console.log(result.data.Result);
-
-            $scope.Extensions = result.data.Result;
-
-            $scope.maxVal = Math.max.apply(Math, $scope.Extensions.map(function (o) {
-                return o.Extension;
-
-
-            }))
-            $scope.maxVal = parseInt($scope.maxVal);
-            $scope.maxVal++;
-            console.log($scope.maxVal);
-
-        });
-
-
-        /** --------------------------------------------------------------
-         * Rushaid_Rilaf_16_NOVEMBER_2020*/
-
-
-
         $scope.toggleNewUserView = function () {
             $scope.newUserView = !$scope.newUserView;
-            console.log($scope.maxVal);
         };
         $scope.runSIPUserSave = function () {
             $rootScope.$broadcast('SIPUserUploadOn');
@@ -50,8 +21,8 @@
             $scope.activeCreateUserTab = 0;
             $scope.newUserView = false;
         });
-		/** --------------------------------------------------------------
-		 * Kasun_Wijeratne_21_MARCH_2018*/
+        /** --------------------------------------------------------------
+         * Kasun_Wijeratne_21_MARCH_2018*/
 
         $scope.showAlert = function (title, type, content) {
 
@@ -66,7 +37,7 @@
         $scope.safeApply = function (fn) {
             var phase = this.$root.$$phase;
             if (phase == '$apply' || phase == '$digest') {
-                if (fn && (typeof (fn) === 'function')) {
+                if (fn && (typeof(fn) === 'function')) {
                     fn();
                 }
             } else {
@@ -217,30 +188,35 @@
         };
 
         $scope.viewProfile = function (username) {
-            $state.go('console.userprofile', { 'username': username });
+            $state.go('console.userprofile', {'username': username});
         };
 
         $scope.viewPermissions = function (item) {
-            $state.go('console.applicationAccessManager', { username: item.username, role: item.user_meta.role });
+            $state.go('console.applicationAccessManager', {username: item.username, role: item.user_meta.role});
         };
 
-        var getUserGrpGroup = function () {
-            attributeService.getGroupByName('User Group').then(function (response) {
-                if (!response.data || !response.data.IsSuccess) {
+        var getUserGrpGroup = function()
+        {
+            attributeService.getGroupByName('User Group').then(function(response)
+            {
+                if(!response.data || !response.data.IsSuccess)
+                {
                     $scope.showAlert("Error", "error", "Error loading fixed group for user groups");
 
                 }
-                else {
-                    if (response.data.Result) {
+                else
+                {
+                    if(response.data.Result)
+                    {
                         attributeService.GetAttributeByGroupId(response.data.Result.GroupId).then(function (response) {
                             /*scope.attachedAttributes = response.ResAttribute;*/
 
                             response.forEach(res => {
-                                if (res.ResAttribute) {
+                                if(res.ResAttribute)
+                                {
                                     res.ResAttribute.AttributeGroupId = res.AttributeGroupId;
                                     $scope.attribinfo.push(res.ResAttribute)
-                                }
-                            });
+                                }});
 
                             loadUserGroups();
 
@@ -251,7 +227,8 @@
                         });
 
                     }
-                    else {
+                    else
+                    {
                         $scope.attribinfo = [];
                     }
 
@@ -260,8 +237,8 @@
         };
 
         getUserGrpGroup();
-        $scope.userList = [];
-        $scope.agents = [];
+        $scope.userList=[];
+        $scope.agents=[];
 
 
         var loadUsers = function () {
@@ -273,15 +250,15 @@
                 var method_list = [];
 
                 for (var i = 1; i <= pagecount; i++) {
-                    method_list.push(userProfileApiAccess.LoadUsersByPage('all', pagesize, i));
+                    method_list.push(userProfileApiAccess.LoadUsersByPage('all',pagesize, i));
                 }
 
 
                 $q.all(method_list).then(function (resolveData) {
                     if (resolveData) {
                         resolveData.map(function (data) {
-                            var Result = data.Result;
-                            Result.map(function (item) {
+                            //var Result= data.Result;
+                            data.map(function (item) {
 
                                 $scope.userList.push(item);
                                 $scope.agents.push(item);
@@ -340,41 +317,41 @@
                 var pagecount = Math.ceil(row_count / pagesize);
 
                 /* var method_list = [];
- 
+
                  for (var i = 1; i <= pagecount; i++) {
                      method_list.push(ShareData.getUsersByRoleWithPaging(pagesize, i));
                  }*/
-                $scope.loadUserRec(1, pagecount);
+                $scope.loadUserRec(1,pagecount);
 
                 /*   $q.all(method_list).then(function (resolveData) {
                        if (resolveData) {
-   
+
                            resolveData.map(function (data) {
-   
+
                                data.map(function (item) {
-   
+
                                    $scope.adminUserList.push(item);
                                });
                            });
-   
+
                        }
                        else
                        {
                            $scope.showAlert("Error","Error in loading Admin user details","error");
                        }
-   
-   
-   
+
+
+
                    }).catch(function (err) {
                        console.error(err);
-   
+
                        $scope.showAlert("Error","Error in loading Admin user details","error");
                    });*/
 
 
 
             }, function (err) {
-                $scope.showAlert("Error", "Error in loading Admin user details", "error");
+                $scope.showAlert("Error","Error in loading Admin user details","error");
             });
             /*userProfileApiAccess.getUsersByRole().then(function (data) {
                 if (data.IsSuccess) {
@@ -398,23 +375,27 @@
             })*/
         };
 
-        $scope.loadUserRec = function (i, pageCount) {
-            var index = i;
-            userProfileApiAccess.LoadUsersByPage('all', 20, index).then(function (items) {
+        $scope.loadUserRec = function(i,pageCount)
+        {
+            var index=i;
+            userProfileApiAccess.LoadUsersByPage('all',20, index).then(function(items)
+            {
 
                 items.map(function (item) {
                     $scope.adminUserList.push(item);
                 });
 
                 index++;
-                if (index <= pageCount) {
-                    $scope.loadUserRec(index, pageCount);
+                if(index<=pageCount)
+                {
+                    $scope.loadUserRec(index,pageCount);
                 }
 
-            }, function (err) {
+            },function (err) {
                 index++;
-                if (index <= pageCount) {
-                    $scope.loadUserRec(i, pageCount);
+                if(index<=pageCount)
+                {
+                    $scope.loadUserRec(i,pageCount);
                 }
             })
         }
@@ -448,132 +429,49 @@
         };
 
         $scope.isUserSaving = false;
-
-
         $scope.addNewUser = function (isSIP, sipExt) {
-			/** Kasun_Wijeratne_21_MARCH_2018
-			 * This function has been modified to receive "isSIP" and "sipEct" parameters when creating a user with "Create SIP user" enabled.
-			 * isSIP = bool
-			 * siExt = SIP extension
-			 * --------------------------------------------------------------*/
-            if (isSIP) {
+            /** Kasun_Wijeratne_21_MARCH_2018
+             * This function has been modified to receive "isSIP" and "sipEct" parameters when creating a user with "Create SIP user" enabled.
+             * isSIP = bool
+             * siExt = SIP extension
+             * --------------------------------------------------------------*/
+            if(isSIP) {
                 $scope.newUser.veeryaccount = {
-                    "contact": sipExt + "@duo.media1.veery.cloud",
+                    "contact": sipExt+"@duo.media1.veery.cloud",
                     "display": sipExt,
                     "verified": true,
                     "type": "sip"
                 };
             }
-			/**--------------------------------------------------------------
-			 * Kasun_Wijeratne_21_MARCH_2018 - ENDs
-			 */
+            /**--------------------------------------------------------------
+             * Kasun_Wijeratne_21_MARCH_2018 - ENDs
+             */
             $scope.isUserSaving = true;
             $scope.sipUserFromUser = {
-                SipUsername: "",
-                mail: "",
-                Password: "",
-                Extension: ""
+                SipUsername :"",
+                mail :"",
+                Password : ""
             };
             userProfileApiAccess.addUser($scope.newUser).then(function (data) {
                 if (data.IsSuccess) {
 
-
-                    //add scopes To User
-                    if ($scope.newUser.addScopes && data.Result && data.Result.username) {
-
-                        var username = data.Result.username;
-
-                        //assign navigation
-                        appAccessManageService.AddConsoleToUser(username, "AGENT_CONSOLE").then(function (response) {
-                            if (response) {
-
-                                $scope.agentscopes = [];
-
-                                $http.get('agentscopes.json')
-                                    .success(function (data) {
-                                        $scope.agentscopes = data;
-                                        console.log(data);
-
-                                        // Creating an empty initial promise that always resolves itself
-                                        var promise = $q.all([]);
-
-                                        // Iterating list of items.
-                                        angular.forEach($scope.agentscopes, function (item) {
-                                            promise = promise.then(function () {
-                                                return $timeout(function () {
-                                                    var editedMenus = item;
-                                                    console.log(editedMenus);
-
-                                                    console.log('calling userservice');
-
-                                                    appAccessManageService.AddSelectedNavigationToUser(username, "AGENT_CONSOLE", editedMenus).then(function (response) {
-
-                                                        if (response.IsSuccess) {
-
-                                                            $scope.showAlert('Success', 'info', item.menuItem + 'successfully updated');
-
-                                                        }
-                                                        else {
-                                                            if (response.CustomMessage) {
-                                                                $scope.showAlert('Error', 'error', errMsg);
-                                                            }
-                                                            else {
-                                                                $scope.showAlert('Error', 'error', errMsg);
-                                                            }
-
-                                                        }
-
-                                                    }, function (error) {
-                                                        $rootScope.$emit('application_access_manager', false);
-                                                        $scope.showAlert('Error', 'error', errMsg);
-                                                    });
-
-
-                                                }, 3000);
-                                            });
-                                        });
-
-                                        promise.finally(function () {
-                                            console.log('Adding scopes finished!');
-                                        });
-
-
-
-                                    })
-                                    .error(function (data) {
-                                        console.log("Error getting data from agentscopes.json");
-                                    });
-
-                                console.log($scope.agentscopes);
-
-                            } else {
-                                $scope.showAlert('Error', 'error', errMsg);
-                            }
-                        }, function (error) {
-                            $scope.showAlert('Error', 'error', errMsg);
-                        });
-
-                    }
-
-
                     //Map Resource To User
                     if ($scope.newUser.mapToResource && data.Result && data.Result.username) {
 
-                        resourceService.SaveResource({ ResourceName: data.Result.username }).then(function (response) {
+                        resourceService.SaveResource({ResourceName: data.Result.username}).then(function (response) {
                             if (response.IsSuccess) {
 
                                 resourceService.SetResourceToProfile(response.Result.ResourceName, response.Result.ResourceId).then(function (mappingStatus) {
                                     if (mappingStatus) {
                                         $scope.showAlert("Map To Resource", "info", "Resource " + response.Result.ResourceName + " Successfully Save.");
-                                    } else {
+                                    }else {
                                         $scope.showAlert("Map To Resource", "warn", "Resource " + response.Result.ResourceName + " Save Successfully Without Mapping to Profile.");
                                     }
                                     $scope.showAlert('Success', 'info', 'User added');
-                                    if (isSIP) {
+                                    if(isSIP){
                                         $scope.activeCreateUserTab = 1;
                                         $scope.sipUserFromUser.SipUsername = $scope.newUser.firstname.toLowerCase();
                                         $scope.sipUserFromUser.Password = $scope.newUser.password;
-                                        $scope.sipUserFromUser.Extension = $scope.maxVal;
                                     }
                                     resetForm();
                                     loadUsers();
@@ -581,12 +479,11 @@
                                 }, function (error) {
                                     $scope.showAlert("Map To Resource", "error", "Fail To Map Resource with Profile.");
                                     $scope.showAlert('Success', 'info', 'User added');
-                                    if (isSIP) {
+                                    if(isSIP){
                                         $scope.activeCreateUserTab = 1;
                                         $scope.sipUserFromUser.SipUsername = $scope.newUser.firstname.toLowerCase();
                                         $scope.sipUserFromUser.Password = $scope.newUser.password;
                                         $scope.sipUserFromUser.Email = $scope.newUser.mail;
-                                        $scope.sipUserFromUser.Extension = $scope.maxVal;
                                     }
                                     resetForm();
                                     loadUsers();
@@ -598,12 +495,11 @@
                                     $scope.showAlert("Map To Resource", "error", "Invalid Resource Name.");
                                 }
                                 $scope.showAlert('Success', 'info', 'User added');
-                                if (isSIP) {
+                                if(isSIP){
                                     $scope.activeCreateUserTab = 1;
                                     $scope.sipUserFromUser.SipUsername = $scope.newUser.firstname.toLowerCase();
                                     $scope.sipUserFromUser.Password = $scope.newUser.password;
                                     $scope.sipUserFromUser.Email = $scope.newUser.mail;
-                                    $scope.sipUserFromUser.Extension = $scope.maxVal;
                                 }
                                 resetForm();
                                 loadUsers();
@@ -613,12 +509,11 @@
                         }, function (error) {
                             $scope.showAlert('Map To Resource', 'error', 'Failed to map user to resource');
                             $scope.showAlert('Success', 'info', 'User added');
-                            if (isSIP) {
+                            if(isSIP){
                                 $scope.activeCreateUserTab = 1;
                                 $scope.sipUserFromUser.SipUsername = $scope.newUser.firstname.toLowerCase();
                                 $scope.sipUserFromUser.Password = $scope.newUser.password;
                                 $scope.sipUserFromUser.Email = $scope.newUser.mail;
-                                $scope.sipUserFromUser.Extension = $scope.maxVal;
                             }
                             resetForm();
                             loadUsers();
@@ -628,12 +523,11 @@
                     } else {
 
                         $scope.showAlert('Success', 'info', 'User added');
-                        if (isSIP) {
+                        if(isSIP){
                             $scope.activeCreateUserTab = 1;
                             $scope.sipUserFromUser.SipUsername = $scope.newUser.firstname.toLowerCase();
                             $scope.sipUserFromUser.Password = $scope.newUser.password;
                             $scope.sipUserFromUser.Email = $scope.newUser.mail;
-                            $scope.sipUserFromUser.Extension = $scope.maxVal;
                         }
                         resetForm();
                         loadUsers();
@@ -843,9 +737,9 @@
                 });
 
                 var updateObj =
-                {
-                    supervisors: $scope.selectedGroup.supervisors
-                };
+                    {
+                        supervisors: $scope.selectedGroup.supervisors
+                    };
 
 
                 userProfileApiAccess.updateUserGroup($scope.selectedGroup._id, updateObj).then(function (resUpdate) {
@@ -909,12 +803,16 @@
                 $scope.isLoadingUsers = true;
                 $scope.selectedGroup = group;
 
-                attributeService.getSkillsForUserGroup(group._id).then(function (sRes) {
-                    if (sRes.IsSuccess && sRes.Result && sRes.Result.length > 0) {
-                        if ($scope.attribinfo && $scope.attribinfo.length > 0) {
+                attributeService.getSkillsForUserGroup(group._id).then(function(sRes)
+                {
+                    if(sRes.IsSuccess && sRes.Result && sRes.Result.length > 0)
+                    {
+                        if($scope.attribinfo && $scope.attribinfo.length > 0)
+                        {
                             $scope.attribinfo.filter(attr => {
                                 sRes.Result.forEach(sg => {
-                                    if (sg.AttributeId === attr.AttributeId) {
+                                    if(sg.AttributeId === attr.AttributeId)
+                                    {
                                         $scope.grpSkills.push(attr);
                                     }
 
@@ -924,7 +822,8 @@
 
                     }
 
-                }).catch(function (err) {
+                }).catch(function(err)
+                {
                     $scope.showAlert("Error", "error", "Error loading user group skills");
 
                 });
@@ -1149,13 +1048,13 @@
         //-------------------------Active Directory-------------------------------------
 
         $scope.activeDirectoryUsers = [];
-        $scope.selectedADUsers = { agents: [], supervisors: [] };
+        $scope.selectedADUsers = {agents: [], supervisors: []};
 
         $scope.adSearchCriteria = "";
 
         $scope.getUsersFromActiveDirectory = function () {
             $scope.activeDirectoryUsers = [];
-            $scope.selectedADUsers = { agents: [], supervisors: [] };
+            $scope.selectedADUsers = {agents: [], supervisors: []};
 
             function pushAdUser(ad_user, isProfileExists, userRole) {
 
@@ -1166,7 +1065,7 @@
                     case 'agent':
                         $scope.selectedADUsers.agents.push(ad_user);
                         break;
-                    default:
+                    default :
                         break;
                 }
 
@@ -1275,7 +1174,8 @@
 
         $scope.loadBusinessUnits = function () {
 
-            if (ShareData.BusinessUnits && ShareData.BusinessUnits.length > 0) {
+            if(ShareData.BusinessUnits && ShareData.BusinessUnits.length>0)
+            {
                 $scope.businessUnits = ShareData.BusinessUnits;
             }
             else {
@@ -1299,10 +1199,10 @@
 
 
             var updateObj =
-            {
-                supervisors: $scope.selectedGroup.supervisors
+                {
+                    supervisors: $scope.selectedGroup.supervisors
 
-            }
+                }
 
 
             userProfileApiAccess.updateUserGroup($scope.selectedGroup._id, updateObj).then(function (resUpdate) {
