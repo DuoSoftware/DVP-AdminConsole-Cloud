@@ -257,8 +257,8 @@
                 $q.all(method_list).then(function (resolveData) {
                     if (resolveData) {
                         resolveData.map(function (data) {
-                            var Result= data.Result;
-                            Result.map(function (item) {
+                            //var Result= data.Result;
+                            data.map(function (item) {
 
                                 $scope.userList.push(item);
                                 $scope.agents.push(item);
@@ -438,9 +438,95 @@
 			};
 			userProfileApiAccess.addUser($scope.newUser).then(function (data) {
                 if (data.IsSuccess) {
-				
-				
-					 //add scopes To User
+
+                    //add supervisor scopes To User
+
+                    if($scope.newUser.addScopes && data.Result && data.Result.username && $scope.newUser.role === 'supervisor' ){
+
+
+                        var username = data.Result.username;
+
+                        //assign navigation
+                        appAccessManageService.AddConsoleToUser(username, "SUPERVISOR_CONSOLE").then(function (response) {
+                            if (response) {
+
+                                $scope.supervisorscopes = [];
+
+                                $http.get('supervisorscopes.json')
+                                    .success(function(data){
+                                        $scope.supervisorscopes = data;
+                                        console.log(data);
+
+                                        // Creating an empty initial promise that always resolves itself
+                                        var promise = $q.all([]);
+
+
+                                        var i = 1;
+                                        // Iterating list of items.
+                                        angular.forEach($scope.supervisorscopes, function (item) {
+
+                                            promise = promise.then(function () {
+                                                return $timeout(function () {
+                                                    var editedMenus = item;
+                                                    console.log(editedMenus);
+
+                                                    console.log('calling userservice');
+
+                                                    appAccessManageService.AddSelectedNavigationToUser(username, "SUPERVISOR_CONSOLE", editedMenus).then(function (response) {
+
+                                                        if (response.IsSuccess) {
+
+                                                            $scope.showAlert('Success', 'info', item.menuItem + 'successfully updated.' + ' Scope'+ i + 'of 99 ');
+
+                                                        }
+                                                        else {
+                                                            if (response.CustomMessage) {
+                                                                $scope.showAlert('Error', 'error', errMsg);
+                                                            }
+                                                            else {
+                                                                $scope.showAlert('Error', 'error', errMsg);
+                                                            }
+
+                                                        }
+
+                                                    }, function (error) {
+                                                        $rootScope.$emit('application_access_manager', false);
+                                                        $scope.showAlert('Error', 'error', errMsg);
+                                                    });
+
+
+                                                }, 3000);
+                                            });
+                                            i++;
+                                        });
+
+                                        promise.finally(function () {
+                                            console.log('Adding supervisor scopes finished!');
+                                        });
+
+
+
+                                    })
+                                    .error(function(data){
+                                        console.log("Error getting data from supervisorscopes.json");
+                                    });
+
+                                console.log($scope.supervisorscopes);
+
+                            }else{
+                                $scope.showAlert('Error', 'error', errMsg);
+                            }
+                        }, function (error) {
+                            $scope.showAlert('Error', 'error', errMsg);
+                        });
+
+                    }
+
+
+
+
+
+                    //add agent scopes To User
                     if($scope.newUser.addScopes && data.Result && data.Result.username ){
 
                         var username = data.Result.username;
