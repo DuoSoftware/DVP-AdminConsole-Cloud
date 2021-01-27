@@ -76,6 +76,10 @@
                                             </th>
                                             <th class="sorting" tabindex="0" aria-controls="datatable-responsive"
                                                 rowspan="1"
+                                                colspan="1" aria-label="OutboundCalls">Outbound Calls (Count)
+                                            </th>
+                                            <th class="sorting" tabindex="0" aria-controls="datatable-responsive"
+                                                rowspan="1"
                                                 colspan="1" aria-label="Queued">Queued Calls (Count)
                                             </th>
                                             <th class="sorting" tabindex="0" aria-controls="datatable-responsive"
@@ -96,7 +100,11 @@
                                             </th>
                                             <th class="sorting" tabindex="0" aria-controls="datatable-responsive"
                                                 rowspan="1"
-                                                colspan="1" aria-label="AvgHold">Avg Hold Time (sec)
+                                                colspan="1" aria-label="InboundAvgHold">Inbound Avg Hold Time (sec)
+                                            </th>
+                                            <th class="sorting" tabindex="0" aria-controls="datatable-responsive"
+                                                rowspan="1"
+                                                colspan="1" aria-label="OutboundAvgHold">Outbound Avg Hold Time (sec)
                                             </th>
                                             <th class="sorting" tabindex="0" aria-controls="datatable-responsive"
                                                 rowspan="1"
@@ -108,15 +116,23 @@
                                             </th>
                                             <th class="sorting" tabindex="0" aria-controls="datatable-responsive"
                                                 rowspan="1"
-                                                colspan="1" aria-label="AvgTalk">Avg Talk Time (sec)
+                                                colspan="1" aria-label="InboundAvgTalk">Inbound Avg Talk Time (sec)
                                             </th>
                                             <th class="sorting" tabindex="0" aria-controls="datatable-responsive"
                                                 rowspan="1"
-                                                colspan="1" aria-label="AnswerCount">Answererd Calls (Count)
+                                                colspan="1" aria-label="OutboundAvgTalk">Outbound Avg Talk Time (sec)
                                             </th>
                                             <th class="sorting" tabindex="0" aria-controls="datatable-responsive"
                                                 rowspan="1"
-                                                colspan="1" aria-label="AnswerPercentage">Answer Percentage (%)
+                                                colspan="1" aria-label="InboundAnswerCount">Inbound Answererd Calls (Count)
+                                            </th>
+                                            <th class="sorting" tabindex="0" aria-controls="datatable-responsive"
+                                                rowspan="1"
+                                                colspan="1" aria-label="OutboundAnswerCount">Outbound Answererd Calls (Count)
+                                            </th>
+                                            <th class="sorting" tabindex="0" aria-controls="datatable-responsive"
+                                                rowspan="1"
+                                                colspan="1" aria-label="AnswerPercentage">Answer Percentage Inbound (%)
                                             </th>
                                         </thead>
                                         <tbody>
@@ -124,17 +140,21 @@
                                             ng-repeat="sumHr in callSummaryHrList">
                                             <td>{{sumHr.Caption}}</td>
                                             <td>{{sumHr.IVRCallsCount}}</td>
+                                            <td>{{sumHr.OutboundCallCount}}</td>
                                             <td>{{sumHr.QueuedCallsCount}}</td>
                                             <td>{{sumHr.AbandonCallsCount}}</td>
                                             <td>{{sumHr.AbandonPercentage}}</td>
                                             <td>{{sumHr.DropCallsCount}}</td>
                                             <td>{{sumHr.DropPercentage}}</td>
-                                            <td>{{sumHr.HoldAverage}}</td>
+                                            <td>{{sumHr.InboundHoldAverage}}</td>
+                                            <td>{{sumHr.OutboundHoldAverage}}</td>
                                             <td>{{sumHr.IvrAverage}}</td>
                                             <td>{{sumHr.RingAverage}}</td>
-                                            <td>{{sumHr.TalkAverage}}</td>
-                                            <td>{{sumHr.AnswerCount}}</td>
-                                            <td>{{sumHr.AnswerPercentage}}</td>
+                                            <td>{{sumHr.InboundTalkAverage}}</td>
+                                            <td>{{sumHr.OutboundTalkAverage}}</td>
+                                            <td>{{sumHr.AnswerCountInbound}}</td>
+                                            <td>{{sumHr.AnswerCountOutbound}}</td>
+                                            <td>{{sumHr.AnswerPercentageInbound}}</td>
                                         </tbody>
                                     </table>
                                 </div>
@@ -213,6 +233,10 @@
                                                     </th>
                                                     <th class="sorting" tabindex="0" aria-controls="datatable-responsive"
                                                         rowspan="1"
+                                                        colspan="1" aria-label="OutboundCalls">Outbound Calls (Count)
+                                                    </th>
+                                                    <th class="sorting" tabindex="0" aria-controls="datatable-responsive"
+                                                        rowspan="1"
                                                         colspan="1" aria-label="Queued">Queued Calls (Count)
                                                     </th>
                                                     <th class="sorting" tabindex="0" aria-controls="datatable-responsive"
@@ -233,7 +257,11 @@
                                                     </th>
                                                     <th class="sorting" tabindex="0" aria-controls="datatable-responsive"
                                                         rowspan="1"
-                                                        colspan="1" aria-label="AvgHold">Avg Hold Time (sec)
+                                                        colspan="1" aria-label="InboundAvgHold">Inbound Avg Hold Time (sec)
+                                                    </th>
+                                                    <th class="sorting" tabindex="0" aria-controls="datatable-responsive"
+                                                        rowspan="1"
+                                                        colspan="1" aria-label="OutboundAvgHold">Outbound Avg Hold Time (sec)
                                                     </th>
                                                     <th class="sorting" tabindex="0" aria-controls="datatable-responsive"
                                                         rowspan="1"
@@ -245,15 +273,23 @@
                                                     </th>
                                                     <th class="sorting" tabindex="0" aria-controls="datatable-responsive"
                                                         rowspan="1"
-                                                        colspan="1" aria-label="AvgTalk">Avg Talk Time (sec)
+                                                        colspan="1" aria-label="InboundAvgTalk">Inbound Avg Talk Time (sec)
                                                     </th>
                                                     <th class="sorting" tabindex="0" aria-controls="datatable-responsive"
                                                         rowspan="1"
-                                                        colspan="1" aria-label="AnswerCount">Answererd Calls (Count)
+                                                        colspan="1" aria-label="OutboundAvgTalk">Outbound Avg Talk Time (sec)
                                                     </th>
                                                     <th class="sorting" tabindex="0" aria-controls="datatable-responsive"
                                                         rowspan="1"
-                                                        colspan="1" aria-label="AnswerPercentage">Answer Percentage (%)
+                                                        colspan="1" aria-label="InboundAnswerCount">Inbound Answered Calls (Count)
+                                                    </th>
+                                                    <th class="sorting" tabindex="0" aria-controls="datatable-responsive"
+                                                        rowspan="1"
+                                                        colspan="1" aria-label="OutboundAnswerCount">Outbound Answererd Calls (Count)
+                                                    </th>
+                                                    <th class="sorting" tabindex="0" aria-controls="datatable-responsive"
+                                                        rowspan="1"
+                                                        colspan="1" aria-label="AnswerPercentage">Answer Percentage Inbound(%)
                                                     </th>
                                                 </thead>
                                                 <tbody>
@@ -261,17 +297,21 @@
                                                     ng-repeat="sumDay in callSummaryDayList">
                                                     <td>{{sumDay.Caption}}</td>
                                                     <td>{{sumDay.IVRCallsCount}}</td>
+                                                    <td>{{sumDay.OutboundCallCount}}</td>
                                                     <td>{{sumDay.QueuedCallsCount}}</td>
                                                     <td>{{sumDay.AbandonCallsCount}}</td>
                                                     <td>{{sumDay.AbandonPercentage}}</td>
                                                     <td>{{sumDay.DropCallsCount}}</td>
                                                     <td>{{sumDay.DropPercentage}}</td>
-                                                    <td>{{sumDay.HoldAverage}}</td>
+                                                    <td>{{sumDay.InboundHoldAverage}}</td>
+                                                    <td>{{sumDay.OutboundHoldAverage}}</td>
                                                     <td>{{sumDay.IvrAverage}}</td>
                                                     <td>{{sumDay.RingAverage}}</td>
-                                                    <td>{{sumDay.TalkAverage}}</td>
-                                                    <td>{{sumDay.AnswerCount}}</td>
-                                                    <td>{{sumDay.AnswerPercentage}}</td>
+                                                    <td>{{sumDay.InboundTalkAverage}}</td>
+                                                    <td>{{sumDay.OutboundTalkAverage}}</td>
+                                                    <td>{{sumDay.AnswerCountInbound}}</td>
+                                                    <td>{{sumDay.AnswerCountOutbound}}</td>
+                                                    <td>{{sumDay.AnswerPercentageInbound}}</td>
                                                 </tbody>
                                             </table>
                                         </div>

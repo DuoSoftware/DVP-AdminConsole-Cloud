@@ -372,16 +372,24 @@
                                     sumr.IvrAverage = convertToMMSS(sumr.IvrAverage);
                                 }
 
-                                if (typeof sumr.HoldAverage === "number") {
-                                    sumr.HoldAverage = convertToMMSS(sumr.HoldAverage);
+                                if (typeof sumr.InboundHoldAverage === "number") {
+                                    sumr.InboundHoldAverage = convertToMMSS(sumr.InboundHoldAverage);
+                                }
+
+                                if (typeof sumr.OutboundHoldAverage === "number") {
+                                    sumr.OutboundHoldAverage = convertToMMSS(sumr.OutboundHoldAverage);
                                 }
 
                                 if (typeof sumr.RingAverage === "number") {
                                     sumr.RingAverage = convertToMMSS(sumr.RingAverage);
                                 }
 
-                                if (typeof sumr.TalkAverage === "number") {
-                                    sumr.TalkAverage = convertToMMSS(sumr.TalkAverage);
+                                if (typeof sumr.InboundTalkAverage === "number") {
+                                    sumr.InboundTalkAverage = convertToMMSS(sumr.InboundTalkAverage);
+                                }
+
+                                if (typeof sumr.OutboundTalkAverage === "number") {
+                                    sumr.OutboundTalkAverage = convertToMMSS(sumr.OutboundTalkAverage);
                                 }
 
                                 return sumr;
@@ -441,16 +449,24 @@
                                     sumr.IvrAverage = convertToMMSS(sumr.IvrAverage);
                                 }
 
-                                if (typeof sumr.HoldAverage === "number") {
-                                    sumr.HoldAverage = convertToMMSS(sumr.HoldAverage);
+                                if (typeof sumr.InboundHoldAverage === "number") {
+                                    sumr.InboundHoldAverage = convertToMMSS(sumr.InboundHoldAverage);
+                                }
+
+                                if (typeof sumr.OutboundHoldAverage === "number") {
+                                    sumr.OutboundHoldAverage = convertToMMSS(sumr.OutboundHoldAverage);
                                 }
 
                                 if (typeof sumr.RingAverage === "number") {
                                     sumr.RingAverage = convertToMMSS(sumr.RingAverage);
                                 }
 
-                                if (typeof sumr.TalkAverage === "number") {
-                                    sumr.TalkAverage = convertToMMSS(sumr.TalkAverage);
+                                if (typeof sumr.InboundTalkAverage === "number") {
+                                    sumr.InboundTalkAverage = convertToMMSS(sumr.InboundTalkAverage);
+                                }
+
+                                if (typeof sumr.OutboundTalkAverage === "number") {
+                                    sumr.OutboundTalkAverage = convertToMMSS(sumr.OutboundTalkAverage);
                                 }
 
                                 return sumr;
