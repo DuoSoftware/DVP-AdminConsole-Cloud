@@ -167,6 +167,10 @@
                                                 rowspan="1"
                                                 colspan="1" aria-label="Answered">Answered
                                             </th>
+					    <th class="sorting" tabindex="0" aria-controls="datatable-responsive"
+                                                rowspan="1"
+                                                colspan="1" aria-label="Play File">Play File
+                                            </th>
                                             <th class="sorting" tabindex="0" aria-controls="datatable-responsive"
                                                 rowspan="1"
                                                 colspan="1" aria-label="Call Time">Call Time
@@ -214,11 +218,7 @@
                                             <th class="sorting" tabindex="0" aria-controls="datatable-responsive"
                                                 rowspan="1"
                                                 colspan="1" aria-label="Business Unit">Business Unit
-                                            </th>
-                                            <th class="sorting" tabindex="0" aria-controls="datatable-responsive"
-                                                rowspan="1"
-                                                colspan="1" aria-label="Play File">Play File
-                                            </th>
+						</th>
                                         </thead>
                                         <tbody>
                                         <tr role="row" class="odd"
@@ -230,32 +230,20 @@
                                             <td>{{cdr.AgentSkill}}</td>
                                             <td>{{cdr.QueuePriority}}</td>
                                             <td>{{cdr.IsAnswered}}</td>
-                                            <td>{{moment(cdr.CreatedTime).local().format("YYYY-MM-DD HH:mm:ss")}}</td>
-                                            <td>{{convertToMMSS(cdr.Duration)}}</td>
-                                            <td>{{convertToMMSS(cdr.BillSec)}}</td>
-                                            <td>{{convertToMMSS(cdr.AnswerSec)}}</td>
-                                            <td>{{convertToMMSS(cdr.QueueSec)}}</td>
-                                            <td>{{convertToMMSS(cdr.HoldSec)}}</td>
-                                            <td>{{cdr.ObjType}}</td>
-                                            <td>{{cdr.ObjCategory}}</td>
-                                            <td>{{cdr.HangupParty}}</td>
-                                            <td>{{cdr.HangupCause}}</td>
-                                            <td>{{cdr.TransferredParties}}</td>
-                                            <td>{{cdr.BusinessUnit}}</td>
-                                            <td>
-                            <!--<span ng-show="cdr.ShowButton">
+					    <td>
+                            			<!--<span ng-show="cdr.ShowButton">
 
-                                <a href="">
-                                    <i class="fa fa-play"
-                                       ng-click="playStopFile(cdr.Uuid)"></i>
-                                </a>
+                                			<a href="">
+                                    				<i class="fa fa-play"
+                                       					ng-click="playStopFile(cdr.Uuid)"></i>
+                                			</a>
 
 
-                                <a class="fa fa-download" target="_self"
-                                   ng-click="SetDownloadPath(cdr)"></a>
+                                			<a class="fa fa-download" target="_self"
+                                   				ng-click="SetDownloadPath(cdr)"></a>
 
-                            </span>-->
-                            <span ng-show="cdr.IsAnswered">
+                            			</span>-->
+                            				<span ng-show="cdr.IsAnswered">
 
                                 <a href="">
                                     <i class="fa fa-play"
@@ -269,6 +257,18 @@
                             </span>
 
                                             </td>
+                                            <td>{{moment(cdr.CreatedTime).local().format("YYYY-MM-DD HH:mm:ss")}}</td>
+                                            <td>{{convertToMMSS(cdr.Duration)}}</td>
+                                            <td>{{convertToMMSS(cdr.BillSec)}}</td>
+                                            <td>{{convertToMMSS(cdr.AnswerSec)}}</td>
+                                            <td>{{convertToMMSS(cdr.QueueSec)}}</td>
+                                            <td>{{convertToMMSS(cdr.HoldSec)}}</td>
+                                            <td>{{cdr.ObjType}}</td>
+                                            <td>{{cdr.ObjCategory}}</td>
+                                            <td>{{cdr.HangupParty}}</td>
+                                            <td>{{cdr.HangupCause}}</td>
+                                            <td>{{cdr.TransferredParties}}</td>
+                                            <td>{{cdr.BusinessUnit}}</td>
                                         </tr>
                                         </tbody>
                                     </table>
