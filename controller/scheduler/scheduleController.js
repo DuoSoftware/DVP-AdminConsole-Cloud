@@ -77,7 +77,8 @@ mainApp.controller("scheduleController", function ($scope, $rootScope, $state, $
 
 
     $scope.saveSchedule = function () {
-
+        $scope.newSchedule.StartDate = formatDateString($scope.newSchedule.StartDate);
+        $scope.newSchedule.EndDate = formatDateString($scope.newSchedule.EndDate);
         var isBefore = moment().isBefore(moment($scope.newSchedule.EndDate));
         if(!(isBefore))
         {
@@ -86,7 +87,6 @@ mainApp.controller("scheduleController", function ($scope, $rootScope, $state, $
         else
         {
             scheduleBackendService.saveNewSchedule($scope.newSchedule).then(function (response) {
-
                 if (!response.data.IsSuccess) {
 
                     console.info("Error in adding new Application " + response.data.Exception);
@@ -110,6 +110,19 @@ mainApp.controller("scheduleController", function ($scope, $rootScope, $state, $
 
 
 
+    };
+
+    formatDateString = function(string){
+        string = string.split("-");
+        if(string[1].length === 1){
+            string[1] = "0" + string[1];
+        }
+        if(string[2].length === 1){
+            string[2] = "0" + string[2];
+        }
+        string = string[0]  + "-" + string[1] + "-" +string[2];
+        console.log("DATE STRING : "+string)
+        //return string;
     };
 
 

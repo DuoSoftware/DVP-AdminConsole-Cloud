@@ -63,7 +63,7 @@ mainApp.controller("agentStatusController", function ($scope, $state, $filter, $
         var queryStartDate = currentDate + ' 00:00:00' + momentTz;
         var queryEndDate = currentDate + ' 23:59:59' + momentTz;
 
-        agentStatusService.GetProductivityWithLoginTime(queryStartDate, queryEndDate).then(function (response) {
+        agentStatusService.GetProductivityWithLoginTime(queryStartDate, queryEndDate, ShareData.BusinessUnit).then(function (response) {
             $scope.productivity = response;
             $scope.isLoading = true;
             calculateProductivity(deferred);
