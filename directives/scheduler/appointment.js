@@ -143,6 +143,8 @@ mainApp.directive("appointmentdir", function ($filter, $uibModal, scheduleBacken
 
             scope.saveAppointment = function () {
 
+                scope.newAppointment.StartDate = formatDateString(scope.newAppointment.StartDate);
+                scope.newAppointment.EndDate = formatDateString(scope.newAppointment.EndDate);
                 if (!scope.newAppointment.RecurrencePattern) {
                     scope.newAppointment.RecurrencePattern = "NONE";
                 }
@@ -184,6 +186,19 @@ mainApp.directive("appointmentdir", function ($filter, $uibModal, scheduleBacken
                 }
 
 
+            };
+
+            formatDateString = function(string){
+                string = string.split("-");
+                if(string[1].length === 1){
+                    string[1] = "0" + string[1];
+                }
+                if(string[2].length === 1){
+                    string[2] = "0" + string[2];
+                }
+                string = string[0]  + "-" + string[1] + "-" +string[2];
+                console.log("DATE STRING : "+string)
+                return string;
             };
 
             scope.hideAppointments = function () {
