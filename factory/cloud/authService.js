@@ -102,6 +102,62 @@ mainApp.service("authService", function(
       });
   };
 
+  // forced logoff
+  this.ForcedLogoff = function(parm, callback) {
+    var username = parm.username;
+    var console = parm.console;
+    var tenant = parm.tenant;
+    var orgId = parm.orgId;
+    $http
+        .delete(
+            baseUrls.authServiceBaseUrl + "oauth/token/forcedLogoff/" + username + '?console=' + console + '&tenant=' + tenant + '&orgId=' + orgId
+        )
+        .success(function(data, status, headers, config) {
+          callback(true);
+        })
+        .error(function(data, status, headers, config) {
+          callback(false);
+        });
+  };
+
+  // forced logoff
+  this.ForcedLogoffById = function(parm, callback) {
+    var userId = parm.userId;
+    var username = parm.username;
+    var console = parm.console;
+    var tenant = parm.tenant;
+    var orgId = parm.orgId;
+    $http
+        .delete(
+            baseUrls.authServiceBaseUrl + "oauth/token/forcedLogoffById/" + userId + '?console=' + console + '&tenant=' + tenant + '&orgId=' + orgId + '&username=' + username
+        )
+        .success(function(data, status, headers, config) {
+          callback(true);
+        })
+        .error(function(data, status, headers, config) {
+          callback(false);
+        });
+  };
+
+  // List Active Logins
+  this.ListActiveLogins = function(parm, callback) {
+    var console = parm.console;
+    var tenant = parm.tenant;
+    var orgId = parm.orgId;
+    $http
+
+        .get(
+
+            baseUrls.authServiceBaseUrl + 'auth/listActiveLogins?console=' + console + '&tenant=' + tenant + '&orgId=' + orgId
+        )
+        .success(function (data, status, headers, config) {
+          callback(data);
+        })
+        .error(function (data, status, headers, config) {
+          callback([]);
+        });
+  };
+
   // user login
   this.Login = function(parm, callback) {
     $http

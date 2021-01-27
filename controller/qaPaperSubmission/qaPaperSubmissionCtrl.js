@@ -4,7 +4,7 @@
 (function () {
     var app = angular.module("veeryConsoleApp");
 
-    var qaSubmissionCtrl = function ($scope, $filter, $q, $sce, $http, $uibModal, userProfileApiAccess, cdrApiHandler, qaModuleService, loginService, $anchorScroll,$auth) {
+    var qaSubmissionCtrl = function ($scope, $filter, $q, $sce, $http, $uibModal, userProfileApiAccess, cdrApiHandler,authService, qaModuleService, loginService, $anchorScroll,$auth) {
         $anchorScroll();
         $scope.showAlert = function (tittle, type, content) {
 

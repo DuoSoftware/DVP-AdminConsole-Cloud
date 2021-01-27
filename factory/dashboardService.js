@@ -4,7 +4,7 @@
 
 'use strict';
 
-mainApp.factory("dashboardService", function ($http, baseUrls, ShareData) {
+mainApp.factory("dashboardService", function ($http, baseUrls, authService,ShareData) {
 
     var getAllCalls = function () {
         var businessUnit = "*";

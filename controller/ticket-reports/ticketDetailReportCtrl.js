@@ -4,7 +4,7 @@
 (function () {
     var app = angular.module("veeryConsoleApp");
 
-    var ticketDetailReportCtrl = function ($scope, $filter, $q, $timeout, ticketReportsService, ShareData, cdrApiHandler, loginService, filterDateRangeValidation) {
+    var ticketDetailReportCtrl = function ($scope, $filter, $q, $timeout, ticketReportsService, ShareData, cdrApiHandler, authService,loginService, filterDateRangeValidation) {
 
         $scope.showAlert = function (tittle, type, content) {
 

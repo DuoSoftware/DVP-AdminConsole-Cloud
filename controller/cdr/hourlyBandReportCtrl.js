@@ -5,7 +5,7 @@
 (function () {
     var app = angular.module("veeryConsoleApp");
 
-    var hourlyBandReportCtrl = function ($scope, $filter, $timeout, loginService, cdrApiHandler, resourceService, baseUrls,$anchorScroll,ShareData, uiGridConstants, uiGridGroupingConstants) {
+    var hourlyBandReportCtrl = function ($scope, $filter, $timeout, loginService, authService,cdrApiHandler, resourceService, baseUrls,$anchorScroll,ShareData, uiGridConstants, uiGridGroupingConstants) {
 
         $scope.dateValid = true;
         $scope.gridApi;

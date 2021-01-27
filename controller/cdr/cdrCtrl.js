@@ -7,7 +7,7 @@
 
 
     var cdrCtrl = function ($scope, $filter, $q, $sce, $timeout, $http, cdrApiHandler, ShareData, resourceService, sipUserApiHandler, ngAudio,
-                            loginService, baseUrls,$anchorScroll,$auth,fileService) {
+                            loginService, baseUrls,$anchorScroll,authService,fileService) {
 
 
 
