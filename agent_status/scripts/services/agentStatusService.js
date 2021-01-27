@@ -103,9 +103,9 @@ mainApp.factory("agentStatusService", function ($http, $log, baseUrls) {
         });
     };
 
-    var getProductivityWithLoginTime = function (startDate, endDate) {
+    var getProductivityWithLoginTime = function (startDate, endDate, bu) {
 
-        return $http.get(baseUrls.resourceServiceBaseUrl + "Resources/Productivity?productivityStartDate="+startDate+"&productivityEndDate="+endDate).then(function (response) {
+        return $http.get(baseUrls.resourceServiceBaseUrl + "Resources/Productivity?productivityStartDate="+startDate+"&productivityEndDate="+endDate+"&bu="+bu).then(function (response) {
             if (response.data && response.data.IsSuccess) {
                 return response.data.Result;
             } else {
