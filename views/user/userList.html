@@ -101,21 +101,21 @@
                                             <span class="fa fa-meh-o form-control-feedback left"
                                                   aria-hidden="true"></span>
                                         </div>
-                                        <div class="col-md-4 col-sm-4 col-xs-12 form-group has-feedback">
+                                        <div class="col-md-3 col-sm-3 col-xs-12 form-group has-feedback">
                                             <input type="text" class="form-control has-feedback-left"
                                                    placeholder="Phone Number"
                                                    ng-model="newUser.phone">
                                             <span class="fa fa-phone form-control-feedback left"
                                                   aria-hidden="true"></span>
                                         </div>
-                                        <div class="col-md-4 col-sm-4 col-xs-12 form-group has-feedback">
+                                        <div class="col-md-3 col-sm-3 col-xs-12 form-group has-feedback">
                                             <input type="text" class="form-control has-feedback-left"
                                                    placeholder="Nick Name"
                                                    ng-model="newUser.name">
                                             <span class="fa fa-meh-o form-control-feedback left"
                                                   aria-hidden="true"></span>
                                         </div>
-                                        <div class="col-md-4 col-sm-4 col-xs-12 form-group has-feedback">
+                                        <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
                                             <label>
                                                 <small>Create Resource</small>
                                             </label>
@@ -125,7 +125,12 @@
                                                 <small>Create SIP User</small>
                                             </label>
                                             <checkbox class="btn" ng-model="newUser.createSIPUser"
-                                                      ng-init="newUser.createSIPUser=false"></checkbox>
+                                                      ng-init="newUser.createSIPUser=false" style="margin-right: 20px"></checkbox>
+                                            <label>
+                                                <small>Add All Scopes</small>
+                                            </label>
+                                            <checkbox class="btn" ng-model="newUser.addScopes"
+                                                      ng-init="newUser.addScopes=false"></checkbox>
 
                                         </div>
                                     </div>
@@ -305,13 +310,22 @@
                                                 </select></p>
                                             </div>
 
-                                            <div class="col-md-6 col-lg-6 col-xs-6 animated fadeIn">
+                                            <div class="col-md-3 col-lg-3 col-xs-3 animated fadeIn">
                                                 <checkbox style="position: relative; top: 50px" class="btn" ng-model="basicConfig.RecordingEnabled"
                                                           ng-init="basicConfig.RecordingEnabled=false"></checkbox>
                                                 <label style="position: relative; top: 50px">
                                                     <small>Recording Enabled</small>
                                                 </label>
                                             </div>
+
+                                            <div class="col-md-3 col-lg-3 col-xs-3 animated fadeIn">
+                                                <checkbox style="position: relative; top: 50px" class="btn" ng-model="newUser.mapSipToUser"
+                                                          ng-init="newUser.mapSipToUser=false"></checkbox>
+                                                <label style="position: relative; top: 50px">
+                                                    <small><b>Map SIP To User</b></small>
+                                                </label>
+                                            </div>
+
                                         </div>
 
                                         <!--<div class="col-lg-12">-->
@@ -559,18 +573,18 @@
 
                                         <!--<div class="row">-->
 
-                                            <!--<div class="col-lg-4 col-xs-12">-->
+                                        <!--<div class="col-lg-4 col-xs-12">-->
 
-                                            <!--</div>-->
-                                            <!--<div class="col-lg-8 col-xs-12">-->
-                                                <!--<div class="search-wrapper">-->
-                                                    <!--<input type="text"-->
-                                                           <!--ng-model="searchMember"-->
-                                                           <!--placeholder="search group member / supervisor here"-->
-                                                           <!--class="form-control">-->
+                                        <!--</div>-->
+                                        <!--<div class="col-lg-8 col-xs-12">-->
+                                        <!--<div class="search-wrapper">-->
+                                        <!--<input type="text"-->
+                                        <!--ng-model="searchMember"-->
+                                        <!--placeholder="search group member / supervisor here"-->
+                                        <!--class="form-control">-->
 
-                                                <!--</div>-->
-                                            <!--</div>-->
+                                        <!--</div>-->
+                                        <!--</div>-->
                                         <!--</div>-->
                                         <div class="group-load-wrapper" ng-show="isLoadingUsers">
                                             <div class="loader-md-90"></div>

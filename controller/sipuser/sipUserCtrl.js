@@ -6,7 +6,7 @@
     var app = angular.module("veeryConsoleApp");
 
 
-    var sipUserCtrl = function ($scope, sipUserApiHandler, loginService, $rootScope,$q) {
+    var sipUserCtrl = function ($scope, sipUserApiHandler, userProfileApiAccess, loginService, $rootScope,$q) {
 
 		$rootScope.$on('SIPUserUploadOn', function () {
 			$scope.onSavePressed();
@@ -238,6 +238,17 @@
             $scope.basicConfig.RecordingEnabled = false;
         };
 
+        //saving SIP user from user creation continuation
+         $scope.onSIPSavePressed = function () {
+            $scope.onSavePressed();
+        };
+
+        //saving SIP user at new SIP user creation page
+        $scope.onNewSavePressed = function () {
+            $scope.newUser = {};
+            $scope.onSavePressed();
+        };
+        
         $scope.onSavePressed = function () {
             if ($scope.IsEdit) {
                 sipUserApiHandler.updateUser($scope.basicConfig).then(function (data1) {
@@ -305,6 +316,126 @@
                                                                 $scope.clearFormOnSave();
                                                                 $scope.reloadUserList();
                                                                 $scope.showAlert('Success', 'success', 'Sip User Saved Successfully');
+
+                                                                //map sip to user automation *RUSHAID_RILAF_2021_JAN
+
+                                                                if (selectMap) {
+
+                                                                    sipUserApiHandler.getSIPUser(curUser.SipUsername).then(function (data4) {
+                                                                        if (data4.IsSuccess) {
+                                                                            if (data4.Result) {
+                                                                                $scope.sipUser = data4.Result;
+
+                                                                                console.log($scope.sipUser.CloudEndUser.Domain);
+
+                                                                                userProfileApiAccess.getProfileByName(extObj.ExtensionName).then(function (data) {
+
+                                                                                    console.log("Entered get profile function");
+
+                                                                                    if (data.IsSuccess) {
+
+                                                                                        console.log("data.IsSuccess");
+
+                                                                                        if (data.Result.birthday) {
+                                                                                            console.log("data.Result.birthday");
+                                                                                            var momentUtc = moment(data.Result.birthday).utc();
+
+                                                                                            data.Result.dob = {};
+                                                                                            data.Result.dob.day = momentUtc.date().toString();
+                                                                                            data.Result.dob.month = (momentUtc.month() + 1).toString();
+                                                                                            data.Result.dob.year = momentUtc.year();
+
+
+                                                                                        } else {
+                                                                                            console.log("!data.Result.birthday");
+
+                                                                                            data.Result.dob = {};
+                                                                                            data.Result.dob.day = moment().date().toString();
+                                                                                            data.Result.dob.month = (moment().month() + 1).toString();
+                                                                                            data.Result.dob.year = moment().year();
+                                                                                        }
+
+
+                                                                                        console.log(data.Result);
+                                                                                        var currentUserProfile = null
+                                                                                        currentUserProfile = data.Result;
+
+
+                                                                                        console.log(curUser);
+
+                                                                                        currentUserProfile.veeryaccount = {}
+                                                                                        //currentUserProfile.veeryaccount.contact = curUser.SipUsername + '@' + curUser.Domain;
+                                                                                        currentUserProfile.veeryaccount.contact = curUser.SipUsername + '@' + $scope.sipUser.CloudEndUser.Domain;
+                                                                                        currentUserProfile.veeryaccount.display = extObj.Extension;
+                                                                                        currentUserProfile.veeryaccount.verified = true;
+                                                                                        currentUserProfile.veeryaccount.type = 'sip';
+
+
+                                                                                        userProfileApiAccess.updateProfile(currentUserProfile.username, currentUserProfile).then(function (data) {
+                                                                                            if (data.IsSuccess) {
+
+                                                                                                if (curUser) {
+                                                                                                    curUser.GuRefId = currentUserProfile._id;
+
+                                                                                                    sipUserApiHandler.updateUser(curUser);
+
+                                                                                                    $scope.showAlert('Success', 'success', 'Sip User Mapped to user Successfully');
+                                                                                                }
+
+                                                                                                $scope.isEditState = false;
+
+                                                                                            } else {
+                                                                                                var errMsg = data.CustomMessage;
+
+                                                                                                if (data.Exception) {
+                                                                                                    errMsg = data.Exception.Message;
+                                                                                                }
+                                                                                                $scope.showAlert('Error', 'error', errMsg);
+
+                                                                                            }
+
+                                                                                        }, function (err) {
+                                                                                            loginService.isCheckResponse(err);
+                                                                                            var errMsg = "Error occurred while saving profile";
+                                                                                            if (err.statusText) {
+                                                                                                errMsg = err.statusText;
+                                                                                            }
+                                                                                            $scope.showAlert('Error', 'error', errMsg);
+                                                                                        });
+
+
+                                                                                    } else {
+                                                                                        var errMsg = data.CustomMessage;
+
+                                                                                        if (data.Exception) {
+                                                                                            errMsg = data.Exception.Message;
+                                                                                        }
+                                                                                        $scope.showAlert('Error', 'error', errMsg);
+
+                                                                                    }
+
+
+                                                                                }, function (err) {
+                                                                                    loginService.isCheckResponse(err);
+                                                                                    var errMsg = "Error occurred while getting profile";
+                                                                                    if (err.statusText) {
+                                                                                        errMsg = err.statusText;
+                                                                                    }
+                                                                                    $scope.showAlert('Error', 'error', errMsg);
+                                                                                });
+
+
+                                                                            }
+                                                                        }
+
+
+                                                                    }, function (err) {
+
+                                                                        $scope.showAlert('Saved with errors', 'error', 'Communication error occurred - while obtaining sip user');
+
+                                                                    })
+
+                                                                }
                                                             }
                                                             else {
                                                                 var errMsg = data3.CustomMessage;
