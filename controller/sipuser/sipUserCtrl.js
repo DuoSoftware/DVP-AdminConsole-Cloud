@@ -35,48 +35,49 @@
         $scope.searchCriteria = "";
 
         $scope.reloadUserList = function () {
-            $scope.searchCriteria = "";
-
             $scope.sipUsrList = [];
+            // Sanura Wijayarathne - 2021/03/18
+            // $scope.searchCriteria = "";
+            if($scope.searchCriteria == null || $scope.searchCriteria === ""){
+                sipUserApiHandler.getSipUsersCount().then(function (row_count) {
+                    var pagesize = 20;
+                    var pagecount = Math.ceil(row_count / pagesize);
+                    var method_list = [];
 
-            sipUserApiHandler.getSipUsersCount().then(function (row_count) {
-                var pagesize = 20;
-                var pagecount = Math.ceil(row_count / pagesize);
+                    for (var i = 1; i <= pagecount; i++) {
+                        method_list.push(sipUserApiHandler.getSipUsersWithPaging(i,pagesize));
+                    }
+                    $q.all(method_list).then(function (resolveData) {
+                        if (resolveData) {
+                            resolveData.map(function (response) {
 
-                var method_list = [];
+                                response.map(function (item) {
 
-                for (var i = 1; i <= pagecount; i++) {
-                    method_list.push(sipUserApiHandler.getSipUsersWithPaging(i,pagesize));
-                }
+                                    $scope.sipUsrList.push(item);
 
-
-                $q.all(method_list).then(function (resolveData) {
-                    if (resolveData) {
-                        resolveData.map(function (response) {
-
-                            response.map(function (item) {
-
-                                $scope.sipUsrList.push(item);
-
+                                });
                             });
-
-
-                        });
-
-                    }
-                    if ($scope.sipUsrList.length > 0) {
-                        $scope.FormState = 'New';
-                        $scope.SipUsernameDisplay = $scope.sipUsrList[0].SipUsername;
-                        //$scope.onEditPressed($scope.sipUsrList[0].SipUsername);
-                    }
-
-                    if ($scope.sipUsrList.length == 0) {
-                        $scope.FormState = 'Cancel';
-                        $scope.SipUsernameDisplay = 'NEW SIP USER';
-                    }
-                    $scope.total = $scope.sipUsrList.length;
-
-                }).catch(function (err) {
+                        }
+                        if ($scope.sipUsrList.length > 0) {
+                            $scope.FormState = 'New';
+                            $scope.SipUsernameDisplay = $scope.sipUsrList[0].SipUsername;
+                            //$scope.onEditPressed($scope.sipUsrList[0].SipUsername);
+                        }
+                        if ($scope.sipUsrList.length == 0) {
+                            $scope.FormState = 'Cancel';
+                            $scope.SipUsernameDisplay = 'NEW SIP USER';
+                        }
+                        $scope.total = $scope.sipUsrList.length;
+                    }).catch(function (err) {
+                        loginService.isCheckResponse(err);
+                        var errMsg = "Error occurred while getting user list";
+                        if (err.statusText) {
+                            errMsg = err.statusText;
+                        }
+                        $scope.showAlert('Error', 'error', errMsg);
+                        $scope.dataReady = true;
+                    });
+                }, function (err) {
                     loginService.isCheckResponse(err);
                     var errMsg = "Error occurred while getting user list";
                     if (err.statusText) {
@@ -84,23 +85,43 @@
                     }
                     $scope.showAlert('Error', 'error', errMsg);
                     $scope.dataReady = true;
-
                 });
+            }
 
+            else{
+                sipUserApiHandler.getSIPUsers().then(function (data) {
+                    if (data.IsSuccess) {
+                        $scope.sipUsrList = data.Result;
+                        if ($scope.sipUsrList.length > 0) {
+                            $scope.FormState = 'New';
+                            $scope.SipUsernameDisplay = $scope.sipUsrList[0].SipUsername;
+                            //$scope.onEditPressed($scope.sipUsrList[0].SipUsername);
+                        }
+                        if ($scope.sipUsrList.length == 0) {
+                            $scope.FormState = 'Cancel';
+                            $scope.SipUsernameDisplay = 'NEW SIP USER';
+                        }
+                        $scope.total = data.Result.length;
+                    }
+                    else {
+                        var errMsg = data.CustomMessage;
 
-
-            }, function (err) {
-                loginService.isCheckResponse(err);
-                var errMsg = "Error occurred while getting user list";
-                if (err.statusText) {
-                    errMsg = err.statusText;
-                }
-                $scope.showAlert('Error', 'error', errMsg);
-                $scope.dataReady = true;
-
-
-            });
-
+                        if (data.Exception) {
+                            errMsg = data.Exception.Message;
+                        }
+                        $scope.showAlert('Error', 'error', errMsg);
+                    }
+                    $scope.dataReady = true;
+                }, function (err) {
+                    loginService.isCheckResponse(err);
+                    var errMsg = "Error occurred while getting user list";
+                    if (err.statusText) {
+                        errMsg = err.statusText;
+                    }
+                    $scope.showAlert('Error', 'error', errMsg);
+                    $scope.dataReady = true;
+                });
+            }
 
 
 
