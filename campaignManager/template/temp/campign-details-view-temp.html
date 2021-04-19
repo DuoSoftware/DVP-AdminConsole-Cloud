@@ -15,8 +15,9 @@
             <div class="camp-header-left-icon">
                 <ul class="inline-list" style="text-align: right;">
                     <li>
-                        <div class="camp-l-round-icon"
+                        <div
                              ng-if="!deleteConfig && !deletSuccessfully"
+                             disabled type="button" class="btn btn-green btn-block"
                              ng-click="deleteCampaign(campaignSelectedData)">
                             <i class="fa fa-trash-o trash-simple-line-icons"></i>
                         </div>
@@ -98,11 +99,11 @@
             <ul class="list-inline customer-inline"
                 ng-if="campaignSelectedData.OperationalStatus=='stop' ">
                 <li>
-                    <div ng-class="isSetCommand?'loading-stop-bg':''"
+                    <!-- <div ng-class="isSetCommand?'loading-stop-bg':''"
                          class="cam-staus-btn-wrapper sm stop animated bounceIn"
                          ng-click="sendCommandToCampaign(campaignSelectedData,'end')">
                         <i class="fa fa-eject cam-eject"></i>
-                    </div>
+                    </div> -->
                 </li>
                 <li>
                     <div ng-class="isSetCommand?'loading-play-bg':''"
