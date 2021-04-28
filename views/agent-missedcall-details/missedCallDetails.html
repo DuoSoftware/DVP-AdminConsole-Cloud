@@ -163,13 +163,15 @@
                                             rowspan="1"
                                             colspan="1" aria-label="ReceivedBy">Received By
                                         </th>
-
-
+                                        <th class="sorting" tabindex="9" aria-controls="datatable-responsive"
+                                            rowspan="1"
+                                            colspan="1" aria-label="MissedBy">Missed By
+                                        </th>
                                     </thead>
                                     <tbody >
                                     <tr role="row" class="odd"
                                         ng-repeat="missedCall in allMissedCallRecords">
-                                        <td>{{missedCall.cdrInfo.CreatedTime|date:"yyyy-MM-dd hh:mm:ss"}}</td>
+                                        <td>{{missedCall.cdrInfo.CreatedTime|date:"yyyy-MM-dd HH:mm:ss"}}</td>
                                         <td>{{missedCall.cdrInfo.AgentSkill}}</td>
                                         <td>{{missedCall.cdrInfo.QueueSec}}</td>
                                         <td>{{missedCall.RejectCount}}</td>
@@ -178,7 +180,7 @@
                                         <td>{{missedCall.cdrInfo.SipToUser}}</td>
                                         <td>{{missedCall.cdrInfo.AgentAnswered}}</td>
                                         <td>{{missedCall.cdrInfo.RecievedBy}}</td>
-
+                                        <td>{{missedCall.ResourceId}}</td>
                                     </tr>
                                     </tbody>
                                 </table>
