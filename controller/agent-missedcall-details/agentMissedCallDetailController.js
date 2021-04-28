@@ -19,6 +19,7 @@
 
         $scope.dtOptions = {paging: false, searching: false, info: false, order: [0, 'asc']};
         $scope.obj = {
+            resourceId: "",
             startDay: moment().format("YYYY-MM-DD"),
             endDay: moment().format("YYYY-MM-DD")
         };
@@ -404,6 +405,14 @@
                 {
 
                     $scope.missedCallRecords.forEach(function (missedCallRecord) {
+                        console.log("Misscall Record Id"+missedCallRecord.ResourceId);
+
+                        for (var l = 0; l < $scope.resourceDetails.length; l++) {
+                            if ($scope.resourceDetails[l].ResourceId == missedCallRecord.ResourceId) {
+                                missedCallRecord.ResourceId = $scope.resourceDetails[l].ResourceName;
+                            }
+                        }
+
                         if(response.Result) {
                             for (var i = 0; i < response.Result.length; i++) {
                                 var cdrRecord = response.Result[i];
