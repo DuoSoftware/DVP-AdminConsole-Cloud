@@ -201,25 +201,25 @@ mainApp.controller("agentSummaryController", function ($scope, $filter, $state, 
                         resetTotals();
                         var summaryData = response.data.Result;
 
-                        $scope.total.StaffTime = summaryData[0].totalStaffTime;
-                        $scope.total.InboundIdleTime = summaryData[0].totalInboundIdleTime;
-                        $scope.total.OutboundIdleTime = summaryData[0].totalOutboundIdleTime;
-                        $scope.total.OfflineIdleTime = summaryData[0].totalOfflineIdleTime;
-                        $scope.total.InboundAfterWorkTime = summaryData[0].totalInboundAfterWorkTime;
-                        $scope.total.OutboundAfterWorkTime = summaryData[0].totalOutboundAfterWorkTime;
-                        $scope.total.InboundAverageHandlingTime = summaryData[0].avgInboundHandlingTime;
-                        $scope.total.OutboundAverageHandlingTime = summaryData[0].avgOutboundHandlingTime;
-                        $scope.total.InboundTalkTime = summaryData[0].totalInboundTalkTime;
-                        $scope.total.OutboundTalkTime = summaryData[0].totalOutboundTalkTime;
-                        $scope.total.InboundHoldTime = summaryData[0].totalInboundHoldTime;
-                        $scope.total.OutboundHoldTime = summaryData[0].totalOutboundHoldTime;
-                        $scope.total.BreakTime = summaryData[0].totalBreakTime;
-                        $scope.total.Answered = summaryData[0].totalInboundAnswered + summaryData[0].totalOutboundAnswered;
-                        $scope.total.InboundCalls = summaryData[0].totalCallsInb;
-                        $scope.total.OutboundCalls = summaryData[0].totalCallsOut;
+                        $scope.total.StaffTime = summaryData[summaryData.length-1].totalStaffTime;
+                        $scope.total.InboundIdleTime = summaryData[summaryData.length-1].totalInboundIdleTime;
+                        $scope.total.OutboundIdleTime = summaryData[summaryData.length-1].totalOutboundIdleTime;
+                        $scope.total.OfflineIdleTime = summaryData[summaryData.length-1].totalOfflineIdleTime;
+                        $scope.total.InboundAfterWorkTime = summaryData[summaryData.length-1].totalInboundAfterWorkTime;
+                        $scope.total.OutboundAfterWorkTime = summaryData[summaryData.length-1].totalOutboundAfterWorkTime;
+                        $scope.total.InboundAverageHandlingTime = summaryData[summaryData.length-1].avgInboundHandlingTime;
+                        $scope.total.OutboundAverageHandlingTime = summaryData[summaryData.length-1].avgOutboundHandlingTime;
+                        $scope.total.InboundTalkTime = summaryData[summaryData.length-1].totalInboundTalkTime;
+                        $scope.total.OutboundTalkTime = summaryData[summaryData.length-1].totalOutboundTalkTime;
+                        $scope.total.InboundHoldTime = summaryData[summaryData.length-1].totalInboundHoldTime;
+                        $scope.total.OutboundHoldTime = summaryData[summaryData.length-1].totalOutboundHoldTime;
+                        $scope.total.BreakTime = summaryData[summaryData.length-1].totalBreakTime;
+                        $scope.total.Answered = summaryData[summaryData.length-1].totalInboundAnswered + summaryData[summaryData.length-1].totalOutboundAnswered;
+                        $scope.total.InboundCalls = summaryData[summaryData.length-1].totalCallsInb;
+                        $scope.total.OutboundCalls = summaryData[summaryData.length-1].totalCallsOut;
                         // $scope.total.MissCallCount = MissCallCount;
-                        $scope.total.OutboundAnswered = summaryData[0].totalOutboundAnswered;
-                        $scope.total.InboundAnswered = summaryData[0].totalInboundAnswered;
+                        $scope.total.OutboundAnswered = summaryData[summaryData.length-1].totalOutboundAnswered;
+                        $scope.total.InboundAnswered = summaryData[summaryData.length-1].totalInboundAnswered;
                         $scope.agentSummaryList = summaryData;
 
                         for (var k = 0; k < $scope.agentSummaryList.length; k++) {
@@ -307,42 +307,43 @@ mainApp.controller("agentSummaryController", function ($scope, $filter, $state, 
                     }
                 }
                 console.log("ResID : "+ resId);
-                if(resId == null && duration === 0){
+
                     var total =
                         {
                             AgentName: 'Total',
                             Date: 'N/A',
                             LoginTime: 'N/A',
-                            StaffTime: summaryData[0].totalStaffTime,
-                            InboundTime: summaryData[0].totalInboundTime,
-                            OutboundTime: summaryData[0].totalOutboundTime,
-                            IdleTimeInbound: summaryData[0].totalInboundIdleTime,
-                            IdleTimeOutbound: summaryData[0].totalOutboundIdleTime,
-                            IdleTimeOffline: summaryData[0].totalOfflineIdleTime,
-                            AfterWorkTimeInbound: summaryData[0].totalInboundAfterWorkTime,
-                            AfterWorkTimeOutbound: summaryData[0].totalOutboundAfterWorkTime,
-                            AverageHandlingTimeInbound: summaryData[0].avgInboundHandlingTime,
-                            AverageHandlingTimeOutbound: summaryData[0].avgOutboundHandlingTime,
-                            AvgTalkTimeInbound: summaryData[0].avgInboundTalkTime,
-                            AvgTalkTimeOutbound: summaryData[0].avgOutboundTalkTime,
-                            TalkTimeInbound: summaryData[0].totalInboundTalkTime,
-                            TalkTimeOutbound: summaryData[0].totalOutboundTalkTime,
-                            TotalHoldTimeInbound: summaryData[0].totalInboundHoldTime,
-                            TotalHoldTimeOutbound: summaryData[0].totalOutboundHoldTime,
-                            BreakTime: summaryData[0].totalBreakTime,
-                            TotalAnswered: summaryData[0].totalInboundAnswered + summaryData[0].totalOutboundAnswered,
-                            TotalCallsInbound: summaryData[0].totalCallsInb,
-                            TotalCallsOutbound: summaryData[0].totalCallsOut,
+                            StaffTime: summaryData[summaryData.length-1].totalStaffTime,
+                            InboundTime: summaryData[summaryData.length-1].totalInboundTime,
+                            OutboundTime: summaryData[summaryData.length-1].totalOutboundTime,
+                            IdleTimeInbound: summaryData[summaryData.length-1].totalInboundIdleTime,
+                            IdleTimeOutbound: summaryData[summaryData.length-1].totalOutboundIdleTime,
+                            IdleTimeOffline: summaryData[summaryData.length-1].totalOfflineIdleTime,
+                            AfterWorkTimeInbound: summaryData[summaryData.length-1].totalInboundAfterWorkTime,
+                            AfterWorkTimeOutbound: summaryData[summaryData.length-1].totalOutboundAfterWorkTime,
+                            AverageHandlingTimeInbound: summaryData[summaryData.length-1].avgInboundHandlingTime,
+                            AverageHandlingTimeOutbound: summaryData[summaryData.length-1].avgOutboundHandlingTime,
+                            AvgTalkTimeInbound: summaryData[summaryData.length-1].avgInboundTalkTime,
+                            AvgTalkTimeOutbound: summaryData[summaryData.length-1].avgOutboundTalkTime,
+                            TalkTimeInbound: summaryData[summaryData.length-1].totalInboundTalkTime,
+                            TalkTimeOutbound: summaryData[summaryData.length-1].totalOutboundTalkTime,
+                            TotalHoldTimeInbound: summaryData[summaryData.length-1].totalInboundHoldTime,
+                            TotalHoldTimeOutbound: summaryData[summaryData.length-1].totalOutboundHoldTime,
+                            BreakTime: summaryData[summaryData.length-1].totalBreakTime,
+                            TotalAnswered: summaryData[summaryData.length-1].totalInboundAnswered + summaryData[summaryData.length-1].totalOutboundAnswered,
+                            TotalCallsInbound: summaryData[summaryData.length-1].totalCallsInb,
+                            TotalCallsOutbound: summaryData[summaryData.length-1].totalCallsOut,
                             //MissCallCount: MissCallCount,
-                            TotalAnsweredOutbound: summaryData[0].totalOutboundAnswered,
-                            TotalHoldInbound: summaryData[0].totalInboundHoldCount,
-                            TotalHoldOutbound: summaryData[0].totalOutboundHoldCount,
-                            AvgHoldTimeInbound: summaryData[0].avgInboundHoldTime,
-                            AvgHoldTimeOutbound: summaryData[0].avgOutboundHoldTime
+                            TotalAnsweredOutbound: summaryData[summaryData.length-1].totalOutboundAnswered,
+                            TotalAnsweredInbound: summaryData[summaryData.length-1].totalInboundAnswered,
+                            TotalHoldInbound: summaryData[summaryData.length-1].totalInboundHoldCount,
+                            TotalHoldOutbound: summaryData[summaryData.length-1].totalOutboundHoldCount,
+                            AvgHoldTimeInbound: summaryData[summaryData.length-1].avgInboundHoldTime,
+                            AvgHoldTimeOutbound: summaryData[summaryData.length-1].avgOutboundHoldTime
                         };
 
                     agentSummaryList.push(total);
-                }
+
                 deferred.resolve(agentSummaryList);
 
 
