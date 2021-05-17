@@ -276,7 +276,7 @@
                                     ng-repeat="ticket in ticketList">
                                     <td>{{ticket.reference}}</td>
                                     <td>{{ticket.subject}}</td>
-                                    <td>{{ticket.assignee ? ticket.assignee.name : ''}}</td>
+                                    <td>{{ticket.assignee ? ticket.assignee.name : (ticket.assignee_group ? ticket.assignee_group.name : '')}}</td>
                                     <td>{{ticket.submitter ? ticket.submitter.name : ''}}</td>
                                     <td>{{ticket.requester ? ticket.requester.name : ''}}</td>
                                     <td>{{moment(ticket.created_at).local().format("YYYY-MM-DD HH:mm:ss")}}</td>
