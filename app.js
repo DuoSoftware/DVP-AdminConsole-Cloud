@@ -157,7 +157,7 @@ var baseUrls = {
     'chatbotContextAPIUrl': "https://smoothbotservices.plus.smoothflow.io/DBF/API/1.0.0.0/ContextMap",
     'articleServiceUrl': 'https://app.facetone.com:1443/DVP/API/1.0.0.0/',
     'contactbasednumberUrl': 'https://app.facetone.com:1443/DVP/API/1.0.0.0/Campaign/', //contactbasednumberdialingservice.app.veery.cloud
-    'interactionServiceURL': 'https://app.facetone.com:1443/DVP/API/1.0.0.0/'
+    'interactionServiceURL': 'http://localhost:3637/DVP/API/1.0.0.0/'
 };
 
 mainApp.constant('baseUrls', baseUrls);
@@ -903,6 +903,14 @@ mainApp.config(["$httpProvider", "$stateProvider", "$urlRouterProvider", "$authP
             url: "/tagmanager",
             templateUrl: "views/tag-manager/tagView.html",
             controller: "tagcontroller",
+            data: {
+                requireLogin: true,
+                navigation: "TAGMANAGER"
+            }
+        }).state('console.dispositionalTagManager', {
+            url: "/dispositionaltagmanager",
+            templateUrl: "views/dispositional-tag-manager/dispositionalTagView.html",
+            controller: "dispositionalTagController",
             data: {
                 requireLogin: true,
                 navigation: "TAGMANAGER"

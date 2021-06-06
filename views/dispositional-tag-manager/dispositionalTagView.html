@@ -1,0 +1,86 @@
+<div class="row">
+
+    <div class="col-md-12 col-sm-6 col-xs-12">
+
+        <!-- add new dispositional tag -->
+        <div class="x_panel bg-light-gray animated fadeIn">
+            <div class="x_content">
+                <div class="x_title border-0">
+                    <div class="col-md-6 col-sm-6 col-xs-6">
+                        <h2 class="font-robot font-300 text-uppercase font-15">New Dispositional Tag</h2>
+                    </div>
+
+                    <div class="col-md-6 col-sm-6 col-xs-6 form-group top_search">
+                        <!-- <div class="input-group">
+                            <input type="text" ng-model="searchCriteria" class="form-control"
+                                   placeholder="Search for...">
+                                <span class="input-group-btn">
+                                  <button class="btn btn-default" type="button">Go!</button>
+                                </span>
+                        </div> -->
+                    </div>
+                    <div class="col-xs-12">
+                        <div class="tile-stats m-top15">
+                            <form class="form-horizontal form-label-left input_mask">
+                                <div class="row">
+                                    <div class="col-md-4 col-sm-4 col-xs-12 form-group has-feedback">
+                                        <input type="text" class="form-control has-feedback-left"
+                                               ng-model="dispositionalTag.tag"
+                                               placeholder="Tag">
+                                        <span class="fa fa-tag form-control-feedback left" aria-hidden="true"></span>
+                                    </div>
+
+                                    <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
+                                        <input type="text" class="form-control has-feedback-left"
+                                               ng-model="dispositionalTag.description"
+                                               placeholder="Description">
+                                        <span class="fa fa-info form-control-feedback left" aria-hidden="true"></span>
+                                    </div>
+
+                                    <div class="col-md-2 col-sm-2 col-xs-12 form-group has-feedback">
+                                        <button type="button" class="btn btn-success btn-block  btn- pull-right"
+                                                ng-click="saveDispositionalTag()">
+                                            Add
+                                        </button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+            </div>
+        </div>
+        <!-- end -->
+
+        <!-- view dispositional tags -->
+        <div class="x_panel">
+            <div class="x_content">
+                <ul class="list-unstyled timeline">
+                    <li ng-repeat="dispositionalTag in dispositionalTags">
+                        <dispositional-tag-directive dispositional-tag="dispositionalTag" dispositional-tags="dispositionalTags" update-dispositional-tag="removeDeleted(dispositionalTag)"
+                                       reload-page="reloadPage()"></dispositional-tag-directive>
+                    </li>
+
+                    <paging ng-show="showPaging"
+                            class="small"
+                            page="currentPage"
+                            page-size="pageSize"
+                            total="pageTotal"
+                            show-prev-next="true"
+                            show-first-last="true"
+                            text-next-class="glyphicon glyphicon-chevron-right"
+                            text-prev-class="glyphicon glyphicon-chevron-left"
+                            text-first-class="glyphicon glyphicon-backward"
+                            text-last-class="glyphicon glyphicon-forward"
+                            paging-action="getPageData('attribute', page, pageSize, total)">
+                    </paging>
+                </ul>
+            </div>
+        </div>
+        <!-- end -->
+    </div>
+
+</div>
+
+</div>

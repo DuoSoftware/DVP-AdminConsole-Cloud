@@ -719,6 +719,9 @@ mainApp.controller('mainCtrl', function ($window, $scope, $rootScope, $state, $t
         goTagManager: function () {
             $state.go('console.tagmanager');
         },
+        goDispositionalTagManager: function () {
+            $state.go('console.dispositionalTagManager');
+        },
         goCallSummary: function () {
             $state.go('console.callsummary');
         },
