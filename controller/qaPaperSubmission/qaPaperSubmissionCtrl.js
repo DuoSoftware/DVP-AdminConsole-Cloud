@@ -151,10 +151,16 @@
 
                 $q.all(method_list).then(function (resolveData) {
                     if (resolveData) {
-                        resolveData.map(function (data) {
-                            var Result= data.Result;
-                            Result.map(function (item) {
+                        // resolveData.map(function (data) {
+                        //     var Result= data.Result;
+                        //     Result.map(function (item) {
 
+                        //         $scope.userList.push(item);
+                        //     });
+                        // });
+                        $.each(resolveData,function(indx, data){
+                            $.each(data, function(i, item){
+                                console.log(item);
                                 $scope.userList.push(item);
                             });
                         });
