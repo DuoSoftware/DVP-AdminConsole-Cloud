@@ -2188,7 +2188,7 @@ ul > li.presentation > a {
 }
 
 .modal-sm {
-    width: 500px;
+    width: fit-content;
 
 }
 
