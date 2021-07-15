@@ -242,6 +242,10 @@
                                         rowspan="1"
                                         colspan="1" aria-label="Created">Created At
                                     </th>
+				    <th class="sorting" tabindex="0" aria-controls="datatable-responsive"
+                                        rowspan="1"
+                                        colspan="1" aria-label="Created">Last Status Changed
+                                    </th>
                                     <th class="sorting" tabindex="0" aria-controls="datatable-responsive"
                                         rowspan="1"
                                         colspan="1" aria-label="Channel">Channel
@@ -280,6 +284,7 @@
                                     <td>{{ticket.submitter ? ticket.submitter.name : ''}}</td>
                                     <td>{{ticket.requester ? ticket.requester.name : ''}}</td>
                                     <td>{{moment(ticket.created_at).local().format("YYYY-MM-DD HH:mm:ss")}}</td>
+				    <td>{{moment(ticket.ticket_matrix.last_status_changed).local().format("YYYY-MM-DD HH:mm:ss")}}</td>
                                     <td>{{ticket.channel}}</td>
                                     <td>{{ticket.status}}</td>
                                     <td>{{ticket.priority}}</td>
